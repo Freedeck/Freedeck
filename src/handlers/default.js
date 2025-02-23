@@ -12,16 +12,18 @@ const { readFileSync, readdirSync, existsSync } = require("node:fs");
 const HookRef = require("../classes/HookRef");
 const {intents, events} = require("../classes/api");
 const { nbws, check } = require("./internalNBWSHandler");
+const { paths } = require("../routers/static");
 
-const userThemesLocation = path.resolve("user-data/themes");
-const userSoundpacksLocation = path.resolve("user-data/soundpacks");
+const userThemesLocation = paths.userData_themes;
+const userSoundpacksLocation = paths.userData_soundpacks;
 
-const commonSoundpacks = path.resolve("webui/common/sounds");
-const commonThemes = path.resolve("webui/shared/theming");
+const commonSoundpacks = paths.webui_common_soundpacks
+const commonThemes = paths.webui_common_themes;
 
 const localStyleLocation = path.resolve("./src/configs/style.json");
 
-const thisPackage = require(path.resolve("package.json"));
+const pkgLoc = path.resolve("package.json");
+const thisPackage = require(pkgLoc);
 const os = require("node:os");
 const hostname = os.hostname()
 

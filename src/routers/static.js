@@ -5,26 +5,45 @@ const router = express.Router();
 
 // User data
 
-router.use("/sounds", express.static(path.resolve("user-data/sounds")));
-router.use("/icons", express.static(path.resolve("user-data/icons")));
+const paths = {
+  userData_themes: path.resolve("user-data/themes"),
+  userData_soundpacks: path.resolve("user-data/soundpacks"),
+  userData_sounds: path.resolve("user-data/sounds"),
+  userData_icons: path.resolve("user-data/icons"),
+  userData: path.resolve("user-data"),
 
-router.get("/user-report", (req, res) => {
+  webui_client: path.resolve("webui/client"),
+  webui_companion: path.resolve("webui/companion"),
+  webui_common: path.resolve("webui/common"),
+
+  webui_common_soundpacks: path.resolve("webui/common/sounds"),
+  webui_common_themes: path.resolve("webui/shared/theming"),
+
+  webui_app: path.resolve("webui/app"),
+  webui_shared: path.resolve("webui/shared")
+}
+
+const expressRouters = {
+  "/sounds": express.static(paths.userData_sounds),
+  "/icons": express.static(paths.userData_icons),
+  "/user-data": express.static(paths.userData),
+
+  "/": express.static(paths.webui_client),
+  "/companion": express.static(paths.webui_companion),
+  "/common": express.static(paths.webui_common),
+  "/app": express.static(paths.webui_app),
+  "/app/shared": express.static(paths.webui_shared),
+}
+
+for(const routerName of Object.keys(expressRouters)) {
+  const actualRouter = expressRouters[routerName];
+  router.use(routerName, actualRouter);
+}
+
+router.get("/api/uploads", (req, res) => {
   const start = Date.now();
-  const report = [fs.readdirSync(path.resolve("user-data/sounds")), fs.readdirSync(path.resolve("user-data/icons"))];
+  const report = [fs.readdirSync(paths.userData_sounds), fs.readdirSync(paths.userData_icons)];
   res.send({ report, time: Date.now() - start, start });
 })
 
-// User uploaded data
-router.use("/user-data", express.static(path.resolve("user-data")));
-
-
-// Front-end
-router.use("/", express.static(path.resolve("webui/client")));
-router.use("/companion", express.static(path.resolve("webui/companion")));
-router.use("/common", express.static(path.resolve("webui/common")));
-
-// Webpack
-router.use("/app", express.static(path.resolve("webui/app")));
-router.use("/app/shared", express.static(path.resolve("webui/shared")));
-
-module.exports = router;
+module.exports = {router, paths};

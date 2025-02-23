@@ -113,7 +113,7 @@
 </style>
 
 <script>
-  fetch("/user-report").then((res) => res.json()).then((data) => {
+  fetch("/api/uploads").then((res) => res.json()).then((data) => {
     let cc = 0;
     for (const i of data.report) {
       for (const j of i) {
@@ -122,11 +122,16 @@
         upload.id = `upload-${cc}`;
         upload.dataset.name = j;
         if (cc == 1) {
-          upload.innerHTML += `<img src="/icons/${j}" />`;
-          universal.createTooltipFor(upload, j);
+          const img = new Image();
+            img.loading = 'lazy';
+            img.decoding = "async";
+            img.src = '/icons/' + encodeURIComponent(j);
+            upload.appendChild(img);
+            universal.createTooltipFor(upload, j);
+
         } else {
-          upload.innerHTML += `<p>${j}</p>`;
-          upload.innerHTML += `<audio controls><source src="/sounds/${j}" type="audio/mpeg"></audio>`;
+          upload.innerHTML += `<p>${universal.cleanHTML(j)}</p>`;
+          upload.innerHTML += `<audio preload="none" controls><source src="/sounds/${encodeURIComponent(j)}" type="audio/mpeg"></audio>`;
         }
         document.querySelector('.uploads-' + cc).appendChild(upload);
       }

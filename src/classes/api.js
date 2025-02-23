@@ -7,6 +7,8 @@ const HookRef = require("./HookRef");
 const picocolors = require("$/picocolors");
 const debug = require("$/debug");
 
+const pluginsLocation = path.resolve("./plugins");
+
 class Plugin {
   v2 = true;
   name;
@@ -259,8 +261,8 @@ class Plugin {
    * Create save data folders/file structure for the plugin.
    */
   createSaveData() {
-    if (!fs.existsSync(path.resolve("./plugins"))) {
-      fs.mkdirSync(path.resolve("./plugins"));
+    if (!fs.existsSync(pluginsLocation)) {
+      fs.mkdirSync(pluginsLocation);
       console.log("Failsafe created plugins folder!");
     }
     if (!fs.existsSync(path.resolve(`./plugins/${this.id}`))) {

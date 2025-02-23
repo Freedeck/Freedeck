@@ -8,6 +8,8 @@ const singleFile = require("@managers/providers/singleFile.js");
 const sourceFolder = require("@managers/providers/sourceFolder.js");
 const asarBundle = require("@managers/providers/default.js");
 
+const tmpLocation = path.resolve("./tmp");
+const pluginsLocation = path.resolve("./plugins");
 
 const pl = {
 	_plc: new Map(),
@@ -33,7 +35,7 @@ const pl = {
 			pl._tyc.delete(type.id);
 		}
 		for (const key in require.cache) {
-			if (key.startsWith(path.resolve("./tmp"))) {
+			if (key.startsWith(tmpLocation)) {
 				delete require.cache[key];
 			}
 		}
@@ -68,7 +70,7 @@ const pl = {
 		pl._disabled = [];
 		pl._plc.clear();
 		pl._tyc.clear();
-		const files = fs.readdirSync(path.resolve("./plugins"));
+		const files = fs.readdirSync(pluginsLocation);
 		const loadPromises = files
 			.filter(
 				(file) =>

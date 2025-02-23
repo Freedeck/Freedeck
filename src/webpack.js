@@ -2,9 +2,10 @@ const { webpack } = require("webpack");
 const fs = require("node:fs");
 const path = require("node:path");
 const picocolors = require("$/picocolors");
+const { paths } = require("./routers/static");
 
 const webpackConfigLocation = path.resolve("webpack.config.js");
-const webpackBuildLocation = path.resolve("webui/app");
+const webpackBuildLocation = paths.webui_app;
 const connectRouterLocation = path.resolve("src/routers/connect.js");
 
 const webpackConfig = require(webpackConfigLocation);

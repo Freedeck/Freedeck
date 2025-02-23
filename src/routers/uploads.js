@@ -4,11 +4,12 @@ const router = express.Router();
 const fs = require("node:fs");
 const path = require("node:path");
 const formidable = require("formidable");
+const { paths } = require("./static");
 
 
 router.post("/sound", (request, response) => {
   const form = new formidable.IncomingForm({
-    uploadDir: path.resolve("./user-data/sounds"),
+    uploadDir: paths.userData_sounds
   });
   // Parse `req` and upload all associated files
   form.parse(request, (err, fields, files) => {
@@ -34,7 +35,7 @@ router.post("/sound", (request, response) => {
 
 router.post("/icon", (request, response) => {
   const form = new formidable.IncomingForm({
-    uploadDir: path.resolve("./user-data/icons"),
+    uploadDir: paths.userData_icons
   });
   // Parse `req` and upload all associated files
   form.parse(request, (err, fields, files) => {
