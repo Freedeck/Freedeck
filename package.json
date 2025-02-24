@@ -23,7 +23,7 @@
 		"alternative"
 	],
 	"_moduleAliases": {
-    "@root": "/",
+		"@root": "/",
 		"@src": "src",
 		"@public": "src/public",
 		"@managers": "src/managers",
@@ -36,6 +36,7 @@
 	"dependencies": {
 		"asar-bundle-runner": "^1.6.0",
 		"babel-loader": "^9.2.1",
+		"compare-versions": "^6.1.1",
 		"electron": "^32.2.6",
 		"express": "^4.19.2",
 		"formidable": "^3.5.2",

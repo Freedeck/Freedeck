@@ -25,6 +25,7 @@ const cfg = {
   devtool: false,
   externals: {
     Pako: "Pako",
+    "\"compare-versions\"": "compare-versions",
     settingsHelpers: "settingsHelpers",
   },
   stats: {

@@ -1,5 +1,9 @@
-<h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50" height="50"></span></h1>
-<center><p>Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your Freedeck.</p></center>
+<h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50"
+            height="50"></span></h1>
+<center>
+    <p>Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your
+        Freedeck.</p>
+</center>
 <button onclick="universal.mkp_addRepo();">
     Add Repository
 </button>
@@ -90,7 +94,7 @@
 </style>
 
 <script type="module">
-    if(document.querySelector('#add-repo')) {
+    if (document.querySelector('#add-repo')) {
         document.querySelector('#add-repo').remove();
     }
     const dialog = universal.UI.makeGenericModal("Add Repository", "Enter the information for the repository.", [], true, `
@@ -133,7 +137,7 @@
             li.style.backgroundSize = 'var(--main-bg-size)';
             li.style.animation = 'error-bg 5s linear infinite';
         }
-        if(isUnofficial) li.innerText += "(!) ";
+        if (isUnofficial) li.innerText += "(!) ";
         li.innerText += repo.title;
         li.innerHTML += " &#10148; ";
         if (isUnofficial) {
@@ -149,7 +153,7 @@
 
         if (repo.type == 'legacy' || !repo.type) {
             li.innerText += universal.cleanHTML(repo.who);
-            if(isUnofficial) li.appendChild(btn);
+            if (isUnofficial) li.appendChild(btn);
 
             legacyFillRepo(repo.link, repo, isUnofficial);
         }
@@ -157,13 +161,13 @@
 
         if (repo.type == 'v3') {
             universal.repositoryManager.getV3Repository(repo).then((data) => {
-                if(data.err) {
+                if (data.err) {
                     li.innerText += " " + data.msg;
-                    if(isUnofficial) li.appendChild(btn);
+                    if (isUnofficial) li.appendChild(btn);
                     return;
                 }
                 li.innerText += " " + universal.cleanHTML(data.title);
-                if(isUnofficial) li.appendChild(btn);
+                if (isUnofficial) li.appendChild(btn);
                 data.plugins.forEach((plugin) => {
                     if (plugin.visible && plugin.visible == 'false') return;
                     const req = plugin;
@@ -194,12 +198,12 @@
                     const file = document.createElement('button');
                     file.dataset.HandoffUrl = 'freedeck://download/' + req.id + '/' + encodeURIComponent(req.download) + '/' + encodeURIComponent(req.description) + '/' + encodeURIComponent(repo.title);
                     file.onclick = () => {
-                        if(req.message) {
+                        if (req.message) {
                             // create a yes/no modal
-                            window.showYesNo("Before you install " + req.title +"...", req.message, (yes) => {
+                            window.showYesNo("Before you install " + req.title + "...", req.message, (yes) => {
                                 window.location.href = file.dataset.HandoffUrl;
-                                    universal.uiSounds.playSound('step_2');
-                            }, ()=>{});
+                                universal.uiSounds.playSound('step_2');
+                            }, () => { });
                         } else {
                             window.location.href = file.dataset.HandoffUrl;
                             universal.uiSounds.playSound('step_2');
@@ -210,23 +214,27 @@
                         file.innerText = 'Installed';
                         file.style.backgroundColor = 'var(--marketplace-plugin-installed)';
                         if (!universal.plugins[req.id].version) universal.plugins[req.id].version = '1.0.0';
-                        if (universal.plugins[req.id].version != req.version) {
-                            file.innerText = 'Update';
-                            file.dataset.HandoffUrl = file.dataset.HandoffUrl.replace('freedeck://download', 'freedeck://update') + "/" + encodeURIComponent(universal.plugins[req.id].version) + "/" + encodeURIComponent(req.version);
-                            file.style.backgroundColor = 'var(--marketplace-plugin-updatable)';
-                        } else
-                            if (universal.plugins[req.id].version == req.version) {
+                        else {
+                            let compareVersionOutput = universal.compareVersions(universal.plugins[req.id].version, req.version);
+                            if (compareVersionOutput == -1) {
+                                file.innerText = 'Update';
+                                file.dataset.HandoffUrl = file.dataset.HandoffUrl.replace('freedeck://download', 'freedeck://update') + "/" + encodeURIComponent(universal.plugins[req.id].version) + "/" + encodeURIComponent(req.version);
+                                file.style.backgroundColor = 'var(--marketplace-plugin-updatable)';
+                            } else if (compareVersionOutput == 0) {
                                 file.innerText = 'Up to date';
                                 file.style.backgroundColor = 'var(--marketplace-plugin-no-updates)';
                                 file.onclick = () => { };
-                            } else {
+                            } else if (compareVersionOutput == 1) {
+                                file.innerText = 'You have a newer version';
+                                file.style.backgroundColor = 'var(--marketplace-plugin-installed)';
                                 file.onclick = () => { };
                             }
+                        }
                     };
                     li.appendChild(file);
                     if (universal.repositoryManager.official.find((r) => r === repo)) {
                         if (!plugin.unofficial || plugin.unofficial !== 'true') {
-                        li.appendChild(officialTag);
+                            li.appendChild(officialTag);
                         }
                     }
                     document.querySelector('.marketplace').appendChild(li);
@@ -380,17 +388,17 @@
                     loadRepos();
                 } else {
                     const options = [];
-                    for(const channelKey in data.channels) {
+                    for (const channelKey in data.channels) {
                         const channel = data.channels[channelKey];
-                        if(channel.type != 'repository' && channel.type != 'repository_external') continue;
-                        options.push({added: Date.now(), type: "legacy", id: channelKey, display: `${channel.title} (${channelKey})`});
+                        if (channel.type != 'repository' && channel.type != 'repository_external') continue;
+                        options.push({ added: Date.now(), type: "legacy", id: channelKey, display: `${channel.title} (${channelKey})` });
                     }
                     const mod = selectModal({
                         title: "Repository Channel",
                         message: "Please select the channel of the repository you are adding.",
                         options
-                    }, ({value}) => {
-                        if(value.id == "main" && url == "https://releases.freedeck.app/index.json") {
+                    }, ({ value }) => {
+                        if (value.id == "main" && url == "https://releases.freedeck.app/index.json") {
                             document.querySelector('.add-msg').innerText = 'You can\'t re-add the main repository!';
                             submit.disabled = false;
                             submit.innerText = "Add";
@@ -398,7 +406,7 @@
                         }
                         const curr = JSON.parse(universal.load('repos.community'))
                         const chn = value.id;
-                        curr.push({ added: Date.now(), type:"v3", title, url: url, channel: chn })
+                        curr.push({ added: Date.now(), type: "v3", title, url: url, channel: chn })
                         universal.save('repos.community', JSON.stringify(curr))
                         universal.repositoryManager.unofficial = curr;
                         loadRepos();

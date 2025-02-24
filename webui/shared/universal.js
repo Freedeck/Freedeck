@@ -1,4 +1,5 @@
 import Pako from "pako";
+import {compareVersions} from 'compare-versions';
 import repositoryManager from "./lib/repositoryManager";
 import dataHandler from "./init/data";
 import eventsHandler from "./init/events";
@@ -46,6 +47,7 @@ window.fetch = async (url, options) => {
 }
 
 const universal = {
+	compareVersions,
 	relay: "",
 	_socket: null,
 	_ca: [],
