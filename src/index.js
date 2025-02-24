@@ -4,13 +4,14 @@ const picocolors = require("$/picocolors");
 const fs = require("node:fs");
 const path = require("node:path");
 const debug = require("$/debug");
+const settings = require("@managers/settings");
 
 let DOES_RUN_SERVER = true;
 let DO_COMPANION = true;
 
-const DOES_SETTINGS_EXIST_YET = fs.existsSync(
-  path.join(__dirname, "configs/config.fd.js"),
-);
+const DOES_SETTINGS_EXIST_YET = 
+fs.existsSync(path.join(__dirname, "configs/config.fd.js")) ||
+fs.existsSync(settings.configLocation)
 
 if (process.argv.includes("--server-only")) {
   console.log(picocolors.blue("Server only mode."));
@@ -54,8 +55,6 @@ if (!DOES_SETTINGS_EXIST_YET && DOES_RUN_SERVER) {
 }
 
 require("./migration");
-
-const settings = require("@managers/settings");
 
 const appSettings = settings.settings();
 debug.writeLogs = appSettings.writeLogs;

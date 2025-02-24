@@ -4,9 +4,9 @@ const eventNames = require("../eventNames");
 module.exports = ({ io, data }) => {
 	const { name, interaction } = data;
 	const settings = config.settings();
-	const profiles = settings.profiles[settings.profile];
+	const keyListing = settings.profiles[settings.profile];
 
-	for (const snd of profiles) {
+	for (const snd of keyListing) {
 		const key = Object.keys(snd)[0];
 		if (snd[key].uuid === interaction.uuid) {
 			if (name !== key) {
@@ -17,6 +17,6 @@ module.exports = ({ io, data }) => {
 		}
 	}
 
-	config.save();
+	config.internalSavers.asyncSaveSpecificProfile(settings.profiles, settings.profile);
 	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
 };
