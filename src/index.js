@@ -121,8 +121,11 @@ function setupTerm() {
         console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded all hooks")}`);
       }
       if (fs.existsSync(path.resolve("./tmp"))) {
-        fs.rmSync(path.resolve("./tmp"), { recursive: true });
-        console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded plugin extractions")}`);
+        fs.rm(path.resolve("./tmp"), { recursive: true }, (e) => {
+          if(e) {
+            console.error("Error removing plugin extractions", e);
+          } else console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded plugin extractions")}`);
+        });
       }
 
       setTimeout(() => {
