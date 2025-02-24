@@ -10,7 +10,7 @@ module.exports = ({ io, data }) => {
 		return snd[key].uuid !== deletingItem.uuid;
 	});
 
-	config.internalSavers.asyncSaveSpecificProfile(settings.profiles, settings.profile);
+	config.save();
 	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
 };
  

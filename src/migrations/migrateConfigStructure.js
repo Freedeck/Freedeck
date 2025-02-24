@@ -1,7 +1,7 @@
 const { existsSync, writeFile, writeFileSync, rmSync } = require("node:fs");
 const { paths } = require("../routers/static")
 const path = require("node:path");
-const { configLocation, profilesFolder } = require("../managers/settings");
+const { configLocation } = require("../managers/settings");
 
 const oldCfgLoc = path.resolve("./src/configs/config.fd.js");
 
@@ -13,20 +13,15 @@ if(existsSync(oldCfgLoc)) {
     release: thatConfig.release || "stable",
     theme: thatConfig.theme || "default.css",
     profile: thatConfig.profile || "Default",
+    profiles: thatConfig.profiles,
     screenSaverActivationTime: thatConfig.screenSaverActivationTime || 5,
     soundOnPress: thatConfig.soundOnPress || false,
     useAuthentication: thatConfig.useAuthentication || false,
     port: thatConfig.port || 5754
   };
   console.log("- Set up main.json")
-  for(let profile in thatConfig.profiles) {
-    const data = thatConfig.profiles[profile];
-    profile = profile.replaceAll(/[/\\?%*:|"<>]/g, "");
-    writeFileSync(path.resolve(profilesFolder, `${profile}.json`), JSON.stringify(data))
-    console.log("- Wrote", `${profile}.json`)
-  }
 
-  writeFileSync(configLocation, JSON.stringify(newMainConfig));
+  writeFileSync(configLocation, JSON.stringify(newMainConfig, null, 2));
   rmSync(oldCfgLoc)
   console.log("* Deleted old config.fd.js")
 } 

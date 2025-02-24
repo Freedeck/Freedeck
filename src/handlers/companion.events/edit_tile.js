@@ -17,6 +17,6 @@ module.exports = ({ io, data }) => {
 		}
 	}
 
-	config.internalSavers.asyncSaveSpecificProfile(settings.profiles, settings.profile);
+	config.save();
 	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
 };
