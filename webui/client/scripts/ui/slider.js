@@ -69,8 +69,8 @@ export default function (data, keyObject, raw) {
 			((value - data.data.min) / (data.data.max - data.data.min)) * 100;
 		sliderContainer.style.background =
 			data.data.direction === "vertical"
-				? `linear-gradient(to top, var(--fd-slider-background) ${percentage}%, var(--fd-slider-foreground) ${percentage}%)`
-				: `linear-gradient(to right, var(--fd-slider-background) ${percentage}%, var(--fd-slider-foreground) ${percentage}%)`;
+				? `linear-gradient(to top, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`
+				: `linear-gradient(to right, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
 
 		const rounded = Number.parseFloat(value).toFixed(1);
 		sliderPercentage.innerText = `${rounded}${data.data.format ? data.data.format : "%"}`;
@@ -99,9 +99,9 @@ export default function (data, keyObject, raw) {
 		const percentage = ((value - min) / (max - min)) * 100;
 
 		if (data.data.direction === "vertical") {
-			sliderContainer.style.background = `linear-gradient(to top, var(--fd-slider-background) ${percentage}%, var(--fd-slider-foreground) ${percentage}%)`;
+			sliderContainer.style.background = `linear-gradient(to top, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
 		} else {
-			sliderContainer.style.background = `linear-gradient(to right, var(--fd-slider-background) ${percentage}%, var(--fd-slider-foreground) ${percentage}%)`;
+			sliderContainer.style.background = `linear-gradient(to right, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
 		}
 
 		const rounded = Number.parseFloat(value).toFixed(1);
@@ -135,8 +135,8 @@ export default function (data, keyObject, raw) {
 
 	const percent =
 		((data.data.value - data.data.min) / (data.data.max - data.data.min)) * 100;
-	sliderContainer.style.background = `linear-gradient(to right, var(--fd-slider-background) ${percent}%, var(--fd-slider-foreground) ${percent}%)`;
+	sliderContainer.style.background = `linear-gradient(to right, var(--slider-background) ${percent}%, var(--slider-foreground) ${percent}%)`;
 	if (data.data.direction === "vertical") {
-		sliderContainer.style.background = `linear-gradient(to top, var(--fd-slider-background) ${percent}%, var(--fd-slider-foreground) ${percent}%)`;
+		sliderContainer.style.background = `linear-gradient(to top, var(--slider-background) ${percent}%, var(--slider-foreground) ${percent}%)`;
 	}
 }

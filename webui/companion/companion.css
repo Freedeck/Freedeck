@@ -17,7 +17,7 @@ input {
 
 .information {
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.25rem;
 	border: var(--generic-border);
 }
@@ -37,7 +37,7 @@ input {
 
 .tag-beta {
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.25rem;
 	display: inline-block;
 	top: 0;
@@ -66,9 +66,9 @@ input {
 	position: fixed;
 	top: 0;
 	right: 0;
-	border-top-left-radius: 1.5rem;
-	border-bottom-left-radius: 1.5rem;
-	/* border-radius: 1.5rem; */
+	border-top-left-radius: var(--main-radius);
+	border-bottom-left-radius: var(--main-radius);
+	/* border-radius: var(--main-radius); */
 	width: 11rem;
 	height: 100%;
 	background-color: var(--companion-right-sidebar-bg);
@@ -103,7 +103,7 @@ input {
 	height: 50%;
 	background: var(--modal-bg);
 	color: var(--modal-color);
-	border-radius: var(--tile-radius);
+	border-radius: var(--main-radius);
 	padding: 1.5rem;
 	z-index: 1000;
 	transition-duration: .25s;
@@ -130,7 +130,7 @@ input {
 	text-align: end;
 	align-items: end;
 	align-content: end;
-	border-radius: .5rem 0 0 .5rem;
+	border-radius: calc(0.5 * var(--main-radius)) 0 0 calc(0.5 * var(--main-radius));
 	padding: 5px;
 	border: 1px solid transparent;
 	border-block-start-color: rgba(255,255,255,0.125);
@@ -148,7 +148,7 @@ input {
 	left: 0;
 	width: 20%;
 	max-height: 100%;
-	border-top-right-radius: 1.5rem;
+	border-top-right-radius: var(--main-radius);
 	/* transform: translateY(-50%); */
 	padding: 5px;
 	background-color: var(--companion-left-sidebar-bg);
@@ -167,7 +167,7 @@ input {
 	position: absolute;
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.5rem;
 	z-index: 1021;
 	transition-duration: .25s;
@@ -193,7 +193,7 @@ input {
 	/* background: rgba(0, 0, 0, 0.3); */
 	/* border: 1px solid rgba(255,255,255,0.225); */
 	/* padding: 1.5rem; */
-	/* border-radius: 1.5rem; */
+	/* border-radius: var(--main-radius); */
 	width: 90%;
 	max-height: 80%;
 	display: flex;
@@ -208,7 +208,7 @@ input {
 	height: 3px;
 	width: 95%;
 	background-color: rgba(255,255,255,0.125);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 }
 
 #color {
@@ -234,7 +234,7 @@ input {
 	background: rgba(0, 0, 0, 0.125);
 	border: 1px solid rgba(255,255,255,0.225);
 	padding: .5rem;
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -297,7 +297,7 @@ input {
 	border: var(--generic-border);
 	width: max-content;
 	padding: 0.5rem;
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	pointer-events: none;
 	z-index: 1000;
 	transition-duration: .25s;
@@ -316,8 +316,8 @@ input {
 	background: var(--modal-bg);
 	color: var(--modal-color);
 	padding: 1.5rem;
-	border-top-left-radius: 1.5rem;
-	border-top-right-radius: 1.5rem;
+	border-top-left-radius: var(--main-radius);
+	border-top-right-radius: var(--main-radius);
 	z-index: 1000;
 	overflow-y: scroll;
 	border: var(--generic-border);
@@ -403,7 +403,7 @@ input {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.25);
 	padding: 1rem;
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 
 }
 
@@ -425,7 +425,7 @@ input {
 
 .tag {
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.25rem;
 }
 
@@ -435,7 +435,7 @@ input {
 	right: 0;
 	padding: 1.5rem;
 	background-color: rgba(255, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	cursor: pointer;
 	transition-duration: .25s;
 }
@@ -456,7 +456,7 @@ input {
 	width: 100%;
 	height: 2px;
 	background-color: rgba(221, 221, 221, 0.5);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	outline: none;
 	margin: 5px 0;
 }
@@ -510,7 +510,7 @@ input {
 	background-color: var(--companion-sidebar-item-bg);
 	border: var(--generic-border);
 	color: var(--companion-sidebar-item-color);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: .5rem;
 	transition-duration: .25s;
 	display: flex;
@@ -539,7 +539,7 @@ input {
 	flex-direction: row;
 	justify-content: space-between;
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.5rem;
 }
 
@@ -550,7 +550,7 @@ input {
 	justify-content: space-between;
 	width: 100%;
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	padding: 0.5rem;
 	gap: 1rem;
 }
@@ -752,7 +752,7 @@ audio::-webkit-media-controls-play-button {
 
 .spi-actions-disabled {
 	background-color: rgba(0, 0, 0, 0.25);
-	border-radius: 1.5rem;
+	border-radius: var(--main-radius);
 	border: var(--generic-border);
 	padding: 0.5rem;
 }

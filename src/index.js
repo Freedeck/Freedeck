@@ -33,16 +33,8 @@ if (
   (!DOES_SETTINGS_EXIST_YET && !DOES_RUN_SERVER) ||
   process.argv.includes("--setup")
 ) {
-  const { app } = require("electron");
-  app.on("ready", () => {
-    require(path.resolve("setupApp/setup.js"))().then(() => {
-      console.log(picocolors.bgGreen("Setup complete!"));
-      app.quit();
-    });
-  });
-  console.log(picocolors.bgRed("Settings do not exist yet. Running setup."));
-  // process.exit(0);
-  return;
+  console.log(picocolors.bgRed("Settings do not exist yet."));
+  process.exit(0);
 }
 
 if (!DOES_SETTINGS_EXIST_YET && DOES_RUN_SERVER) {
