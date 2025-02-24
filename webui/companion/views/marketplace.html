@@ -200,7 +200,13 @@
                     file.onclick = () => {
                         if (req.message) {
                             // create a yes/no modal
-                            window.showYesNo("Before you install " + req.title + "...", req.message, (yes) => {
+                            let str = "install";
+                            if (universal.plugins[req.id]) {
+                                let compareVersionOutput = universal.compareVersions(universal.plugins[req.id].version, req.version);
+                                if (compareVersionOutput == -1) str = "update";
+                                if (compareVersionOutput == 1) str = "... downgrade? You shouldn't be seeing this, but";
+                            }
+                            window.showYesNo("Before you " + str + " " + req.title + "...", req.message, (yes) => {
                                 window.location.href = file.dataset.HandoffUrl;
                                 universal.uiSounds.playSound('step_2');
                             }, () => { });
