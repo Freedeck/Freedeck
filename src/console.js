@@ -1,0 +1,111 @@
+const {compileWebpack, isCompilerFinished} = require('@src/webpack.js');
+
+const commandPrefix = "FDConsole >>";
+
+function output(...args) {
+  console.log(commandPrefix, ...args);
+}
+
+const commands = {
+  'help': {
+    name: 'help',
+    description: 'Help command.',
+    usage: 'help [command]',
+    handler: help
+  },
+  'webpack.compile': {
+    name: 'webpack.compile',
+    aliases: ['wc'],
+    description: 'Tell the Webpack runner to compile the bundles',
+    usage: 'webpack.compile',
+    handler: wbp_c
+  }
+}
+
+
+class Spinner {
+  stateText = 'No text specific';
+  frames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+  currentFrame = 0;
+  interval = 80;
+  loop;
+  periodicRunner;
+  constructor(periodic) {
+    this.periodicRunner = periodic;
+    this.loop = setInterval(() => this.update(), this.interval);
+  }
+
+  update() {
+    const frame = this.frames[this.currentFrame++ % this.frames.length];
+    process.stdout.write(`\b${frame}`);
+    this.periodicRunner(this);
+  }
+
+  remove() {
+    process.stdout.write('\b');
+    clearInterval(this.loop);
+  }
+}
+
+async function wbp_c() {
+  compileWebpack();
+  const spin = new Spinner(() => {
+    if(isCompilerFinished) spin.remove();
+  })
+}
+
+function help(...args) {
+  if(args.length > 0) {
+    for(const arg of args) {
+      if(Object.keys(commands).includes(arg)) {
+        const data = commands[arg];
+        output(`${data.name}: ${data.description}`);
+        output(`Usage: ${data.usage}`);
+      } else {
+        output(`Command ${arg} not found.`)
+      }
+    }
+    return;
+  }
+  output("Commands:");
+  for(const key in commands) {
+    const data = commands[key];
+    output(`${data.name}: ${data.description}`);
+  }
+}
+
+const dataListeners = {};
+process.stdin.on('data', (buf) => {
+  const data = buf.toString().trim();
+  if(Object.keys(dataListeners).includes(data)) {
+    dataListeners[data] = true;
+  }
+  const args = data.split(" ");
+  let foundCommand = false;
+  for(const commandKey in commands) {
+    const command = commands[commandKey];
+    if(data.startsWith(commandKey)) {
+      const handler = command.handler;
+      args.shift();
+      handler(...args);
+      foundCommand = true;
+    } else {
+      if(command.aliases?.includes(args[0])) {
+        const handler = command.handler;
+        args.shift();
+        handler(...args);
+        foundCommand = true;
+      }
+    }
+  }
+  if(!foundCommand) output("Command not recognized. Type 'help' for a list of commands.")
+})
+
+function wasEntered(g) {
+  if(dataListeners[g]) return dataListeners[g];
+}
+
+module.exports = {
+  dataListeners,
+  wasEntered
+}

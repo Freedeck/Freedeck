@@ -1,6 +1,6 @@
 const listing = [];
 const listingData = {};
-let currentTheme = {};
+let currentTheme = ()=>{};
 
 function getPathFor(id) {
 	if(id.endsWith("#")) {
@@ -11,7 +11,6 @@ function getPathFor(id) {
 
 async function fetchAndParse(id) {
 	const fetchable = await fetch(getPathFor(id));
-	let theme;
 	if (fetchable.status !== 200) {
 		console.error(`Failed to fetch theme ${id}`);
 		return universal.sendToast(`Failed to fetch theme ${id}`);
@@ -22,14 +21,18 @@ async function fetchAndParse(id) {
 		universal.sendToast(`Failed to parse theme ${id}`);
 		return console.error(`Failed to parse theme ${id}`);
 	}
-	theme = {};
-	const metaLines = meta[1].split("\n");
+	return await parseFor(id, meta[1]);
+}
+
+async function parseFor(id, string) {
+	const theme = {};
+	const metaLines = string.split("\n");
 	for (const line of metaLines) {
 		if (!line.trim()) continue;
 		const [key, value] = line.trim().split(": ");
 		theme[key.split("--")[1]] = value.split('";')[0].split('"')[1];
 	}
-	theme.raw = rawData;
+	theme.raw = string;
 	listingData[id] = theme;
 	return theme;
 }
@@ -50,17 +53,15 @@ function setTheme(name, global = true) {
 			if (document.getElementById("theme")) {
 				document.getElementById("theme").remove();
 			}
+			
 			const stylea = document.createElement("style");
 			stylea.id = "theme";
 			stylea.innerText += css;
 			document.body.appendChild(stylea);
-			universal.save("theme", name);
-			const dStyle = getComputedStyle(document.body);
-			currentTheme = {
-				name: dStyle.getPropertyValue("--theme-name"),
-				author: dStyle.getPropertyValue("--theme-author"),
-				description: dStyle.getPropertyValue("--theme-description"),
-			};
+			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
+			const res = parseFor(name, meta[1]);
+			currentTheme =()=> res;
+			
 			if (global) universal.send(universal.events.companion.set_theme, name);
 			universal.save("theme", name);
 		})

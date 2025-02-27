@@ -11,7 +11,8 @@ const connectRouterLocation = path.resolve("src/routers/connect.js");
 const webpackConfig = require(webpackConfigLocation);
 const setWsStateHttp = require(connectRouterLocation).webpackState;
 
-let compileTime = 0;
+let compileTime = -1;
+let isCompilerFinished = true;
 process.env.NODE_ENV = "production";
 
 /**
@@ -22,13 +23,16 @@ process.env.NODE_ENV = "production";
 function runWebpack(webpackInstance) {
   if (!fs.existsSync(webpackBuildLocation)) {
     console.log(
-      "Welcome to Freedeck! This is your first time running Freedeck, so it will take a moment to set up.",
+      "Welcome to Freedeck! This is your first time running Freedeck, so it will take a moment to set up."
     );
     fs.mkdirSync(webpackBuildLocation);
   }
 
+  compileTime = -1;
+  isCompilerFinished = false;
   return new Promise((resolve, reject) => {
     webpackInstance.run((err, stats) => {
+      isCompilerFinished = true;
       if (err) {
         console.log(err);
         reject(err);
@@ -36,8 +40,30 @@ function runWebpack(webpackInstance) {
         compileTime = stats.endTime - stats.startTime;
         console.log(
           stats.toString({
+            assets: false,
+            cached: false,
+            cachedAssets: false,
+            children: false,
             chunks: false,
-            colors: true,
+            chunkModules: false,
+            chunkOrigins: false,
+            colors: false,
+            depth: false,
+            entrypoints: false,
+            errors: true,
+            errorDetails: true,
+            hash: false,
+            maxModules: 0,
+            modules: false,
+            performance: false,
+            providedExports: false,
+            publicPath: false,
+            reasons: false,
+            source: false,
+            timings: false,
+            usedExports: false,
+            version: false,
+            warnings: false
           }),
           picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`)
         );
@@ -54,14 +80,17 @@ function runWebpack(webpackInstance) {
 async function compileWebpack() {
   setWsStateHttp(0);
   const webpackInstance = webpack(webpackConfig);
-  await runWebpack(webpackInstance).then(() => {
-    setWsStateHttp(1);
-  }).catch((e) => {
-    console.error(e);
-  });
+  await runWebpack(webpackInstance)
+    .then(() => {
+      setWsStateHttp(1);
+    })
+    .catch((e) => {
+      console.error(e);
+    });
 }
 
 module.exports = {
   compileWebpack,
   compileTime,
+  isCompilerFinished,
 };

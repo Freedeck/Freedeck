@@ -64,7 +64,7 @@ export default function eventsHandler(universal, user) {
 			console.log(`${data.sender}: ${data.data}`);
 		});
 
-		universal.on(universal.events.default.notif, (dat) => {
+		function handoffApiNotif(dat) {
 			if (dat.data === "Authorize" && dat.incoming && universal.name === 'Companion') {
 				showPick(
 					`${dat.incoming.appInformation.title} wants to connect to your Freedeck!`,
@@ -93,16 +93,25 @@ export default function eventsHandler(universal, user) {
 				);
 				return;
 			}
-			if(dat.sender === 'handoff-api' && dat.data.startsWith("ui-sound:")) {
-				const sound = dat.data.split(":")[1];
-				universal.uiSounds.playSound(sound);
+			if(dat.sender === 'handoff-api' && dat.data.startsWith("hid.c ")) {
+				const requestId = notification.data.split("hid.c ")[1].split(" |")[0];
+        const requestData = JSON.parse(notification.data.split(`hid.c ${requestId} |`)[1]);				
+				switch(requestId) {
+					case 'ui-sound': {
+						universal.uiSounds.playSound(requestData.sound);		
+						break;
+					}
+				}
 				return;
 			}
-		});
+		};
 
 		universal.on(universal.events.default.notif, (data) => {
 			if (data.incoming) return;
-			if (data.sender === 'handoff-api') return;
+			if (data.sender === 'handoff-api') {
+				handoffApiNotif(data);
+				return;
+			};
 			if (!data.isCon) {
 				universal.sendToast(`${data.data}`, data.sender);
 			}

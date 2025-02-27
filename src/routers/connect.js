@@ -38,4 +38,4 @@ router.get("/dev-status", (req, res) => {
   });
 });
 
-module.exports = {router, webpackState};
+module.exports = {router, webpackState, getWs:()=>iwebpackState};

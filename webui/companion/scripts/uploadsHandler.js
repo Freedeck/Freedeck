@@ -75,7 +75,7 @@ const upload = (accept, callback, type = "sound") => {
 	const form = document.createElement("form");
 	form.method = "post";
 	form.enctype = "multipart/form-data";
-	form.action = `/fd/api/upload/${type}`;
+	form.action = `/api/upload/${type}`;
 	form.target = "dummyFrame";
 	form.style.display = "none";
 	const fileUpload = document.createElement("input");

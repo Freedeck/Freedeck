@@ -19,14 +19,13 @@ const settings = config.settings();
 const PORT = settings.port || 5754;
 
 const networkAddresses = require("@managers/networkAddresses");
+const netAddresses = networkAddresses();
 
 module.exports = {
   http,
   server,
   app,
 };
-
-compileWebpack().catch((err) => console.error(err));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -38,7 +37,7 @@ app.use("/", staticRouter);
 app.use("/connect", connectRouter);
 app.use("/handoff", handoffRouter);
 
-app.use("/fd/api/upload", uploadRouter);
+app.use("/api/upload", uploadRouter);
 
 app.get("/native/*", (req, res) => {
   fetch(`http://localhost:5756/${req.url.split("/").slice(2).join("/")}`)
@@ -51,13 +50,10 @@ app.get("/native/*", (req, res) => {
     });
 });
 
-app.get("/slider-value-change/:sTU/:sV", (req, res) => {
-  notifMan.add("handoff-api", `nb-slider-${req.params.sTU}-${req.params.sV}`);
-});
-
-const netAddresses = networkAddresses();
-
 server.listen(PORT, () => {
+  (async () => {
+    compileWebpack().catch((err) => console.error(err));
+  })()
   for (const netInterface of Object.keys(netAddresses)) {
     const ipPort = `${netAddresses[netInterface][0]}:${PORT}`;
     console.log(

@@ -20,8 +20,6 @@ window.loadThemeListing = async () => {
 		const apply = document.createElement("i");
 		apply.innerText = "Click to apply.";
 		element.onclick = () => {
-			universal.save("theme", id);
-			universal.send(universal.events.companion.set_theme, id);
 			universal.theming.setTheme(
 				id, true
 			);

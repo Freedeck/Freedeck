@@ -3,150 +3,69 @@ const path = require("node:path");
 const fs = require("node:fs");
 const picocolors = require("$/picocolors");
 const debug = require("$/debug");
+
 const NotificationManager = require("@managers/notifications");
+const pluginManager = require("@managers/plugins");
+
 const eventNames = require("@handlers/eventNames");
 const { server } = require("./http");
+const { startRelay } = require("./server/relay");
 const io = new socketIO.Server(server);
 
 const handlers = new Map();
-const pl = require("@managers/plugins");
-const plugins = pl.plugins();
+const plugins = pluginManager.plugins();
 
-for (const file of fs.readdirSync(path.resolve("./src/handlers"))) {
-  if (fs.lstatSync(path.resolve(`./src/handlers/${file}`)).isDirectory()) {
-    continue;
+(async()=>{
+  for (const file of fs.readdirSync(path.resolve("./src/handlers"))) {
+    if (fs.lstatSync(path.resolve(`./src/handlers/${file}`)).isDirectory()) {
+      continue;
+    }
+    const handler = require(`@handlers/${file}`);
+    if (!handler.exec) continue;
+    debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing")
+    handlers.set(handler.name, handler);
   }
-  const handler = require(`@handlers/${file}`);
-  if (!handler.exec) continue;
-  handlers.set(handler.name, handler);
-}
 
-const types = pl.types;
+  pluginManager.update();
 
-pl.update();
+  startRelay(handleSock);
+})();
+
+const types = pluginManager.types;
 
 const clients = [];
-let RelayStatus = false;
-
-function connectRelayClient() {
-  const relayClient = require("socket.io-client")("http://localhost:3000");
-  relayClient.on("connect", () => {
-    RelayStatus = true;
-    // const rlc = Math.random().toString(36).substring(7);
-    const rlc = "kctonp";
-    relayClient.emit(eventNames.relay.identify, rlc);
-    if(!relayClient._id) handleSock(relayClient);
-    relayClient.on(eventNames.relay.request, (upath) => {
-
-      const allowed =[
-        "",
-        'app',
-        'common',
-        'companion',
-        'shared',
-        'hooks'
-      ]
-
-      if(!allowed.some((a) => upath.startsWith(a))) {
-        relayClient.emit(eventNames.relay.file, "Access Denied");
-        return;
-      } 
-
-      let folder = "client";
-      if(upath.includes("companion")) folder = "companion";
-      if(upath.includes("shared")) folder = "shared";
-      if(upath.includes("hooks")) folder = "hooks";
-      if(upath.includes("app")) folder = "app";
-      if(upath.includes("common")) folder = "common";
-      // /app/shared/theming/a.css -> ["", "app", "shared", "theming", "a.css"]
-      let file = upath.split("/");
-      if(upath.split("/").length > 1) {
-        file.shift();
-      }
-      if(upath.includes("app") && upath.includes("shared")) {
-        folder = "shared";
-        file.shift();
-      }
-      file = file.join("/");
-
-      console.log(folder, file, upath);
-
-      if(file === "") file = "index.html";
-      
-
-      const f = fs.readFileSync(
-        path.resolve(`webui/${folder}/${file}`),
-        "utf8",
-      )
-      let mimeType = "text/plain";
-      console.log(file.split(".").pop())
-      switch(file.split(".").pop()) {
-        case "js":
-          mimeType = "text/javascript";
-          break;
-        case "css":
-          mimeType = "text/css";
-          break;
-        case "html":
-          mimeType = "text/html";
-          break;
-      }
-      relayClient.emit(eventNames.relay.file,[f, mimeType, upath]);
-    })
-    relayClient.on(eventNames.relay.error, (err) => {
-      if(err[1] === -1) {
-        // Device already exists
-        console.log("Device already exists, disconnecting and reconnecting");
-        relayClient.disconnect();
-        connectRelayClient();
-        return;
-      }
-    })
-    relayClient.on(eventNames.relay.opened, () => {
-      console.log(`
-
-Relay connection opened
-Connect with code ${rlc}
-
-        `)
-    });
-    relayClient.on("disconnect", () => {
-      RelayStatus = false;
-      console.log("Disconnected from relay server");
-      relayClient.disconnect();
-      const wait = setInterval(() => {
-        if(!RelayStatus) {
-          clearInterval(wait);
-          connectRelayClient();
-        }
-      }, 1000);
-    });
-  });
-}
-
-// connectRelayClient();
 
 debug.log("Initializing server...", "Server / HTTP");
 
 io.on("connection", handleSock);
 
-function handleSock(socket) {
+async function handleSock(socket) {
   /**
    * Send latest notification to Freedeck Client.
    * @param {Object} notification Notification data for Freedeck Client to parse.
    */
-  function sendNotification(notification) {
+  async function sendNotification(notification) {
     if (notification.sender === "handoff-api") {
-      switch (notification.data) {
-        case "reload-plugins":
-          io.emit(eventNames.default.reload);
-          break;
+      if (notification.data.startsWith("hid.s ")) {
+        const requestId = notification.data.split("hid.s ")[1].split(" |")[0];
+        const requestData = JSON.parse(notification.data.split(`hid.s ${requestId} |`)[1]);
+        switch(requestId) {
+          case 'slider': {
+            const slider = requestData.uuid;
+            const value = requestData.value;
+            io.emit(eventNames.default.slider_update, { slider, value });
+            break;
+          }
+          case "reload-plugins": {
+            io.emit(eventNames.default.reload);
+            break;
+          }
+          case 'notify': {
+            socket.emit(eventNames.default.notif, requestData);
+          }
+        }
       }
-      if (notification.data.startsWith("nb-slider-")) {
-        const slider = notification.data.split("-")[2];
-        const value = notification.data.split("-")[3];
-        io.emit(eventNames.default.slider_update, { slider, value });
-      }
+      return;
     }
     console.log("Sending notification to client");
     socket.emit(eventNames.default.notif, notification);

@@ -40,7 +40,7 @@ for(const routerName of Object.keys(expressRouters)) {
   router.use(routerName, actualRouter);
 }
 
-router.get("/api/uploads", (req, res) => {
+router.get("/api/upload/report", (req, res) => {
   const start = Date.now();
   const report = [fs.readdirSync(paths.userData_sounds), fs.readdirSync(paths.userData_icons)];
   res.send({ report, time: Date.now() - start, start });

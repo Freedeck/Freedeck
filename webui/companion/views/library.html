@@ -113,7 +113,7 @@
 </style>
 
 <script>
-  fetch("/api/uploads").then((res) => res.json()).then((data) => {
+  fetch("/api/upload/report").then((res) => res.json()).then((data) => {
     let cc = 0;
     for (const i of data.report) {
       for (const j of i) {

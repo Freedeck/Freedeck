@@ -15,7 +15,7 @@ const dbg = {
 		if (k !== "_unset") strToBuild += `${picocolors.blue(k)} >> `;
 		strToBuild += `${v}`;
 		if (dbg.status)
-			console.secretDebugLogNoWriteToFileOnlyDoIfYouKnowWhatYoureDoing(
+			console._log(
 				strToBuild,
 			);
 		if (dbg.writeLogs === true) {
@@ -31,8 +31,6 @@ const dbg = {
 };
 
 console._log = console.log;
-console.secretDebugLogNoWriteToFileOnlyDoIfYouKnowWhatYoureDoing = (...e) =>
-	console._log(...e);
 console.log = (...e) => {
 	console._log(...e);
 	if (dbg.writeLogs === true) {

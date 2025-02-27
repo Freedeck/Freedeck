@@ -1,4 +1,4 @@
-const { existsSync, writeFile, writeFileSync, rmSync } = require("node:fs");
+const { existsSync, writeFileSync, rmSync } = require("node:fs");
 const { paths } = require("../routers/static")
 const path = require("node:path");
 const { configLocation } = require("../managers/settings");
@@ -13,11 +13,11 @@ if(existsSync(oldCfgLoc)) {
     release: thatConfig.release || "stable",
     theme: thatConfig.theme || "default.css",
     profile: thatConfig.profile || "Default",
-    profiles: thatConfig.profiles,
     screenSaverActivationTime: thatConfig.screenSaverActivationTime || 5,
     soundOnPress: thatConfig.soundOnPress || false,
     useAuthentication: thatConfig.useAuthentication || false,
-    port: thatConfig.port || 5754
+    port: thatConfig.port || 5754,
+    profiles: thatConfig.profiles
   };
   console.log("- Set up main.json")
 

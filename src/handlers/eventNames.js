@@ -14,8 +14,6 @@ const eventNames = {
 		unauthorized: "daCF",
 	},
 	default: {		
-		set_theme: "dT",
-
 		notif: "dN",
 
 		log: "dL",

@@ -19,7 +19,9 @@
     --tile-border: 2px solid #f8f9fa;
     --tile-width: var(--button-width);
     --tile-height: var(--button-height);
-    --tile-radius: 1.5rem;
+    --tile-radius: 100rem;
+    
+    --button-radius: 1.5rem;
     --main-radius: 1.5rem;
     
     --app-tile-container-width: 100vw;
@@ -460,18 +462,13 @@ input:disabled {
     padding: 0;
 }
 
-#keys button {
-    width: var(--tile-width);
-    height: var(--tile-height);
-}
-
 .button, button {
     width: var(--button-width);
     height: var(--button-height);
     overflow: hidden;
     min-width: var(--button-width);
     min-height: var(--button-height);
-    border-radius: var(--tile-radius);
+    border-radius: var(--button-radius);
     background: var(--tile-bg);
     text-align: center;
     border: var(--tile-border); /* Add a border */
@@ -498,6 +495,12 @@ input:disabled {
             cursor: pointer;
         }
     }
+}
+
+#keys button {
+    width: var(--tile-width);
+    height: var(--tile-height);
+    border-radius: var(--tile-radius);
 }
 
 .button.tiles-center:active {
@@ -717,7 +720,7 @@ a:hover {
     width: 100%;
     height: 100%;
     background: var(--tile-bg);
-    border-radius: var(--tile-radius);
+    border-radius: var(--button-radius);
     position: relative;
     display: flex;
     align-items: center;
@@ -785,6 +788,7 @@ a:hover {
     min-width: var(--tile-width);
     width: var(--tile-width);
     height: var(--tile-height);
+    border-radius: var(--tile-radius);
     font-size: var(--font-size);
 }
 
@@ -793,7 +797,7 @@ a:hover {
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
     color: white;
-    border-radius: var(--tile-radius);
+    border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
     /* bottom right of parent */
@@ -807,7 +811,7 @@ a:hover {
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
     color: white;
-    border-radius: var(--tile-radius);
+    border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
     /* bottom right of parent */
@@ -821,7 +825,7 @@ a:hover {
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
     color: white;
-    border-radius: var(--tile-radius);
+    border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
     /* bottom right of parent */
