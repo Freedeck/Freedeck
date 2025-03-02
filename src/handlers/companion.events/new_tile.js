@@ -3,14 +3,15 @@ const eventNames = require("../eventNames");
 
 let timeAtLastTileCreation = 0;
 module.exports = ({ socket, io, data }) => {
-	const timeSinceLastNewTile = Date.now() - timeAtLastTileCreation;
+	const currentTime = Date.now();
+	const timeSinceLastNewTile = currentTime - timeAtLastTileCreation;
 	if(timeSinceLastNewTile < socket.abuse.timeout.tiles) {
 		socket.abuse.increment(socket.abuse.presets.ioAbuse, "Making tiles inhumanly fast! File I/O abuse.");
 		socket.abuse.timeout.tiles += socket.abuse.timeout.presets.bad_tiles;
 		return;
 	}
 	socket.abuse.timeout.tiles = Math.max(5, socket.abuse.timeout.tiles + socket.abuse.timeout.presets.good_tiles)
-	timeAtLastTileCreation = Date.now()
+	timeAtLastTileCreation = currentTime;
 	const settings = config.settings();
 	settings.profiles[settings.profile].push(data);
 	config.save();

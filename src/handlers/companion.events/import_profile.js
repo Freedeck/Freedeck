@@ -1,10 +1,19 @@
 const config = require("@managers/settings");
 const eventNames = require("../eventNames");
 
-module.exports = ({ io, data }) => {
+let timeAtLastTileCreation = 0;
+module.exports = ({ socket, io, data }) => {
+	const currentTime = Date.now();
+	const timeSinceLastNewTile = currentTime - timeAtLastTileCreation;
+	if(timeSinceLastNewTile < socket.abuse.timeout.profiles_import) {
+		socket.abuse.increment(socket.abuse.presets.ioAbuse, "Importing profiles inhumanly fast! File I/O abuse.");
+		socket.abuse.timeout.profiles_import += socket.abuse.timeout.presets.bad_profiles_import;
+		return;
+	}
+	socket.abuse.timeout.profiles_import = Math.max(5, socket.abuse.timeout.profiles_import + socket.abuse.timeout.presets.good_profiles_import)
+	timeAtLastTileCreation = currentTime;
 	const settings = config.settings();
 	settings.profiles[data.name] = data.data;
-	settings.profile = data.name;
 	config.save();
 	io.emit(eventNames.default.reload);
 };

@@ -78,22 +78,39 @@ async function handleSock(socket) {
       presets: {
         good_tiles: -1.75,
         bad_tiles: 2,
+
+        good_profiles: -1,
+        bad_profiles: 1,
+
+        good_profiles_import: -1,
+        bad_profiles_import: 5,
       },
-      tiles: 5
+      tiles: 5,
+      profiles: 5,
+      profiles_import: 5,
     },
     presets: {
       ioAbuse: 2.5,
       generic: 1
     },
+    notifyCount:5,
+    currentNotifyCount:0,
     kick: (m="Socket API abuse detected!") => {
       socket.sendNotif({
-        sender: "Abuse",
-        data: m
+        sender: "Slow down!",
+        data: `${m}\nYou have been kicked from the server.`
       })
       socket.disconnect();
     },
     increment(x=1, m="Socket API abuse detected!") {
       socket.abuse.count += x;
+      if(socket.abuse.currentNotifyCount++ === socket.abuse.notifyCount) {
+        socket.sendNotif({
+          sender: "Slow down!",
+          data: `${m}\nYou may be kicked from the server soon.`
+        })
+        socket.abuse.currentNotifyCount = 0;
+      }
       if(socket.abuse.count > socket.abuse.limit) {
         socket.abuse.kick(m)
       }
