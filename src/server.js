@@ -71,6 +71,34 @@ async function handleSock(socket) {
     socket.emit(eventNames.default.notif, notification);
     NotificationManager.once("newNotification", sendNotification);
   }
+  socket.abuse = {
+    count: 0,
+    limit: 100,
+    timeout: {
+      presets: {
+        good_tiles: -1.75,
+        bad_tiles: 2,
+      },
+      tiles: 5
+    },
+    presets: {
+      ioAbuse: 2.5,
+      generic: 1
+    },
+    kick: (m="Socket API abuse detected!") => {
+      socket.sendNotif({
+        sender: "Abuse",
+        data: m
+      })
+      socket.disconnect();
+    },
+    increment(x=1, m="Socket API abuse detected!") {
+      socket.abuse.count += x;
+      if(socket.abuse.count > socket.abuse.limit) {
+        socket.abuse.kick(m)
+      }
+    }
+  }
 
   socket.sendNotif = sendNotification;
 

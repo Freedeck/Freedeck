@@ -14,7 +14,75 @@ const locales = {
 // The active locale
 let locale;
 // Gets filled with active locale translations
-let translations = {};
+let translations = { 
+  "locale.display": "English",
+  "sidebar.Tiles": "Tiles",
+  "sidebar.Library": "Library",
+  "sidebar.Marketplace": "Marketplace",
+  "sidebar.Settings": "Settings",
+  "sidebar.Connect": "Connect",
+  "sidebar.Recompile": "Recompile",
+  "sidebar.Setup": "Setup",
+  "sidebar.Pair Device": "Pair Device",
+  "sidebar.Themer": "Themer",
+  
+  "lside.mobd": "Mobile Device",
+  "lside.mobd.pair": "Pair Mobile Device",
+
+  "lside.pages.page": "Page: ",
+  "lside.pages.try": "Try Tiles",
+  "lside.pages.previous": "Previous Page",
+  "lside.pages.next": "Next Page",
+
+  "lside.footer.thanks": "Thank you for using Freedeck!",
+  "lside.footer.github_pre": "Freedeck is open-source and can be found on",
+  "lside.footer.need_help": "Need help?",
+  "lside.footer.need_help.wiki": "Check the Wiki!",
+
+  "editor.sections.no_action": "No Action!",
+
+  "settings.title": "Settings",
+
+  "settings.sections.style": "Style",
+  "settings.sections.style.compact": "Compact Mode",
+  "settings.sections.style.scroll": "Scroll Long Text",
+  "settings.sections.style.fill": "Fill Tiles",
+  "settings.sections.style.themes": "Themes",
+
+  "settings.sections.language": "Language",
+
+  "settings.sections.plugins": "Plugins",
+  "settings.sections.plugins.reload_all": "Reload All Plugins",
+  "settings.sections.plugins.single.disable": "Disable",
+  "settings.sections.plugins.single.reload": "Reload",
+  "settings.sections.plugins.disabled.title": "Disabled Plugins",
+  "settings.sections.plugins.disabled.enable": "Enable",
+  "settings.sections.plugins.tile_previews": "Tile Previews",
+
+  "settings.sections.audio_devices": "Audio Devices",
+  "settings.sections.audio_devices.monitor": "Monitor Devices",
+  "settings.sections.audio_devices.vb": "VB-Cable Devices",
+
+  "settings.sections.general": "General",
+  "settings.sections.general.dont_ask": "Don't ask to delete Tiles",
+  "settings.sections.general.fdc_tab": "Show FDConnect as a tab",
+  "settings.sections.general.ui_sounds": "UI Sounds",
+  "settings.sections.general.center_mode": "Center Mode",
+
+  "settings.sections.experiments": "Experiments",
+
+  "settings.sections.uis": "UI Sounds",
+  "settings.sections.uis.soundpacks": "Soundpacks",
+  "settings.sections.uis.soundpacks.current": "Current Soundpack",
+
+  "settings.sections.bug": "Bug Report",
+  "settings.sections.bug.request_generate": "Click \"Generate Report\"",
+  "settings.sections.bug.generate": "Generate Report",
+  "settings.sections.bug.report_reader": "Report Reader",
+  "settings.sections.bug.report_reader.read": "Read Report",
+
+  "settings.footer.by": "is a project by"
+}
 
 function doLocalization() {
   // setLocale(defaultLocale);
@@ -62,75 +130,7 @@ function translationKey(key, defaultValue="{{key}} not found in locale.") {
     }
   }
   const defaultValueTwo = defaultValue.replace("{{key}}", key);
-  return { 
-    "locale.display": "English",
-    "sidebar.Tiles": "Tiles",
-    "sidebar.Library": "Library",
-    "sidebar.Marketplace": "Marketplace",
-    "sidebar.Settings": "Settings",
-    "sidebar.Connect": "Connect",
-    "sidebar.Recompile": "Recompile",
-    "sidebar.Setup": "Setup",
-    "sidebar.Pair Device": "Pair Device",
-    "sidebar.Themer": "Themer",
-    
-    "lside.mobd": "Mobile Device",
-    "lside.mobd.pair": "Pair Mobile Device",
-  
-    "lside.pages.page": "Page: ",
-    "lside.pages.try": "Try Tiles",
-    "lside.pages.previous": "Previous Page",
-    "lside.pages.next": "Next Page",
-  
-    "lside.footer.thanks": "Thank you for using Freedeck!",
-    "lside.footer.github_pre": "Freedeck is open-source and can be found on",
-    "lside.footer.need_help": "Need help?",
-    "lside.footer.need_help.wiki": "Check the Wiki!",
-  
-    "editor.sections.no_action": "No Action!",
-  
-    "settings.title": "Settings",
-  
-    "settings.sections.style": "Style",
-    "settings.sections.style.compact": "Compact Mode",
-    "settings.sections.style.scroll": "Scroll Long Text",
-    "settings.sections.style.fill": "Fill Tiles",
-    "settings.sections.style.themes": "Themes",
-  
-    "settings.sections.language": "Language",
-  
-    "settings.sections.plugins": "Plugins",
-    "settings.sections.plugins.reload_all": "Reload All Plugins",
-    "settings.sections.plugins.single.disable": "Disable",
-    "settings.sections.plugins.single.reload": "Reload",
-    "settings.sections.plugins.disabled.title": "Disabled Plugins",
-    "settings.sections.plugins.disabled.enable": "Enable",
-    "settings.sections.plugins.tile_previews": "Tile Previews",
-  
-    "settings.sections.audio_devices": "Audio Devices",
-    "settings.sections.audio_devices.monitor": "Monitor Devices",
-    "settings.sections.audio_devices.vb": "VB-Cable Devices",
-  
-    "settings.sections.general": "General",
-    "settings.sections.general.dont_ask": "Don't ask to delete Tiles",
-    "settings.sections.general.fdc_tab": "Show FDConnect as a tab",
-    "settings.sections.general.ui_sounds": "UI Sounds",
-    "settings.sections.general.center_mode": "Center Mode",
-  
-    "settings.sections.experiments": "Experiments",
-  
-    "settings.sections.uis": "UI Sounds",
-    "settings.sections.uis.soundpacks": "Soundpacks",
-    "settings.sections.uis.soundpacks.current": "Current Soundpack",
-  
-    "settings.sections.bug": "Bug Report",
-    "settings.sections.bug.request_generate": "Click \"Generate Report\"",
-    "settings.sections.bug.generate": "Generate Report",
-    "settings.sections.bug.report_reader": "Report Reader",
-    "settings.sections.bug.report_reader.read": "Read Report",
-  
-    "settings.footer.by": "is a project by"
-  }[key] || defaultValueTwo;
+  return translations[key] || defaultValueTwo;
 }
 
 export {

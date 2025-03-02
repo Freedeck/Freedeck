@@ -13,19 +13,20 @@ function startRelay(handleSock) {
     const rlc = "kctonp";
     relayClient.emit(eventNames.relay.identify, rlc);
     if(!relayClient._id) handleSock(relayClient);
-    relayClient.on(eventNames.relay.request, (upath) => {
-
+    relayClient.on(eventNames.relay.request, (upath, raw) => {
+      console.log(raw)
       const allowed =[
         "",
         'app',
         'common',
+        'user-data',
         'companion',
         'shared',
         'hooks'
       ]
 
       if(!allowed.some((a) => upath.startsWith(a))) {
-        relayClient.emit(eventNames.relay.file, "Access Denied");
+        relayClient.emit(eventNames.relay.file,['Directory break detected.', 'text/plain', upath]);
         return;
       } 
 

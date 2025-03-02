@@ -45,9 +45,10 @@ module.exports = {
 };
 
 const callPlugin = (types, plugins, ev) => {
-	if (types().get(ev.btn.type) || plugins.get(ev.btn.type)) {
-		if (types().get(ev.btn.type)) {
-			types().get(ev.btn.type).instance.onButton(ev.btn);
+	const cacheTypes = types();
+	if (cacheTypes.get(ev.btn.type) || plugins.get(ev.btn.type)) {
+		if (cacheTypes.get(ev.btn.type)) {
+			cacheTypes.get(ev.btn.type).instance.onButton(ev.btn);
 			return;
 		}
 		if (plugins.get(ev.btn.type)) {

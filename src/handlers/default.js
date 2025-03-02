@@ -56,6 +56,27 @@ module.exports = {
       }
     });
 
+    for (const event of Object.keys(eventNames.default)) {
+      socket.on(eventNames.default[event], (data) => {
+        if(!existsSync(path.resolve(`./src/handlers/default.events/${event}.js`))) {
+          console.log(`Event ${event} is not implemented.`);
+          return;
+        }
+        const eventHandler = require(path.resolve(`./src/handlers/default.events/${event}`));
+        if(typeof eventHandler !== "function") {
+          // its a new event handler
+          const flags = eventHandler.flags || [];
+          if(flags.includes("AUTH")) {
+            console.log(socket.auth)
+          }
+          return;
+        }
+        // unmigrated
+        eventHandler({ io, socket, data, clients });
+      });
+    }
+
+    
     for (const plugin of plugins.plugins()) {
       const instance = plugin[1].instance;
       if(instance.v2) {
@@ -88,25 +109,6 @@ module.exports = {
 
     debug.log("Created socket hooks.", `Socket Server / ${socket.user? socket.user : socket.id}`);
 
-    for (const event of Object.keys(eventNames.default)) {
-      socket.on(eventNames.default[event], (data) => {
-        if(!existsSync(path.resolve(`./src/handlers/default.events/${event}.js`))) {
-          console.log(`Event ${event} is not implemented.`);
-          return;
-        }
-        const eventHandler = require(path.resolve(`./src/handlers/default.events/${event}`));
-        if(typeof eventHandler !== "function") {
-          // its a new event handler
-          const flags = eventHandler.flags || [];
-          if(flags.includes("AUTH")) {
-            console.log(socket.auth)
-          }
-          return;
-        }
-        // unmigrated
-        eventHandler({ io, socket, data, clients });
-      });
-    }
     debug.log(
       "Initialized event listeners.",
       `Socket Server / ${socket.user ? socket.user : socket.id}`,
