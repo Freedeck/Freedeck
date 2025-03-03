@@ -8,7 +8,7 @@
     --main-bg-size: 400% 400%;
     --main-bg: linear-gradient(105deg, rgba(255, 0, 89, 1) 0%, rgb(0, 179, 255) 33%, rgba(255, 0, 89, 1) 66%, rgba(0, 179, 255, 1) 100%);
                                 
-    --generic-border: 1px solid rgba(255,255,255,0.125);
+    --generic-border: 1px solid rgba(255,255,255,0.1);
     --modal-bg: #17212a;
     --modal-color: white;
 
@@ -180,7 +180,7 @@ details {
     margin: 0;
     padding: 0.5rem;
     background-color: rgba(0,0,0,0.25);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.825);
+    border: var(--generic-border);
     border-radius: var(--main-radius);
     display: flex;
     flex-direction: column;

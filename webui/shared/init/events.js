@@ -191,7 +191,7 @@ export default function eventsHandler(universal, user) {
 		for (const plugin of Object.keys(universal.plugins)) {
 			const data = universal.plugins[plugin];
 			for (const hook of data.hooks.filter(
-				(ref) => ref.type === (universal.name === "Main" ? 1 : 0),
+				(ref) => ref.type === (universal.name === "Main" ? 0 : 1),
 			)) {
 				const scr = document.createElement("script");
 				scr.classList.add("fd-hook");

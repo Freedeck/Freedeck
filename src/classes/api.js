@@ -77,6 +77,8 @@ class Plugin {
     
     this._customLog("Called setup.");
 
+    this.id = this.id.toLowerCase();
+
     this.emit(events.ready);
 
     this._customLog("Emitted ready.");

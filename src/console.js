@@ -19,6 +19,23 @@ const commands = {
     description: 'Tell the Webpack runner to compile the bundles',
     usage: 'webpack.compile',
     handler: wbp_c
+  },
+  'js.eval': {
+    name: 'js.eval',
+    aliases: ['eval', 'ev', 'exec'],
+    description: 'Evaluate any JavaScript expression on the server side. REALLY UNSAFE.',
+    usage: 'js.eval <expression>',
+    handler: jseval
+  }
+}
+
+function jseval(...args) {
+  const expression = args.join(" ");
+  try {
+    const out = eval(expression);
+    console.log(out);
+  } catch(err) {
+    output("Error while processing expression:", err, expression);
   }
 }
 
