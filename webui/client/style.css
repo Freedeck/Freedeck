@@ -19,8 +19,8 @@
     --tile-border: 2px solid #f8f9fa;
     --tile-width: var(--button-width);
     --tile-height: var(--button-height);
-    --tile-radius: 100rem;
     
+    --tile-radius: 1.5rem;
     --button-radius: 1.5rem;
     --main-radius: 1.5rem;
     
@@ -468,7 +468,7 @@ input:disabled {
     overflow: hidden;
     min-width: var(--button-width);
     min-height: var(--button-height);
-    border-radius: var(--button-radius);
+    border-radius: var(--tile-radius);
     background: var(--tile-bg);
     text-align: center;
     border: var(--tile-border); /* Add a border */

@@ -419,6 +419,7 @@ const intents = {
   SOCKET: 0xc0,
   IO: 0xc1,
   CLIENTS: 0xc2,
+  HIDE: 0xf0,
   hooks: {
     CLIENT: 0xd2,
     SERVER: 0xd3,

@@ -470,7 +470,11 @@
         actionContainer.appendChild(a);
         actionContainer.appendChild(b);
         li.appendChild(actionContainer);
-        document.querySelector('#actl').appendChild(li);
+        if(req.intents && !req.intents.includes(0xf0)) {
+            document.querySelector('#actl').appendChild(li);
+        } else if(!req.intents) {
+            document.querySelector('#actl').appendChild(li);
+        }
 
         const types = req.types;
         types.forEach((dataObj) => {

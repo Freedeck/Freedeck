@@ -1,5 +1,6 @@
 const eventNames = require("./eventNames");
-const cfg = require("../managers/settings");
+const cfg = require("@managers/settings");
+const styleManager = require("@managers/style");
 const plugins = require("../managers/plugins");
 const debug = require("../utils/debug");
 const NotificationManager = require("../managers/notifications");
@@ -19,8 +20,6 @@ const userSoundpacksLocation = paths.userData_soundpacks;
 
 const commonSoundpacks = paths.webui_common_soundpacks
 const commonThemes = paths.webui_common_themes;
-
-const localStyleLocation = path.resolve("./src/configs/style.json");
 
 const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
@@ -140,6 +139,7 @@ module.exports = {
           id,
           author,
           version,
+          intents: plugin[1].instance._intent || [],
           Settings: {},
           popout,
           types,
@@ -178,9 +178,7 @@ module.exports = {
               ).map(e=>`${e}#`)
         ],
         mobileConnected: isMobileConnected || false,
-        style: JSON.parse(
-          readFileSync(localStyleLocation),
-        ),
+        style: styleManager.get(),
         plugins: pl,
         disabled: plugins._disabled,
         events: eventNames,

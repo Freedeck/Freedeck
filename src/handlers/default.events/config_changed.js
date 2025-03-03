@@ -1,17 +1,10 @@
-const path = require("node:path");
 const eventNames = require("../eventNames");
-const fs = require("node:fs");
-const { settings } = require("../../managers/settings");
-
-const styleLocation = path.resolve("./src/configs/style.json");
+const styleManager = require("../../managers/style");
 
 module.exports = ({ io, data }) => {
-	if(!fs.existsSync(styleLocation)) {
-		settings.checkStyle();
+	for (const key in data) {
+		styleManager._cache[key] = data[key];
 	}
-	fs.writeFileSync(
-		styleLocation,
-		JSON.stringify(data),
-	);
+	styleManager.save();
 	io.emit(eventNames.default.config_changed, data);
 };
