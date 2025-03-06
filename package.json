@@ -6,11 +6,8 @@
 	"scripts": {
 		"start": "electron .",
 		"companion": "electron . --companion-only",
-		"native-bridge": "node src/index.js --native-bridge-only",
 		"server": "node src/index.js --server-only",
 		"debug-server": "node src/index.js --server-only --debug",
-		"lint": "biome format --write ./src",
-		"build": "esbuild  --bundle --outfile=out.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
@@ -25,6 +22,7 @@
 	"_moduleAliases": {
 		"@root": "/",
 		"@src": "src",
+		"@routers": "src/routers",
 		"@public": "src/public",
 		"@managers": "src/managers",
 		"@handlers": "src/handlers",
@@ -35,21 +33,21 @@
 	"license": "ISC",
 	"dependencies": {
 		"asar-bundle-runner": "^1.6.0",
-		"babel-loader": "^9.2.1",
+		"babel-loader": "^10.0.0",
 		"compare-versions": "^6.1.1",
-		"electron": "^32.2.6",
-		"express": "^4.19.2",
+		"electron": "^34.3.0",
+		"express": "^4.21.2",
 		"formidable": "^3.5.2",
 		"module-alias": "^2.2.3",
 		"pako": "^2.1.0",
 		"socket.io": "^4.8.1",
 		"socket.io-client": "^4.8.1",
 		"tar": "^7.4.3",
-		"webpack": "^5.97.0",
-		"ws": "^8.18.0"
+		"webpack": "^5.98.0",
+		"ws": "^8.18.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"webpack-cli": "^5.1.4"
+		"webpack-cli": "^6.0.1"
 	}
 }

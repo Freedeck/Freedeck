@@ -16,7 +16,7 @@ module.exports = (
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
-			preload: path.resolve("src/appPreload.js")
+			preload: path.resolve("src/app/preload.js")
 		}
 	});
 

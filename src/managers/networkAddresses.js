@@ -1,5 +1,5 @@
 const { networkInterfaces } = require("node:os");
-const debug = require("../utils/debug.js");
+const debug = require("$/debug.js");
 
 const nets = networkInterfaces();
 const results = Object.create(null); // Or just '{}', an empty object

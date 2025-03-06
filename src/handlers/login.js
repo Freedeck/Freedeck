@@ -1,6 +1,6 @@
 const eventNames = require("./eventNames");
 const sec = require("../managers/secrets");
-const debug = require("../utils/debug");
+const debug = require("$/debug");
 
 module.exports = {
 	name: "Login",

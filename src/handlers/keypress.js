@@ -1,5 +1,5 @@
 const eventNames = require("./eventNames");
-const debug = require("../utils/debug");
+const debug = require("$/debug");
 const settings = require("../managers/settings");
 const cfg = settings.settings();
 

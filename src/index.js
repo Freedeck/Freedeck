@@ -19,7 +19,7 @@ const runCfg = {
   }
 }
 
-require('@src/console.js');
+require('$/console.js');
 
 const shouldExitNoSettings = (!runCfg.requirements.settingsExists && runCfg.runs.server);
 
@@ -39,7 +39,7 @@ require("./migration");
 if (runCfg.runs.companion) {
   const { app } = require("electron");
   app.whenReady().then(() => {
-    require("./makeWindow")("webui/client/new-connect.html", true, 420, 525, false);
+    require("./app/makeWindow")("webui/client/new-connect.html", true, 420, 525, false);
   });
 }
 

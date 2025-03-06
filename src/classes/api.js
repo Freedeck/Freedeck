@@ -21,7 +21,7 @@ class Plugin {
   disabled = false;
   stopped = false;
   hasInit = false;
-  popout = "<p>No popout code set. Edit this in your PluginV2 definition!</p>";
+  popout = "";
   _hookLocation = "user-data/hooks/";
   _usesAsar = false;
   _customLog(...msg) {
@@ -113,6 +113,7 @@ class Plugin {
 
   io = {
     active: false,
+    emit:()=>{},
   }
 
   on(ev, cb) {
@@ -350,6 +351,10 @@ class Plugin {
       type: opt.type,
       renderType: opt.renderType || types.button,
       templateData: opt.templateData || {},
+    }
+    const existingType = this.types.filter((e) => {e.type === basic.type});
+    if(existingType.length > 0) {
+      this.types = this.types.filter((e) => e !== existingType[0]);
     }
     this.types.push({
       ...basic,

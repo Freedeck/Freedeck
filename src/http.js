@@ -1,19 +1,19 @@
 const express = require("express");
 const http = require("node:http");
 
-const picocolors = require("./utils/picocolors");
+const picocolors = require("$/picocolors");
 
 const app = express();
 const server = http.createServer(app);
 const config = require("@managers/settings");
 const notifMan = require("@managers/notifications");
-const { compileWebpack } = require("./webpack");
+const { compileWebpack } = require("@src/webpack");
 
 /** ROUTERS */
-const handoffRouter = require("./routers/handoff");
-const connectRouter = require("./routers/connect").router;
-const staticRouter = require("./routers/static").router;
-const uploadRouter = require("./routers/uploads");
+const handoffRouter = require("@routers/handoff");
+const connectRouter = require("@routers/connect").router;
+const staticRouter = require("@routers/static").router;
+const uploadRouter = require("@routers/uploads");
 
 const settings = config.settings();
 const PORT = settings.port || 5754;
