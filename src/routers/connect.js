@@ -1,8 +1,10 @@
 const express = require("express");
-const plugins = require("../managers/plugins");
-const tsm = require("../managers/temporarySettings");
-const networkAddresses = require("../managers/networkAddresses");
+const path = require("node:path");
+const plugins = require("@managers/plugins");
+const tsm = require("@managers/temporarySettings");
+const networkAddresses = require("@managers/networkAddresses");
 const router = express.Router();
+const { version } = require(path.resolve("package.json"));
 
 let iwebpackState = 0;
 
@@ -20,6 +22,11 @@ router.get("/plugins", (req, res) => {
 });
 
 router.get("/status", (req, res) => res.sendStatus(200));
+
+router.get("/discover", (req, res) => res.send({
+  title: "Freedeck",
+  version
+}));
 
 router.get("/webpack", (req, res) => {
   res.send({ compiled: iwebpackState });
