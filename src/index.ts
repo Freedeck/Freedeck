@@ -48,7 +48,7 @@ if(runCfg.runs.server) {
   createInterruptHandlers();
 }
 
-function hasArgument(i) { return process.argv.includes(i)};
+function hasArgument(i: string) { return process.argv.includes(i)};
 
 /**
  * Setup the terminal
@@ -77,32 +77,30 @@ function createInterruptHandlers() {
     });
   }
 
-  const terminator = (sig) => {
-    if (typeof sig === "string") {
-      // call your async task here and then call process.exit() after async task is done
-      const hookPath = path.resolve("./user-data/hooks");
-      if (fs.existsSync(hookPath)) {
-        for (const file of fs.readdirSync(hookPath)) {
-          fs.rmSync(path.resolve(hookPath, file), {
-            recursive: true,
-          });
-          console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red(`Unloaded hook ${file}`)}`);
-        }
-
-        console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded all hooks")}`);
-      }
-      if (fs.existsSync(path.resolve("./tmp"))) {
-        fs.rm(path.resolve("./tmp"), { recursive: true }, (e) => {
-          if(e) {
-            console.error("Error removing plugin extractions", e);
-          } else console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded plugin extractions")}`);
+  const terminator = (sig: string) => {
+    // call your async task here and then call process.exit() after async task is done
+    const hookPath = path.resolve("./user-data/hooks");
+    if (fs.existsSync(hookPath)) {
+      for (const file of fs.readdirSync(hookPath)) {
+        fs.rmSync(path.resolve(hookPath, file), {
+          recursive: true,
         });
+        console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red(`Unloaded hook ${file}`)}`);
       }
 
-      setTimeout(() => {
-        console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Exiting...")}`);
-        process.exit(1);
+      console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded all hooks")}`);
+    }
+    if (fs.existsSync(path.resolve("./tmp"))) {
+      fs.rm(path.resolve("./tmp"), { recursive: true }, (e: Error) => {
+        if(e) {
+          console.error("Error removing plugin extractions", e);
+        } else console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded plugin extractions")}`);
       });
     }
+
+    setTimeout(() => {
+      console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Exiting...")}`);
+      process.exit(1);
+    });
   };
 }

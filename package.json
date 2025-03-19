@@ -32,6 +32,7 @@
 	"author": "ia74",
 	"license": "ISC",
 	"dependencies": {
+		"@types/filesystem": "^0.0.36",
 		"asar-bundle-runner": "^1.6.0",
 		"babel-loader": "^10.0.0",
 		"compare-versions": "^6.1.1",
@@ -39,6 +40,7 @@
 		"express": "^4.21.2",
 		"formidable": "^3.5.2",
 		"module-alias": "^2.2.3",
+		"npm": "^11.2.0",
 		"pako": "^2.1.0",
 		"socket.io": "^4.8.1",
 		"socket.io-client": "^4.8.1",
@@ -48,6 +50,10 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
+		"@types/node": "^22.13.10",
+		"ts-migrate": "^0.1.35",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.2",
 		"webpack-cli": "^6.0.1"
 	}
 }
