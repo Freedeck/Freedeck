@@ -906,10 +906,7 @@ const setToLocalCfg = (key, value) => {
 };
 
 const lcfg = universal.lclCfg();
-
-let tc = "repeat(5, 2fr)";
-if (lcfg.tileCols) tc = tc.replace("5", lcfg.tileCols);
-document.documentElement.style.setProperty("--tile-columns", tc);
+document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);
 
 universal.listenFor("audio-end", (data) => {
   const filname = data.name.replace(/[^a-zA-Z0-9]/g, "");

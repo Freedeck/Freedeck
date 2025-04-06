@@ -155,10 +155,8 @@ export default function eventsHandler(universal, user) {
 					`${e.buttonSize}rem`,
 				);
 			}
-			let tc = "repeat(5, 2fr)";
-			if (e.tileCols) tc = tc.replace("5", e.tileCols);
+			document.documentElement.style.setProperty("--tile-columns", `repeat(${e.tileCols ? e.tileCols : "5"}, 2fr)`);
 			universal.save("nopreset", e.nopreset);
-			document.documentElement.style.setProperty("--tile-columns", tc);
 			universal.lclCfg = () => e;
 			universal.lclCfg().iconCountPerPage = Number.parseInt(e.iconCountPerPage);
 			universal.sendEvent("local-config", e);

@@ -229,7 +229,7 @@ export class SidebarSlider {
 
     const resetButton = document.createElement("button");
     resetButton.classList.add("reset-button");
-    resetButton.innerHTML = `<img src="/common/icons/reset.svg" alt="Reset" width="25" height="25">`;
+    resetButton.innerHTML = `<img src="/common/icons/reset.svg" alt="Reset" width="25" height="25" loading="lazy">`;
     resetButton.id = `${this.id}-reset`;
     resetButton.onclick = (e) => {
       this.onReset(e);

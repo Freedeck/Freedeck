@@ -20,15 +20,18 @@ module.exports = (
 		}
 	});
 
-	ipcMain.handle("resize-splash", (ev) => {
-		mainWindow.setSize(420, 525)
+	const dimensions = {
+		splashScreen: [420, 525],
+		default: [1400, 850],
+	}
+
+	ipcMain.handle("resize-splash", () => _handle(...dimensions.splashScreen));
+	ipcMain.handle("resize", () => _handle(...dimensions.default));
+
+	function _handle(w, h) {
+		mainWindow.setSize(w, h);
 		mainWindow.center();
-	})
-	
-	ipcMain.handle("resize", (ev) => {
-		mainWindow.setSize(1400, 850)
-		mainWindow.center();
-	})
+	}
 	
 	console.log(`Here we go! Launching the requested page ${_page}`);
 	

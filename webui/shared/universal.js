@@ -370,6 +370,22 @@ const universal = {
   uiSounds,
   /*  */
   _cb: [],
+
+  setPage(page) {
+    const lastPage = universal.page;
+    const direction = lastPage > page ? "right" : "left";
+    universal.page = page;
+    universal.save("page", universal.page);
+    UI.reloadSounds();
+    universal.sendEvent("page_change");
+    universal.sendEvent("animate_page", "automated", direction);
+  },
+  incrementPage() {
+    if (UI.Pages[currentPage + 1]) universal.setPage(universal.page + 1);
+  },
+  decrementPage() {
+    if (UI.Pages[currentPage - 1]) universal.setPage(universal.page - 1);
+  },
   keySet: () => {
     let isCentered = false;
     if (universal.lclCfg() != null) isCentered = universal.lclCfg().center;
@@ -490,16 +506,8 @@ const universal = {
     });
   },
   name: "",
-  _initFn: (/** @type {string} */ user) =>
-    new Promise((resolve, reject) => {
-      try {
-        universal.CLU("InitFN", "Starting init function");
-        window.universal = universal;
-        universal.CLU("InitFN", "Copied universal to window");
-        universal._socket = io();
-        universal.CLU("InitFN", "Preflight: connection to socket");
-        universal._socket.on("connect", () => {
-          universal.CLU("InitFN", "We're connected to the server!");
+  _initConnectionHandler:(user) => {
+    universal.CLU("InitFN", "We're connected to the server!");
           universal.connected = true;
           universal.name = user;
           if (universal.lastRetry !== -1) {
@@ -517,7 +525,19 @@ const universal = {
               resolve(true);
             });
           });
-        });
+  },
+  _createSocket: (user) => {
+    universal._socket = io();
+    universal.CLU("InitFN", "Preflight: connection to socket");
+    universal._socket.on("connect", () => universal._initConnectionHandler(user));
+  },
+  _initFn: (/** @type {string} */ user) =>
+    new Promise((resolve, reject) => {
+      try {
+        universal.CLU("InitFN", "Starting init function");
+        window.universal = universal;
+        universal.CLU("InitFN", "Copied universal to window");
+        universal._createSocket(user);
         universal.CLU("InitFN / WakeLock", "Attempting to grab wake lock.");
         universal.wakeLock.request();
         universal.CLU("InitFN", "Boot completed.");

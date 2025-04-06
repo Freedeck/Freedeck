@@ -1,75 +1,34 @@
 import { universal } from "../../shared/universal.js";
-import { UI } from "./ui.js";
 import "../../shared/useAuthentication.js";
 
 await universal.init("Main");
-
 
 window.onscroll = () => {
   window.scrollTo(0, 0);
 };
 
-let touchstartX = 0;
-let touchendX = 2500;
-
-const checkDirection = () => {
-  const currentPage = universal.page;
-  const range = touchendX - touchstartX;
-  if(document.querySelector("#lock").checked) return;
-  if (range < -50) {
-    // go page up
-    if (UI.Pages[currentPage + 1]) {
-      universal.page++;
-      universal.save("page", universal.page);
-      UI.reloadSounds();
-      universal.sendEvent("page_change");
-      universal.sendEvent("animate_page", "automated", "left");
-    } else {
-      /* empty */
-    }
-  }
-  if (range > 50) {
-    // go page down
-    if (UI.Pages[currentPage - 1]) {
-      universal.page--;
-      universal.save("page", universal.page);
-      UI.reloadSounds();
-      universal.sendEvent("page_change");
-      universal.sendEvent("animate_page", "automated", "right");
-    } else {
-      /* empty */
-    }
+const pageLock = document.querySelector("#lock");
+const threshold = 50;
+const checkDirection = (range) => {
+  if (pageLock.checked) return;
+  const direction = Math.sign(range);
+  if (Math.abs(range) >= threshold) {
+    if(direction > 0) universal.incrementPage();
+    else universal.decrementPage();
   }
 };
 
 document.addEventListener("keydown", (ev) => {
   if (ev.key === "ArrowLeft") {
-    if (UI.Pages[universal.page - 1]) {
-      universal.page--;
-      universal.save("page", universal.page);
-      universal.uiSounds.playSound("page_down");
-      UI.reloadSounds();
-      universal.sendEvent("page_change");
-      universal.sendEvent("animate_page", "automated", "right");
-    }
-  }
-  if (ev.key === "ArrowRight") {
-    if (UI.Pages[universal.page + 1]) {
-      universal.page++;
-      universal.save("page", universal.page);
-      universal.uiSounds.playSound("page_up");
-      UI.reloadSounds();
-      universal.sendEvent("page_change");
-      universal.sendEvent("animate_page", "automated", "left");
-    }
+    universal.decrementPage();
+  } else if (ev.key === "ArrowRight") {
+    universal.incrementPage();
   }
 });
 
 if (universal.config.profile !== universal.load("profile")) {
   universal.save("profile", universal.config.profile);
-  universal.page = 0;
-  universal.save("page", universal.page);
-  UI.reloadSounds();
+  universal.setPage(0);
 }
 
 const lcfg = universal.lclCfg();
@@ -85,10 +44,10 @@ document.documentElement.style.setProperty(
   "--tile-height",
   `${lcfg.buttonSize}rem`,
 );
+document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);
 
-let tc = "repeat(5, 2fr)";
-if (lcfg.tileCols) tc = tc.replace("5", lcfg.tileCols);
-document.documentElement.style.setProperty("--tile-columns", tc);
+let touchstartX = 0;
+let touchendX = 2500;
 
 window.addEventListener("touchstart", (e) => {
   touchstartX = e.changedTouches[0].screenX;
@@ -100,12 +59,12 @@ window.addEventListener("mousedown", (e) => {
 
 document.addEventListener("mouseup", (e) => {
   touchendX = e.screenX;
-  checkDirection();
+  checkDirection(touchendX - touchstartX);
 });
 
 document.addEventListener("touchend", (e) => {
   touchendX = e.changedTouches[0].screenX;
-  checkDirection();
+  checkDirection(touchendX - touchstartX);
 });
 
 const versionDisplay = document.querySelector("#version");

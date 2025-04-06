@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="/companion/views/styles/marketplace.css">
 
-<h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50"
-            height="50"></span></h1>
+<h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50" loading="lazy" height="50"></span></h1>
 <center>
     <p>Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your
         Freedeck.</p>
@@ -101,6 +100,7 @@
                     li.className = 'item';
                     const officialTag = document.createElement('img');
                     officialTag.src = '/common/icons/official.svg';
+                    officialTag.loading = 'lazy';
                     officialTag.style.width = '8rem';
                     const name = document.createElement('div');
                     name.innerText += plugin.title;

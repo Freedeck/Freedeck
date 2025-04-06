@@ -37,10 +37,11 @@ if (runCfg.runs.companion === false) {
 require("./migration");
 
 if (runCfg.runs.companion) {
-  const { app } = require("electron");
-  app.whenReady().then(() => {
+  const { app, Menu } = require("electron");
+  // Menu.setApplicationMenu(null);
+  app.on("ready", () => {
     require("./app/makeWindow")("webui/client/new-connect.html", true, 420, 525, false);
-  });
+  })
 }
 
 if(runCfg.runs.server) {
