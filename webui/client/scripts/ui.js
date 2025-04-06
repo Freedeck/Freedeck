@@ -2,6 +2,7 @@ const Pages = {};
 
 import { translationKey } from "../../shared/localization.js";
 import createTileRenderer from "./ui/createTileRenderer.js";
+import gridItemDrag from "../../companion/scripts/lib/gridItemDrag.js";
 
 function makeGenericModal(
   title,
@@ -702,6 +703,10 @@ function reloadSounds() {
 
   // Append all tooltips to the DOM at once
   document.body.appendChild(tooltipFragment);
+  
+  if(universal.name === "Companion") {
+    gridItemDrag.setContext(universal.keys);
+  }
 
   universal.sendEvent("page_change");
 

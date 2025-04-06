@@ -1,0 +1,149 @@
+.disabledable,
+    #disbl-list {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btns {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    center ul {
+        list-style-type: none;
+        padding: 0;
+        border-radius: var(--main-radius);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .btnlist {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .btnlist li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        color: var(--modal-item-text);
+        border: 1px solid #000;
+        border-radius: var(--main-radius);
+        margin: 0.5rem 0;
+        gap: 0.25rem;
+        min-width: 150px;
+        height: max-content;
+        text-overflow: ellipsis;
+
+        background: var(--modal-item-bg);
+        background-size: var(--modal-item-bg-size);
+        animation: var(--modal-item-bg-anim);
+    }
+
+    .audio-device-picker {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        background-color: rgba(0, 0, 0, 0.25);
+        padding: 5px;
+        border-radius: var(--main-radius);
+    }
+
+    .audio-device {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 0.25rem;
+        border-radius: var(--main-radius);
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    details>summary::marker {
+        display: none;
+        content: "";
+    }
+
+    details>summary:hover {
+        cursor: pointer;
+    }
+
+    .experiments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .experiment {
+        display: flex;
+        background: var(--modal-item-bg);
+        background-size: var(--modal-item-bg-size);
+        animation: var(--modal-item-bg-anim);
+        padding: 0.65rem;
+        border-radius: var(--main-radius);
+    }
+
+    .experiment input {
+        width: 50%;
+    }
+
+    .uisounds,
+    .soundpacks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .25rem;
+    }
+
+    .uisounds li,
+    .soundpacks li {
+        display: flex;
+        gap: .25rem;
+        background: var(--modal-item-bg);
+        background-size: var(--modal-item-bg-size);
+        animation: var(--modal-item-bg-anim);
+        padding: .5rem;
+        border-radius: var(--main-radius);
+    }
+
+    .experiment-exist h3 {
+        margin: 0;
+    }
+
+    .experiment-exist {
+        background-color: rgba(0, 0, 0, 0.25);
+        padding: 5px;
+        border-radius: var(--main-radius);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .cti {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 0;
+        left: calc(50% - 50vw); 
+        transform: translateX(4%);
+        background-color: rgba(0, 0, 0, 0.25);
+        width: max-content;
+        padding: 5px;
+        border-radius: var(--main-radius) var(--main-radius) 0 0;
+
+    }
+
+    .ctxl,
+    .flags {
+        display: flex;
+        flex-wrap: wrap;
+    }

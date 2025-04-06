@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/companion/views/styles/marketplace.css">
+
 <h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50"
             height="50"></span></h1>
 <center>
@@ -13,85 +15,6 @@
 <div class="marketplace">
     <p>Loading Marketplace...</p>
 </div>
-
-<style>
-    .disabledable {
-        display: flex;
-    }
-
-    .repositories {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    .repositories li {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        color: var(--modal-item-text);
-        border: 1px solid #000;
-        border-radius: var(--main-radius);
-        margin: 0.5rem 0;
-        gap: 1rem;
-        min-width: 150px;
-        text-overflow: ellipsis;
-
-        background: var(--modal-item-bg);
-        background-size: var(--modal-item-bg-size);
-        animation: var(--modal-item-bg-anim);
-    }
-
-    .repositories li button {
-        height: 3rem;
-        min-height: 3rem;
-    }
-
-    .plugin-ifo {
-        background: rgba(0, 0, 0, 0.25);
-        padding: 0.5rem;
-        border-radius: var(--main-radius);
-    }
-
-    .item {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        color: var(--modal-item-text);
-        border: 1px solid #000;
-        border-radius: var(--main-radius);
-        margin: 0.5rem 0;
-        gap: 1rem;
-        width: 200px;
-        text-overflow: ellipsis;
-
-        background: var(--modal-item-bg);
-        background-size: var(--modal-item-bg-size);
-        animation: var(--modal-item-bg-anim);
-    }
-
-    .item button {
-        width: 100%;
-    }
-
-    .marketplace {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    .special-lineheight {
-        gap: 0;
-    }
-
-    .special-lineheight h1 {
-        height: 0.5em;
-    }
-</style>
 
 <script type="module">
     if (document.querySelector('#add-repo')) {
