@@ -48,7 +48,7 @@ if(runCfg.runs.server) {
   createInterruptHandlers();
 }
 
-function hasArgument(i: string) { return process.argv.includes(i)};
+function hasArgument(i) { return process.argv.includes(i)};
 
 /**
  * Setup the terminal
@@ -77,7 +77,7 @@ function createInterruptHandlers() {
     });
   }
 
-  const terminator = (sig: string) => {
+  const terminator = (sig) => {
     // call your async task here and then call process.exit() after async task is done
     const hookPath = path.resolve("./user-data/hooks");
     if (fs.existsSync(hookPath)) {
@@ -91,7 +91,7 @@ function createInterruptHandlers() {
       console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded all hooks")}`);
     }
     if (fs.existsSync(path.resolve("./tmp"))) {
-      fs.rm(path.resolve("./tmp"), { recursive: true }, (e: Error) => {
+      fs.rm(path.resolve("./tmp"), { recursive: true }, (e) => {
         if(e) {
           console.error("Error removing plugin extractions", e);
         } else console.log(`${picocolors.blue("Freedeck")} >> ${picocolors.red("Unloaded plugin extractions")}`);
