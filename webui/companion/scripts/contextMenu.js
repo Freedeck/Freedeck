@@ -115,7 +115,7 @@ window.oncontextmenu = (e) => {
         }
         case "Remove Tile":
           UI.reloadProfile();
-          if(universal.flags.isEnabled("no_ask_to_delete")) {
+          if(universal.lclCfg()["app.freedeck.tiles.force_deletion"]) {
             universal.send(universal.events.companion.del_tile, {
               name: e.srcElement.dataset.name,
               item: e.srcElement.getAttribute("data-interaction"),

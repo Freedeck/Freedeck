@@ -8,6 +8,8 @@
   },
   "sounds": {
     "click": "click.mp3",
+    "select_option": "select_option.mp3",
+    "select_option_false": "select_option_false.mp3",
     "page_enter": "page_enter.mp3",
     "notification": "notification.mp3",
     "slide_open": "slide_open.mp3",

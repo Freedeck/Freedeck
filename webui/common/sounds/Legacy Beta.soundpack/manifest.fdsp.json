@@ -1,10 +1,10 @@
 {
 	"info": {
-		"name": "Legacy Futuristic",
+		"name": "Legacy Beta",
 		"version": "1.0.0",
 		"author": "Freedeck",
 		"description": "The OLD Futuristic soundpack for Freedeck",
-		"id": "Legacy Futuristic.soundpack"
+		"id": "Legacy Beta.soundpack"
 	},
 	"sounds": {
 		"click": "click.mp3",

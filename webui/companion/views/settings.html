@@ -63,33 +63,7 @@
     <div class="vb-cables audio-device-picker"></div>
 </details>
 <br>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.general">General</span> <span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div class="experiments">
-        <div class="experiment">
-            <label for="no_ask_to_delete" data-i18n-key="settings.sections.general.dont_ask">Don't ask to delete Tiles</label>
-            <input type="checkbox" id="no_ask_to_delete" />
-        </div>
-        <div class="experiment">
-            <label for="connect-tab" data-i18n-key="settings.sections.general.fdc_tab">Show FDConnect as a tab</label>
-            <input type="checkbox" id="connect-tab" />
-        </div>
-        <div class="experiment">
-            <label for="uis" data-i18n-key="settings.sections.general.ui_sounds">UI Sounds</label>
-            <input type="checkbox" id="uis" />
-        </div>
-        <div class="experiment">
-            <label for="cpm"><span data-i18n-key="settings.sections.general.center_mode">Center Mode</span> <span class="tag-beta">BETA</span></label>
-            <input type="checkbox" id="cpm" />
-        </div>
-        <div class="experiment">
-            <label for="notl"><span data-i18n-key="settings.sections.general.notification_log">Notification Log</span></label>
-            <input type="checkbox" id="notl" />
-        </div>
-    </div>
-</details>
+<settings section="generale"></settings>
 <br>
 <details>
     <summary class="settings-section-title">
@@ -103,10 +77,6 @@
         <div class="experiment">
             <label for="nbik">No preset keys (Stop All,Reload,Logo) <span class="tag-beta">BETA</span></label>
             <input type="checkbox" id="nbik" />
-        </div>
-        <div class="experiment">
-            <label for="swc">Show Recompile as a Sidebar tab</label>
-            <input type="checkbox" id="swc" />
         </div>
         <div class="experiment">
             <label for="apc">Animate Page Changes <span class="tag-beta">BAD</span></label>
@@ -457,30 +427,11 @@
         appendDetails(details, data);
     }
 
-    settings_makeToggleFlag("#swc", "recompile-tab", () => { universal.reloadRight() });
-    settings_makeToggleFlag("#blvs", "skip-boot-animation");
-    settings_makeToggleFlag("#notl", "notification-log");
-    settings_makeToggleFlag("#no_ask_to_delete", "no_ask_to_delete")
-    settings_makeToggleFlag("#connect-tab", "connect-tab", () => { universal.reloadRight() })
-
     settings_makeExternalStyleToggleFlag("#nbik", "nopreset")
     settings_makeExternalStyleToggleFlag("#apc", "animation")
-    settings_makeExternalStyleToggleFlag("#cpm", "center")
-
-
     settings_makeExternalStyleToggleFlag("#compact", "compact", () => { universal.UI.reloadSounds() })
     settings_makeExternalStyleToggleFlag("#scroll-long-text", "scroll", () => { universal.UI.reloadSounds() })
     settings_makeExternalStyleToggleFlag("#fill-tiles", "fill", () => { universal.UI.reloadSounds() })
-
-
-    settings_makeToggleFlag("#uis", "uiSounds", () => {
-        document.querySelector(".soundpack").style.display = universal.flags.isEnabled("uiSounds")
-            ? "block"
-            : "none";
-        document.querySelector(".soundpack-br").style.display = universal.flags.isEnabled("uiSounds")
-            ? "block"
-            : "none";
-    });
 
     getElement("#erals").onclick = () => {
         localStorage.clear();
@@ -627,6 +578,108 @@
         cfg[key] = value;
         return cfg;
     }
+
+    const setupMenu = {
+        "generale": {
+            "title": "General",
+            "icon": "/common/icons/settings.svg",
+            "options": {
+                "app.freedeck.tiles.force_deletion": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.dont_ask",
+                    "description": "Don't ask to delete Tiles",
+                    "default": universal.lclCfg()["app.freedeck.tiles.force_deletion"] || false,
+                },
+                "app.freedeck.sidebar.connect_tab": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.fdc_tab",
+                    "description": "Show FDConnect as a tab",
+                    "default": universal.lclCfg()["app.freedeck.sidebar.connect_tab"] || false,
+                    "onchange": () => {
+                        universal.reloadRight();
+                    }
+                },
+                "app.freedeck.ui_sounds": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.ui_sounds",
+                    "description": "UI Sounds",
+                    "flag": "uis",
+                    "default": universal.lclCfg()["app.freedeck.ui_sounds"] || false,
+                },
+                "app.freedeck.render.center_mode": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.center_mode",
+                    "description": "Center Mode",
+                    "flag": "cpm",
+                    "default": universal.lclCfg()["app.freedeck.render.center_mode"] || false,
+                },
+                "app.freedeck.notification_log": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.notification_log",
+                    "description": "Notification Log",
+                    "flag": "notl",
+                    "default": universal.lclCfg()["app.freedeck.notification_log"] || false,
+                },
+            }
+        }
+    }
+    
+    document.querySelectorAll("settings").forEach((el) => {
+        const details = document.createElement("details");
+        const summary = document.createElement("summary");
+        details.appendChild(summary);
+
+        const _setupMenu = setupMenu[el.getAttribute("section")];
+        if (!_setupMenu) return;
+        el.parentNode.replaceChild(details, el);
+
+        const title = document.createElement("p");
+        title.innerText = _setupMenu.title;
+        title.classList.add("settings-section-title");
+        summary.prepend(title);
+        const icon = document.createElement("img");
+        icon.src = _setupMenu.icon;
+        icon.width = 50;
+        icon.height = 50;
+        icon.loading = "lazy";
+        title.appendChild(icon);
+
+        const settingsList = document.createElement("div");
+        settingsList.classList.add("experiments");
+        details.appendChild(settingsList);
+
+        const options = _setupMenu.options;
+        const container = document.createElement("div");
+        container.classList.add("experiments");
+        
+        for (const optionId in options) {
+            const option = options[optionId];
+            const translationKey = option.key;
+            const optContainer = document.createElement("div");
+            optContainer.classList.add("experiment");
+            const label = document.createElement("label");
+            label.setAttribute("data-i18n-key", translationKey);
+            label.setAttribute("for", optionId);
+            label.innerText = option.description;
+            const input = document.createElement("input");
+            input.type = option.type;
+            input.id = optionId;
+            input.checked = option.default;
+            input.onchange = () => {
+                universal.send(universal.events.default.config_changed, setToLocalCfg(optionId, input.checked));
+                if(input.checked) {
+                    universal.uiSounds.playSound("select_option");
+                } else {
+                    universal.uiSounds.playSound("select_option_false");
+                }
+                if(option.onchange) option.onchange(input.checked);
+            };
+            optContainer.appendChild(label);
+            optContainer.appendChild(input);
+            container.appendChild(optContainer);
+        }
+        settingsList.appendChild(container);
+    });
 
     loadSounds();
 </script>

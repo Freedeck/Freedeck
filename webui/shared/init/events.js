@@ -1,8 +1,7 @@
 import { UI } from "../../client/scripts/ui";
 
-export default function eventsHandler(universal, user) {
-	return new Promise((resolve, reject) => {
-		universal.CLU("Event Handler", "Creating event handlers...");
+export default async function eventsHandler(universal, user) {
+	universal.CLU("Event Handler", "Creating event handlers...");
 
 		universal.on(universal.events.login.unauthorized, () =>
 			universal.sendToast("You are not authenticated!"),
@@ -123,7 +122,7 @@ export default function eventsHandler(universal, user) {
 			universal.sendToast("Disconnected from server.", "Server");
 			universal.lastRetry = new Date();
 			const retryLoop = setInterval(() => {
-				universal.sendToast("Attempting to reconnect...");
+				universal.sendToast("Attempting to reconnect...", "Freedeck");
 				universal.reconnect();
 				setTimeout(() => {
 					if (universal.connected === true) {
@@ -203,6 +202,4 @@ export default function eventsHandler(universal, user) {
 		universal.CLU("Event Handler", `Loaded ${hookCount} ${hookType} hooks from ${Object.keys(universal.plugins).length} plugins.`);
 		universal.sendEvent("loadHooks");
 		universal.CLU("Event Handler", "Tell plugins that their hooks are loaded.");
-		resolve(true);
-	});
 }

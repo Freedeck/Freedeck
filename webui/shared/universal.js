@@ -309,62 +309,88 @@ const universal = {
       );
     }
   },
-  init: (user) =>
-    new Promise((resolve, reject) => {
-      fetch("/connect/webpack")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.compiled !== 1) {
-            window.location.href = `/new-connect.html?id=${user}`;
-          }
-        });
-      UI.makeBootLog();
-      doLocalization();
-      universal.CLU("Boot", "(PRE LOG CREATION) Init promise created");
-      universal.CLU("Boot", "Boot log created");
-      universal.CLU("Boot", "Attempting to run LS migrations");
-      try {
-        universal.CLU("Boot", "Pre-init");
-        universal._initFn(user).then(async () => {
-          universal.CLU(
-            "Boot",
-            `Received full configuration (${
-              Object.keys(universal.config).length
-            } objects translated from ${
-              Object.keys(universal._information).length
-            })`
-          );
-          universal.CLU("Boot", "Running post-init tasks");
-          universal.doInitialize(
-            universal.theming.initialize,
-            { name: "Theme Engine" },
-            universal
-          );
-          universal.doInitialize(UI.initialize, { name: "UI" }, universal);
-          universal.doInitialize(
-            universal.audioClient.initialize,
-            { name: "Audio Engine" },
-            universal
-          );
-          universal.doInitialize(
-            universal.uiSounds.initialize,
-            { name: "UI Sounds" },
-            universal
-          );
-          universal.CLU("Boot", "Post-init tasks completed.");
-          universal.CLU("Boot", "Attempting to run localization.");
-          universal.sendEvent("launch");
-          UI.closeBootLog().then(() => {
-            universal.CLU("Boot", "Boot log closed.");
-            doLocalization();
-            resolve(true);
+  init: (user) => {
+    return new Promise((resolve, reject) => {
+      (async () => {    
+        const stateFetch = await fetch("/connect/webpack");
+        const state = await stateFetch.json();
+        if (state.compiled !== 1) {
+          window.location.href = `/new-connect.html?id=${user}`;
+        }
+        UI.makeBootLog();
+        universal.CLU("Boot", "Boot log created");
+        window.universal = universal;
+        universal.CLU("InitFN", "Copied universal to window");
+        doLocalization();
+        universal.CLU("Boot", "Localization initialized");
+        try {
+          universal.CLU("Boot", "Pre-init");
+          universal.CLU("InitFN", "Starting init function");
+          universal._socket = io();
+          universal.CLU("InitFN", "Preflight: connection to socket");
+          universal._socket.on("connect", async () => {
+            universal.CLU("InitFN", "We're connected to the server!");
+            universal.connected = true;
+            universal.name = user;
+            if (universal.lastRetry !== -1) {
+              universal.CLU("InitFN", "This is a reconnection.");
+              universal.sendToast("Reconnected to server.");
+              // tell server we're disconnecting
+              universal._socket.disconnect();
+              window.location.reload();
+              return;
+            }
+            universal.listenForOnce("data_ready", async () => {
+              universal.CLU("InitFN", "Starting eventsHandler");
+              await eventsHandler(universal, user);
+              universal.CLU("InitFN / WakeLock", "Attempting to grab wake lock.");
+              universal.wakeLock.request();
+              universal.CLU("InitFN", "Boot completed.");
+              universal.CLU(
+                "Boot",
+                `Received full configuration (${
+                  Object.keys(universal.config).length
+                } objects translated from ${
+                  Object.keys(universal._information).length
+                })`
+              );
+              universal.CLU("Boot", "Running post-init tasks");
+              universal.doInitialize(
+                universal.theming.initialize,
+                { name: "Theme Engine" },
+                universal
+              );
+              universal.doInitialize(UI.initialize, { name: "UI" }, universal);
+              universal.doInitialize(
+                universal.audioClient.initialize,
+                { name: "Audio Engine" },
+                universal
+              );
+              universal.doInitialize(
+                universal.uiSounds.initialize,
+                { name: "UI Sounds" },
+                universal
+              );
+              universal.CLU("Boot", "Post-init tasks completed.");
+              universal.sendEvent("launch");
+              await UI.closeBootLog();
+              universal.CLU("Boot", "Launching!");
+              resolve();
+            }) 
+            universal.CLU("InitFN", "Starting dataHandler");
+            await dataHandler(universal, user);
           });
-        });
-      } catch (e) {
-        console.error(`${e} | Universal: initialize failed.`);
-        reject(e);
-      }
-    }),
+        } catch (e) {
+          universal.CLU("Boot", `Error while running init: ${e}`);
+          universal.sendToast(
+            "Failed to initialize Freedeck. Please try again.",
+            "Error"
+          );
+          reject(e);
+        }
+        })();
+      });
+  },
   /* repos */
   repositoryManager,
   uiSounds,
@@ -506,46 +532,6 @@ const universal = {
     });
   },
   name: "",
-  _initConnectionHandler:(user) => {
-    universal.CLU("InitFN", "We're connected to the server!");
-          universal.connected = true;
-          universal.name = user;
-          if (universal.lastRetry !== -1) {
-            universal.CLU("InitFN", "This is a reconnection.");
-            universal.sendToast("Reconnected to server.");
-            // tell server we're disconnecting
-            universal._socket.disconnect();
-            window.location.reload();
-            return;
-          }
-          universal.CLU("InitFN", "Starting dataHandler");
-          dataHandler(universal, user).then(() => {
-            universal.CLU("InitFN", "Starting eventsHandler");
-            eventsHandler(universal, user).then(() => {
-              resolve(true);
-            });
-          });
-  },
-  _createSocket: (user) => {
-    universal._socket = io();
-    universal.CLU("InitFN", "Preflight: connection to socket");
-    universal._socket.on("connect", () => universal._initConnectionHandler(user));
-  },
-  _initFn: (/** @type {string} */ user) =>
-    new Promise((resolve, reject) => {
-      try {
-        universal.CLU("InitFN", "Starting init function");
-        window.universal = universal;
-        universal.CLU("InitFN", "Copied universal to window");
-        universal._createSocket(user);
-        universal.CLU("InitFN / WakeLock", "Attempting to grab wake lock.");
-        universal.wakeLock.request();
-        universal.CLU("InitFN", "Boot completed.");
-      } catch (e) {
-        console.error(e);
-        reject(e);
-      }
-    }),
   sendToast: (message, sender = "") => {
     if (!HTMLElement.prototype.setHTML) {
       HTMLElement.prototype.setHTML = function (html) {

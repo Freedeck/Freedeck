@@ -99,7 +99,7 @@ export class SidebarSelect {
     // select the first option if none are selected
     if (select.selectedIndex === -1) select.selectedIndex = 0;
     select.onchange = (ev) => {
-      universal.uiSounds.playSound("step_2");
+      universal.uiSounds.playSound("select_option");
       this.onSelected(ev);
     };
     return container;

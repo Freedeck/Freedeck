@@ -1,9 +1,0 @@
-<h1>Custom Themes</h1>
-<input type="color" id="abc">
-
-<script>
-  document.querySelector('#abc').addEventListener('change', function() {
-    getComputedStyle(document.documentElement)
-    .setProperty('--main-bg', this.value);
-  });
-</script>

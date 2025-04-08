@@ -19,7 +19,7 @@ universal.listenFor("init", () => {
 
 document.onkeydown = (ev) => universal.uiSounds.playSound("int_type");
 
-const pages = ["library", "plugins", "marketplace", "settings", "prompts", "setup", "customtheme"];
+const pages = ["library", "plugins", "marketplace", "settings", "prompts", "setup"];
 for(const page of pages) contextual.addView(page);
 
 const sidebarEle = document.createElement("div");
@@ -35,7 +35,7 @@ universal.reloadRight = () => {
 		{ Marketplace: "marketplace.html" },
 		{ Settings: "settings.html" },
 	];
-	if(universal.flags.isEnabled("connect-tab")) {
+	if(universal.lclCfg()["app.freedeck.sidebar.connect_tab"]) {
 		sidebar.push({ Connect: "/new-connect.html?id=Companion&new_ip=true" })
 	}
 	if(universal.load("has_setup") === "false") {
@@ -44,10 +44,6 @@ universal.reloadRight = () => {
 			{ "Pair Device": "prompts.html" },
 		]
 	}
-	if(universal.load("cte") === "true")
-		sidebar.push({'Themer': 'customtheme.html'});
-	if(universal.flags.isEnabled("recompile-tab"))
-		sidebar.push({'Recompile': '+universal.send(universal.events.default.recompile)'})
 	sidebarUl.setHTML(
 		`<li style="font-size: .6em; background: none; margin: 0 auto;">
 		<span style="display:flex;align-items:center;">

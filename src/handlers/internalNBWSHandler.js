@@ -56,10 +56,10 @@ function retryConnection() {
       retryDelay = Math.min(retryDelay * 2, 30000);
     };
     nbws._socket.onerror = (event) => {
-      console.error(`WebSocket error: ${event.message}`);
+      console.error(`NBWSWebSocket error: ${JSON.stringify(event)}`);
     };
   } catch (e) {
-    console.error(`WebSocket error: ${e.message}`);
+    console.error(`NBWSWebSocket Loop error: ${JSON.stringify(e)}`);
     setTimeout(retryConnection, retryDelay);
     retryDelay = Math.min(retryDelay * 2, 30000);
   }
@@ -79,7 +79,5 @@ nbws._socket.onmessage = (event) => {
   }
 };
 
-nbws._socket.onerror = (error) => {
-  console.error(`WebSocket error: ${error}`);
-};
+
 module.exports = { nbws, check };
