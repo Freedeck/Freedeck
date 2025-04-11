@@ -121,6 +121,7 @@ function fix() {
 	};
 	beingEdited = false;
 }
+fix();
 universal.listenFor("page_change", fix)
 universal.listenFor("data_ready", fix)
 

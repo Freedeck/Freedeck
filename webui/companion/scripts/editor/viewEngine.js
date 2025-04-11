@@ -6,7 +6,7 @@ const selectableViews = [
   "plugins",
   "system",
   "none",
-  "profile",
+  "profiles",
   "macro",
 ];
 

@@ -674,9 +674,6 @@ function reloadSounds() {
         case "fd.none":
           tooltipContent += "<p>Does nothing.</p>";
           break;
-        case "fd.select":
-          tooltipContent += "<p>No plugin selected.</p>";
-          break;
       }
 
       tooltipContent += "<p>Right click to edit.</p>";

@@ -526,7 +526,7 @@ input {
 	scrollbar-width: none;
 }
 
-.plugin-items {
+.generic-chips {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -534,7 +534,7 @@ input {
 	justify-content: start;
 }
 
-.plugin-item {
+.generic-chip {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -555,12 +555,12 @@ input {
 	gap: 1rem;
 }
 
-.spi-active {
-	background-color: rgba(0, 0, 0, 0.75);
+.selectable-plugin-tile-action {
+	display: none;
 }
 
-.spiaction {
-	display: none;
+.selectable-plugin-tile-action .active {
+	background-color: rgba(0, 0, 0, 0.75);
 }
 
 #spi-actions {

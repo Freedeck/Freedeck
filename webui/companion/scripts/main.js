@@ -50,9 +50,9 @@ const editorViewLogics = new Map(
   [
     ["audio", new Sound()],
     ["system", new System()],
-    ["plugin", new EditorViewLogic()],
+    ["plugins", new EditorViewLogic()],
     ["macro", new Macro()],
-    ["profile", new Profile()],
+    ["profiles", new Profile()],
     ["none", new EditorViewLogic()],
   ]
 )
@@ -75,8 +75,9 @@ function editTile(e) {
   const realEle = document.querySelector(`.k[data-interaction='${e.srcElement.getAttribute("data-interaction")}']`);
   realEle.classList.remove("smaller");
 
-  if (document.querySelector(".contextMenu"))
-    document.querySelector(".contextMenu").style.display = "none";
+  const contextMenu = document.querySelector(".contextMenu");
+  if(contextMenu) contextMenu.remove();
+
   for (const el of document.querySelectorAll(".plugin-view")) {
     el.style.display = "none";
   }
@@ -89,13 +90,12 @@ function editTile(e) {
     "data-interaction",
     e.srcElement.getAttribute("data-interaction")
   );
-  for (const a of document.querySelectorAll(".spiaction")) {
+  for (const a of document.querySelectorAll(".selectable-plugin-tile-action")) {
     a.style.display = "none";
-    a.classList.remove("spi-active");
+    a.classList.remove("active");
     if (!interactionData.plugin) continue;
     if (a.dataset.plugin === interactionData.plugin) {
-      if (a.dataset.type === interactionData.type)
-        a.classList.add("spi-active");
+      if (a.dataset.type === interactionData.type) a.classList.add("active");
       a.style.display = "block";
     }
   }
@@ -103,11 +103,6 @@ function editTile(e) {
   if (interactionData.plugin === "Freedeck" || !interactionData.plugin) {
     document.querySelector("#plugin").style.display = "none";
     document.querySelector('label[for="plugin"]').style.display = "none";
-  } else {
-    document.querySelector('label[for="plugin"]').style.display = "block";
-    document.querySelector("#plugin").style.display = "block";
-    document.querySelector("#plugin").value =
-      interactionData.plugin || "Freedeck";
   }
   document.querySelector("#editor-back").style.display = "block";
   
@@ -116,14 +111,14 @@ function editTile(e) {
   document.querySelector(".spi-actions-notfound").style.display = "none";
 
   if (!interactionData.type.startsWith("fd.")) {
-    for (const el of document.querySelectorAll(".spiaction")) {
+    for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
       if (el.classList.contains(`pl-${interactionData.plugin}`))
         el.style.display = "block";
     }
     for (const el of document.querySelectorAll(".spiback")) {
       el.style.display = "block";
     }
-    for (const el of document.querySelectorAll(".spiplugin")) {
+    for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
       el.style.display = "none";
     }
 
@@ -136,7 +131,7 @@ function editTile(e) {
       el.innerText = interactionData.type;
     }
     if (
-      !document.querySelector(`.spi[data-type="${interactionData.type}"]`)
+      !document.querySelector(`.selectable-plugin-tile-action[data-type="${interactionData.type}"]`)
     ) {
       document.querySelector(".spi-actions-notfound").style.display = "block";
     }
@@ -145,10 +140,10 @@ function editTile(e) {
     }
     openViewTop("plugins");
   } else {
-    for (const el of document.querySelectorAll(".spiaction, .spiback")) {
+    for (const el of document.querySelectorAll(".selectable-plugin-tile-action, .spiback")) {
       el.style.display = "none";
     }
-    for (const el of document.querySelectorAll(".spiplugin")) {
+    for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
       el.style.display = "block";
     }
   }
@@ -163,9 +158,7 @@ function editTile(e) {
     }
   } 
   
-  if (interactionData.plugin) {
-    loadSettings(interactionData.plugin);
-  }
+
   if (interactionData.data) {
     const itm = interactionData.data;
     loadData(itm);
@@ -205,8 +198,9 @@ function editTile(e) {
 
 universal.editTile = editTile;
 
-document.querySelector("#editor-back").onclick = () => {
-  document.querySelector("#editor-back").style.display = "none";
+const editorBackButton = document.querySelector("#editor-back");
+editorBackButton.onclick = () => {
+  editorBackButton.style.display = "none";
   openViewTop("none");
 };
 
@@ -232,98 +226,13 @@ createEditorCheckbox("#nsh", "noShadow");
 createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
 
-document.querySelector("#change-pl-settings").onclick = () => {
-  const plugin = document.querySelector("#plugin").value;
-  const settings = {};
-  for (const el of document.querySelectorAll(".pl-settings-item")) {
-    const key = el.querySelector("div").innerText;
-    if (el.querySelector(".pl-settings-array")) {
-      const array = [];
-      for (const item of el.querySelectorAll(".pl-settings-array input")) {
-        array.push(item.value);
-      }
-      settings[key] = array;
-    } else {
-      settings[key] = el.querySelector("input").value;
-    }
-  }
-  universal.send(universal.events.companion.plugin_set_all, {
-    plugin,
-    settings,
-  });
-};
-
-const loadSettings = (plugin) => {
-  const settingsElement = document.querySelector("#pl-settings");
-  settingsElement.innerHTML = "";
-  document.querySelector("#pl-title").innerText = "Plugin Settings";
-  if (!universal.plugins[plugin]) {
-    settingsElement.innerHTML =
-      "<h2>The plugin for this Tile is missing.</h2><p>Please re-enable or download it.</p>";
-    document.querySelector("#change-pl-settings").style.display = "none";
-    return;
-  }
-  document.querySelector("#change-pl-settings").style.display = "block";
-  document.querySelector(
-    "#pl-title"
-  ).innerText = `${universal.plugins[plugin].name} Settings`;
-  const settings = universal.plugins[plugin].Settings;
-  for (const key of Object.keys(settings)) {
-    const value = settings[key];
-    const container = document.createElement("div");
-    container.classList.add("pl-settings-item");
-    const title = document.createElement("div");
-    title.innerText = key;
-    container.appendChild(title);
-    if (Array.isArray(value) || typeof value === "object") {
-      const arrayContainer = document.createElement("div");
-      arrayContainer.classList.add("pl-settings-array");
-      let i = 0;
-      for (const val of value) {
-        const item = document.createElement("input");
-        item.type = key !== "password" || key !== "token" ? "text" : "password";
-        item.id = key;
-        item.dataset.index = i;
-        item.value = val;
-        arrayContainer.appendChild(item);
-        i++;
-      }
-      container.appendChild(arrayContainer);
-    } else {
-      const item = document.createElement("input");
-      item.type = key !== "password" || key !== "token" ? "text" : "password";
-      item.id = key;
-      item.value = value;
-      container.appendChild(item);
-    }
-    settingsElement.appendChild(container);
-  }
-};
-
-const generateProfileSelect = () => {
-  const select = document.querySelector("#eprofile-select");
-  select.innerHTML = "";
-  for (const profile of Object.keys(universal.config.profiles)) {
-    const option = document.createElement("option");
-    option.innerText = profile;
-    option.value = profile;
-    select.appendChild(option);
-  }
-  select.onchange = (e) => {
-    const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-    int.data.profile = e.srcElement.value;
-    editorButton.setAttribute("data-interaction", JSON.stringify(int));
-    loadData(int.data);
-  };
-};
-universal.generateProfileSelect = generateProfileSelect;
 
 document.querySelector("#spiback").onclick = (e) => {
   document.querySelector(".spi-actions-disabled").style.display = "none";
-  for (const el of document.querySelectorAll(".spiaction, .spiback")) {
+  for (const el of document.querySelectorAll(".selectable-plugin-tile-action, .spiback")) {
     el.style.display = "none";
   }
-  for (const el of document.querySelectorAll(".spiplugin")) {
+  for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
     el.style.display = "block";
   }
 };
@@ -341,18 +250,17 @@ document.querySelector("#spiav").onclick = () => {
 };
 
 const spiContainer = document.querySelector("#spi-actions");
-for (const type of universal._tyc.keys()) {
-  if (!document.querySelector(`.rpl-${type.pluginId}`)) {
-    if(type.hidden) continue;
+const createdIdentifiers = [];
+for (const interactionType of universal._tyc.keys()) {
+  if (interactionType.hidden) continue;
+  if (!createdIdentifiers.includes(interactionType.pluginId)) {
     const element = document.createElement("div");
-    element.classList.add(`rpl-${type.pluginId}`);
-    element.classList.add("plugin-item");
-    element.classList.add("spi");
-    element.classList.add("spiplugin");
-    element.innerText = type.display;
+    element.classList.add("generic-chip");
+    element.classList.add("selectable-plugin-lister");
+    element.innerText = interactionType.display;
     element.onclick = (e) => {
       for (const el of document.querySelectorAll(
-        `.spiaction.pl-${type.pluginId}`
+        `.selectable-plugin-tile-action[data-plugin="${interactionType.pluginId}"]`
       )) {
         el.style.display = "block";
       }
@@ -361,59 +269,43 @@ for (const type of universal._tyc.keys()) {
         el.style.display = "block";
       }
 
-      for (const el of document.querySelectorAll(".spiplugin")) {
+      for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
         el.style.display = "none";
       }
     };
     spiContainer.appendChild(element);
+    createdIdentifiers.push(interactionType.pluginId);
   }
   const element = document.createElement("div");
-  element.classList.add(`pl-${type.pluginId}`);
-  element.classList.add("plugin-item");
-  element.classList.add("spi");
-  element.classList.add("spiaction");
-  element.setAttribute("data-type", type.type);
-  element.setAttribute("data-plugin", type.pluginId);
-  element.setAttribute("data-rt", type.renderType);
-  element.setAttribute("data-template", JSON.stringify(type.templateData));
-  element.innerText = `${type.display}: ${type.name}`;
+  element.classList.add("generic-chip");
+  element.classList.add("selectable-plugin-tile-action");
+  element.setAttribute("data-type", interactionType.type);
+  element.setAttribute("data-plugin", interactionType.pluginId);
+  element.innerText = `${interactionType.display}: ${interactionType.name}`;
   element.onclick = (e) => {
     const interaction = JSON.parse(
       editorButton.getAttribute("data-interaction")
     );
-    const type = e.target.getAttribute("data-type");
-    const plugin = e.target.getAttribute("data-plugin");
-    const renderType = e.target.getAttribute("data-rt");
-    const templateData = JSON.parse(e.target.getAttribute("data-template"));
 
+    const tileToSelect = document.querySelector(
+      `.selectable-plugin-tile-action[data-type="${interactionType.type}"][data-plugin="${interactionType.pluginId}"]`
+    )
+    
     if (interaction.plugin) {
-      if (
-        document.querySelector(
-          `.spi[data-type="${interaction.type}"][data-plugin="${interaction.plugin}"]`
-        )
-      )
-        document
-          .querySelector(
-            `.spi[data-type="${interaction.type}"][data-plugin="${interaction.plugin}"]`
-          )
-          .classList.remove("spi-active");
+      if (tileToSelect) tileToSelect.classList.remove("active");
     }
-    interaction.type = type;
-    interaction.plugin = plugin;
-    interaction.renderType = renderType;
-    interaction.data = { ...interaction.data, ...templateData };
-    document
-      .querySelector(`.spi[data-type="${type}"][data-plugin="${plugin}"]`)
-      .classList.add("spi-active");
+    
+    interaction.type = interactionType.type;
+    interaction.plugin = interactionType.plugin;
+    interaction.renderType = interactionType.renderType;
+    interaction.data = { ...interaction.data, ...interactionType.templateData };
+    tileToSelect.classList.add("active");
     editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
-    document.querySelector("#type").value = type;
-    document.querySelector("#plugin").value = plugin;
+    document.querySelector("#type")
     loadData(interaction.data);
-    loadSettings(interaction.plugin);
   };
   spiContainer.appendChild(element);
 }
-generateProfileSelect();
 
 document.querySelector("#upload-sound").onclick = () => {
   document.querySelector("#upload-sound").disabled = true;
@@ -468,7 +360,7 @@ document.querySelector("#upload-sound").onclick = () => {
 };
 
 editorViewLogics.forEach((logic, k) => {
-  console.log("Setting up", k);
+  console.log(`Setting up ${k}`);
   if(!document.querySelector(`#none-${k}`)) return;
   document.querySelector(`#none-${k}`).onclick = (e) => {
     e.preventDefault();
@@ -526,16 +418,6 @@ document.querySelector("#macro-type").onchange = (e) => {
   int.type = e.srcElement.value === "text" ? "fd.macro_text" : "fd.macro";
   document.querySelector("#type").innerText = int.type;
   editorButton.setAttribute("data-interaction", JSON.stringify(int));
-};
-
-document.querySelector("#none-plugin").onclick = (e) => {
-  document.querySelector('label[for="plugin"]').style.display = "block";
-  document.querySelector("#plugin").style.display = "block";
-  const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-  int.type = "fd.select";
-  document.querySelector("#type").innerText = "fd.select";
-  editorButton.setAttribute("data-interaction", JSON.stringify(int));
-  openViewTop("plugins");
 };
 
 function setupLibraryFor(type){
@@ -817,8 +699,8 @@ window.UniversalUI = {
 
 window.onclick = (e) => {
   if (e.srcElement.className !== "contextMenu") {
-    if (document.querySelector(".contextMenu"))
-      document.querySelector(".contextMenu").remove();
+    const contextMenu = document.querySelector(".contextMenu");
+    if (contextMenu) contextMenu.remove();
   }
   universal.uiSounds.playSound("click");
 };
@@ -847,7 +729,6 @@ document.addEventListener("keydown", (ev) => {
   }
 });
 
-// document.querySelector("#es-profiles").appendChild(profileSelect);
 
 // get url params
 const editing = universal.load("now-editing");
@@ -899,11 +780,6 @@ if (universal._information.mobileConnected) {
   })
 }
 
-const setToLocalCfg = (key, value) => {
-  const cfg = universal.lclCfg();
-  cfg[key] = value;
-  return cfg;
-};
 
 const lcfg = universal.lclCfg();
 document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);

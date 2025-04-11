@@ -95,8 +95,8 @@
                 </details>
                 <br />
             </div>
-            <div style="display: none" id="plugins-only" class="editor-section plugin-items editor-section-bottom">
-                <div id="spi-actions" class="plugin-items">
+            <div style="display: none" id="plugins-only" class="editor-section generic-chips editor-section-bottom">
+                <div id="spi-actions" class="generic-chips">
                     <div class="information">
                         <h3>Plugin</h3>
                         <p>Select a plugin to control this Tile</p>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="flex-wrap-r">
-                    <button class="spiback" id="spiback" style="display: none">
+                    <button id="spiback" style="display: none">
                         Back
                     </button>
                     <button id="spiav" style="display: none">
@@ -124,7 +124,7 @@
                     </button>
                 </div>
             </div>
-            <div style="display: none" id="audio-only" class="editor-section plugin-items editor-section-bottom">
+            <div style="display: none" id="audio-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
                     <h3>Soundboard</h3>
                     <p>Control your Freedeck soundboard!</p>
@@ -137,17 +137,17 @@
             </div>
             <div style="display: none" id="system-only" class="editor-section editor-section-bottom">
                 <h1>App Volume</h1>
-                <div id="sys-actions" class="plugin-items">
+                <div id="sys-actions" class="generic-chips">
                     <p>This tile will change the volume of:</p>
                     <select name="system-select" id="system-select"></select>
                 </div>
             </div>
-            <div style="display: none" id="macro-only" class="plugin-items editor-section editor-section-bottom">
+            <div style="display: none" id="macro-only" class="generic-chips editor-section editor-section-bottom">
                 <div class="information">
                     <h3>Macro<span class="tag-beta">BETA</span></h3>
                     <p>Type or press a key combination!</p>
                 </div>
-                <div id="sys-actions" class="plugin-items">
+                <div id="sys-actions" class="generic-chips">
                     <p>When pressed, this tile will perform a</p>
                     <select name="macro-type" id="macro-type">
                         <option value="text">Text (only text)</option>
@@ -157,14 +157,17 @@
                     <input type="text" name="macro-macro" id="macro-macro">
                 </div>
             </div>
-            <div style="display: none" id="profile-only" class="editor-section plugin-items editor-section-bottom">
-                <h1>Folder Switcher</h1>
-                <div class="plugin-items">
-                    <p>Select the folder this tile will switch to</p>
+            <div style="display: none" id="profiles-only" class="editor-section generic-chips editor-section-bottom">
+                <div class="information">
+                    <h3>Folder Switcher</h3>
+                    <p>Switch to a specified folder!</p>
+                </div>
+                <div class="generic-chips">
+                    <p>This tile will switch to the folder: </p>
                 </div>
                 <select name="eprofile-select" id="eprofile-select"></select>
             </div>
-            <div style="display: none" id="none-only" class="plugin-items editor-section editor-section-bottom" >
+            <div style="display: none" id="none-only" class="generic-chips editor-section editor-section-bottom" >
                 <div class="information">
                     <h3 data-i18n-key="editor.sections.no_action">No Action!</h3>
                     <p>What should this tile do?</p>
@@ -174,7 +177,7 @@
                         <p>Soundboard</p>
                         <img src="/common/icons/t_audio.svg" alt="Audio Tile" loading="lazy">
                     </button>
-                    <button id="none-plugin">
+                    <button id="none-plugins">
                         <p>Plugin</p>
                         <img src="/common/icons/t_plugin.svg" alt="Plugin Tile" loading="lazy">
                     </button>
@@ -194,20 +197,8 @@
             </div>
             <div id="advanced-view" style="display: none;">
                 <div class="flex-wrap">
-                    <div class="esection">
-                        <div class="information">
-                            <h2 id="pl-title">Plugin Settings</h2>
-                            <div id="pl-settings"></div>
-                            <br />
-                            <div class="button" id="change-pl-settings">
-                                Save Changes
-                            </div>
-                        </div>
-                        <div id="spi-actions" class="plugin-items"></div>
-                    </div>
                     <div class="esection" id="tiledata">
                         <h2>Tile Data</h2>
-                        <p>These are advanced settings!</p>
                     </div>
                 </div>
             </div>

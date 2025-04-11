@@ -1,14 +1,34 @@
+import { loadData } from "../data.js";
 import EditorViewLogic from "./EditorViewLogic.js";
 
 const editorButton = document.querySelector("#editor-btn");
 
+const select = document.querySelector("#eprofile-select");
+const generateProfileSelect = () => {
+  select.innerHTML = "";
+  for (const profile of Object.keys(universal.config.profiles)) {
+    const option = document.createElement("option");
+    option.innerText = profile;
+    option.value = profile;
+    select.appendChild(option);
+  }
+  select.onchange = (e) => {
+    const int = JSON.parse(editorButton.getAttribute("data-interaction"));
+    int.data.profile = e.srcElement.value;
+    editorButton.setAttribute("data-interaction", JSON.stringify(int));
+    loadData(int.data);
+  };
+};
+const typeField = document.querySelector("#type");
+
 class Profile extends EditorViewLogic {
   constructor() {
     super("profile", "fd.profile");
+    generateProfileSelect();
   
     this.setOnRun(({interactionData}) => {
-      universal.generateProfileSelect();
-      document.querySelector("#eprofile-select").value =
+      generateProfileSelect();
+      select.value =
         interactionData.data.profile;
     })
 
@@ -17,11 +37,12 @@ class Profile extends EditorViewLogic {
       int.type = "fd.profile";
       int.data.profile = "Default";
       editorButton.setAttribute("data-interaction", JSON.stringify(int));
-      document.querySelector("#type").value = "fd.profile";
-      universal.generateProfileSelect();
-      document.querySelector("#eprofile-select").value = int.data.profile;
+      typeField.value = "fd.profile";
+      generateProfileSelect();
+      select.value = int.data.profile;
     });
   }
 }
+
 
 export default Profile;

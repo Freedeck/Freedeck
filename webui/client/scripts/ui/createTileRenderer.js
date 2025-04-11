@@ -26,7 +26,6 @@ export default function (sndType, keyObject, snd, rawDat) {
 		
 	if (sndType === "fd.sound") defaultHandler(snd, keyObject, rawDat);
 	else if (sndType === "fd.none") noneHandler(snd, keyObject, rawDat, true);
-	else if (sndType === "fd.select") noneHandler(snd, keyObject, rawDat, true);
 	else {
 		switch (snd.renderType) {
 			case "button":

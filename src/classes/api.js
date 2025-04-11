@@ -239,11 +239,7 @@ class Plugin {
    */
   addImport(file) {
     this.imports.push(file);
-    this.tempImportPath = path.resolve(
-      `tmp/_${this.id}.fdpackage`,
-      file,
-    );
-    fs.cpSync(this.tempImportPath, path.resolve(`user-data/hooks/${file}`));
+    this.internalAdd(HookRef.types.import, file, this._hookLocation);
   }
 
   /**
