@@ -35,16 +35,15 @@
 		"asar-bundle-runner": "^1.6.0",
 		"babel-loader": "^10.0.0",
 		"compare-versions": "^6.1.1",
-		"electron": "^34.3.0",
+		"electron": "^35.1.5",
 		"express": "^4.21.2",
 		"formidable": "^3.5.2",
 		"module-alias": "^2.2.3",
-		"npm": "^11.2.0",
 		"pako": "^2.1.0",
 		"socket.io": "^4.8.1",
 		"socket.io-client": "^4.8.1",
 		"tar": "^7.4.3",
-		"webpack": "^5.98.0",
+		"webpack": "^5.99.5",
 		"ws": "^8.18.1"
 	},
 	"devDependencies": {
