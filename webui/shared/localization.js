@@ -67,7 +67,6 @@ let translations = {
   "settings.sections.general.dont_ask": "Don't ask to delete Tiles",
   "settings.sections.general.fdc_tab": "Show FDConnect as a tab",
   "settings.sections.general.ui_sounds": "UI Sounds",
-  "settings.sections.general.center_mode": "Center Mode",
 
   "settings.sections.experiments": "Experiments",
 

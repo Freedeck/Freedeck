@@ -23,10 +23,20 @@ module.exports = (
 	const dimensions = {
 		splashScreen: [420, 525],
 		default: [1400, 850],
+		// emu: [1136, 640],
+		emu: [570, 370],
 	}
 
 	ipcMain.handle("resize-splash", () => _handle(...dimensions.splashScreen));
+	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
 	ipcMain.handle("resize", () => _handle(...dimensions.default));
+
+	const fs = require("node:fs");
+ipcMain.handle("tryss", async () => {
+	const img = await mainWindow.webContents.capturePage({ x: 0, y: 0 }); // Adjust x, y, width, height as needed
+	const png = img.toPNG(); // or toJPEG()
+	fs.writeFileSync("Screenshot.png", png); // Save the screenshot to the file system
+})
 
 	function _handle(w, h) {
 		mainWindow.setSize(w, h);

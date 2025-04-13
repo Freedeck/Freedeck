@@ -396,15 +396,8 @@ input {
 }
 
 #keys {
-	gap: 1rem;
-	grid-template-columns: var(--tile-columns);
-	gap: 2px 7px;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.25);
 	padding: 1rem;
-	border-radius: var(--main-radius);
-
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
 .center {

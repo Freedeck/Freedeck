@@ -407,14 +407,13 @@ const universal = {
     universal.sendEvent("animate_page", "automated", direction);
   },
   incrementPage() {
-    if (UI.Pages[currentPage + 1]) universal.setPage(universal.page + 1);
+    if (UI.Pages[universal.page + 1]) universal.setPage(universal.page + 1);
   },
   decrementPage() {
-    if (UI.Pages[currentPage - 1]) universal.setPage(universal.page - 1);
+    if (UI.Pages[universal.page - 1]) universal.setPage(universal.page - 1);
   },
   keySet: () => {
-    let isCentered = false;
-    if (universal.lclCfg() != null) isCentered = universal.lclCfg().center;
+    const isCentered = false;
     universal.keys.innerHTML = "";
     for (let i = 0; i < universal.config.iconCountPerPage; i++) {
       const tempDiv = document.createElement("div");
@@ -450,7 +449,7 @@ const universal = {
       },
     ];
 
-    if (universal.load("nopreset") === "true") builtInKeys = [];
+    if (universal.lclCfg()["app.freedeck.no_preset_tiles"]) builtInKeys = [];
 
     for (const key of builtInKeys) {
       const tempDiv = document.createElement("div");
@@ -561,19 +560,20 @@ const universal = {
       }, 500);
     }, 3000);
     const logIn = {
-      timestamp: new Date(),
-      page: window.location.pathname,
-      message,
+      t: Date.now(),
+      p: window.location.pathname,
+      m: message,
+      ov: universal.ctx.opened
     };
     if (
       universal.loadObj("logs/notif").length > 0 &&
-      !universal.flags.isEnabled("notification-log")
+      !universal.lclCfg()["app.freedeck.notification_log"]
     )
       universal.saveObj("logs/notif", []);
     else {
       if (universal.loadObj("logs/notif").length > 128)
         universal.saveObj("logs/notif", []);
-      if (universal.flags.isEnabled("notification-log")) {
+      if (universal.lclCfg()["app.freedeck.notification_log"]) {
         const log = universal.loadObj("logs/notif");
         log.push(logIn);
         universal.saveObj("logs/notif", log);
@@ -743,7 +743,7 @@ if (!universal.UI) universal.UI = UI;
 universal.listenFor(
   "animate_page",
   (type = "automated", direction = "left") => {
-    if (universal.lclCfg().animation !== true) return;
+    if (!universal.lclCfg()['app.freedeck.animate_page_changes']) return;
     const keys = document.getElementById("keys");
     if (type === "automated") {
       keys.style.animation = `pull-${direction} 0.5s`;

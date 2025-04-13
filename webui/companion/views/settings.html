@@ -65,25 +65,7 @@
 <br>
 <settings section="generale"></settings>
 <br>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.experiments">Experiments</span> <span><img src="/common/icons/experi.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div class="experiments">
-        <div class="experiment">
-            <label for="blvs">Skip Splash Animation <span class="tag-beta">BETA</span></label>
-            <input type="checkbox" id="blvs" />
-        </div>
-        <div class="experiment">
-            <label for="nbik">No preset keys (Stop All,Reload,Logo) <span class="tag-beta">BETA</span></label>
-            <input type="checkbox" id="nbik" />
-        </div>
-        <div class="experiment">
-            <label for="apc">Animate Page Changes <span class="tag-beta">BAD</span></label>
-            <input type="checkbox" id="apc" />
-        </div>
-    </div>
-</details>
+<settings section="expe"></settings>
 <br class="soundpack-br">
 <details class="experiment-exist soundpack">
     <summary class="settings-section-title">
@@ -138,77 +120,21 @@
         <button onclick="universal.showBootLog()">
             Show boot log
         </button>
-        <button onclick="universal.sendToast('This is a test', 'Settings')">
+        <button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
             Test Notification
         </button>
         <button onclick="universal.send(universal.events.default.recompile)">
-            Ask server to recompile Webpack bundles
+            Recompile Webpack bundles
         </button>
     </div>
     <br>
-    <details>
-        <summary>
-            freedeck:// URI Utilities
-        </summary>
-        <p>Prefix is freedeck://COMMAND/ARGS</p>
-        <div class="flex-wrap-r">
-            <button onclick="window.location.href='freedeck://startup'">
-                startup
-            </button>
-            <button onclick="window.location.href='freedeck://show'">
-                show
-            </button>
-            <button onclick="window.location.href='freedeck://hide'">
-                hide
-            </button>
-            <button onclick="window.location.href='freedeck://show/front'">
-                show/front
-            </button>
-            <button onclick="window.location.href='freedeck://native_open'">
-                native_open
-            </button>
-            <button onclick="window.location.href='freedeck://exit'">
-                exit
-            </button>
-        </div>
-        <h3>App Utilities - Plugin Management</h3>
-        <div class="flex-wrap-r">
-            <div>
-                <h3>Download Flow</h3>
-                <p>://download/ID/URL/DESCRIPTION/REPO_TITLE</p>
-            </div>
-            <br>
-            <button onclick="window.location.href='freedeck://download/ID/URL/DESCRIPTION/REPO_TITLE'">
-                Download Flow
-            </button>
-            <br>
-            <div>
-                <h3>Update Flow</h3>
-                <p>://update/ID/URL/DESCRIPTION/REPO_TITLE/FROM_V0/TO_V1</p>
-            </div>
-            <br>
-            <button onclick="window.location.href='freedeck://update/ID/URL/DESCRIPTION/REPO_TITLE/FROM_V0/TO_V1'">
-                Update Flow
-            </button>
-        </div>
-    </details>
-    <br>
-    <strong><a href="//github.com/ia74/contextual" target="_blank">Contextual</a></strong>
-    <br>
-    <div class="ctxl"></div>
-    <p id="ctx"></p>
-    <h3>Be warned, you can reset your data from here. Tile configuration is NOT affected.</h3>
-    <details>
-        <summary>Local Storage Configuration</summary>
-        <div class="ls-reader">
-
-        </div>
-    </details>
     <div>
-        <button id="fsw">Force setup-wizard</button>
         <details>
-            <summary>Erase ALL LocalStorage data</summary>
-            <button id="erals">ERASE! (NO UNDOING, WILL HAPPEN ON CLICK.)</button>
+            <summary>
+                <h3>Danger Zone</h3>
+            </summary>
+            <div class="flex-wrap-r"><button id="fsw">Force setup-wizard</button>
+                <button id="erals">Erase LocalStorage (NO UNDOING, WILL HAPPEN ON CLICK.)</button></div>
         </details>
     </div>
 </details>
@@ -402,9 +328,6 @@
         vbs.appendChild(container);
     });
 
-    const details = document.querySelector(".ls-reader");
-    appendDetails(details, localStorage, true);
-
     getElement("#fsw").onclick = () => {
         universal.save("has_setup", false);
         window.location.reload();
@@ -427,8 +350,6 @@
         appendDetails(details, data);
     }
 
-    settings_makeExternalStyleToggleFlag("#nbik", "nopreset")
-    settings_makeExternalStyleToggleFlag("#apc", "animation")
     settings_makeExternalStyleToggleFlag("#compact", "compact", () => { universal.UI.reloadSounds() })
     settings_makeExternalStyleToggleFlag("#scroll-long-text", "scroll", () => { universal.UI.reloadSounds() })
     settings_makeExternalStyleToggleFlag("#fill-tiles", "fill", () => { universal.UI.reloadSounds() })
@@ -439,10 +360,10 @@
         window.location.reload();
     }
 
-    document.querySelector(".soundpack").style.display = universal.flags.isEnabled("uiSounds")
+    document.querySelector(".soundpack").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
         ? "block"
         : "none";
-    document.querySelector(".soundpack-br").style.display = universal.flags.isEnabled("uiSounds")
+    document.querySelector(".soundpack-br").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
         ? "block"
         : "none";
     document.querySelector("#soundpack-id").innerText =
@@ -563,16 +484,6 @@
         return button;
     }
 
-    document.querySelector("#ctx").innerText = JSON.stringify(universal.ctx);
-
-    const _views = [
-    ];
-    for (const view of universal.ctx.views) {
-        const button = settingsViewOpen(view, view);
-        _views.push(button);
-    }
-    for (const view of _views) document.querySelector(".ctxl").appendChild(view);
-
     function setToLocalCfg(key, value) {
         const cfg = universal.lclCfg();
         cfg[key] = value;
@@ -584,6 +495,13 @@
             "title": "General",
             "icon": "/common/icons/settings.svg",
             "options": {
+                "app.freedeck.ui_sounds": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.ui_sounds",
+                    "description": "UI Sounds",
+                    "flag": "uis",
+                    "default": universal.lclCfg()["app.freedeck.ui_sounds"] || false,
+                },
                 "app.freedeck.tiles.force_deletion": {
                     "type": "checkbox",
                     "key": "settings.sections.general.dont_ask",
@@ -593,25 +511,11 @@
                 "app.freedeck.sidebar.connect_tab": {
                     "type": "checkbox",
                     "key": "settings.sections.general.fdc_tab",
-                    "description": "Show FDConnect as a tab",
+                    "description": "Show Connect as a tab",
                     "default": universal.lclCfg()["app.freedeck.sidebar.connect_tab"] || false,
                     "onchange": () => {
                         universal.reloadRight();
                     }
-                },
-                "app.freedeck.ui_sounds": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.ui_sounds",
-                    "description": "UI Sounds",
-                    "flag": "uis",
-                    "default": universal.lclCfg()["app.freedeck.ui_sounds"] || false,
-                },
-                "app.freedeck.render.center_mode": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.center_mode",
-                    "description": "Center Mode",
-                    "flag": "cpm",
-                    "default": universal.lclCfg()["app.freedeck.render.center_mode"] || false,
                 },
                 "app.freedeck.notification_log": {
                     "type": "checkbox",
@@ -620,6 +524,30 @@
                     "flag": "notl",
                     "default": universal.lclCfg()["app.freedeck.notification_log"] || false,
                 },
+            }
+        },
+        "expe": {
+            "title": "Experiments",
+            "icon": "/common/icons/experi.svg",
+            "options": {
+                "app.freedeck.skip_boot_animation": {
+                    "type": "checkbox",
+                    "key": "settings.sections.experiments.skip_boot_animation",
+                    "description": "Skip Boot Animation",
+                    "default": universal.lclCfg()["app.freedeck.skip_boot_animation"] || false,
+                },
+                "app.freedeck.no_preset_tiles": {
+                    "type": "checkbox",
+                    "key": "settings.sections.experiments.no_preset_tiles",
+                    "description": "No preset Tiles (Stop All, Reload, Logo)",
+                    "default": universal.lclCfg()["app.freedeck.no_preset_tiles"] || false,
+                },
+                "app.freedeck.animate_page_changes": {
+                    "type": "checkbox",
+                    "key": "settings.sections.experiments.animate_page_changes",
+                    "description": "Animate Page Changes",
+                    "default": universal.lclCfg()["app.freedeck.animate_page_changes"] || false,
+                }
             }
         }
     }
@@ -635,14 +563,14 @@
 
         const title = document.createElement("p");
         title.innerText = _setupMenu.title;
-        title.classList.add("settings-section-title");
+        summary.classList.add("settings-section-title");
         summary.prepend(title);
         const icon = document.createElement("img");
         icon.src = _setupMenu.icon;
         icon.width = 50;
         icon.height = 50;
         icon.loading = "lazy";
-        title.appendChild(icon);
+        summary.appendChild(icon);
 
         const settingsList = document.createElement("div");
         settingsList.classList.add("experiments");

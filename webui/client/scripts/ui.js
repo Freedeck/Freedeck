@@ -120,7 +120,7 @@ function closeBootLog() {
     resolve(true);
     bootLogContainer.style.scale = "0";
     openCloseBootLog.style.display = "none";
-    if (universal.flags.isEnabled("skip-boot-animation")) {
+    if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
       bootLog.style.display = "none";
       if (window.splashScreen) window.splashScreen.unsplash();
     } else {
@@ -509,6 +509,9 @@ function reloadSounds() {
   // Handle compact mode in one operation
   keysContainer.style.width = universal.lclCfg().compact ? "unset" : "100%";
   keysContainer.style.height = universal.lclCfg().compact ? "unset" : "100%";
+  if(universal.name !== "Companion") {
+    keysContainer.style.padding = universal.lclCfg().compact ? ".25rem" : "1rem";
+  }
 
   // Don't remove the keys, we'll update them in place
   // Just remove tooltips and buttons

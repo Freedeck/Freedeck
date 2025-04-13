@@ -155,7 +155,6 @@ export default async function eventsHandler(universal, user) {
 				);
 			}
 			document.documentElement.style.setProperty("--tile-columns", `repeat(${e.tileCols ? e.tileCols : "5"}, 2fr)`);
-			universal.save("nopreset", e.nopreset);
 			universal.lclCfg = () => e;
 			universal.lclCfg().iconCountPerPage = Number.parseInt(e.iconCountPerPage);
 			universal.sendEvent("local-config", e);
