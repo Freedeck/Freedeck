@@ -531,6 +531,7 @@ const universal = {
     });
   },
   name: "",
+  _timeouts: {},
   sendToast: (message, sender = "") => {
     if (!HTMLElement.prototype.setHTML) {
       HTMLElement.prototype.setHTML = function (html) {
@@ -542,7 +543,29 @@ const universal = {
       snackbar.id = "snackbar";
       document.body.appendChild(snackbar);
     }
+    if(document.querySelector(`div[data-message='${message}'][data-sender='${sender}']`)) {
+      const elem = document.querySelector(`div[data-message='${message}'][data-sender='${sender}']`);
+      const count = Number.parseInt(elem.getAttribute("data-count"));
+      elem.setAttribute("data-count", count + 1);
+      elem.setHTML(`<h3>${sender}</h3>${message} (x${count + 1})`);
+      clearTimeout(universal._timeouts[elem.id]);
+      const id = elem.id;
+      const to = setTimeout(() => {
+        elem.className = elem.className.replace("show", "hide");
+        setTimeout(() => {
+          elem.remove();
+        }, 500);
+      }, 3000);
+      universal._timeouts[id] = to;
+      universal.uiSounds.playSound("notification");
+      return;
+    }
     const s = document.createElement("div");
+    s.setAttribute("data-message", message);
+    s.setAttribute("data-sender", sender);
+    s.setAttribute("data-count", 1);
+    const id = `toast-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    s.id = id;
     s.setHTML(`<h3>${sender}</h3>${message}`);
     s.classList.add("toast");
     s.classList.add("show");
@@ -553,12 +576,13 @@ const universal = {
     universal.uiSounds.playSound("notification");
     document.querySelector("#snackbar").appendChild(s);
 
-    setTimeout(() => {
+    const to = setTimeout(() => {
       s.className = s.className.replace("show", "hide");
       setTimeout(() => {
         s.remove();
       }, 500);
     }, 3000);
+    universal._timeouts[id] = to;
     const logIn = {
       t: Date.now(),
       p: window.location.pathname,
