@@ -13,8 +13,8 @@ const checkDirection = (range) => {
   if (pageLock.checked) return;
   const direction = Math.sign(range);
   if (Math.abs(range) >= threshold) {
-    if(direction > 0) universal.incrementPage();
-    else universal.decrementPage();
+    if(direction > 0) universal.decrementPage();
+    else universal.incrementPage();
   }
 };
 

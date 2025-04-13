@@ -1,8 +1,8 @@
 universal.listenFor("launch", () => {
 	loadThemeListing();
-});
-universal.on(universal.events.companion.set_theme, (theme) => {
-	loadThemeListing();
+	universal.on(universal.events.companion.set_theme, (theme) => {
+		loadThemeListing();
+	});
 });
 window.loadThemeListing = async () => {
 	document.querySelector(".themelist").innerHTML = "";
