@@ -459,7 +459,7 @@ const universal = {
       if (key.name === "Settings") {
         tempDiv.innerText = "";
         tempDiv.id = "fd-settings-button";
-        tempDiv.style.backgroundImage = "url(/common/icons/fd.png)";
+        tempDiv.style.backgroundImage = "url(/assets/logo_big.png)";
         tempDiv.style.border = "none";
         tempDiv.style.backgroundColor = "transparent";
         tempDiv.style.boxShadow = "none";

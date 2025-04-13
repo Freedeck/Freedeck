@@ -1,20 +1,18 @@
 node_modules
-plugins/*
 
-tmp/
+# User-specific files
+FreedeckCore.log
 
+src/configs/*
 *.fd.js
 
-# User data
-src/configs/*
-src/public/*
 user-data/
+plugins/*
+
+
+# Plugin extractions
+tmp/
 
 # WebUI Webpacked resources
 webui/app/*
 webui/hooks/*
-
-# Not sure why this is here.
-webui/common/sounds/default*
-
-FreedeckCore.log

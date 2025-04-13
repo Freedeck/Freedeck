@@ -1,7 +1,7 @@
 # Freedeck 
 
 <center>
-<img src="./assets/logo_big.png" width="120" height="120">
+<img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/Freedeck@2k.png" width="120" height="120">
 <br />
 <i>The FOSS alternative to the Elgato Stream Deck.</i>
 </center>
