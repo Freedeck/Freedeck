@@ -5,7 +5,7 @@
     <p>Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your
         Freedeck.</p>
 </center>
-<button onclick="universal.mkp_addRepo();">
+<button id="repo" onclick="universal.mkp_addRepo();">
     Add Repository
 </button>
 <h2 class="message">Loading Marketplace...</h2>
@@ -18,6 +18,9 @@
 <script type="module">
     if (document.querySelector('#add-repo')) {
         document.querySelector('#add-repo').remove();
+    }
+    if(universal.flags.isEnabled("app.freedeck.demo.disable_new_repo")) {
+        document.querySelector('#repo').remove();
     }
     const dialog = universal.UI.makeGenericModal("Add Repository", "Enter the information for the repository.", [], true, `
         <small class="add-msg"></small>

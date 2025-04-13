@@ -45,6 +45,7 @@ function makeGenericModal(
     close: () => {
       modal.classList.add("closing");
       modal.querySelector(".modal-body").classList.add("closing");
+      universal.uiSounds.playSound("int_no");
       setTimeout(() => {
         modal.remove();
       }, 250);

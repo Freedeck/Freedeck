@@ -131,7 +131,7 @@
 			const status = data.deviceStatus ? "Your device is connected to Freedeck!" : "Your device is not connected to Freedeck!";
 			const devStatus = document.querySelectorAll('.dev-status');
 			devStatus.forEach(e => e.innerText = `Status: ${status}`);
-			if (data.state) {
+			if (data.deviceStatus) {
 				devStatus.forEach(e => e.style.color = 'green');
 				document.querySelector('#later-button').innerText = 'Close';
 				clearInterval(poll);
