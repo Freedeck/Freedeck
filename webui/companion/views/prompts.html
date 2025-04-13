@@ -87,7 +87,7 @@
 	let code = 'A code could not be generated.';
 	let ip;
 
-	fetch('/connect/local-ip').then(res => res.json()).then(data => {
+	fetch('/api/discover').then(res => res.json()).then(data => {
 		localNet.forEach(e => e.innerText = data.ip[Object.keys(data.ip)[0]][0]);
 		if (Object.keys(data.ip).length == 0) {
 			document.querySelectorAll('.mfa-code').forEach(e => e.innerText = "You are offline, please try again later.");
@@ -127,8 +127,8 @@
 	}
 
 	const poll = setInterval(() => {
-		fetch('/connect/dev-status').then(res => res.json()).then(data => {
-			const status = data.message;
+		fetch('/api/discover').then(res => res.json()).then(data => {
+			const status = data.deviceStatus ? "Your device is connected to Freedeck!" : "Your device is not connected to Freedeck!";
 			const devStatus = document.querySelectorAll('.dev-status');
 			devStatus.forEach(e => e.innerText = `Status: ${status}`);
 			if (data.state) {

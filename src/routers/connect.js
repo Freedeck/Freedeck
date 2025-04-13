@@ -6,43 +6,34 @@ const networkAddresses = require("@managers/networkAddresses");
 const router = express.Router();
 const { version } = require(path.resolve("package.json"));
 
-let iwebpackState = 0;
+let iwebpackState = "uninitialized";
 
 const webpackState = (i) => {
   iwebpackState = i;
 }
 
-router.get("/plugins", (req, res) => {
-  const idList = [];
+const idList = [];
+function recalculate() {
+  idList.length = 0;
   const pl = plugins._plc.keys();
   for (const key of pl) {
     idList.push(key);
   }
-  res.send({ plugins: idList });
-});
+}
+recalculate();
 
-router.get("/status", (req, res) => res.sendStatus(200));
+const ip = networkAddresses();
 
-router.get("/discover", (req, res) => res.send({
-  title: "Freedeck",
-  version
-}));
-
-router.get("/webpack", (req, res) => {
-  res.send({ compiled: iwebpackState });
-});
-
-router.get("/local-ip", (req, res) => {
-  res.send({ ip: networkAddresses() });
-});
-
-router.get("/dev-status", (req, res) => {
+router.get("/discover", (req, res) => {
+  if(plugins._plc.keys().length !== idList.length) recalculate();
   res.send({
-    message: tsm.get("isMobileConnected")
-      ? "Your device is connected to Freedeck!"
-      : "Your device is not connected to Freedeck!",
-    state: tsm.get("isMobileConnected"),
-  });
+    title: "Freedeck",
+    version,
+    plugins: idList,
+    webpackStatus: iwebpackState,
+    deviceStatus: tsm.get("isMobileConnected"),
+    ip
+  })
 });
 
 module.exports = {router, webpackState, getWs:()=>iwebpackState};

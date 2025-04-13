@@ -13,7 +13,7 @@
   <meta name="apple-mobile-web-app-title" content="Freedeck" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="msapplication-TileColor" content="#00b3ff" />
-  <title>Freedeck - Connecting...</title>
+  <title>Freedeck Connect</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
     <input type="text" value="http://localhost:5754" id="url">
   </div>
   <img src="/assets/logo_big.png" class="icon">
-  <p class="progress-text"></p>
+  <p class="progress-text">Freedeck is starting...</p>
   <style>
     .connection {
       position: fixed;
@@ -164,32 +164,26 @@
     window.splashScreen.splash()
     async function task() {
       if (isTryingToConnect) return;
-      setText("Connecting to server...");
       animateProgressTo(1);
-      const res = await fetch(url + "/connect/webpack").catch((err) => {
+      async function webpacker() {
+        const res = await fetch(url + "/api/discover").catch((err) => {
         setText("Failed to connect to server.");
         document.querySelector(".connection").style.display = "block";
         document.querySelector("#failure").innerText = "Failed to connect to server.";
         document.querySelector("#url").value = url;
         return;
       });
-      const data = await res.json();
-      const isBuilding = data.compiled != 1;
-      setText(isBuilding ? "Preparing client..." : "Compiling Bundles: " + (data.compiled + 1) + "/2");
+        const data = await res.json();
+        const isBuilding = data.webpackStatus != "ready";
+        setText(isBuilding ? "Freedeck is starting..." : "Freedeck is ready!");
+        return isBuilding;
+      }
+      const isBuilding = await webpacker();
       animateProgressTo(20);
 
       if(isBuilding) {
         const timer = setInterval(async () => {
-          const res = await fetch(url + "/connect/webpack").catch((err) => {
-            setText("Failed to connect to server.");
-            document.querySelector(".connection").style.display = "block";
-            document.querySelector("#failure").innerText = "Failed to connect to server.";
-            document.querySelector("#url").value = url;
-            return;
-          });
-          const data = await res.json();
-          const isBuilding = data.compiled != 1;
-          setText("Compiling Bundles: " + (data.compiled + 1) + "/2");
+          await webpacker();
           if (!isBuilding) {
             clearInterval(timer);
           }
@@ -197,11 +191,9 @@
         return;
       };
 
-      setText("Locking client...");
       isTryingToConnect = true;
       animateProgressTo(100);
 
-      setText("Deciding where to send user " + id);
       let whereToGo = url;
       if (localStorage.getItem(btoa("fd.BfCon"))) {
         localStorage.removeItem(btoa("fd.BfCon"));
@@ -213,15 +205,15 @@
       } else {
         whereToGo = url;
       }
-      document.querySelector("progress").style.opacity = '0';
+      p.style.opacity = '0';
       
-      setText(`Redirecting to ${whereToGo}`);
       window.location.replace(whereToGo);
     }
     setInterval(() => {
       if (isTryingToConnect) return;
       task();
     }, 500);
+    task();
   </script>
 </body>
 

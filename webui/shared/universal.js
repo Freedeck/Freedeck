@@ -312,9 +312,9 @@ const universal = {
   init: (user) => {
     return new Promise((resolve, reject) => {
       (async () => {    
-        const stateFetch = await fetch("/connect/webpack");
+        const stateFetch = await fetch("/api/discover")
         const state = await stateFetch.json();
-        if (state.compiled !== 1) {
+        if (state.webpackStatus !== "ready") {
           window.location.href = `/new-connect.html?id=${user}`;
         }
         UI.makeBootLog();

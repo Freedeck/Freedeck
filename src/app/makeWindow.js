@@ -31,13 +31,6 @@ module.exports = (
 	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
 	ipcMain.handle("resize", () => _handle(...dimensions.default));
 
-	const fs = require("node:fs");
-ipcMain.handle("tryss", async () => {
-	const img = await mainWindow.webContents.capturePage({ x: 0, y: 0 }); // Adjust x, y, width, height as needed
-	const png = img.toPNG(); // or toJPEG()
-	fs.writeFileSync("Screenshot.png", png); // Save the screenshot to the file system
-})
-
 	function _handle(w, h) {
 		mainWindow.setSize(w, h);
 		mainWindow.center();

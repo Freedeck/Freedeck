@@ -397,6 +397,7 @@ input {
 
 #keys {
 	padding: 1rem;
+	transition-duration: .25s;
 	background-color: rgba(0, 0, 0, 0.25);
 }
 

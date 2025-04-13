@@ -1,7 +1,7 @@
 import { UI } from "../../../../client/scripts/ui";
 import { SidebarSection, SidebarSlider, SidebarCheck } from "../SidebarSection";
 
-const style = new SidebarSection("Style", "Style");
+const style = new SidebarSection("Tile Style", "Style");
 
 const handleCheckFor = (e, property) => {
   universal.send(

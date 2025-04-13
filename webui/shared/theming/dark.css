@@ -13,7 +13,7 @@
 	--modal-bg:rgba(15,15,15);
 	--modal-color:white;
 
-	--tile-border:rgba(255,255,255, 0.25);
+	--tile-border:1px solid rgba(255,255,255, 0.5);
 	--tile-bg:rgba(255,255,255, 0.025);
 
 	--input-bg:rgba(255,255,255, 0.25);

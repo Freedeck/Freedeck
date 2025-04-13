@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 app.use("/", staticRouter);
 
-app.use("/connect", connectRouter);
+app.use("/api", connectRouter);
 app.use("/handoff", handoffRouter);
 
 app.use("/api/upload", uploadRouter);

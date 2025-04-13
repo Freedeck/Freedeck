@@ -78,11 +78,11 @@ function runWebpack(webpackInstance) {
  * @return {Promise<void>}
  */
 async function compileWebpack() {
-  setWsStateHttp(0);
+  setWsStateHttp("compiling");
   const webpackInstance = webpack(webpackConfig);
   await runWebpack(webpackInstance)
     .then(() => {
-      setWsStateHttp(1);
+      setWsStateHttp("ready");
     })
     .catch((e) => {
       console.error(e);

@@ -56,16 +56,6 @@ router.get("/:token/notify/:data/:sender", (req, res) => {
   res.send({ status: "success", message: "Sent notification." });
 });
 
-
-router.get("/:token/slider-change/:uuid/:value", (req, res) => {
-  const {uuid, value} = req.params;
-  interactorDataSendToServer('slider', {
-    uuid,
-    value
-  })
-  res.send({ status: "pending-success", message: "Attempting to change slider." });
-});
-
 function interactorDataSendToServer(id, data={}) {
   notifMan.add('handoff-api', `hid.s ${id} |${JSON.stringify(data)}`)
 }
