@@ -553,7 +553,7 @@ input {
 	display: none;
 }
 
-.selectable-plugin-tile-action .active {
+.selectable-plugin-tile-action.active {
 	background-color: rgba(0, 0, 0, 0.75);
 }
 

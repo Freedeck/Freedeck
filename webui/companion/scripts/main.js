@@ -57,6 +57,15 @@ const editorViewLogics = new Map(
   ]
 )
 
+const selectPluginDisabled = document.querySelector('.spi-actions-disabled');
+const selectPluginNotFound = document.querySelector('.spi-actions-notfound')
+const selectPluginDisabledId = document.querySelectorAll('.spi-actions-disabled-id');
+const selectPluginType = document.querySelectorAll(".spi-actions-notfound-type");
+function setDisabledMessageFor(id, type) {
+  for(const i of selectPluginDisabledId) i.innerText = id;
+  for(const i of selectPluginType) i.innerText = type;
+}
+
 /**
  * Edit a tile
  * @param {*} e HTML Element corresponding to the button that we grabbed context from
@@ -104,46 +113,36 @@ function editTile(e) {
     document.querySelector("#plugin").style.display = "none";
     document.querySelector('label[for="plugin"]').style.display = "none";
   }
-  document.querySelector("#editor-back").style.display = "block";
+  document.querySelector("#editor-back").style.display = "flex";
   
   closeAllViews();
-  document.querySelector(".spi-actions-disabled").style.display = "none";
-  document.querySelector(".spi-actions-notfound").style.display = "none";
+  selectPluginDisabled.style.display = "none";
+  selectPluginNotFound.style.display = "none";
 
+  const allSelectablePluginListers = document.querySelectorAll(".selectable-plugin-lister");
   if (!interactionData.type.startsWith("fd.")) {
-    for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
-      if (el.classList.contains(`pl-${interactionData.plugin}`))
-        el.style.display = "block";
-    }
-    for (const el of document.querySelectorAll(".spiback")) {
+    const selectableItemsOfType = document.querySelectorAll(`.selectable-plugin-tile-action[data-plugin="${universal.cleanHTML(interactionData.plugin)}"]`)
+    for (const el of selectableItemsOfType) {
       el.style.display = "block";
     }
-    for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
+    for (const el of allSelectablePluginListers) {
       el.style.display = "none";
     }
 
-    for (const el of document.querySelectorAll(".spi-actions-disabled-id")) {
-      el.innerText = interactionData.plugin;
-    }
-    for (const el of document.querySelectorAll(
-      ".spi-actions-notfound-type"
-    )) {
-      el.innerText = interactionData.type;
-    }
-    if (
-      !document.querySelector(`.selectable-plugin-tile-action[data-type="${interactionData.type}"]`)
-    ) {
-      document.querySelector(".spi-actions-notfound").style.display = "block";
+    setDisabledMessageFor(interactionData.plugin, interactionData.type);
+    if (!doesInteractionTypeExist(interactionData.type)) {
+      selectPluginNotFound.style.display = "block";
     }
     if (universal.plugins[interactionData.plugin] === undefined) {
-      document.querySelector(".spi-actions-disabled").style.display = "block";
+      selectPluginDisabled.style.display = "block";
     }
+    selectablePluginItemBack.style.display = "flex";
     openViewTop("plugins");
   } else {
-    for (const el of document.querySelectorAll(".selectable-plugin-tile-action, .spiback")) {
+    for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
       el.style.display = "none";
     }
-    for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
+    for (const el of allSelectablePluginListers) {
       el.style.display = "block";
     }
   }
@@ -227,14 +226,17 @@ createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
 
 
-document.querySelector("#spiback").onclick = (e) => {
-  document.querySelector(".spi-actions-disabled").style.display = "none";
-  for (const el of document.querySelectorAll(".selectable-plugin-tile-action, .spiback")) {
+const selectablePluginItemBack = document.querySelector("#select-plugin-back");
+const disabledActions = document.querySelector(".spi-actions-disabled"); 
+selectablePluginItemBack.onclick = (e) => {
+  disabledActions.style.display = "none";
+  for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
     el.style.display = "none";
   }
   for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
     el.style.display = "block";
   }
+  selectablePluginItemBack.style.display = "none";
 };
 
 document.querySelector("#spiav").onclick = () => {
@@ -251,6 +253,12 @@ document.querySelector("#spiav").onclick = () => {
 
 const spiContainer = document.querySelector("#spi-actions");
 const createdIdentifiers = [];
+function doesInteractionTypeExist(type) {
+  for(const it of universal._tyc.keys()) {
+    if(it.type === type) return true;
+  }
+  return false;
+}
 for (const interactionType of universal._tyc.keys()) {
   if (interactionType.hidden) continue;
   if (!createdIdentifiers.includes(interactionType.pluginId)) {
@@ -265,9 +273,7 @@ for (const interactionType of universal._tyc.keys()) {
         el.style.display = "block";
       }
 
-      for (const el of document.querySelectorAll(".spiback")) {
-        el.style.display = "block";
-      }
+      selectablePluginItemBack.style.display = 'flex';
 
       for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
         el.style.display = "none";
@@ -290,18 +296,22 @@ for (const interactionType of universal._tyc.keys()) {
     const tileToSelect = document.querySelector(
       `.selectable-plugin-tile-action[data-type="${interactionType.type}"][data-plugin="${interactionType.pluginId}"]`
     )
+
+    for(const i of document.querySelectorAll(".selectable-plugin-tile-action")) {
+      i.classList.remove("active");
+    }
     
     if (interaction.plugin) {
       if (tileToSelect) tileToSelect.classList.remove("active");
     }
     
     interaction.type = interactionType.type;
-    interaction.plugin = interactionType.plugin;
+    interaction.plugin = interactionType.pluginId;
     interaction.renderType = interactionType.renderType;
     interaction.data = { ...interaction.data, ...interactionType.templateData };
     tileToSelect.classList.add("active");
     editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
-    document.querySelector("#type")
+    document.querySelector("#type").value = interactionType.type;
     loadData(interaction.data);
   };
   spiContainer.appendChild(element);

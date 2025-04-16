@@ -840,13 +840,15 @@ a:hover {
 .tooltip {
     position: absolute;
     display: none;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white;
+    background-color: var(--modal-bg);
+    color: var(--modal-color);
+    border: var(--generic-border);
     padding: 5px;
     border-radius: var(--main-radius);
     z-index: 1020;
     pointer-events: none;
     transition: opacity 0.2s;
+    margin: .5rem;
 }
 
 .tooltip.show {

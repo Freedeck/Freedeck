@@ -681,7 +681,7 @@ function reloadSounds() {
       }
 
       tooltipContent += "<p>Right click to edit.</p>";
-      tooltipContent += `<details><summary>Advanced (press V)</summary><p>Type: ${
+      tooltipContent += `<details><summary>Advanced (press V)</summary><small>These are internally used for Freedeck.</small><p>Type: ${
         snd.type
       }</p><p>Pos: ${snd.pos}</p><p>Data size: ${
         Object.keys(snd.data).length
@@ -758,12 +758,9 @@ function reloadSounds() {
     window._tooltipVKeyListener = true;
     window.addEventListener("keydown", (e) => {
       if (e.key === "v") {
-        const visibleTooltip = document.querySelector(
-          ".tile-tooltip:not([style*='display: none'])"
-        );
-        if (visibleTooltip && visibleTooltip.querySelector("details")) {
-          visibleTooltip.querySelector("details").open =
-            !visibleTooltip.querySelector("details").open;
+        for (const tooltip of document.querySelectorAll(".tile-tooltip")) {
+          const details = tooltip.querySelector("details");
+          if (details) details.open = !details.open;
         }
       }
     });

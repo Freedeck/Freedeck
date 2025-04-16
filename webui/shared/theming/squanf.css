@@ -1,0 +1,13 @@
+:theme-meta {
+	--name: "Squaw! Never Forget";
+	--description: "Inspired by Troy Valdes";
+	--author: "Freedeck";
+	--version: "1.0.0";
+}
+
+:root {
+    --main-bg-size: 20%;
+    --main-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
+    
+    --modal-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
+}

@@ -91,6 +91,8 @@ const editorContainer = document.querySelector("#editor");
 const toggleSidebarContainer = document.querySelector(".toggle-sidebar");
 const toggleSidebarButton = document.querySelector(".toggle-sidebar button");
 
+universal.createTooltipFor(editorClose, "Your unsaved changes will not be made.");
+
 editorClose.onclick = () => {
   universal.uiSounds.playSound("int_no");
   for(const el of document.querySelectorAll(".k")) {
