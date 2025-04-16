@@ -631,8 +631,23 @@ const universal = {
       tooltip.classList.add("show");
     };
     element.onmousemove = (ev) => {
-      tooltip.style.top = `${ev.clientY}px`;
-      tooltip.style.left = `${ev.clientX}px`;
+      const tooltipWidth = tooltip.offsetWidth;
+      const tooltipHeight = tooltip.offsetHeight;
+      
+      const mouseX = ev.clientX;
+      const mouseY = ev.clientY;
+      
+      if (mouseX + tooltipWidth > window.innerWidth) {
+        tooltip.style.left = `${mouseX - tooltipWidth}px`;
+      } else {
+        tooltip.style.left = `${mouseX}px`;
+      }
+      
+      if (mouseY + tooltipHeight > window.innerHeight) {
+        tooltip.style.top = `${mouseY - tooltipHeight}px`;
+      } else {
+        tooltip.style.top = `${mouseY}px`;
+      }
     };
     return tooltip;
   },
