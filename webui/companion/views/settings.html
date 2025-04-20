@@ -3,25 +3,8 @@
 </h1>
 <details>
     <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.style">Style</span> <span><img src="/common/icons/style.svg" width="50" height="50" loading="lazy"></span>
+        <span data-i18n-key="settings.sections.style">Themes</span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
     </summary>
-    <br>
-    <div class="experiments">
-        <div class="experiment">
-            <label for="compact" data-i18n-key="settings.sections.style.compact">Compact Mode</label>
-            <input type="checkbox" id="compact" />
-        </div>
-        <div class="experiment">
-            <label for="scroll-long-text" data-i18n-key="settings.sections.style.scroll">Scroll Long Text</label>
-            <input type="checkbox" id="scroll-long-text" />
-        </div>
-        <div class="experiment">
-            <label for="fill-tiles" data-i18n-key="settings.sections.style.fill">Fill Tiles</label>
-            <input type="checkbox" id="fill-tiles" />
-        </div>
-    </div>
-    <br>
-    <h2 class="flex-wrap-r alc"><span data-i18n-key="settings.sections.style.themes">Themes</span> <span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span></h2>
     <div class="themelist"></div>
 </details>
 <br style="display:none;">
@@ -350,10 +333,6 @@
         appendDetails(details, data);
     }
 
-    settings_makeExternalStyleToggleFlag("#compact", "compact", () => { universal.UI.reloadSounds() })
-    settings_makeExternalStyleToggleFlag("#scroll-long-text", "scroll", () => { universal.UI.reloadSounds() })
-    settings_makeExternalStyleToggleFlag("#fill-tiles", "fill", () => { universal.UI.reloadSounds() })
-
     getElement("#erals").onclick = () => {
         localStorage.clear();
         universal.sendToast("Erased all LocalStorage data! Cleaning up...", "Settings: Developer Tools");
@@ -424,33 +403,6 @@
         document.querySelector(".soundpacks").appendChild(li);
     });
 
-    function setToExternalStyle(k, v) {
-        universal.send(
-            universal.events.default.config_changed,
-            setToLocalCfg(k, v)
-        );
-    }
-
-    function settings_makeToggleFlag(k, v, a = () => { }) {
-        document.querySelector(k).checked = universal.flags.isEnabled(v);
-        document.querySelector(k).onchange = (ev) => {
-            universal.flags.toggle(v);
-            a(ev);
-        }
-    }
-    function settings_makeExternalStyleToggleFlag(k, v) {
-        document.querySelector(k).checked = universal.lclCfg()[v] == true;
-
-        document.querySelector(k).onchange = () => {
-            setToExternalStyle(v, !(universal.lclCfg()[v] == true));
-        };
-    }
-
-    function settingsView_createLSCheck(id, label, description, changed) {
-        const a = "";
-        settings_makeToggleFlag("#" + id, id, changed);
-    }
-
     function appendDetails(parent, data, isUniversal = false) {
         Object.keys(data).forEach((key) => {
             const detail = document.createElement("details");
@@ -495,6 +447,33 @@
             "title": "General",
             "icon": "/common/icons/settings.svg",
             "options": {
+                "compact": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.compact",
+                    "description": "Compact Mode",
+                    "default": universal.lclCfg()["compact"] || false,
+                    "onchange": () => {
+                        universal.UI.reloadSounds();
+                    }
+                },
+                "scroll": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.scroll",
+                    "description": "Scroll Long Text",
+                    "default": universal.lclCfg()["scroll"] || false,
+                    "onchange": () => {
+                        universal.UI.reloadSounds();
+                    }
+                },
+                "app.freedeck.ui.fill_tiles": {
+                    "type": "checkbox",
+                    "key": "settings.sections.general.fill",
+                    "description": "Fill Tiles",
+                    "default": universal.lclCfg()["app.freedeck.ui.fill_tiles"] || false,
+                    "onchange": () => {
+                        universal.UI.reloadSounds();
+                    }
+                },
                 "app.freedeck.ui_sounds": {
                     "type": "checkbox",
                     "key": "settings.sections.general.ui_sounds",

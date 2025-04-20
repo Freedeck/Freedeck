@@ -587,7 +587,7 @@ const universal = {
       t: Date.now(),
       p: window.location.pathname,
       m: message,
-      ov: universal.ctx.opened
+      ov: universal.ctx?.opened
     };
     if (
       universal.loadObj("logs/notif").length > 0 &&

@@ -5,7 +5,7 @@ const styleLocation = path.resolve("./src/configs/style.json");
 
 const defaults = {
   scroll: false,
-  fill: false,
+  "app.freedeck.ui.fill_tiles": false,
   center: false,
   animation: false,
   compact: true,

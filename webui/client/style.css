@@ -396,7 +396,7 @@ input {
 .space-evenly {
     justify-content: space-evenly;
     align-items: center;
-}
+}  
 
 .full-center {
     position: absolute;

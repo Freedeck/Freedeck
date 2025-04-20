@@ -57,7 +57,7 @@ export default async function dataHandler(universal, user) {
     universal.flags.reload();
 
     if (!universal.load("welcomed")) {
-      universal.sendToast("Welcome to Freedeck.");
+      universal.sendToast("Welcome to Freedeck.", "Freedeck");
       universal.CLU("Incoming Data Handler", "Welcomed user.");
       universal.save("welcomed", "true");
     }

@@ -75,6 +75,7 @@ nbws._socket.onmessage = (event) => {
       nbws._io.emit(`NBWS_${data.Event}`, JSON.parse(data.Data));
     } 
   } catch (e) {
+    console.log(realData);
     console.log(`Failed to parse JSON: ${e}`);
   }
 };

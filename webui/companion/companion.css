@@ -157,6 +157,17 @@ input {
 	height: 100%;
 	z-index: 1002;
 	overflow-y: scroll;
+	transition-duration: .25s;
+}
+
+.sidebar.disabled {
+	pointer-events: none;
+	/* background-color: rgba(0, 0, 0, 0.25); */
+}
+
+.sidebar.disabled > * {
+	pointer-events: none;
+	opacity: 0.5;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -165,9 +176,10 @@ input {
 
 .contextMenu {
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: var(--modal-bg);
 	color: white;
 	border-radius: var(--main-radius);
+	border: var(--generic-border);
 	padding: 0.5rem;
 	z-index: 1021;
 	transition-duration: .25s;
@@ -412,7 +424,7 @@ input {
 	transition-duration: .25s;
 }
 
-.disabled {
+.disabled:not(.sidebar) {
 	pointer-events: none;
 	background-color: rgba(0, 0, 0, 0.25);
 }

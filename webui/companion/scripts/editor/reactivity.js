@@ -4,6 +4,7 @@ const color = document.querySelector("#color");
 const name = document.querySelector("#name");
 const type = document.querySelector("#type");
 const renderType = document.querySelector("#rendertype");
+const leftSidebar = document.querySelector(".sidebar");
 
 color.onchange = (e) => {
   editorButton.style.backgroundColor =
@@ -81,6 +82,8 @@ universal.listenFor("editTile", (d, tileName) => {
     document.querySelector("#plugins-only").style.display = "none";
     document.querySelector(`#plugin-view-${data._view}`).style.display = "block";
   }
+  leftSidebar.classList.add("disabled")
+
 })
 
 const editorSave = document.querySelector("#editor-save");
@@ -115,6 +118,7 @@ editorClose.onclick = () => {
     document.querySelector("#color").dataset.has_set = "false";
     editorButton.style.backgroundColor = "";
   }, 249);
+  leftSidebar.classList.remove("disabled");
 };
 
 editorSave.onclick = () => {
