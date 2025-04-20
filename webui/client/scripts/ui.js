@@ -300,7 +300,7 @@ function reloadSounds() {
   // Update page indicator in one operation
   const pageIndicator = document.querySelector(".cpage");
   if (pageIndicator) {
-    pageIndicator.innerText = `${translationKey("lside.pages.page")}${
+    pageIndicator.innerText = `${translationKey("sidebars.left.pages.page")}${
       currentPage + 1
     }/${Object.keys(Pages).length}`;
   }

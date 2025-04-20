@@ -1,37 +1,36 @@
 { 
   "locale.display": "English",
-  "sidebar.Tiles": "Tiles",
-  "sidebar.Library": "Library",
-  "sidebar.Marketplace": "Marketplace",
-  "sidebar.Settings": "Settings",
-  "sidebar.Connect": "Connect",
-  "sidebar.Recompile": "Recompile",
-  "sidebar.Setup": "Setup",
-  "sidebar.Pair Device": "Pair Device",
-  "sidebar.Themer": "Themer",
+  "sidebars.right.Tiles": "Tiles",
+  "sidebars.right.Library": "Library",
+  "sidebars.right.Marketplace": "Marketplace",
+  "sidebars.right.Settings": "Settings",
+  "sidebars.right.Connect": "Connect",
+  "sidebars.right.Recompile": "Recompile",
+  "sidebars.right.Setup": "Setup",
+  "sidebars.right.Pair Device": "Pair Device",
+  "sidebars.right.Themer": "Themer",
   
-  "lside.mobd": "Mobile Device",
-  "lside.mobd.pair": "Pair Mobile Device",
+  "sidebars.left.mobd": "Mobile Device",
+  "sidebars.left.mobd.pair": "Pair Mobile Device",
 
-  "lside.pages.page": "Page: ",
-  "lside.pages.try": "Try Tiles",
-  "lside.pages.previous": "Previous Page",
-  "lside.pages.next": "Next Page",
+  "sidebars.left.pages.page": "Page: ",
+  "sidebars.left.pages.try": "Test Tiles",
+  "sidebars.left.pages.previous": "Previous Page",
+  "sidebars.left.pages.next": "Next Page",
 
-  "lside.footer.thanks": "Thank you for using Freedeck!",
-  "lside.footer.github_pre": "Freedeck is open-source and can be found on",
-  "lside.footer.need_help": "Need help?",
-  "lside.footer.need_help.wiki": "Check the Wiki!",
+  "sidebars.left.footer.thanks": "Thank you for using Freedeck!",
+  "sidebars.left.footer.github_pre": "Freedeck is open-source and can be found on",
+  "sidebars.left.footer.need_help": "Need help?",
+  "sidebars.left.footer.need_help.wiki": "Check the Wiki!",
 
   "editor.sections.no_action": "No Action!",
 
   "settings.title": "Settings",
 
-  "settings.sections.style": "Style",
-  "settings.sections.style.compact": "Compact Mode",
-  "settings.sections.style.scroll": "Scroll Long Text",
-  "settings.sections.style.fill": "Fill Tiles",
-  "settings.sections.style.themes": "Themes",
+  "settings.sections.style": "Themes",
+  "settings.sections.general.compact": "Compact Mode",
+  "settings.sections.general.scroll": "Scroll Long Text",
+  "settings.sections.general.fill": "Fill Tiles",
 
   "settings.sections.language": "Language",
 
@@ -43,14 +42,18 @@
   "settings.sections.plugins.disabled.enable": "Enable",
   "settings.sections.plugins.tile_previews": "Tile Previews",
 
-  "settings.sections.audio_devices": "Audio Devices",
-  "settings.sections.audio_devices.monitor": "Monitor Devices",
+  "settings.sections.audio_devices": "Output Devices",
+  "settings.sections.audio_devices.monitor": "Output Devices",
   "settings.sections.audio_devices.vb": "VB-Cable Devices",
 
   "settings.sections.general": "General",
   "settings.sections.general.dont_ask": "Don't ask to delete Tiles",
   "settings.sections.general.fdc_tab": "Show FDConnect as a tab",
+  "settings.sections.general.notification_log": "Notification Log",
   "settings.sections.general.ui_sounds": "UI Sounds",
+  "settings.sections.general.skip_boot_animation": "Skip Boot Animation",
+  "settings.sections.experiments.no_preset_tiles": "No Preset Tiles BETA (Stop All, Reload, Logo)",
+
 
   "settings.sections.experiments": "Experiments",
 

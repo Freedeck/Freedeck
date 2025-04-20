@@ -34,7 +34,7 @@
         align-items: center;
         padding: 1rem;
         color: var(--modal-item-text);
-        border: 1px solid #000;
+        border: var(--generic-border);
         border-radius: var(--main-radius);
         margin: 0.5rem 0;
         gap: 0.25rem;
@@ -52,7 +52,7 @@
         flex-direction: column;
         flex-wrap: wrap;
         gap: 0.25rem;
-        background-color: rgba(0, 0, 0, 0.25);
+        /* background-color: rgba(0, 0, 0, 0.25); */
         padding: 5px;
         border-radius: var(--main-radius);
     }
@@ -63,7 +63,11 @@
         justify-content: start;
         gap: 0.25rem;
         border-radius: var(--main-radius);
-        background-color: rgba(0, 0, 0, 0.25);
+        padding: 0.5rem;
+        background: var(--modal-item-bg);
+        background-size: var(--modal-item-bg-size);
+        animation: var(--modal-item-bg-anim);
+        border: var(--generic-border);
     }
 
     details>summary::marker {
@@ -85,6 +89,7 @@
         display: flex;
         background: var(--modal-item-bg);
         background-size: var(--modal-item-bg-size);
+        border: var(--generic-border);
         animation: var(--modal-item-bg-anim);
         padding: 0.65rem;
         border-radius: var(--main-radius);
@@ -109,6 +114,7 @@
         background-size: var(--modal-item-bg-size);
         animation: var(--modal-item-bg-anim);
         padding: .5rem;
+        border: var(--generic-border);
         border-radius: var(--main-radius);
     }
 

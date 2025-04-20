@@ -368,7 +368,7 @@ summary ::-webkit-details-marker {
 }
 
 select {
-    background-color: var(--modal-bg);
+    background: var(--modal-bg);
     border: var(--generic-border);
     border-radius: var(--main-radius);
     padding: 5px;
@@ -380,7 +380,7 @@ select {
 }
 
 input {
-    background-color: var(--modal-bg);
+    background: var(--modal-bg);
     border: var(--generic-border);
     border-radius: var(--main-radius);
     padding: 5px;
@@ -395,7 +395,7 @@ input[type="checkbox"] {
     max-height: 1.5rem;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: var(--modal-bg);
+    background: var(--modal-bg);
     border: var(--generic-border);
     border-radius: var(--main-radius);
     padding: 5px;
@@ -406,7 +406,7 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked {
     appearance: none;
-    background-color: var(--modal-bg);
+    background: var(--modal-bg);
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.2l-4.2-4.2L3 14l6 6 12-12-1.8-1.8z"/></svg>');
     background-repeat: no-repeat;
     background-position: center;
@@ -767,7 +767,7 @@ a:hover {
 .slider-thumb {
     width: 100%;
     height: 100%;
-    background-color: var(--slider-foreground);
+    background: var(--slider-foreground);
     opacity: 0;
     position: absolute;
     cursor: pointer;
@@ -873,7 +873,7 @@ a:hover {
 .tooltip {
     position: absolute;
     display: none;
-    background-color: var(--modal-bg);
+    background: var(--modal-bg);
     color: var(--modal-color);
     border: var(--generic-border);
     padding: 5px;

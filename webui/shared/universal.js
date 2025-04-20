@@ -782,10 +782,10 @@ if (!universal.UI) universal.UI = UI;
 universal.listenFor(
   "animate_page",
   (type = "automated", direction = "left") => {
-    if (!universal.lclCfg()['app.freedeck.animate_page_changes']) return;
-    const keys = document.getElementById("keys");
-    if (type === "automated") {
-      keys.style.animation = `pull-${direction} 0.5s`;
-    }
+    // if (!universal.lclCfg()['app.freedeck.animate_page_changes']) return;
+    // const keys = document.getElementById("keys");
+    // if (type === "automated") {
+    //   keys.style.animation = `pull-${direction} 0.5s`;
+    // }
   }
 );

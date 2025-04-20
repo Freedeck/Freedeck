@@ -15,7 +15,6 @@
   align-items: center;
   padding: 1rem;
   color: var(--modal-item-text);
-  border: 1px solid #000;
   border-radius: var(--main-radius);
   margin: 0.5rem 0;
   gap: 1rem;
@@ -23,6 +22,7 @@
   text-overflow: ellipsis;
 
   background: var(--modal-item-bg);
+  border: var(--generic-border);
   background-size: var(--modal-item-bg-size);
   animation: var(--modal-item-bg-anim);
 }
@@ -45,7 +45,7 @@
   align-items: center;
   padding: 1rem;
   color: var(--modal-item-text);
-  border: 1px solid #000;
+  border: var(--generic-border);
   border-radius: var(--main-radius);
   margin: 0.5rem 0;
   gap: 1rem;

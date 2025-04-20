@@ -10,7 +10,7 @@ body {
 }
 
 input {
-	background-color: var(--input-bg);
+	background: var(--input-bg);
 	color: var(--input-color);
 	width: 100%;
 }
@@ -80,7 +80,7 @@ input[type="color"] {
 	/* border-radius: var(--main-radius); */
 	width: 11rem;
 	height: 100%;
-	background-color: var(--companion-right-sidebar-bg);
+	background: var(--companion-right-sidebar-bg);
 	border: var(--generic-border);
 	display: flex;
 	flex-direction: column;
@@ -160,7 +160,7 @@ input[type="color"] {
 	border-top-right-radius: var(--main-radius);
 	/* transform: translateY(-50%); */
 	padding: 5px;
-	background-color: var(--companion-left-sidebar-bg);
+	background: var(--companion-left-sidebar-bg);
 	color: var(--companion-left-sidebar-color);
 	border: var(--generic-border);
 	height: 100%;
@@ -185,7 +185,7 @@ input[type="color"] {
 
 .contextMenu {
 	position: absolute;
-	background-color: var(--modal-bg);
+	background: var(--modal-bg);
 	color: white;
 	border-radius: var(--main-radius);
 	border: var(--generic-border);
@@ -470,7 +470,7 @@ input[type="color"] {
 	appearance: none;
 	width: 100%;
 	height: 2px;
-	background-color: var(--modal-bg);
+	background: var(--modal-bg);
 	border-radius: var(--main-radius);
 	border: var(--generic-border);
 	outline: none;
@@ -523,7 +523,7 @@ input[type="color"] {
 }
 
 .sidebar-item {
-	background-color: var(--companion-sidebar-item-bg);
+	background: var(--companion-sidebar-item-bg);
 	border: var(--generic-border);
 	color: var(--companion-sidebar-item-color);
 	border-radius: var(--main-radius);

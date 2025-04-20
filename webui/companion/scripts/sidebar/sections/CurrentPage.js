@@ -8,16 +8,16 @@ style.children.push({
   build: () => {
     const h1 = document.createElement("h1");
     h1.classList.add("cpage");
-    h1.innerText = `${translationKey("lside.pages.page")}${universal.page + 1}/${Object.keys(UI.Pages).length}`;
+    h1.innerText = `${translationKey("sidebars.left.pages.page")}${universal.page + 1}/${Object.keys(UI.Pages).length}`;
     return h1;
   }
 })
 
-const tryButtons = new SidebarCheck(translationKey("lside.pages.try"), "sdbtry", (e) => {
+const tryButtons = new SidebarCheck(translationKey("sidebars.left.pages.try"), "sdbtry", (e) => {
   universal.flags.toggle("try_buttons");
 }, universal.flags.isEnabled("try_buttons"));
 
-const previousPage = new SidebarButton(translationKey("lside.pages.previous"), (e) => {
+const previousPage = new SidebarButton(translationKey("sidebars.left.pages.previous"), (e) => {
   if (UI.Pages[universal.page - 1]) {
 		universal.page--;
 		universal.save("page", universal.page);
@@ -28,7 +28,7 @@ const previousPage = new SidebarButton(translationKey("lside.pages.previous"), (
   }
 });
 
-const nextPage = new SidebarButton(translationKey("lside.pages.next"), (e) => {
+const nextPage = new SidebarButton(translationKey("sidebars.left.pages.next"), (e) => {
   if (UI.Pages[universal.page + 1]) {
 		universal.page++;
 		universal.save("page", universal.page);

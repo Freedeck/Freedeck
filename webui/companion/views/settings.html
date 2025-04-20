@@ -40,15 +40,14 @@
     <summary class="settings-section-title">
         <span data-i18n-key="settings.sections.audio_devices">Audio Devices</span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
     </summary>
-    <p data-i18n-key="settings.sections.audio_devices.monitor">Monitor Devices</p>
     <div class="monitor-devices audio-device-picker"></div>
-    <p data-i18n-key="settings.sections.audio_devices.vb">VB-Cables</p>
+    <span data-i18n-key="settings.sections.audio_devices.vb">VB-Cable Devices</span>
     <div class="vb-cables audio-device-picker"></div>
 </details>
 <br>
 <settings section="generale"></settings>
-<br>
-<settings section="expe"></settings>
+<!-- <br>
+<settings section="expe"></settings> -->
 <br class="soundpack-br">
 <details class="experiment-exist soundpack">
     <summary class="settings-section-title">
@@ -275,8 +274,10 @@
             let isChecked = e.target.checked;
             if (isChecked && !universal.audioClient.sinkManager.hasSink(out.value)) {
                 universal.audioClient.sinkManager.addSink(universal.audioClient.sinkManager.types.monitor, out.value);
+                universal.uiSounds.playSound("select_option");
             } else if (!isChecked && universal.audioClient.sinkManager.hasSink(out.value)) {
                 universal.audioClient.sinkManager.removeSink(out.value);
+                universal.uiSounds.playSound("select_option_false");
             }
         };
         const label = document.createElement("label");
@@ -511,15 +512,9 @@
                     "flag": "notl",
                     "default": universal.lclCfg()["app.freedeck.notification_log"] || false,
                 },
-            }
-        },
-        "expe": {
-            "title": "Experiments",
-            "icon": "/common/icons/experi.svg",
-            "options": {
                 "app.freedeck.skip_boot_animation": {
                     "type": "checkbox",
-                    "key": "settings.sections.experiments.skip_boot_animation",
+                    "key": "settings.sections.general.skip_boot_animation",
                     "description": "Skip Boot Animation",
                     "default": universal.lclCfg()["app.freedeck.skip_boot_animation"] || false,
                 },
@@ -529,14 +524,8 @@
                     "description": "No preset Tiles (Stop All, Reload, Logo)",
                     "default": universal.lclCfg()["app.freedeck.no_preset_tiles"] || false,
                 },
-                "app.freedeck.animate_page_changes": {
-                    "type": "checkbox",
-                    "key": "settings.sections.experiments.animate_page_changes",
-                    "description": "Animate Page Changes",
-                    "default": universal.lclCfg()["app.freedeck.animate_page_changes"] || false,
-                }
             }
-        }
+        },
     }
     
     document.querySelectorAll("settings").forEach((el) => {

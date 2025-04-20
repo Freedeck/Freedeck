@@ -30,7 +30,7 @@
   justify-content: space-between;
   align-items: center;
   color: var(--modal-item-text);
-  border: 1px solid #000;
+  border: var(--generic-border);
   border-radius: var(--main-radius);
   gap: 0.25rem;
   width: min-content;
@@ -43,12 +43,11 @@
 }
 
 .uploads-0 .upload audio {
-  transform: scale(0.8);
+  transform: scale(0.9);
+  border: none;
 }
 
 .uploads-0 .upload p {
-  background-color: rgba(0, 0, 0, 0.125);
-  border-radius: var(--main-radius);
   padding: 0.5rem;
 }
 

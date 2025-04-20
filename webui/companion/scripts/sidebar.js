@@ -58,13 +58,13 @@ universal.reloadRight = () => {
 		const page = pages.find((p) => val.includes(p)) || val;
 		if (val.startsWith("+")) {
 			const ele = document.createElement("li");
-			ele.setHTML(`<a data-i18n-key="sidebar.${name}" onclick="${val.substring(1)}">${name}</a>`);
+			ele.setHTML(`<a data-i18n-key="sidebars.right.${name}" onclick="${val.substring(1)}">${name}</a>`);
 			sidebarUl.appendChild(ele);
 			break;
 		}
 		const ele = document.createElement("li");
 		ele.setAttribute("hovereffect", "yes");
-		ele.setHTML(`<a data-i18n-key="sidebar.${name}" onclick="universal.vopen('${page}')">${name}</a>`);
+		ele.setHTML(`<a data-i18n-key="sidebars.right.${name}" onclick="universal.vopen('${page}')">${name}</a>`);
 		sidebarUl.appendChild(ele);
 	}
 	translatePage(sidebarUl);
