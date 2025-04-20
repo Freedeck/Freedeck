@@ -39,12 +39,12 @@
     --slider-background: #3498db;
     --slider-foreground: transparent;
 
-    --companion-left-sidebar-bg: rgba(0, 0, 0, 0.5);
+    --companion-left-sidebar-bg: rgba(0, 0, 0, 0.6);
     --companion-right-sidebar-bg: rgba(0, 0, 0, 0.5);
     --companion-left-sidebar-color: white;
     --companion-right-sidebar-color: white;
 
-    --companion-sidebar-item-bg: rgba(0, 0, 0, 0.5);
+    --companion-sidebar-item-bg: rgba(0, 0, 0, 0.25);
     --companion-sidebar-item-color: white;
 
     --modal-item-bg: linear-gradient(105deg,rgba(0, 179, 255, 1) 0%, rgba(0, 135, 255, 1) 50%, rgba(0, 179, 255, 1) 100%);
@@ -368,25 +368,58 @@ summary ::-webkit-details-marker {
 }
 
 select {
-    background-color: var(--input-bg);
-    border: 1px solid black;
+    background-color: var(--modal-bg);
+    border: var(--generic-border);
     border-radius: var(--main-radius);
     padding: 5px;
     font-family: var(--font);
-    color: var(--input-color);
+    color: var(--modal-color);
     outline: none;
     width: 100%;
     margin: 5px 0;
 }
 
 input {
-    background-color: var(--input-bg);
-    border: 0;
+    background-color: var(--modal-bg);
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+    padding: 5px;
+    font-family: var(--font);
+    color: var(--modal-color);
+    outline: none;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--modal-bg);
+    border: var(--generic-border);
     border-radius: var(--main-radius);
     padding: 5px;
     font-family: var(--font);
     color: var(--input-color);
     outline: none;
+}
+
+input[type="checkbox"]:checked {
+    appearance: none;
+    background-color: var(--modal-bg);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.2l-4.2-4.2L3 14l6 6 12-12-1.8-1.8z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+    padding: 5px;
+    font-family: var(--font);
+    color: var(--input-color);
+    outline: none;
+}
+
+input[type="checkbox"]:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .tint-green {

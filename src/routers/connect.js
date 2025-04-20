@@ -24,6 +24,30 @@ recalculate();
 
 const ip = networkAddresses();
 
+let myAppCode = "Loading...";
+const myAppUrlDisplay = "https://my.freedeck.app/";
+const myAppUrl = "https://my.freedeck.app/api.php";
+
+const randomlyGenerated = Math.random().toString(36).toUpperCase().split('.')[1].substring(0, 5);
+const appCodeRequest = new URL(myAppUrl);
+appCodeRequest.searchParams = new URLSearchParams();
+appCodeRequest.searchParams.set("code", randomlyGenerated);
+appCodeRequest.searchParams.set("name", "Companion");
+appCodeRequest.searchParams.set("local_ip", ip[Object.keys(ip)[0]][0]);
+
+router.get("/discover/code-request", (req, res) => {
+  if(myAppCode === "Loading..." || !myAppCode) {
+    fetch(appCodeRequest).then((res) => res.text()).then((res) => {
+      myAppCode = randomlyGenerated;
+      if (res.includes('EXISTS@')) myAppCode = res.split('EXISTS@')[1].split('@')[0]
+    })
+  }
+  res.send({
+    code: myAppCode
+  });
+});
+
+
 router.get("/discover", (req, res) => {
   if(plugins._plc.keys().length !== idList.length) recalculate();
   res.send({
@@ -32,8 +56,13 @@ router.get("/discover", (req, res) => {
     plugins: idList,
     webpackStatus: iwebpackState,
     deviceStatus: tsm.get("isMobileConnected"),
-    ip
+    ip,
+    myApp: {
+      code: myAppCode,
+      host: myAppUrlDisplay,
+    }
   })
 });
+
 
 module.exports = {router, webpackState, getWs:()=>iwebpackState};

@@ -95,7 +95,7 @@ window.oncontextmenu = (e) => {
             data: {},
           };
           universal.send(universal.events.companion.new_tile, {
-            "New Tile": interaction,
+            "Enter Title": interaction,
           });
           universal.listenForOnce("page_change", () => {
             universal.editTile({
@@ -104,7 +104,7 @@ window.oncontextmenu = (e) => {
                   return JSON.stringify(interaction);
                 },
                 dataset: {
-                  name: "New Tile",
+                  name: "Enter Title",
                   interaction: JSON.stringify(interaction),
                 },
                 className: "button k-0 k",

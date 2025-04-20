@@ -20,7 +20,7 @@ export class SidebarSection {
     }
 
     if (this.name !== "") {
-      const title = document.createElement("h1");
+      const title = document.createElement("h2");
       title.classList.add("sidebar-section-title");
       title.innerHTML = this.name;
 
@@ -155,7 +155,7 @@ export class SidebarCheck {
     container.appendChild(inlineContainer);
     const label = document.createElement("label");
     label.htmlFor = this.id;
-    const realLabel = document.createElement("h2");
+    const realLabel = document.createElement("h3");
     realLabel.innerText = this.name;
     label.appendChild(realLabel);
     const button = document.createElement("input");
@@ -213,7 +213,7 @@ export class SidebarSlider {
 
     const label = document.createElement("label");
     label.htmlFor = this.id;
-    const realLabel = document.createElement("h2");
+    const realLabel = document.createElement("h3");
     realLabel.innerText = this.name;
     label.appendChild(realLabel);
     const button = document.createElement("input");
@@ -244,6 +244,10 @@ export class SidebarSlider {
     const max = document.createElement("div");
     max.innerText = this.max;
     max.className = "fdc-slider-max";
+
+    min.style.display = "none";
+    max.style.display = "none";
+
     const value = document.createElement("div");
     value.innerText = this.defaultV + postfix;
     value.className = "fdc-slider-value";

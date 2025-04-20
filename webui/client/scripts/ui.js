@@ -521,7 +521,7 @@ function reloadSounds() {
       // Store interaction data on element directly to avoid recreating it in click handler
       e._interactionData = {
         interaction,
-        name: "New Tile",
+        name: "Enter Title",
       };
 
       e.addEventListener("click", clickHandleNewTile);

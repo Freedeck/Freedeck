@@ -20,8 +20,8 @@
 <div id="conn-content" style="display: none;">
 	<h1>Connect to Freedeck on <span class="osp-selected">iOS</span></h1>
 	<ul>
-		<li>Open <strong class="osp-browser">Safari</strong> and go to <i><strong>https://my.freedeck.app</strong></i></li>
-		<li>Type in code <i><span class="mfa-code"></span></i> and press Connect.</li>
+		<li>Open <strong class="osp-browser">Safari</strong> and go to <i><strong class="osp-host"></strong></i></li>
+		<li>Type in code <i><span class="mfa-code">Loading...</span></i> and press Connect.</li>
 		<li>When you see your Freedeck, <span class="osp-add-to-home-screen">press Share at the bottom</span>.</li>
 		<li>Press <i>Add To Home Screen</i></li>
 	</ul>
@@ -84,19 +84,22 @@
 		universal.vopen("index");
 		document.querySelector("#sidebar").style.right = "0";
 	}
-	let code = 'A code could not be generated.';
+	let code = 'Loading...';
 	let ip;
+	let m;
 
 	fetch('/api/discover').then(res => res.json()).then(data => {
+		document.querySelectorAll(".osp-host").forEach(e => e.innerText = data.myApp.host);
 		localNet.forEach(e => e.innerText = data.ip[Object.keys(data.ip)[0]][0]);
 		if (Object.keys(data.ip).length == 0) {
 			document.querySelectorAll('.mfa-code').forEach(e => e.innerText = "You are offline, please try again later.");
 			return;
 		}
 		ip = data.ip[Object.keys(data.ip)[0]][0];
-		code = Math.random().toString(36).toUpperCase().split('.')[1].substring(0, 5);
-		const m =window.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
-			submitAndRequestCode();
+		m =	window.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
+			fetch('/api/discover/code-request').then((res) => res.json()).then((res) => {
+				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = res.code);
+			})
 		}, false);
 		let count = 5;
 
@@ -117,15 +120,6 @@
 		}, 5000);
 	});
 
-	function submitAndRequestCode() {
-		fetch('https://my.freedeck.app/api.php?code=' + code + '&name=' + universal._information.hostname + '&local_ip=' + ip, {
-			// mode: 'no-cors'
-		}).then((res) => res.text()).then((res) => {
-			if (res.includes('EXISTS@')) code = res.split('EXISTS@')[1].split('@')[0]
-			document.querySelectorAll('.mfa-code').forEach(e => e.innerText = code);
-		})
-	}
-
 	const poll = setInterval(() => {
 		fetch('/api/discover').then(res => res.json()).then(data => {
 			const status = data.deviceStatus ? "Your device is connected to Freedeck!" : "Your device is not connected to Freedeck!";
@@ -139,6 +133,15 @@
 				document.querySelector('#later-button').click();
 			} else {
 				devStatus.forEach(e => e.style.color = 'red');
+			}
+			if(data.myApp?.code) {
+				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = data.myApp.code);
+				if(m) {
+					m.modal.remove();
+				}
+			}
+			if(data.myApp?.host) {
+				document.querySelectorAll(".osp-host").forEach(e => e.innerText = data.myApp.host);
 			}
 		});
 	}, 500);
