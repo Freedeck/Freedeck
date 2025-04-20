@@ -43,7 +43,7 @@
                         <strong>Appearance</strong>
                     </summary>
                     <div class="flex-wrap-r alc">
-                        <label for="color">Background</label>
+                        <label for="color">Background Color</label>
                         <input type="color" id="color" data-has_set="false" value="#000" />
                     </div>
                     <div class="flex-wrap-r alc">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="flex-wrap-r">
                     <button id="select-plugin-back" style="display: none">
-                        Back
+                        Back to Plugins
                     </button>
                     <button id="spiav" style="display: none">
                         View Settings
@@ -129,20 +129,24 @@
                     <h3>Soundboard</h3>
                     <p>Control your Freedeck soundboard!</p>
                 </div>
-                <div class="flex-wrap-r alc">
-                    <p>This tile will play&nbsp;</p>
-                    <h2 id="audio-file" class="information">AUDIOFILE.MP3</h2>
+                <div class="flex-wrap-r alc" style="width: -webkit-fill-available;">
+                    <center style="width: -webkit-fill-available;">
+                        <p>This tile will play&nbsp;</p>
+                        <h2 id="audio-file" class="information">AUDIOFILE.MP3</h2>
+                        <div class="button" id="upload-sound">Change</div>
+                    </center>
                 </div>
-                <div class="button" id="upload-sound">Change</div>
             </div>
-            <div style="display: none" id="system-only" class="editor-section editor-section-bottom">
-                <h1>App Volume</h1>
+            <div style="display: none" id="system-only" class="editor-section generic-chips editor-section-bottom">
+                <div class="information">
+                    <h3>App Volume<span class="tag-beta">BETA</span></h3>
+                    <p>This tile will change the volume of the app selected.</p>
+                </div>
                 <div id="sys-actions" class="generic-chips">
-                    <p>This tile will change the volume of:</p>
                     <select name="system-select" id="system-select"></select>
                 </div>
             </div>
-            <div style="display: none" id="macro-only" class="generic-chips editor-section editor-section-bottom">
+            <div style="display: none" id="macro-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
                     <h3>Macro<span class="tag-beta">BETA</span></h3>
                     <p>Type or press a key combination!</p>
@@ -160,10 +164,9 @@
             <div style="display: none" id="profiles-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
                     <h3>Folder Switcher</h3>
-                    <p>Switch to a specified folder!</p>
+                    <p>This tile will switch to the folder selected!</p>
                 </div>
                 <div class="generic-chips">
-                    <p>This tile will switch to the folder: </p>
                 </div>
                 <select name="eprofile-select" id="eprofile-select"></select>
             </div>
@@ -203,7 +206,7 @@
                 </div>
             </div>
             <div class="flex-wrap-r editor-options">
-                <div class="button" id="editor-back" style="display:none;">Back</div>
+                <div class="button" id="editor-back" style="display:none;">Change Tile Type</div>
                 <div class="button" id="editor-save">Save</div>
             </div>
         </div>

@@ -136,9 +136,6 @@
 			}
 			if(data.myApp?.code) {
 				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = data.myApp.code);
-				if(m) {
-					m.modal.remove();
-				}
 			}
 			if(data.myApp?.host) {
 				document.querySelectorAll(".osp-host").forEach(e => e.innerText = data.myApp.host);

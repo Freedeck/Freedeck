@@ -15,7 +15,16 @@ input {
 	width: 100%;
 }
 
+input[type="color"] {
+	width: auto;
+	border-radius: var(--main-radius);
+	border: none;
+	background-color: transparent;
+}
+
 .information {
+	width: -webkit-fill-available;
+	text-align: center;
 	background-color: rgba(0, 0, 0, 0.25);
 	border-radius: var(--main-radius);
 	padding: 0.25rem;
@@ -572,6 +581,7 @@ input {
 
 #spi-actions {
 	width: 100%;
+	align-items: center;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	scrollbar-width: none;
