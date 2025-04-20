@@ -144,15 +144,21 @@ const UAE = {
 			vol = universal.audioClient._player.normalVol;
 		}
 		for (const sink of sinks) {
-			await UAE._play({
-				file,
-				name,
-				stopPrevious,
-				volume: vol,
-				pitch,
-				channel,
-				sink,
-			});
+			try {
+				await UAE._play({
+					file,
+					name,
+					stopPrevious,
+					volume: vol,
+					pitch,
+					channel,
+					sink,
+				});
+			} catch(err) {
+				// Remove sink from manager
+				UAE.sinkManager.removeSink(sink);
+				universal.sendToast("Fatal error, couldn't play audio. Removed faulty device.", "Audio Engine");
+			}
 		}
 	},
 	_play: async ({
