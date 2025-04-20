@@ -1,33 +1,14 @@
 {
   "major": [
-    "**Introducing 2 new macro types: Application Volume and Macro (BETA)!!**",
-    [
-      "Application Volume: This macro type allows you to control the volume of a specific application on your computer. This is useful for when you want to control the volume of a specific application without affecting the system volume.",
-      "Macro (BETA): This macro type allows you to create a macro that can either type text, or press individual keys."
-    ],
-    "**You are now able to use multiple audio devices at once!**",
-    "**A lot of views have gotten a visual refresh! Notice more icons, better colors, and more!**",
-    "**Some experiments from Settings have been moved to the main settings page!** These states have not been lost.",
-    "**The splash screen has been improved!** The transition now feels much better, and there's a progress bar!",
-    "**The editor has gotten a better redesign!** Everything feels modern, and the main content sticks out better.",
-    "**Added support for .fdpackage bundles!** These are like .Freedeck files, but much, much smaller AND can now be used for themes!",
-    "**Added support for Marketplace V3!** The old marketplace will not receive any new updates.",
-    "**You can now reload and disable single plugins!**",
-    "**Plugin [re]loading has been reworked and is now more efficient.**",
-    "**NativeBridge support has been added. Keeping the Freedeck App (launcher) open in the background will allow you to control your computer with Freedeck like never before.**",
-    "Official badges have been added to official Marketplace plugins!",
-    "The splash screen is now fast, has a progress bar, and now has a smooth transition!",
-    "The sidebar has once again, gotten a few more design improvements!",
-    "A lot of UI elements have now gotten a border!"
+    "Reworked a lot of UI.",
+    "Fixed a lot of bugs, but notably:",
+    "Fixed bug where failing to connect to an audio device would cause the app to be fully unable to play sounds.",
+    "Fixed notification log filling and exceeding quota.",
+    "Improved theming around entire app",
+    "Some more fix-ups to the editor and it's performance",
+    "Fixed that theme changer bug that would delay Active theme displaying."
   ],
   "other": [
-    "Fixed an issue where the UI would not size or load properly.",
-    "Fixed the issue where after selecting a Library upload, grid dragging would not work",
-    "This changelog dialog is now scrollable!",
-    "This changelog dialog can no longer be bypassed",
-    "Fixed a bug where opening the plugin-type selector will cause the previously selected type to still be highlighted",
-    "Fixed a bug where the plugin-type selector wouldn't work at all",
-    "(WIP, but works) **Plugins can now add Editor views!**"
   ],
   "known": [
   ],

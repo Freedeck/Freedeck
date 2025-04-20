@@ -16,7 +16,7 @@ const makeThanks = (force=false) => {
   close.onclick = () => {
     universal.uiSounds.playSound("welcome");
 		universal.save("thanks", universal._information.version.raw);
-    container.close();
+    container.close(false); // No sound.
   }
   close.innerText = "OK";
 
