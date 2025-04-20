@@ -133,6 +133,7 @@
 <!-- <h2>This is the bottom of the Settings menu.</h2> -->
 <script type="module">
     import "/app/settingsThemes.js";
+    loadThemeListing();
 
     import {locales, setLocale, translationKey} from "/app/shared/localization.js"
     document.querySelector("#clang").innerText = "Current Language: " + locales[universal.load("locale")]
@@ -146,7 +147,6 @@
         document.querySelector("#language-list").appendChild(li);
     });
 
-    loadThemeListing();
     document.querySelector("#hostname").innerText = "Hostname: " + universal._information.hostname;
 
     const seen = {};
@@ -450,7 +450,7 @@
                 "compact": {
                     "type": "checkbox",
                     "key": "settings.sections.general.compact",
-                    "description": "Compact Mode",
+                    "description": "Fit Screen",
                     "default": universal.lclCfg()["compact"] || false,
                     "onchange": () => {
                         universal.UI.reloadSounds();
@@ -480,6 +480,14 @@
                     "description": "UI Sounds",
                     "flag": "uis",
                     "default": universal.lclCfg()["app.freedeck.ui_sounds"] || false,
+                    "onchange": () => {
+                        document.querySelector(".soundpack").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
+                            ? "block"
+                            : "none";
+                        document.querySelector(".soundpack-br").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
+                            ? "block"
+                            : "none";
+                    }
                 },
                 "app.freedeck.tiles.force_deletion": {
                     "type": "checkbox",
