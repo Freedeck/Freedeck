@@ -53,6 +53,7 @@
   "settings.sections.general.ui_sounds": "UI Sounds",
   "settings.sections.general.skip_boot_animation": "Skip Boot Animation",
   "settings.sections.experiments.no_preset_tiles": "No Preset Tiles BETA (Stop All, Reload, Logo)",
+  "settings.sections.experiments.disable_new_repo": "Disable new repo addition",
 
 
   "settings.sections.experiments": "Experiments",
