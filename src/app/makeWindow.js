@@ -12,13 +12,15 @@ module.exports = (
 		height,
 		frame: _showTitlebar,
 		autoHideMenuBar: true,
-		icon: path.resolve("./assets/logo_big.ico"),
+		icon: path.resolve("./webui/client/assets/logo_big.ico"),
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
 			preload: path.resolve("src/app/preload.js")
 		}
 	});
+
+
 
 	const dimensions = {
 		splashScreen: [420, 525],

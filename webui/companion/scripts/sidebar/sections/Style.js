@@ -84,7 +84,7 @@ style.children.push(new SidebarSlider("Tile Count", "es-tc", " tiles", "3", icon
 	);
 }));
 
-style.children.push(new SidebarSlider("Columns", "es-tr", " cols", "2", cols, "5", (e) => {
+style.children.push(new SidebarSlider("Columns", "es-tr", " columns", "2", cols, "5", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
 		universal.events.default.config_changed,
@@ -103,7 +103,7 @@ style.children.push(new SidebarSlider("Columns", "es-tr", " cols", "2", cols, "5
 	document.documentElement.style.setProperty("--tile-columns", "repeat(5, 2fr)");
 }));
 
-style.children.push(new SidebarSlider("Hold Time", "es-lp", " sec", "2", "6", "3", (e) => {
+style.children.push(new SidebarSlider("Hold Time", "es-lp", " seconds", "2", "6", "3", (e) => {
   universal.uiSounds.playSound("fdc_slider");
   universal.send(
 		universal.events.default.config_changed,
