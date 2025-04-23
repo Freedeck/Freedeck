@@ -23,6 +23,7 @@ async function load(soundpack) {
     console.error(err);
     universal.sendToast(
       "Failed to load soundpack. Defaulting to futuristic.",
+      "Freedeck"
     );
     uiSoundEngine.currentSoundpack = "futuristic.soundpack";
     reload();

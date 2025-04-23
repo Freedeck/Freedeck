@@ -4,12 +4,13 @@ export default async function eventsHandler(universal, user) {
 	universal.CLU("Event Handler", "Creating event handlers...");
 
 		universal.on(universal.events.login.unauthorized, () =>
-			universal.sendToast("You are not authenticated!"),
+			universal.sendToast("You are not authenticated!", "Freedeck"),
 		);
 
 		universal.on(universal.events.login.session_validation_failure, () =>
 			universal.sendToast(
 				"Login not allowed! Session could not be verified against server.",
+				"Freedeck",
 			),
 		);
 
@@ -169,7 +170,7 @@ export default async function eventsHandler(universal, user) {
 		universal.on(universal.events.default.login, (auth) => {
 			universal.authStatus = auth;
 			if (auth === false) {
-				universal.sendToast("Incorrect password!");
+				universal.sendToast("Incorrect password!", "Authentication");
 				if (document.querySelector("#login-dialog"))
 					document.querySelector("#login-dialog").style.display = "flex";
 			} else {

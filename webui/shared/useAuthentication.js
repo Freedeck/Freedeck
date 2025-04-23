@@ -36,7 +36,7 @@ universal.listenFor("init", () => {
 	universal.on(universal.events.login.login, (dat) => {
 		if (dat === true) {
 			if (universal.load("logintime") > Date.now())
-				universal.sendToast("Logged in!");
+				universal.sendToast("Logged in!", "Authentication");
 			if (
 				document.querySelector("#password") &&
 				document.querySelector("#password").value !== ""

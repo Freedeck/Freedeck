@@ -147,7 +147,7 @@ function initialize() {
     Number.parseInt(universal.lclCfg().iconCountPerPage) || 12;
   universal.CLU("Boot / UI", "Set icon count");
   universal.theming.setTheme(
-    universal.config.theme ? universal.config.theme : "default",
+    universal.config.theme ? universal.config.theme : "default.css",
     false
   );
   universal.CLU("Boot / UI", "Set local theme");
@@ -458,12 +458,7 @@ function reloadSounds() {
           break;
       }
 
-      tooltipContent += "<p>Right click to edit.</p>";
-      tooltipContent += `<details><summary>Advanced (press V)</summary><small>These are internally used for Freedeck.</small><p>Type: ${
-        snd.type
-      }</p><p>Pos: ${snd.pos}</p><p>Data size: ${
-        Object.keys(snd.data).length
-      }</p></details>`;
+      tooltipContent += `<p>Right click to edit.</p><center><i>${snd.type}</i></center>`;
 
       const tt = universal.createTooltipFor(keyObject, tooltipContent);
       tt.classList.add("tile-tooltip");
@@ -529,19 +524,6 @@ function reloadSounds() {
 
     // Append all unset tooltips to the DOM at once
     document.body.appendChild(unsetTooltipFragment);
-  }
-
-  // Single event listener for V key (instead of one per tooltip)
-  if (!window._tooltipVKeyListener) {
-    window._tooltipVKeyListener = true;
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "v") {
-        for (const tooltip of document.querySelectorAll(".tile-tooltip")) {
-          const details = tooltip.querySelector("details");
-          if (details) details.open = !details.open;
-        }
-      }
-    });
   }
 }
 

@@ -40,7 +40,10 @@ router.get("/discover/code-request", (req, res) => {
     fetch(appCodeRequest).then((res) => res.text()).then((res) => {
       myAppCode = randomlyGenerated;
       if (res.includes('EXISTS@')) myAppCode = res.split('EXISTS@')[1].split('@')[0]
-    })
+    }).catch((e => {
+      console.error("Error fetching app code:", e);
+      myAppCode = "Error";
+    }));
   }
   res.send({
     code: myAppCode

@@ -71,7 +71,7 @@ const universal = {
           universal.CLU("Boot / WakeLock", "Wake lock acquired.");
         } catch (err) {
           console.error(`${err.name}, ${err.message}`);
-          universal.sendToast("Failed to acquire wake lock.");
+          universal.sendToast("Failed to acquire wake lock.", "Freedeck");
         }
       }
     },
@@ -248,37 +248,31 @@ const universal = {
     document.body.appendChild(scriptElement);
   },
   ExportReportData: () => {
-    const erdStart = Date.now();
+    const exportTimeStart = Date.now();
     console.log("<h2>Exporting..</h2>");
-    console.log("<h3>Decoding Notification Log</h3>");
-    const decodedNotifLog = universal.loadObj("logs/notif");
-    console.log(
-      "<p>The notification log can get large, so this may take some time.</p>"
-    );
-    console.log(`<p>Your log is ${decodedNotifLog.length} items long.</p>`);
-    console.log("<h3>Decoded Notification Log.</h3>");
-    console.log("<p>Now, we're putting it all together.</p>");
     const state = {};
     Object.assign(state, universal);
-    state._socket = `C=${universal._socket.connected},U=${universal._socket.io.uri}`;
-    state.keys = "DOM element";
-    const erd = {
-      erdStart,
-      time: Date.now(),
-      page: window.location.pathname,
-      state,
-      ls: {
-        keys: universal.storage.keys(),
-        ls: localStorage,
-      },
-      client_nlog: decodedNotifLog,
-      client_cfg: universal.lclCfg(),
-      errLog: universal.ErrorLog,
-      client_bootlog: universal.CLUL,
+    state._socket = {
+      connected: universal._socket.connected,
+      uri: universal._socket.io.uri,
     };
-    const erdEnd = Date.now();
-    erd.erdEnd = erdEnd;
-    erd.exportTimeElapsed = erdEnd - erdStart;
+    state.keys = "DOM Element";
+    const erd = {
+      time: Date.now(),
+      currentPage: window.location.pathname,
+      state,
+      client: {
+        localStorage,
+        notificationLog: universal.loadObj("logs/notif", []),
+        localConfiguration: universal.lclCfg(),
+        bootLog: universal.CLUL,
+        errorLog: universal.ErrorLog,
+      },
+      exportTimeStart,
+    };
+    const exportTimeEnd = Date.now();
+    erd.exportTimeEnd = exportTimeEnd;
+    erd.exportTimeElapsed = exportTimeEnd - exportTimeStart;
     return JSON.stringify(erd);
   },
   CL: true,

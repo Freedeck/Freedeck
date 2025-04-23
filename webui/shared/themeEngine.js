@@ -13,12 +13,12 @@ async function fetchAndParse(id) {
 	const fetchable = await fetch(getPathFor(id));
 	if (fetchable.status !== 200) {
 		console.error(`Failed to fetch theme ${id}`);
-		return universal.sendToast(`Failed to fetch theme ${id}`);
+		return universal.sendToast(`Failed to fetch theme ${id}`, "Freedeck");
 	}
 	const rawData = await fetchable.text();
 	const meta = rawData.match(/:theme-meta {([\s\S]*?)}/);
 	if (!meta) {
-		universal.sendToast(`Failed to parse theme ${id}`);
+		universal.sendToast(`Failed to parse theme ${id}`, "Freedeck");
 		return console.error(`Failed to parse theme ${id}`);
 	}
 	return await parseFor(id, meta[1]);
@@ -45,7 +45,7 @@ async function initialize() {
 }
 
 function setTheme(name, global = true) {
-	const fu = listing.includes(name) ? name : "default";
+	const fu = listing.includes(name) ? name : "default.css";
 
 	fetch(getPathFor(fu))
 		.then((res) => res.text())
@@ -53,21 +53,26 @@ function setTheme(name, global = true) {
 			if (document.getElementById("theme")) {
 				document.getElementById("theme").remove();
 			}
+			if(css.includes("Cannot GET")) {
+				throw new Error(`Failed to get theme ${getPathFor(fu)}`);
+			}
 			
 			const stylea = document.createElement("style");
 			stylea.id = "theme";
 			stylea.innerText += css;
 			document.body.appendChild(stylea);
+			
 			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
 			const res = parseFor(name, meta[1]);
-			currentTheme =()=> res;
+			
+			currentTheme = () => res;
 			
 			if (global) universal.send(universal.events.companion.set_theme, name);
 			universal.save("theme", name);
 		})
-		.catch(() => {
-			console.error("Failed to load theme.");
-			universal.sendToast("Failed to load theme.");
+		.catch((e) => {
+			console.error("Failed to load theme.",name,global,fu,e);
+			universal.sendToast("Failed to load theme.", "Freedeck");
 		});
 }
 
