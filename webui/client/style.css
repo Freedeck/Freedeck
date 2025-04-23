@@ -689,6 +689,7 @@ a {
 	padding: 5px;
 	background-color: rgba(0, 0, 0, 0.25);
 	border-radius: var(--main-radius);
+    border: var(--generic-border);
 	text-align: left;
 	transition-duration: .25s;
 }

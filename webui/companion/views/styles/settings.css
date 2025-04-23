@@ -118,6 +118,19 @@
         border-radius: var(--main-radius);
     }
 
+    #settings-menu-full {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #settings-menu-full > details {
+        display: flex;
+        flex-direction: column;
+        /* gap: 0.5rem; */
+        padding: 0.5rem;
+    }
+
     .experiment-exist h3 {
         margin: 0;
     }
@@ -140,10 +153,12 @@
         position: fixed;
         bottom: 0;
         left: calc(50% - 50vw); 
-        transform: translateX(4%);
+        /* transform: translateX(4%); */
         background-color: rgba(0, 0, 0, 0.25);
+        border: var(--generic-border);
+        border-radius: var(--main-radius);
+        padding: 0.5rem;
         width: max-content;
-        padding: 5px;
         border-radius: var(--main-radius) var(--main-radius) 0 0;
 
     }

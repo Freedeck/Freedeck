@@ -1,134 +1,127 @@
 <link rel="stylesheet" href="/companion/views/styles/settings.css">
 <h1 class="settings-section-title"><span data-i18n-key="settings.title">Settings</span> <span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy"></span>
 </h1>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.style">Themes</span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div class="themelist"></div>
-</details>
-<br style="display:none;">
-<details style="display:none;" data-note="THIS IS SUPER SUPER SUPER BUGGY.">
-    <summary class="settings-section-title">
-        <span><span data-i18n-key="settings.sections.language">Language </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <br>
-    <p id="clang">Loading...</p>
-    <div id="language-list"></div>
-</details>
-<br>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.plugins">Plugins</span> <span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <br>
-    <div class="experiments">
-        <ul id="actl" class="btnlist"></ul>
-    </div>
-    <button id="upd" data-i18n-key="settings.sections.plugins.reload_all">Reload All Plugins</button>
-        <div class="flex-wrap">
-            <h2 data-i18n-key="settings.sections.plugins.disabled.title">Disabled Plugins</h2>
-            <div id="disbl-list" class="row"></div>
-        </div>
-    <details id="tile-prev">
-        <summary><strong data-i18n-key="settings.sections.plugins.tile_previews">Tile Previews</strong></summary>
-        <div class="btns"></div>
-    </details>
-</details>
-<br>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.audio_devices">Audio Devices</span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div class="monitor-devices audio-device-picker"></div>
-    <span data-i18n-key="settings.sections.audio_devices.vb">VB-Cable Devices</span>
-    <div class="vb-cables audio-device-picker"></div>
-</details>
-<br>
-<settings section="generale"></settings>
-<!-- <br>
-<settings section="expe"></settings> -->
-<br class="soundpack-br">
-<details class="experiment-exist soundpack">
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.uis">UI Sounds</span> <span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div>
-        <h4 data-i18n-key="settings.sections.uis.soundpacks">Soundpacks</h4>
-        <ul class="soundpacks"></ul>
-        <h2 data-i18n-key="settings.sections.uis.soundpacks.current">Current Soundpack</h2>
-        <div class="experiment-exist">
-            <h3 id="soundpack-title">Soundpack</h3>
-            <span>(<span id="soundpack-id">id.soundpack</span>)
-                v<span id="soundpack-version">0.0.0</span> by
-                <span id="soundpack-author">somebody</span></span>
-        </div>
-        <ul class="uisounds"></ul>
-    </div>
-</details>
-<br>
-<details>
-    <summary class="settings-section-title">
-        <span data-i18n-key="settings.sections.bug">Bug Report</span> <span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate">Click "Generate Report"</textarea>
-    <p id="hostname">Your hostname here</p>
-    <br>
-    <button id="genr" data-i18n-key="settings.sections.bug.generate">Generate Report</button>
+<div id="settings-menu-full">
     <details>
-        <summary data-i18n-key="settings.sections.bug.report_reader">
-            Report Reader
+        <summary class="settings-section-title">
+            <span data-i18n-key="settings.sections.style">Themes</span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
         </summary>
-        <textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
-        <button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read">Read Report</button>
-        <div class="report-details">
-
+        <div class="themelist"></div>
+    </details>
+    <br style="display:none;">
+    <details style="display:none;" data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+        <summary class="settings-section-title">
+            <span><span data-i18n-key="settings.sections.language">Language </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <br>
+        <p id="clang">Loading...</p>
+        <div id="language-list"></div>
+    </details>
+    <details>
+        <summary class="settings-section-title">
+            <span data-i18n-key="settings.sections.plugins">Plugins</span> <span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <br>
+        <div class="experiments">
+            <ul id="actl" class="btnlist"></ul>
+        </div>
+        <button id="upd" data-i18n-key="settings.sections.plugins.reload_all">Reload All Plugins</button>
+            <div class="flex-wrap">
+                <h2 data-i18n-key="settings.sections.plugins.disabled.title">Disabled Plugins</h2>
+                <div id="disbl-list" class="row"></div>
+            </div>
+        <details id="tile-prev">
+            <summary><strong data-i18n-key="settings.sections.plugins.tile_previews">Tile Previews</strong></summary>
+            <div class="btns"></div>
+        </details>
+    </details>
+    <details>
+        <summary class="settings-section-title">
+            <span data-i18n-key="settings.sections.audio_devices">Output Devices</span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <div class="monitor-devices audio-device-picker"></div>
+        <span data-i18n-key="settings.sections.audio_devices.vb">VB-Cable Devices</span>
+        <div class="vb-cables audio-device-picker"></div>
+    </details>
+    <settings section="generale"></settings>
+    <details class="experiment-exist soundpack">
+        <summary class="settings-section-title">
+            <span data-i18n-key="settings.sections.uis">UI Sounds</span> <span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <div>
+            <h4 data-i18n-key="settings.sections.uis.soundpacks">Soundpacks</h4>
+            <ul class="soundpacks"></ul>
+            <h2 data-i18n-key="settings.sections.uis.soundpacks.current">Current Soundpack</h2>
+            <div class="experiment-exist">
+                <h3 id="soundpack-title">Soundpack</h3>
+                <span>(<span id="soundpack-id">id.soundpack</span>)
+                    v<span id="soundpack-version">0.0.0</span> by
+                    <span id="soundpack-author">somebody</span></span>
+            </div>
+            <ul class="uisounds"></ul>
         </div>
     </details>
-</details>
-<br>
-<div class="settings"></div>
-<details>
-    <summary class="settings-section-title">
-        Developer Tools <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
-    </summary>
-    <div class="flex-wrap-r">
-        <button onclick="universal.remove('thanks');window.location.reload()">
-            Show latest changelog (Reloads)
-        </button>
-        <button onclick="window._makeThanks(true)">
-            Show current changelog
-        </button>
-        <button onclick="universal.showBootLog()">
-            Show boot log
-        </button>
-        <button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
-            Test Notification
-        </button>
-        <button onclick="universal.send(universal.events.default.recompile)">
-            Recompile Webpack bundles
-        </button>
-    </div>
-    <br>
-    <div>
+    <details>
+        <summary class="settings-section-title">
+            <span data-i18n-key="settings.sections.bug">Bug Report</span> <span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate">Click "Generate Report"</textarea>
+        <p id="hostname">Your hostname here</p>
+        <br>
+        <button id="genr" data-i18n-key="settings.sections.bug.generate">Generate Report</button>
         <details>
-            <summary>
-                <h3>Danger Zone</h3>
+            <summary data-i18n-key="settings.sections.bug.report_reader">
+                Report Reader
             </summary>
-            <div class="flex-wrap-r"><button id="fsw">Force setup-wizard</button>
-                <button id="erals">Erase LocalStorage (NO UNDOING, WILL HAPPEN ON CLICK.)</button></div>
+            <textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
+            <button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read">Read Report</button>
+            <div class="report-details">
+    
+            </div>
         </details>
-    </div>
-</details>
-<div class="cti">
-    <h1>Freedeck</h1>
-    <img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy">
-    <p><span data-i18n-key="settings.footer.by">is a project by</span> <a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a></p>
+    </details>
+    <details>
+        <summary class="settings-section-title">
+            Developer Tools <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
+        </summary>
+        <div class="flex-wrap-r">
+            <button onclick="universal.remove('thanks');window.location.reload()">
+                Show latest changelog (Reloads)
+            </button>
+            <button onclick="window._makeThanks(true)">
+                Show current changelog
+            </button>
+            <button onclick="universal.showBootLog()">
+                Show boot log
+            </button>
+            <button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
+                Test Notification
+            </button>
+            <button onclick="universal.send(universal.events.default.recompile)">
+                Recompile Webpack bundles
+            </button>
+        </div>
+        <br>
+        <div>
+            <details>
+                <summary>
+                    <h3>Danger Zone</h3>
+                </summary>
+                <div class="flex-wrap-r"><button id="fsw">Force setup-wizard</button>
+                    <button id="erals">Erase LocalStorage (NO UNDOING, WILL HAPPEN ON CLICK.)</button></div>
+            </details>
+        </div>
+    </details>
+    <details>
+        <summary class="settings-section-title">
+            <h1 class="version"></h1>
+            <img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy">
+        </summary>
+        <center>
+            <span data-i18n-key="settings.footer.by">is a project by</span> <a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a>
+        </center>
+    </details>
 </div>
-<center>
-    <h2 class="version"></h2>
-</center>
-<br><br>
 <!-- <h2>This is the bottom of the Settings menu.</h2> -->
 <script type="module">
     import "/app/settingsThemes.js";
@@ -343,9 +336,6 @@
     document.querySelector(".soundpack").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
         ? "block"
         : "none";
-    document.querySelector(".soundpack-br").style.display = universal.lclCfg()["app.freedeck.ui_sounds"]
-        ? "block"
-        : "none";
     document.querySelector("#soundpack-id").innerText =
         universal.uiSounds.info.id;
     document.querySelector("#soundpack-title").innerText =
@@ -525,10 +515,11 @@
                     "default": universal.lclCfg()["app.freedeck.no_preset_tiles"] || false,
                 },
                 "app.freedeck.demo.disable_new_repo": {
+                    "handler": "flag",
                     "type": "checkbox",
                     "key": "settings.sections.experiments.disable_new_repo",
                     "description": "Disable new repo addition",
-                    "default": universal.lclCfg()["app.freedeck.demo.disable_new_repo"] || false,
+                    "default": universal.flags.isEnabled("app.freedeck.demo.disable_new_repo") || false,
                 }
             }
         },
@@ -576,7 +567,11 @@
             input.id = optionId;
             input.checked = option.default;
             input.onchange = () => {
-                universal.send(universal.events.default.config_changed, setToLocalCfg(optionId, input.checked));
+                if(option.handler === "flag") {
+                    universal.flags.set(optionId, ""+input.checked);
+                } else {
+                    universal.send(universal.events.default.config_changed, setToLocalCfg(optionId, input.checked));
+                }
                 if(input.checked) {
                     universal.uiSounds.playSound("select_option");
                 } else {

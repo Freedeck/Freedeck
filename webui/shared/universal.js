@@ -543,8 +543,9 @@ const universal = {
       snackbar.id = "snackbar";
       document.body.appendChild(snackbar);
     }
-    if(document.querySelector(`div[data-message='${message}'][data-sender='${sender}']`)) {
-      const elem = document.querySelector(`div[data-message='${message}'][data-sender='${sender}']`);
+    const base64Identifier = btoa(message + sender) 
+    if(document.querySelector(`div[data-id="${base64Identifier}"]`)) {
+      const elem = document.querySelector(`div[data-id="${base64Identifier}"]`);
       const count = Number.parseInt(elem.getAttribute("data-count"));
       elem.setAttribute("data-count", count + 1);
       elem.setHTML(`<h3>${sender}</h3>${message} (x${count + 1})`);
@@ -561,8 +562,7 @@ const universal = {
       return;
     }
     const s = document.createElement("div");
-    s.setAttribute("data-message", message);
-    s.setAttribute("data-sender", sender);
+    s.setAttribute("data-id", base64Identifier);
     s.setAttribute("data-count", 1);
     const id = `toast-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     s.id = id;
