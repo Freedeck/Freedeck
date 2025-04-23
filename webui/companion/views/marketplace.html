@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="/companion/views/styles/marketplace.css">
 
-<h1 class="settings-section-title">Marketplace <span><img src="/common/icons/marketplace.svg" width="50" loading="lazy" height="50"></span></h1>
+<h1 class="settings-section-title"><span data-i18n-key="marketplace.title">Marketplace</span> <span><img src="/common/icons/marketplace.svg" width="50" loading="lazy" height="50"></span></h1>
 <center>
-    <p>Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your
+    <p data-i18n-key="marketplace.description">Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your
         Freedeck.</p>
 </center>
-<button id="repo" onclick="universal.mkp_addRepo();">
+<button id="repo" onclick="universal.mkp_addRepo();" data-i18n-key="marketplace.add">
     Add Repository
 </button>
 <h2 class="message">Loading Marketplace...</h2>
-<p>Repositories</p>
+<p data-i18n-key="marketplace.repositories">Repositories</p>
 <ul class="repositories"></ul>
 <div class="marketplace">
     <p>Loading Marketplace...</p>

@@ -369,6 +369,9 @@ const universal = {
               universal.sendEvent("launch");
               await UI.closeBootLog();
               universal.CLU("Boot", "Launching!");
+              if(universal.load("locale") !== "en") {
+                universal.sendToast("Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.", "Freedeck");
+              }
               resolve();
             }) 
             universal.CLU("InitFN", "Starting dataHandler");

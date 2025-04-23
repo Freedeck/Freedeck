@@ -1,3 +1,4 @@
+import { translationKey } from "../../../shared/localization";
 import { getAllTileData } from "./data";
 const editorButton = document.querySelector("#editor-btn");
 const color = document.querySelector("#color");

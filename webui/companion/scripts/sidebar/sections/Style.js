@@ -1,7 +1,8 @@
 import { UI } from "../../../../client/scripts/ui";
 import { SidebarSection, SidebarSlider, SidebarCheck } from "../SidebarSection";
+import { translationKey } from "../../../../shared/localization";
 
-const style = new SidebarSection("Tile Style", "Style");
+const style = new SidebarSection(translationKey("sidebars.left.style.title"), "Style");
 
 const handleCheckFor = (e, property) => {
   universal.send(
@@ -14,7 +15,7 @@ const handleCheckFor = (e, property) => {
 let fontSize = "25";
 if(universal.load("ebigt") === "true") fontSize = "50";
 
-style.children.push(new SidebarSlider("Font Size", "es-fs", "px", "10", fontSize, "15", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.font_size"), "es-fs", translationKey("sidebars.left.style.font_size.unit"), "10", fontSize, "15", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	document.documentElement.style.setProperty(
 		"--font-size",
@@ -34,7 +35,7 @@ style.children.push(new SidebarSlider("Font Size", "es-fs", "px", "10", fontSize
 	);
 }));
 
-style.children.push(new SidebarSlider("Tile Size", "es-bs", "rem", "1", "12", "6", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_size"), "es-bs", translationKey("sidebars.left.style.tile_size.unit"), "1", "12", "6", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
 		universal.events.default.config_changed,
@@ -57,7 +58,7 @@ let cols = "15";
 if(universal.load("houston") === "true") cols = "60";
 if(universal.load("insanity") === "true") cols = "120";
 
-style.children.push(new SidebarSlider("Tile Count", "es-tc", " tiles", "3", iconAmount, "12", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_count"), "es-tc", translationKey("sidebars.left.style.tile_count.unit"), "3", iconAmount, "12", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	const count = document.querySelectorAll(".fdc-placeholder").length;
 	const diff = e.target.value - count;
@@ -84,7 +85,7 @@ style.children.push(new SidebarSlider("Tile Count", "es-tc", " tiles", "3", icon
 	);
 }));
 
-style.children.push(new SidebarSlider("Columns", "es-tr", " columns", "2", cols, "5", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.columns"), "es-tr", translationKey("sidebars.left.style.columns.unit"), "2", cols, "5", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
 		universal.events.default.config_changed,
@@ -103,7 +104,7 @@ style.children.push(new SidebarSlider("Columns", "es-tr", " columns", "2", cols,
 	document.documentElement.style.setProperty("--tile-columns", "repeat(5, 2fr)");
 }));
 
-style.children.push(new SidebarSlider("Hold Time", "es-lp", " seconds", "2", "6", "3", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.hold_time"), "es-lp", translationKey("sidebars.left.style.hold_time.unit"), "2", "6", "3", (e) => {
   universal.uiSounds.playSound("fdc_slider");
   universal.send(
 		universal.events.default.config_changed,

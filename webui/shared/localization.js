@@ -54,7 +54,7 @@ function translateElement(element) {
   element.innerText = translation;
 }
 
-function translationKey(key, defaultValue="{{key}} not found in locale.") {
+function translationKey(key, defaultValue="{{key}}") {
   if(translations[key] === undefined) {
     console.warn(`Translation key ${key} not found in locale.`);
     if(Object.keys(translations).length === 0) {

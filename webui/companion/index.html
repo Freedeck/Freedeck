@@ -28,66 +28,66 @@
     </div>
     <dialog id="editor">
         <div id="editor-div">
-            <div class="x" id="editor-close">Close</div>
+            <div class="x" id="editor-close" data-i18n-key="editor.close">Close</div>
             <div class="editor-section editor-info">
                 <div data-state="not" class="button" id="editor-btn">Not Loaded</div>
                 <div class="flex-wrap-r alc">
-                    <label for="name">Title</label>
+                    <label for="name" data-i18n-key="editor.title">Title</label>
                     <input type="text" id="name" value="Not Loaded" />
                 </div>
-                <div class="button" style="height:30px;min-height:30px;" id="upload-icon">
+                <div class="button" style="height:30px;min-height:30px;" id="upload-icon" data-i18n-key="editor.set_icon">
                     Set Icon
                 </div>
                 <details>
                     <summary>
-                        <strong>Appearance</strong>
+                        <strong data-i18n-key="editor.appearance">Appearance</strong>
                     </summary>
                     <div class="flex-wrap-r alc">
-                        <label for="color">Background Color</label>
+                        <label for="color" data-i18n-key="editor.appearance.background">Background Color</label>
                         <input type="color" id="color" data-has_set="false" value="#000" />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="sbg">No Background</label>
+                        <label for="sbg" data-i18n-key="editor.appearance.no.background">No Background</label>
                         <input class="fdc-checkbox" type="checkbox" id="sbg" />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="nbo">No Border</label>
+                        <label for="nbo" data-i18n-key="editor.appearance.no.border">No Border</label>
                         <input class="fdc-checkbox" type="checkbox" id="nbo" />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="nbr">No Rounding</label>
+                        <label for="nbr" data-i18n-key="editor.appearance.no.rounding">No Rounding</label>
                         <input class="fdc-checkbox" type="checkbox" id="nbr" />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="nsh">No Shadow</label>
+                        <label for="nsh" data-i18n-key="editor.appearance.no.shadow">No Shadow</label>
                         <input class="fdc-checkbox" type="checkbox" id="nsh" />
                     </div>
                 </details>
                 <details>
                     <summary>
-                        <strong>Controls</strong>
+                        <strong data-i18n-key="editor.controls">Controls</strong>
                     </summary>
                     <div class="flex-wrap-r alc">
-                        <label for="lp">Long Press</label>
+                        <label for="lp" data-i18n-key="editor.controls.long_press">Long Press</label>
                         <input class="fdc-checkbox" type="checkbox" id="lp" />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="orl">On release?</label>
+                        <label for="orl" data-i18n-key="editor.controls.on_release">On release?</label>
                         <input class="fdc-checkbox" type="checkbox" id="orl" />
                     </div>
                 </details>
                 <details>
-                    <summary><strong>Advanced</strong></summary>
+                    <summary><strong data-i18n-key="editor.advanced">Advanced</strong></summary>
                     <div class="flex-wrap-r alc">
-                        <label for="type">Type</label>
+                        <label for="type" data-i18n-key="editor.advanced.type">Type</label>
                         <input style="color:white;" type="text" id="type" value="fd.sound" disabled />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="plugin">Plugin</label>
+                        <label for="plugin" data-i18n-key="editor.advanced.plugin">Plugin</label>
                         <input style="color:white;" type="text" id="plugin" value="Freedeck" disabled />
                     </div>
                     <div class="flex-wrap-r alc">
-                        <label for="rendertype">RenderType</label>
+                        <label for="rendertype" data-i18n-key="editor.advanced.renderer">Renderer</label>
                         <input style="color:white;" type="text" id="rendertype" value="button" disabled />
                     </div>
                     <div class="horizontal-seperator"></div>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="flex-wrap-r">
-                    <button id="select-plugin-back" style="display: none">
+                    <button id="select-plugin-back" style="display: none" data-i18n-key="editor.back_to_plugins">
                         Back to Plugins
                     </button>
                     <button id="spiav" style="display: none">
@@ -126,20 +126,20 @@
             </div>
             <div style="display: none" id="audio-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
-                    <h3>Soundboard</h3>
-                    <p>Control your Freedeck soundboard!</p>
+                    <h3 data-i18n-key="editor.sections.no_action.soundboard">Soundboard</h3>
+                    <p data-i18n-key="editor.sections.soundboard.description">Control your Freedeck soundboard!</p>
                 </div>
                 <div class="flex-wrap-r alc" style="width: -webkit-fill-available;">
                     <center style="width: -webkit-fill-available;">
-                        <p>This tile will play&nbsp;</p>
+                        <p data-i18n-key="editor.sections.soundboard.action">This tile will play</p>
                         <h2 id="audio-file" class="information">AUDIOFILE.MP3</h2>
-                        <div class="button" id="upload-sound">Change</div>
+                        <div class="button" id="upload-sound" data-i18n-key="editor.sections.soundboard.change">Change</div>
                     </center>
                 </div>
             </div>
             <div style="display: none" id="system-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
-                    <h3>App Volume<span class="tag-beta">BETA</span></h3>
+                    <h3><span data-i18n-key="editor.sections.no_action.app_volume">App Volume</span><span class="tag-beta">BETA</span></h3>
                     <p>This tile will change the volume of the app selected.</p>
                 </div>
                 <div id="sys-actions" class="generic-chips">
@@ -148,7 +148,7 @@
             </div>
             <div style="display: none" id="macro-only" class="editor-section generic-chips editor-section-bottom">
                 <div class="information">
-                    <h3>Macro<span class="tag-beta">BETA</span></h3>
+                    <h3><span data-i18n-key="editor.sections.no_action.macro">Macro</span><span class="tag-beta">BETA</span></h3>
                     <p>Type or press a key combination!</p>
                 </div>
                 <div id="sys-actions" class="generic-chips">
@@ -173,27 +173,27 @@
             <div style="display: none" id="none-only" class="generic-chips editor-section editor-section-bottom" >
                 <div class="information">
                     <h3 data-i18n-key="editor.sections.no_action">No Action!</h3>
-                    <p>What should this tile do?</p>
+                    <p data-i18n-key="editor.sections.no_action.description">What should this tile do?</p>
                 </div>
                 <div class="flex-wrap-r plugin-view-listing tile-selection">
                     <button id="none-audio">
-                        <p>Soundboard</p>
+                        <p data-i18n-key="editor.sections.no_action.soundboard">Soundboard</p>
                         <img src="/common/icons/t_audio.svg" alt="Audio Tile" loading="lazy">
                     </button>
                     <button id="none-plugins">
-                        <p>Plugin</p>
+                        <p data-i18n-key="editor.sections.no_action.plugin">Plugin</p>
                         <img src="/common/icons/t_plugin.svg" alt="Plugin Tile" loading="lazy">
                     </button>
                     <button id="none-macro">
-                        <p>Macro</p>
+                        <p data-i18n-key="editor.sections.no_action.macro">Macro</p>
                         <img src="/common/icons/t_macro.svg" alt="Macro Tile" loading="lazy">
                     </button>
                     <button id="none-system">
-                        <p>App Volume</p>
+                        <p data-i18n-key="editor.sections.no_action.app_volume">App Volume</p>
                         <img src="/common/icons/t_app_volume.svg" alt="Application Volume Tile" loading="lazy">
                     </button>
                     <button id="none-profiles">
-                        <p>Folder Changer</p>
+                        <p data-i18n-key="editor.sections.no_action.folder_changer">Folder Changer</p>
                         <img src="/common/icons/t_folder.svg" alt="Folder Changer Tile" loading="lazy">
                     </button>
                 </div>
@@ -206,8 +206,8 @@
                 </div>
             </div>
             <div class="flex-wrap-r editor-options">
-                <div class="button" id="editor-back" style="display:none;">Change Tile Type</div>
-                <div class="button" id="editor-save">Save</div>
+                <div class="button" id="editor-back" style="display:none;" data-i18n-key="editor.change_tile_type">Change Tile Type</div>
+                <div class="button" id="editor-save" data-i18n-key="editor.save">Save</div>
             </div>
         </div>
     </dialog>

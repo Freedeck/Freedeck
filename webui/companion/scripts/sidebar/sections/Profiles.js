@@ -1,15 +1,15 @@
 import { SidebarSection, SidebarSvgButton } from "../SidebarSection";
 import { translationKey } from "../../../../shared/localization";
 
-const style = new SidebarSection("Folders", "Profiles");
+const style = new SidebarSection(translationKey("sidebars.left.style.folders.title"), "Profiles");
 
 const newBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
-		"New Folder",
-		"Enter a name for the new folder",
+		translationKey("sidebars.left.style.folders.popups.new"),
+		translationKey("sidebars.left.style.folders.popups.new.description"),
 		(modal, value, feedback, title, button, input, content) => {
 			if (value.length < 1) {
-				feedback.innerText = "Please enter a name for the folder";
+				feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 				return false;
 			}
 			universal.config.profiles[value] = [
@@ -37,11 +37,11 @@ const newBtn = new SidebarSvgButton("", ()=>{
 
 const dupBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
-		"Duplicate Folder",
-		"Enter a name for the new folder",
+		translationKey("sidebars.left.style.folders.popups.duplicate"),
+		translationKey("sidebars.left.style.folders.popups.duplicate.description"),
 		(modal, value, feedback, title, button, input, content) => {
 			if (value.length < 1) {
-				feedback.innerText = "Please enter a name for the folder";
+				feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 				return false;
 			}
 			universal.send(universal.events.companion.dup_profile, value);
@@ -52,17 +52,21 @@ const dupBtn = new SidebarSvgButton("", ()=>{
 
 const importBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
-		"Import Folder",
-		"Enter the folder data to import",
+		translationKey("sidebars.left.style.folders.popups.import"),
+		translationKey("sidebars.left.style.folders.popups.import.description"),
 		(modal, pfData, feedback, title, button, input, content) => {
 			try {
+				if(!pfData.startsWith("[")) {
+					feedback.innerText = translationKey("sidebars.left.style.folders.popups.import.error_json_format");
+					return false;
+				}
 				const data = JSON.parse(pfData);
 				window.UniversalUI.show.showEditModal(
-					"Import Folder",
-					"Enter a name for the new folder",
+					translationKey("sidebars.left.style.folders.popups.import"),
+					translationKey("sidebars.left.style.folders.popups.import.ask_name"),
 					(modal, value, feedback, title, button, input, content) => {
 						if (value.length < 1) {
-							feedback.innerText = "Please enter a name for the folder";
+							feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 							return false;
 						}
 						universal.send(universal.events.companion.import_profile, {
@@ -73,7 +77,7 @@ const importBtn = new SidebarSvgButton("", ()=>{
 				);
 				return true;
 			} catch (e) {
-				feedback.innerText = "Invalid JSON data";
+				feedback.innerText = translationKey("sidebars.left.style.folders.popups.import.error_json");
 				return false;
 			}
 		},
@@ -108,7 +112,7 @@ function fix() {
 		option.setAttribute("value", profile);
 		profileSelect.appendChild(option);
 	}
-	profileTxt.innerHTML = `Current Folder:&nbsp<i>${universal.cleanHTML(universal.config.profile)}</i>`;
+	profileTxt.innerHTML = `${translationKey("sidebars.left.style.folders.text")}<i>${universal.cleanHTML(universal.config.profile)}</i>`;
 	profileSelect.value = universal.config.profile;
 	profileSelect.onkeydown = (e) => {
 		return false;
@@ -126,7 +130,7 @@ universal.listenFor("page_change", fix)
 universal.listenFor("data_ready", fix)
 
 universal.listenFor("profile", (data) => {
-	profileTxt.innerHTML = `Current Folder:&nbsp<i>${universal.cleanHTML(data)}</i>`;
+	profileTxt.innerHTML = `${translationKey("sidebars.left.style.folders.text")}<i>${universal.cleanHTML(data)}</i>`;
 	profileSelect.value = data;
 });
 

@@ -1,6 +1,7 @@
 import { SidebarSection, SidebarSlider, SidebarButton, SidebarSelect } from "../SidebarSection";
+import { translationKey } from "../../../../shared/localization";
 
-const style = new SidebarSection("Soundboard", "Soundboard");
+const style = new SidebarSection(translationKey("sidebars.left.soundboard.title"), "Soundboard");
 
 style.children.push({build:()=>{
   const d = document.createElement("div");
@@ -22,23 +23,23 @@ universal.listenFor("now-playing", (data) => {
 	document.querySelector("#np-sb").appendChild(newEle);
 });
 
-style.children.push(new SidebarButton("Stop All", (e) => {universal.audioClient.stopAll();}));
+style.children.push(new SidebarButton(translationKey("sidebars.left.soundboard.stop_all"), (e) => {universal.audioClient.stopAll();}));
 
-style.children.push(new SidebarSlider("Pitch", "pitch", "%", "0.1", "2", "1", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.pitch"), "pitch", translationKey("sidebars.left.soundboard.sliders.pitch.unit"), "0.1", "2", "1", (e) => {
   universal.audioClient.setPitch(e.target.value)
 }, () => {
   universal.audioClient.setPitch(1);
   setValue("#pitch", 1);
 }, 0.1));
 
-style.children.push(new SidebarSlider("Output Volume", "v", "%", "0", "100", "100", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.volume.output"), "v", translationKey("sidebars.left.soundboard.sliders.volume.unit"), "0", "100", "100", (e) => {
   universal.audioClient.setVolume(e.target.value / 100, universal.audioClient.channels.cable)
 }, () => {
   universal.audioClient.setVolume(1, universal.audioClient.channels.cable)
   setValue("#v", 100);
 }));
 
-style.children.push(new SidebarSlider("Monitor Volume", "mv", "%", "0", "100", "100", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.volume.monitor"), "v", translationKey("sidebars.left.soundboard.sliders.volume.unit"), "0", "100", "100", (e) => {
   universal.audioClient.setVolume(e.target.value / 100, universal.audioClient.channels.monitor)
 }, () => {
   universal.audioClient.setVolume(1, universal.audioClient.channels.monitor)
@@ -48,16 +49,16 @@ style.children.push(new SidebarSlider("Monitor Volume", "mv", "%", "0", "100", "
 
 const playbackModes = [
 	{
-		label: "Stop Previous",
+		label: translationKey("sidebars.left.soundboard.mode.stop_previous"),
 		value: "stop_prev",
 	},
 	{
-		label: "Play Over",
+		label: translationKey("sidebars.left.soundboard.mode.play_over"),
 		value: "play_over",
 	},
 ];
 
-const playbackModeSelect = new SidebarSelect("Playback Mode", "es-playback", (e) => {
+const playbackModeSelect = new SidebarSelect(translationKey("sidebars.left.soundboard.mode.title"), "es-playback", (e) => {
   universal.save("playback-mode", e.target.value);
   console.log(`Playback mode set to ${e.target.value}`);
 }, universal.load("playback-mode"));

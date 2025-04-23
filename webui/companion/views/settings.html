@@ -8,8 +8,7 @@
         </summary>
         <div class="themelist"></div>
     </details>
-    <br style="display:none;">
-    <details style="display:none;" data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+    <details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
         <summary class="settings-section-title">
             <span><span data-i18n-key="settings.sections.language">Language </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
         </summary>
@@ -82,7 +81,7 @@
     </details>
     <details>
         <summary class="settings-section-title">
-            Developer Tools <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.developer_tools">Developer Tools</span> <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div class="flex-wrap-r">
             <button onclick="universal.remove('thanks');window.location.reload()">
@@ -436,6 +435,7 @@
     const setupMenu = {
         "generale": {
             "title": "General",
+            "key": "settings.sections.general.title",
             "icon": "/common/icons/settings.svg",
             "options": {
                 "compact": {
@@ -535,6 +535,7 @@
         el.parentNode.replaceChild(details, el);
 
         const title = document.createElement("p");
+        title.setAttribute("data-i18n-key", _setupMenu.key);
         title.innerText = _setupMenu.title;
         summary.classList.add("settings-section-title");
         summary.prepend(title);
