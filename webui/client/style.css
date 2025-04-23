@@ -882,7 +882,7 @@ a:hover {
     background: var(--modal-bg);
     color: var(--modal-color);
     border: var(--generic-border);
-    padding: 5px;
+    padding: 0.5rem;
     border-radius: var(--main-radius);
     z-index: 1020;
     pointer-events: none;

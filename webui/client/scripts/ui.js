@@ -458,7 +458,7 @@ function reloadSounds() {
           break;
       }
 
-      tooltipContent += `<p>Right click to edit.</p><center><i>${snd.type}</i></center>`;
+      tooltipContent += `<p>Right click to edit.</p><i>${snd.type}</i>`;
 
       const tt = universal.createTooltipFor(keyObject, tooltipContent);
       tt.classList.add("tile-tooltip");

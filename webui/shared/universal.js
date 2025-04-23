@@ -620,7 +620,6 @@ const universal = {
     element.onmouseleave = () => {
       tooltip.classList.remove("show");
     };
-
     element.onmouseenter = () => {
       tooltip.classList.add("show");
     };
