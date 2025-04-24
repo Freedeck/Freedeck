@@ -185,7 +185,7 @@ details {
     display: flex;
     flex-direction: column;
     gap: 0;
-    
+    cursor: pointer;
 }
 
 
