@@ -409,6 +409,19 @@ input[type="checkbox"] {
     outline: none;
 }
 
+input[type="range"]::-webkit-slider-thumb {
+    cursor: grab;
+    pointer-events: all;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+}
+
+input[type="range"] {
+    pointer-events: none;
+}
+
 input[type="checkbox"]:checked {
     appearance: none;
     background: var(--modal-bg);

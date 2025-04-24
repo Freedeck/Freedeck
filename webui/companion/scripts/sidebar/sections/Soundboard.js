@@ -39,7 +39,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.s
   setValue("#v", 100);
 }));
 
-style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.volume.monitor"), "v", translationKey("sidebars.left.soundboard.sliders.volume.unit"), "0", "100", "100", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.volume.monitor"), "mv", translationKey("sidebars.left.soundboard.sliders.volume.unit"), "0", "100", "100", (e) => {
   universal.audioClient.setVolume(e.target.value / 100, universal.audioClient.channels.monitor)
 }, () => {
   universal.audioClient.setVolume(1, universal.audioClient.channels.monitor)

@@ -23,7 +23,7 @@ const typeField = document.querySelector("#type");
 
 class Profile extends EditorViewLogic {
   constructor() {
-    super("profile", "fd.profile");
+    super("profiles", "fd.profile");
     generateProfileSelect();
   
     this.setOnRun(({interactionData}) => {

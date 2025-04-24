@@ -80,6 +80,7 @@ universal.vclose = () => {
 }
 
 universal.vopen = (v) => {
+	if(v === "demo-pages" && !pages.includes(v)) pages.push(v);
 	if(universal.load("has_setup") === "false") return;
 	universal.uiSounds.playSound("sidebar");
 	const view_container = document.querySelector(universal.ctx.view_container);

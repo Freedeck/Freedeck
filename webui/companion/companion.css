@@ -145,6 +145,7 @@ input[type="color"] {
 	border-block-start-color: rgba(255,255,255,0.125);
 	border-inline-start-color: rgba(255,255,255,0.125);
 	border-block-end-color: rgba(255,255,255,0.125);
+	cursor: pointer;
 }
 
 .sidebar {
@@ -778,4 +779,10 @@ audio::-webkit-media-controls-play-button {
 
 #thanks .modalContent .modal-body {
 	gap: 8.25px;
+}
+
+.center-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
