@@ -19,7 +19,7 @@ const runCfg = {
   }
 }
 
-require('$/console.js');
+function hasArgument(i) { return process.argv.includes(i)};
 
 const shouldExitNoSettings = (!runCfg.requirements.settingsExists && runCfg.runs.server);
 
@@ -30,26 +30,17 @@ if(shouldExitNoSettings || runCfg.runs.setup) {
 
 if (runCfg.runs.companion === false) {
   console.log(picocolors.blue("Server only mode."));
+  require("./migration");
+  require('$/console.js');
+  createInterruptHandlers();
+  (async()=>require("./server"))();
 } else if (runCfg.runs.server === false) {
   console.log(picocolors.blue("Companion only mode."));
-}
-
-require("./migration");
-
-if (runCfg.runs.companion) {
-  const { app, Menu } = require("electron");
-  // Menu.setApplicationMenu(null);
+  const { app } = require("electron");
   app.on("ready", () => {
     require("./app/makeWindow")("webui/client/new-connect.html", true, 420, 525, false);
   })
 }
-
-if(runCfg.runs.server) {
-  (async()=>require("./server"))();
-  createInterruptHandlers();
-}
-
-function hasArgument(i) { return process.argv.includes(i)};
 
 /**
  * Setup the terminal

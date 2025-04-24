@@ -23,6 +23,8 @@ function recalculate() {
 recalculate();
 
 const ip = networkAddresses();
+const firstIPKey = Object.keys(ip)[0];
+const determinedIP = ip[firstIPKey][0] || null;
 
 let myAppCode = "Loading...";
 const myAppUrlDisplay = "https://my.freedeck.app/";
@@ -33,7 +35,7 @@ const appCodeRequest = new URL(myAppUrl);
 appCodeRequest.searchParams = new URLSearchParams();
 appCodeRequest.searchParams.set("code", randomlyGenerated);
 appCodeRequest.searchParams.set("name", "Companion");
-appCodeRequest.searchParams.set("local_ip", ip[Object.keys(ip)[0]][0]);
+appCodeRequest.searchParams.set("local_ip", determinedIP);
 
 router.get("/discover/code-request", (req, res) => {
   if(myAppCode === "Loading..." || !myAppCode) {

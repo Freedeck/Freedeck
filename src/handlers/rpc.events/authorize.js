@@ -8,4 +8,9 @@ module.exports = ({ io, socket, data }) => {
 			io.rpcClients.splice(index, 1);
 		}
 	});
+	io.emit(evt.default.notif, {
+		sender: "handoff-api",
+		data: "Authorize",
+		incoming: data,
+	});
 };

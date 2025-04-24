@@ -107,8 +107,9 @@ export default async function eventsHandler(universal, user) {
 		};
 
 		universal.on(universal.events.default.notif, (data) => {
-			if (data.incoming) return;
-			if (data.sender === 'handoff-api') {
+			console.log(data)
+			// if (data.incoming) return;
+			if (data.sender === 'RPC') {
 				handoffApiNotif(data);
 				return;
 			};
