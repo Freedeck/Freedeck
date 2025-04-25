@@ -84,7 +84,7 @@
             <span data-i18n-key="settings.sections.developer_tools">Developer Tools</span> <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div class="flex-wrap-r">
-            <button onclick="universal.remove('thanks');window.location.reload()">
+            <button onclick="restChnglog();window.location.reload()">
                 Show latest changelog (Reloads)
             </button>
             <button onclick="window._makeThanks(true)">
@@ -128,6 +128,11 @@
 <script type="module">
     import "/app/settingsThemes.js";
     loadThemeListing();
+
+    function restChnglog() {
+        universal.send(universal.events.default.config_changed,setToLocalCfg('app.freedeck.last_changelog_viewed', null));
+    }
+    window.restChnglog = restChnglog;
 
     import {locales, setLocale, translationKey} from "/app/shared/localization.js"
     document.querySelector("#clang").innerText = "Current Language: " + locales[universal.load("locale")]

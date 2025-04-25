@@ -433,7 +433,13 @@ const universal = {
       {
         name: "Reload",
         onclick: (ev) => {
-          window.location.reload();
+          if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
+            window.location.reload();
+          }
+          UI.showBootLog(false);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         },
       },
       {

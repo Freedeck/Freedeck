@@ -2,7 +2,7 @@ import changes from './changes.json';
 
 const makeThanks = (force=false) => {
   if(!force) {
-    if(universal.load("thanks") === universal._information.version.raw) return;
+    if(universal.lclCfg()["app.freedeck.last_changelog_viewed"] === universal._information.version.raw) return;
     if(universal.load("has_setup") === 'false') return;
   }
   const {major, other, known} = changes;
@@ -15,7 +15,10 @@ const makeThanks = (force=false) => {
   const close = document.createElement("button");
   close.onclick = () => {
     universal.uiSounds.playSound("welcome");
-		universal.save("thanks", universal._information.version.raw);
+    universal.send(
+      universal.events.default.config_changed,
+      setToLocalCfg("app.freedeck.last_changelog_viewed", universal._information.version.raw),
+    );
     container.close(false); // No sound.
   }
   close.innerText = "OK";
@@ -120,6 +123,12 @@ const makeNested = (data, parent) => {
     parent.appendChild(ul);
   }
 }
+
+const setToLocalCfg = (key, value) => {
+	const cfg = universal.lclCfg();
+	cfg[key] = value;
+	return cfg;
+};
 
 export {makeThanks};
 window._makeThanks = makeThanks;

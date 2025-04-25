@@ -57,10 +57,14 @@ export default async function eventsHandler(universal, user) {
 		});
 
 		universal.on(universal.events.default.recompile, () => {
+			if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
+				window.location.href = `/new-connect.html?id=${user}`;
+			}
 			UI.showBootLog(false);
+			if(window.splashScreen) window.splashScreen.splash();
 			setTimeout(() => {
 				window.location.href = `/new-connect.html?id=${user}`;
-			}, 1000);
+			}, 500);
 		});
 
 		universal.on(universal.events.default.log, (data) => {

@@ -79,3 +79,7 @@ const fdSettingsButton = document.querySelector("#fd-settings-button");
 
 fdSettingsButton.onmousedown = downEvent;
 fdSettingsButton.ontouchstart = downEvent;
+
+if(universal.lclCfg()["app.freedeck.last_changelog_viewed"] !== universal._information.version.raw) {
+  universal.sendToast("Check your computer for the changelog!", "Freedeck");
+}

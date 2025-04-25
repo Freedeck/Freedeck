@@ -320,6 +320,20 @@ summary ::-webkit-details-marker {
     }
 }
 
+
+@keyframes pull-down-boot-log {
+    from{
+        height: 0;
+        top: 0;
+    }
+
+    to {
+        height: 100%;
+        top: 0;
+        background-color: #17212a;
+    }
+}
+
 .flex-wrap {
 	display: flex;
 	flex-direction: column;

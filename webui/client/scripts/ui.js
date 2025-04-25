@@ -115,7 +115,7 @@ function showBootLog(showText=true) {
     }
     bootLog.querySelector("h1").style.animation = "real-fade-in 0.5s";
     bootLog.querySelector("img").style.animation = "real-fade-in 0.5s";
-    bootLog.style.animation = "pull-down 0.5s";
+    bootLog.style.animation = "pull-down-boot-log 0.5s";
     bootLog.style.display = "block";
   });
 }
