@@ -57,7 +57,10 @@ export default async function eventsHandler(universal, user) {
 		});
 
 		universal.on(universal.events.default.recompile, () => {
-			window.location.href = `/new-connect.html?id=${user}`;
+			UI.showBootLog(false);
+			setTimeout(() => {
+				window.location.href = `/new-connect.html?id=${user}`;
+			}, 1000);
 		});
 
 		universal.on(universal.events.default.log, (data) => {

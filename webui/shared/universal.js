@@ -305,13 +305,13 @@ const universal = {
   },
   init: (user) => {
     return new Promise((resolve, reject) => {
+      UI.makeBootLog();
       (async () => {    
         const stateFetch = await fetch("/api/discover")
         const state = await stateFetch.json();
         if (state.webpackStatus !== "ready") {
           window.location.href = `/new-connect.html?id=${user}`;
         }
-        UI.makeBootLog();
         universal.CLU("Boot", "Boot log created");
         window.universal = universal;
         universal.CLU("InitFN", "Copied universal to window");

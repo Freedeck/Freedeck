@@ -102,15 +102,19 @@ function makeBootLog() {
   });
 }
 
-function showBootLog() {
+function showBootLog(showText=true) {
   return new Promise((resolve, reject) => {
-    universal.CLU(
-      "Boot / UI : WARNING!",
-      "The boot log style hasn't been updated, and won't be! You may notice a few imperfections."
-    );
-    bootLogContainer.style.scale = "1";
-    bootLogContainer.style.display = "block";
-    openCloseBootLog.style.display = "block";
+    if(showText) {
+      universal.CLU(
+        "Boot / UI : WARNING!",
+        "The boot log style hasn't been updated, and won't be! You may notice a few imperfections."
+      );
+      bootLogContainer.style.scale = "1";
+      bootLogContainer.style.display = "block";
+      openCloseBootLog.style.display = "block";
+    }
+    bootLog.querySelector("h1").style.animation = "real-fade-in 0.5s";
+    bootLog.querySelector("img").style.animation = "real-fade-in 0.5s";
     bootLog.style.animation = "pull-down 0.5s";
     bootLog.style.display = "block";
   });

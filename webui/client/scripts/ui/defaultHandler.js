@@ -1,3 +1,5 @@
+import { translationKey } from "../../../shared/localization";
+
 /**
  * Create the default FD button.
  * @param {*} snd Freedeck Button Config
@@ -63,7 +65,10 @@ export default function (snd, keyObject, raw) {
 		if(universal.load("cct") === "true") return;
 		if(universal.name === "Companion") {
 			keyObject.onpointerup = (ev) => {
-				if(!universal.flags.isEnabled("try_buttons")) return;
+				if(!universal.flags.isEnabled("try_buttons")) {
+					universal.sendToast(translationKey("app.error.test_buttons_is_off"), "Freedeck");
+					return;
+				}
 				if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
@@ -75,13 +80,18 @@ export default function (snd, keyObject, raw) {
 				if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
-					btn: snd,
+					btn: snd,  
 				});
 			};
 		} else {
 			keyObject.onpointerdown = (ev) => {
-				if(universal.name === "Companion" && !universal.flags.isEnabled("try_buttons")) return;
-				if (ev.which !== 1) return;
+				if(universal.name === "Companion") {
+					if(!universal.flags.isEnabled("try_buttons")) {
+						universal.sendToast(translationKey("app.error.test_buttons_is_off"), "Freedeck");
+						return;
+					}
+				}
+					if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
 					btn: snd,

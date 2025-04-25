@@ -1,5 +1,6 @@
 { 
   "locale.display": "English",
+  "app.error.test_buttons_is_off": "You can't press Tiles here before enabling 'Test Tiles'.",
   "sidebars.right.Tiles": "Tiles",
   "sidebars.right.Library": "Library",
   "sidebars.right.Marketplace": "Marketplace",
