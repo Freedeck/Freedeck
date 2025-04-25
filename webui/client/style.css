@@ -151,24 +151,22 @@ h1 {
     /* width:max-content; */
 }
 
-#boot-log-div > .oclb {
+#boot-log > .oclb {
     transition-duration: .5s;
     position: absolute;
-    top: 87%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    right: 1rem;
 }
 
 #boot-log {
     display: block;
-    width: 94%;
-    height: 73%;
+    height: 95%;
+    width: 85%;
     overflow-y: scroll;
     position: absolute;
-    top: 48.85%;
-    left: 48.85%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--modal-bg);
     color: white;
     padding: 1rem;
     transition-duration: .125s;

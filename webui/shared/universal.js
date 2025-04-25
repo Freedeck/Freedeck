@@ -355,22 +355,26 @@ const universal = {
                 universal
               );
               universal.doInitialize(UI.initialize, { name: "UI" }, universal);
-              universal.doInitialize(
-                universal.audioClient.initialize,
-                { name: "Audio Engine" },
-                universal
-              );
-              universal.doInitialize(
-                universal.uiSounds.initialize,
-                { name: "UI Sounds" },
-                universal
-              );
-              universal.CLU("Boot", "Post-init tasks completed.");
+              if(universal.name === "Companion") {
+                universal.doInitialize(
+                  universal.audioClient.initialize,
+                  { name: "Audio Engine" },
+                  universal
+                );
+                universal.doInitialize(
+                  universal.uiSounds.initialize,
+                  { name: "UI Sounds" },
+                  universal
+                );
+              }
+              universal.CLU("Boot", "Platform specific post-init tasks completed.");
               universal.sendEvent("launch");
+              universal.CLU("Boot", "Sent 'launch' event");
               await UI.closeBootLog();
-              universal.CLU("Boot", "Launching!");
+              universal.CLU("Boot", "Launching -- closing splash screen.");
               if(universal.load("locale") !== "en") {
                 universal.sendToast("Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.", "Freedeck");
+                universal.CLU("Boot", "User is using a non-default language.");
               }
               resolve();
             }) 
