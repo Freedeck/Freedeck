@@ -36,6 +36,7 @@ input[type="color"] {
 	justify-content: center;
 	align-items: center;
 	gap: 1rem;
+	color: var(--text-color);
 }
 
 .settings-section-title span {
@@ -146,6 +147,7 @@ input[type="color"] {
 	border-inline-start-color: rgba(255,255,255,0.125);
 	border-block-end-color: rgba(255,255,255,0.125);
 	cursor: pointer;
+  color: var(--text-color);
 }
 
 .sidebar {
@@ -187,7 +189,7 @@ input[type="color"] {
 .contextMenu {
 	position: absolute;
 	background: var(--modal-bg);
-	color: white;
+	color: var(--text-color-secondary);
 	border-radius: var(--main-radius);
 	border: var(--generic-border);
 	padding: 0.5rem;
@@ -240,7 +242,7 @@ input[type="color"] {
 .editor-info {
 	width: max-content;
 	background: 0;
-	color: white;
+	color: var(--text-color-secondary);
 	border: 0;
 	padding: 0;
 	overflow-y: scroll;
@@ -336,7 +338,7 @@ input[type="color"] {
 	max-height: 50vh;
 	min-height: 50vh;
 	background: var(--modal-bg);
-	color: var(--modal-color);
+	color: var(--text-color-secondary);
 	padding: 1.5rem;
 	border-top-left-radius: var(--main-radius);
 	border-top-right-radius: var(--main-radius);
@@ -471,7 +473,8 @@ input[type="color"] {
 	appearance: none;
 	width: 100%;
 	height: 2px;
-	background: var(--modal-bg);
+	background: var(--input-bg);
+	color: var(--input-color);
 	border-radius: var(--main-radius);
 	border: var(--generic-border);
 	outline: none;
@@ -484,7 +487,7 @@ input[type="color"] {
 	z-index: 999;
 	width: 25px;
 	height: 25px;
-	background-color: rgba(12,12,12,1);
+	background-color: var(--input-slider-bg);
 	border-radius: 50%;
 	cursor: pointer;
 }

@@ -6,29 +6,47 @@
 }
 
 :root {
-	--main-bg: linear-gradient(45deg, rgba(30, 30, 40, 1) 0%, rgba(49, 50, 68, 1) 33%, rgba(30, 30, 40, 1) 66%, rgba(49, 50, 68, 1) 100%);
+	--ctp-text: #cdd6f4;
+	--ctp-subtext-1: #bac2de;
+	--ctp-subtext-0: #a6adc8;
+	--ctp-overlay-2: #9399b2;
+	--ctp-overlay-1: #7f849c;
+	--ctp-overlay-0: #6c7086;
+	--ctp-surface-2: #585b70;
+	--ctp-surface-1: #45475a;
+	--ctp-surface-0: #313244;
+	--ctp-base: #1e1e2e;
+	--ctp-mantle: #181825;
+	--ctp-crust: #11111b;
+
+
+	--main-bg: linear-gradient(45deg, var(--ctp-base) 0%,  33%, var(--ctp-mantle) 66%, var(--ctp-crust) 100%);
 	
 	--tile-bg: rgba(180, 190, 254, 0.125);
 	
-	--text-color: #cdd6f4;
+	--text-color: var(--ctp-text);
+	--text-color-secondary:  var(--ctp-subtext-1);
+
+	--tile-border: 1px solid rgba(147, 153, 178, 0.5);
 	
 	--modal-color: #cdd6f4;
-	--modal-bg: #45475a;
+	--modal-bg: var(--ctp-crust);
 
-	--input-bg: #313244;
-	--input-color: #cdd6f4;
+	--input-bg: var(--ctp-surface-1);
+	--input-slider-bg: var(--ctp-base);
+	--input-color: var(--ctp-overlay-1);
 
 	--modal-item-bg: linear-gradient(45deg, rgba(30, 30, 40, 1) 0%, rgba(49, 50, 68, 1) 33%, rgba(30, 30, 40, 1) 66%, rgba(49, 50, 68, 1) 100%);
 	--modal-item-bg-size: 400% 400%;
 	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
 	--modal-item-text: #cdd6f4;
 
-	--companion-left-sidebar-bg: rgba(30, 30, 40, 0.5);
-	--companion-right-sidebar-bg: rgba(30, 30, 40, 0.5);
+	--companion-left-sidebar-bg: var(--ctp-mantle);
+	--companion-right-sidebar-bg: var(--ctp-mantle);
 
-	--companion-left-sidebar-color: #cdd6f4;
-	--companion-right-sidebar-color: #cdd6f4;
+	--companion-left-sidebar-color: var(--ctp-text);
+	--companion-right-sidebar-color: var(--ctp-text);
 
-	--companion-sidebar-item-bg: #45475a;
-	--companion-sidebar-item-color: #cdd6f4;
+	--companion-sidebar-item-bg: var(--ctp-surface-0);
+	--companion-sidebar-item-color: var(--ctp-text);
 }

@@ -6,22 +6,22 @@
 }
 
 :root {
-	--main-bg: #000000f2;
+	--main-bg: #060606;
 	
 	--text-color: white;
 
 	--modal-bg:rgba(15,15,15);
 	--modal-color:white;
 
-	--tile-border:1px solid rgba(255,255,255, 0.5);
-	--tile-bg:rgba(255,255,255, 0.025);
+	--tile-border: 1px solid rgba(255,255,255, 0.125);
+	--tile-bg: rgb(30,30,30);
 
 	--input-bg:rgba(255,255,255, 0.25);
 	--input-color: rgba(255,255,255);
 
 	--modal-item-bg: rgba(255,255,255,0.125);
-	--modal-item-bg-size:400% 400%;
-	--modal-item-bg-anim:error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+	--modal-item-bg-size: 100%;
+	--modal-item-bg-anim: none;
 	--modal-item-text:white;
 
 	--companion-left-sidebar-bg:rgba(0,0,0,0.5);
@@ -30,6 +30,6 @@
 	--companion-left-sidebar-color:white;
 	--companion-right-sidebar-color:white;
 
-	--companion-sidebar-item-bg:rgba(0,0,0,0.5);
+	--companion-sidebar-item-bg: #121212;
 	--companion-sidebar-item-color:white;
 }

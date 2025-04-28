@@ -8,15 +8,18 @@
 :root {
     --main-bg: black;
     
-    --tile-bg: rgba(0, 0, 0, 0.5);
-    --tile-border: 1px solid rgba(255, 255, 255, 0.5);
+    --tile-bg: #0a0a0a;
+    --tile-border: 1px solid #2e2e2e;
      
-    --text-color: white;
+    --text-color: #fafafa;
+    --text-color-secondary: #fefefe;
     
     --modal-bg: #080808;
-    --modal-color: white;
+    --modal-color: var(--text-color-secondary);
     
     --input-bg: #1a1a1a;
+    --input-slider-bg: #1a1a1a;
+    --input-color: var(--text-color);
 
     --modal-item-bg: linear-gradient(105deg,rgba(0, 0, 0, 1) 0%, rgba(0, 25, 25, 1) 50%, rgba(0, 0, 0, 1) 100%);
     --modal-item-bg-size: 400% 400%;
@@ -25,9 +28,9 @@
     --companion-left-sidebar-bg:rgba(0,0,0,0.5);
 	--companion-right-sidebar-bg:rgba(0,0,0,0.5);
 
-	--companion-left-sidebar-color:white;
-	--companion-right-sidebar-color:white;
+	--companion-left-sidebar-color:var(--text-color);
+	--companion-right-sidebar-color:var(--text-color);
 
 	--companion-sidebar-item-bg:rgba(0,0,0,0.5);
-	--companion-sidebar-item-color:white;
+	--companion-sidebar-item-color:var(--text-color);
 }

@@ -26,10 +26,12 @@
     
     --app-tile-container-width: 100vw;
     
-    --text-color: black;
+    --text-color: white;
+    --text-color-secondary: white;
     --font-size: 15px;
 
-    --input-bg: #FFFFFF;
+    --input-bg: #17212a;
+    --input-slider-bg: rgb(12,12,12);
     --input-color: black;
 
     --marketplace-plugin-updatable: #545400;
@@ -87,8 +89,17 @@ body {
 h1 {
     font-family: var(--font);
     font-size: 2rem;
+    color: var(--text-color);
     /* font-weight: normal; */
     font-weight: 700;
+}
+
+h2,h3,h4,h5,h6 {
+    color: var(--text-color);
+}
+
+p {
+    color:var(--text-color-secondary);
 }
 
 .alc {
@@ -131,7 +142,7 @@ h1 {
     top: 0;
     z-index: 9999;
     transition-duration: .5s;
-    color: white;
+    color: var(--text-color-secondary);
 }
 
 .n-icon {
@@ -167,7 +178,7 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--modal-bg);
-    color: white;
+    color: var(--text-color-secondary);
     padding: 1rem;
     transition-duration: .125s;
     border-radius: var(--main-radius);
@@ -178,6 +189,7 @@ details {
     margin: 0;
     padding: 0.5rem;
     background-color: rgba(0,0,0,0.25);
+    color: var(--text-color);
     border: var(--generic-border);
     border-radius: var(--main-radius);
     display: flex;
@@ -206,7 +218,7 @@ summary ::-webkit-details-marker {
     padding: 5px;
     background-color: rgba(0, 0, 0, 0.5);
     border: var(--generic-border);
-    color: white;
+    color: var(--text-color-secondary);
     min-height: 5rem;
     min-width: 10rem;
     border-radius: var(--main-radius);
@@ -367,8 +379,7 @@ summary ::-webkit-details-marker {
     visibility: hidden;
     background: var(--modal-bg);
     border: 2px solid rgba(255,255,255,0.125);
-    color: #fff;
-    color: var(--modal-item-text);
+    color: var(--text-color-secondary);
     text-align: center;
     border-radius: var(--main-radius);
     display: flex;
@@ -543,7 +554,7 @@ input:disabled {
     border: var(--tile-border); /* Add a border */
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    color: white;
+    color: var(--text-color-secondary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -559,7 +570,7 @@ input:disabled {
         }
         &:hover:not(:has(.smaller)) {
             filter: brightness(0.84);
-            color: white;
+            color: var(--text-color-secondary);
             transform: scale(1.05);
             cursor: pointer;
         }
@@ -575,13 +586,13 @@ input:disabled {
 .button.tiles-center:active {
     transform: scale(0.875) translate(-57%, -57%);
     filter: brightness(1.2);
-    color: white;
+    color: var(--text-color-secondary);
 }
 
 .button:active, button:active {
     filter: brightness(1.2);
     transform: scale(0.875);
-    color: white;
+    color: var(--text-color-secondary);
 }
 
 .modal {
@@ -610,7 +621,7 @@ input:disabled {
 .modal-close {
     background: none;
     border: none;
-    color: white;
+    color: var(--text-color-secondary);
     font-size: 1.5rem;
     cursor: pointer;
     float: right;
@@ -655,7 +666,7 @@ input:disabled {
 }
 .modalContent input {
 	background: rgba(0, 0, 0, 0.5);
-	color: white;
+    color: var(--text-color-secondary);
 	padding: 5px;
 	border-radius: var(--main-radius);
 	/* width: 80%; */
@@ -727,10 +738,7 @@ a {
     border: var(--generic-border);
 	text-align: left;
 	transition-duration: .25s;
-}
-
-a {
-	color: white;
+    color: var(--text-color-secondary);
 	text-decoration: none;
 }
 
@@ -800,7 +808,7 @@ a:hover {
 
 .slider-title {
     font-size: var(--font-size);
-    color: white;
+    color: var(--text-color-secondary);
     text-align: center;
     pointer-events: none;
 }
@@ -844,7 +852,7 @@ a:hover {
 .button-text {
     font-size: var(--font-size);
     width: calc(min-content + 1rem);
-    color: white;
+    color: var(--text-color-secondary);
     text-align: center;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -866,7 +874,7 @@ a:hover {
     background-color: rgba(0, 255, 0, 0.5);
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
-    color: white;
+    color: var(--text-color-secondary);
     border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
@@ -880,7 +888,7 @@ a:hover {
     background-color: rgba(255, 255, 0, 0.5);
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
-    color: white;
+    color: var(--text-color-secondary);
     border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
@@ -894,7 +902,7 @@ a:hover {
     background-color: rgba(255, 0, 0, 0.5);
     border-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
-    color: white;
+    color: var(--text-color-secondary);
     border-radius: var(--button-radius);
     width: calc(var(--tile-width) / 4);
     height: calc(var(--tile-height) / 4);
