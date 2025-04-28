@@ -95,7 +95,8 @@ window.oncontextmenu = (e) => {
             data: {},
           };
           universal.send(universal.events.companion.new_tile, {
-            "Enter Title": interaction,
+            name: "Enter Title",
+            interaction,
           });
           universal.listenForOnce("page_change", () => {
             universal.editTile({
@@ -113,13 +114,12 @@ window.oncontextmenu = (e) => {
           });
           break;
         }
-        case "Remove Tile":
+        case "Remove Tile": {
           UI.reloadProfile();
+          const interaction = e.srcElement?.getAttribute("data-interaction")|| "{}";
+          console.log(interaction)
           if(universal.lclCfg()["app.freedeck.tiles.force_deletion"]) {
-            universal.send(universal.events.companion.del_tile, {
-              name: e.srcElement.dataset.name,
-              item: e.srcElement.getAttribute("data-interaction"),
-            });
+            universal.send(universal.events.companion.del_tile, interaction);
             return;
           }
           window.showPick(
@@ -132,14 +132,12 @@ window.oncontextmenu = (e) => {
             ],
             ({value}) => {
               if (value.value !== true) return;
-              universal.send(universal.events.companion.del_tile, {
-                name: e.srcElement.dataset.name,
-                item: e.srcElement.getAttribute("data-interaction"),
-              });
+              universal.send(universal.events.companion.del_tile, interaction);
             },
             "This cannot be undone!"
           );
           break;
+        }
         case "Copy Tile Here":
           showReplaceGUI(e.srcElement);
           break;
@@ -183,13 +181,13 @@ function showReplaceGUI(srcElement) {
           : 0);
       // we need to clone value, and change the pos, and uuid, then make a new key.
       universal.send(universal.events.companion.new_tile, {
-        [value.name]: {
+        name: value.name,
+        interaction: {
           type: valueToo.type,
-          plugin: valueToo.plugin,
           pos,
           uuid: `fdc.${Math.random() * 10000000}`,
           data: valueToo.data,
-        },
+        }
       });
       return true;
     }

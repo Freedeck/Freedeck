@@ -16,8 +16,6 @@ const eventNames = {
 	default: {		
 		notif: "dN",
 
-		log: "dL",
-
 		plugin_info: "dP",
 
 		reload: "dR",
@@ -34,7 +32,6 @@ const eventNames = {
 
 	companion: {
 		tile_update: "cTu",
-		conn_fail: 0x01, // This should not be changed
 		new_tile: "ckN",
 		del_tile: "ckD",
 		edit_tile: "ckE",

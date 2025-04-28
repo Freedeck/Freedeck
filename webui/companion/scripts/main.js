@@ -81,8 +81,7 @@ function editTile(e) {
     el.classList.add("smaller");
     el.classList.add("blur");
   }
-  const realEle = document.querySelector(`.k[data-interaction='${e.srcElement.getAttribute("data-interaction")}']`);
-  realEle.classList.remove("smaller");
+  e.srcElement?.classList?.remove("smaller");
 
   const contextMenu = document.querySelector(".contextMenu");
   if(contextMenu) contextMenu.remove();

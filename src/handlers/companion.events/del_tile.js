@@ -12,7 +12,7 @@ module.exports = ({ socket, io, data }) => {
 	}
 	socket.abuse.timeout.tiles = Math.max(5, socket.abuse.timeout.tiles + socket.abuse.timeout.presets.good_tiles)
 	timeAtLastTileCreation = currentTime;
-	const deletingItem = JSON.parse(data.item);
+	const deletingItem = JSON.parse(data);
 	const settings = config.settings();
 	const currentProfile = settings.profiles[settings.profile];
 	settings.profiles[settings.profile] = currentProfile.filter((snd) => {

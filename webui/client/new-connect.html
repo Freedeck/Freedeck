@@ -25,22 +25,40 @@
   </div>
   <div class="connection">
     <small id="failure">Connection Settings</small>
-    <br>
     <input type="text" value="http://localhost:5754" id="url">
+    <button id="retry">Retry</button>
   </div>
   <img src="./assets/logo_big.png" class="icon">
   <p class="progress-text">Freedeck is starting...</p>
   <style>
     @import url("fonts.css");
+    button {
+      background-color: #17212a;
+      border: 1px solid rgba(255,255,255,0.1);
+
+      color: white;
+      border-radius: .5rem;
+      padding: .5rem;
+      transition-duration: .125s;
+    }
+
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
     .connection {
       position: fixed;
-      bottom: 6%;
+      bottom: 50%;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.25);
-      border-radius: 1.5rem;
+      background-color: #17212a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: .5rem;
       padding: 5px;
       display: none;
+      text-align: center;
+      flex-direction: column;
+      gap: 5px;
     }
 
     .progress-text {
@@ -123,98 +141,91 @@
   </style>
   <script>
     const p = document.getElementById("progress");
+    const progressText = document.querySelector(".progress-text");
+    const connection = document.querySelector(".connection");
+    const fail = document.querySelector("#failure");
+    const retry = document.querySelector("#retry");
+    const urlEle = document.getElementById("url");
+    const existing = window.location.href.split("/new-connect.html")[0];
+    const urlParameters = new URLSearchParams(window.location.search);
+    
+    let isCompanion = false;
+    let url = urlEle.value;
+    
+    url = existing;
+    if (existing.includes('file:')) {
+      url = "http://localhost:5754";
+      isCompanion = true;
+    }
+
+    if (urlParameters.has("id") && urlParameters.get("id").includes("Companion")) isCompanion = true;
+
+    let isTryingToConnect = false;
+    let isErrored = false;
+
+    window.splashScreen?.splash()
+
+    retry.onclick = () => {
+      attemptConnection();
+      connection.style.display = "none";
+      p.style.display = "block";
+      progressText.innerText = "Retrying...";
+      urlEle.value = url;
+    }
+
+    setInterval(() => {
+      if (isTryingToConnect || isErrored) return;
+      attemptConnection();
+    }, 500);
+    
+    attemptConnection();
+
+    async function attemptConnection() {
+      if (isTryingToConnect) return;
+      animateProgressTo(0);
+
+      async function webpackStillBuilding() {
+        const res = await fetch(url + "/api/discover").catch((err) => {
+          connection.style.display = "flex";
+          p.style.display = "none";
+          fail.innerText = "Error while fetching status.";
+          progressText.innerText = "";
+          isErrored = true;
+          return;
+        });
+        const data = await res.json();
+        const isBuilding = data.webpackStatus != "ready";
+        progressText.innerText = (isBuilding ? "Freedeck is starting..." : "Freedeck is ready!");
+        animateProgressTo(50);
+        return isBuilding;
+      }
+      
+      if(await webpackStillBuilding()) {
+        const timer = setInterval(async () => {
+          if (!await webpackStillBuilding()) clearInterval(timer);
+        }, 500);
+        return;
+      };
+
+      isTryingToConnect = true;
+      
+      animateProgressTo(100);
+
+      if(isCompanion) url += "/companion";
+
+      p.style.opacity = '0';
+      
+      progressText.innerText = url;
+      window.location.replace(url);
+    }
+
     function animateProgressTo(num) {
       p.value += (num - p.value) / 50;
       if (p.value < num) {
         requestAnimationFrame(() => animateProgressTo(num));
       }
     }
-    function setText(text) {
-      document.querySelector(".progress-text").innerText = text;
-    }
-    let id = "Main";
-
-    if (!window.splashScreen) {
-      window.splashScreen = {
-        splash: () => { },
-        unsplash: () => { }
-      }
-    }
-    const urlEle = document.getElementById("url");
-    let url = urlEle.value;
-
-    const urls = new URLSearchParams(window.location.search);
-    const existing = window.location.href.split("/new-connect.html")[0];
-    url = existing;
-    if (urls.has("sloc")) {
-      url = urls.get("sloc");
-    }
-    if (existing.includes('file:')) {
-      url = "http://localhost:5754";
-      id = "Companion";
-    }
-    if (urls.has("id") &&
-      urls.get("id").includes("Companion")) id = "Companion";
-
-
-    let isTryingToConnect = false;
-
-    async function waitFor(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-    window.splashScreen.splash()
-    async function task() {
-      if (isTryingToConnect) return;
-      animateProgressTo(1);
-      async function webpacker() {
-        const res = await fetch(url + "/api/discover").catch((err) => {
-        setText("Failed to connect to server.");
-        document.querySelector(".connection").style.display = "block";
-        document.querySelector("#failure").innerText = "Failed to connect to server.";
-        document.querySelector("#url").value = url;
-        return;
-      });
-        const data = await res.json();
-        const isBuilding = data.webpackStatus != "ready";
-        setText(isBuilding ? "Freedeck is starting..." : "Freedeck is ready!");
-        return isBuilding;
-      }
-      const isBuilding = await webpacker();
-      animateProgressTo(20);
-
-      if(isBuilding) {
-        const timer = setInterval(async () => {
-          await webpacker();
-          if (!isBuilding) {
-            clearInterval(timer);
-          }
-        }, 500);
-        return;
-      };
-
-      isTryingToConnect = true;
-      animateProgressTo(100);
-
-      let whereToGo = url;
-      if (localStorage.getItem(btoa("fd.BfCon"))) {
-        localStorage.removeItem(btoa("fd.BfCon"));
-        whereToGo = atob(localStorage.getItem(btoa("fd.BfCon")));
-      }
-      
-      if (id === "Companion") {
-        whereToGo = url + "/companion?fdc=true";
-      } else {
-        whereToGo = url;
-      }
-      p.style.opacity = '0';
-      
-      window.location.replace(whereToGo);
-    }
-    setInterval(() => {
-      if (isTryingToConnect) return;
-      task();
-    }, 500);
-    task();
+  
   </script>
 </body>
 

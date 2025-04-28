@@ -1,4 +1,5 @@
 const plugins = require("@managers/plugins").plugins;
+const eventNames = require("@handlers/eventNames");
 
 module.exports = ({ socket, data }) => {
 	const plug = plugins().get(data);

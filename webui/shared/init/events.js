@@ -67,10 +67,6 @@ export default async function eventsHandler(universal, user) {
 			}, 500);
 		});
 
-		universal.on(universal.events.default.log, (data) => {
-			console.log(`${data.sender}: ${data.data}`);
-		});
-
 		function handoffApiNotif(dat) {
 			if (dat.data === "Authorize" && dat.incoming && universal.name === 'Companion') {
 				showPick(

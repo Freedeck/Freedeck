@@ -7,7 +7,7 @@ module.exports = {
 	id: "fd.handlers.login",
 	exec: ({ socket }) => {
 		socket.on(eventNames.login.login_data, (data) => {
-			if (data.tlid === socket.tempLoginID) {
+			if (data === socket.tempLoginID) {
 				// yes
 				socket.emit(eventNames.login.login_data_ack, true);
 				socket.tlidMatch = true;

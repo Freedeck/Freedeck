@@ -537,7 +537,8 @@ function clickHandleNewTile(v) {
   const tileName = this._interactionData.name;
 
   universal.send(universal.events.companion.new_tile, {
-    [tileName]: interaction,
+    name: tileName,
+    interaction
   });
 
   universal.listenForOnce("page_change", () => {

@@ -13,7 +13,10 @@ module.exports = ({ socket, io, data }) => {
 	socket.abuse.timeout.tiles = Math.max(5, socket.abuse.timeout.tiles + socket.abuse.timeout.presets.good_tiles)
 	timeAtLastTileCreation = currentTime;
 	const settings = config.settings();
-	settings.profiles[settings.profile].push(data);
+	const {name, interaction} = data;
+	settings.profiles[settings.profile].push({
+		[name]: {...interaction}
+	});
 	config.save();
 	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
 };

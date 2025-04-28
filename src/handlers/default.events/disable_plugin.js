@@ -4,8 +4,16 @@ const eventNames = require("../eventNames");
 const fs = require("node:fs");
 
 module.exports = ({ io, data }) => {
+	if(!data) {
+		io.emit(eventNames.default.notif, {sender: "Freedeck", data: "No plugin provided."});
+		return;
+	}
 	const currLoaded = plugins.plugins();
 	plugin = currLoaded.get(data);
+	if(!plugin) {
+		io.emit(eventNames.default.notif, {sender: "Freedeck", data: `Plugin ${data} not found.`});
+		return;
+	}
 	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file}`))) return;
 	if(Object.keys(plugin.instance.types).length > 0) {
 		for (const type of plugin.instance.types) {

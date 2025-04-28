@@ -232,9 +232,7 @@ const universal = {
   },
   audioClient: audioEngine,
   login: (passwd) => {
-    universal.send(universal.events.login.login_data, {
-      tlid: universal._information.tempLoginID,
-    });
+    universal.send(universal.events.login.login_data, universal._information.tempLoginID);
     universal.send(universal.events.login.login, { passwd });
   },
   theming: themeEngine,
@@ -619,10 +617,6 @@ const universal = {
   },
   once: (event, callback) => {
     universal._socket.once(event, callback);
-  },
-  log: (data, sender = "Universal") => {
-    universal.send(universal.events.default.log, { sender, data });
-    console.log(`[${sender}] ${data}`);
   },
   ErrorLog: [],
   createTooltipFor: (element, html) => {
