@@ -1,6 +1,6 @@
 {
 	"name": "freedeck",
-	"version": "6.0.0d-rc3-042125",
+	"version": "6.0.0d-rc3-042125-1",
 	"description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
 	"main": "src/index.js",
 	"scripts": {
