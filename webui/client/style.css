@@ -884,7 +884,7 @@ a:hover {
     border: var(--indicator-border);
     color: var(--text-color-secondary);
     border-radius: var(--button-radius);
-    width: calc(var(--tile-width) / var(--indicator-divWisor));
+    width: calc(var(--tile-width) / var(--indicator-divisor));
     height: calc(var(--tile-height) / var(--indicator-divisor));
     position: absolute;
     bottom: var(--indicator-offset);
