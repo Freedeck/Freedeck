@@ -7,7 +7,8 @@
     --font: 'Rethink Sans', sans-serif;
     --main-bg-size: 400% 400%;
     --main-bg: linear-gradient(105deg, rgba(255, 0, 89, 1) 0%, rgb(0, 179, 255) 33%, rgba(255, 0, 89, 1) 66%, rgba(0, 179, 255, 1) 100%);
-                                
+                
+    --border-color: rgba(255, 255, 255, 0.1);
     --generic-border: 1px solid rgba(255,255,255,0.1);
     --modal-bg: #17212a;
     --modal-color: white;
@@ -33,6 +34,15 @@
     --input-bg: #17212a;
     --input-slider-bg: rgb(12,12,12);
     --input-color: black;
+
+    --link-hover-background: rgba(0,0,0,0.25);
+
+    --indicator-border: 1px solid rgba(0,0,0,0.5);
+    --indicator-divisor: 4;
+    --indicator-offset: 5px;
+    --indicator-green: rgba(0, 255, 0, 0.5);
+    --indicator-yellow: rgba(255, 255, 0, 0.5);
+    --indicator-red: rgba(255, 0, 0, 0.5);
 
     --marketplace-plugin-updatable: #545400;
     --marketplace-plugin-no-updates: #1a541a;
@@ -870,47 +880,28 @@ a:hover {
     font-size: var(--font-size);
 }
 
+.indicator-green, .indicator-yellow, .indicator-red {
+    border: var(--indicator-border);
+    color: var(--text-color-secondary);
+    border-radius: var(--button-radius);
+    width: calc(var(--tile-width) / var(--indicator-divWisor));
+    height: calc(var(--tile-height) / var(--indicator-divisor));
+    position: absolute;
+    bottom: var(--indicator-offset);
+    right: var(--indicator-offset);
+    z-index: 9999;
+}
+
 .indicator-green {
-    background-color: rgba(0, 255, 0, 0.5);
-    border-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid black;
-    color: var(--text-color-secondary);
-    border-radius: var(--button-radius);
-    width: calc(var(--tile-width) / 4);
-    height: calc(var(--tile-height) / 4);
-    /* bottom right of parent */
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    z-index: 9999;
+    background: var(--indicator-green);
 }
+
 .indicator-yellow {
-    background-color: rgba(255, 255, 0, 0.5);
-    border-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid black;
-    color: var(--text-color-secondary);
-    border-radius: var(--button-radius);
-    width: calc(var(--tile-width) / 4);
-    height: calc(var(--tile-height) / 4);
-    /* bottom right of parent */
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    z-index: 9999;
+    background: var(--indicator-yellow);
 }
+
 .indicator-red {
-    background-color: rgba(255, 0, 0, 0.5);
-    border-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid black;
-    color: var(--text-color-secondary);
-    border-radius: var(--button-radius);
-    width: calc(var(--tile-width) / 4);
-    height: calc(var(--tile-height) / 4);
-    /* bottom right of parent */
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    z-index: 9999;
+    background: var(--indicator-red);
 }
 
 .tiles-center {

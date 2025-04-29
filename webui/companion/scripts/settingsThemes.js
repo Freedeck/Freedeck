@@ -1,15 +1,10 @@
 universal.listenFor("launch", () => {
 	loadThemeListing();
-	universal.on(universal.events.companion.set_theme, (theme) => {
-		universal.theming.setTheme(theme, false);
-		loadThemeListing();
-	});
+	universal.on(universal.events.companion.set_theme, () => {loadThemeListing()});
 });
 
 if(universal.events?.companion?.set_theme) {
-	universal.on(universal.events.companion.set_theme, (theme) => {
-		loadThemeListing();
-	});
+		universal.on(universal.events.companion.set_theme, () => {loadThemeListing()});
 }
 
 window.loadThemeListing = async () => {

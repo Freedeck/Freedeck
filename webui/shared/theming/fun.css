@@ -2,8 +2,9 @@
 
 :theme-meta {
 	--name: "Fun";
-	--description: "This theme is supposed to look bad. You have been warned.";
+	--description: "This theme makes Freedeck unusable. Use at your own risk. Very fun though.";
 	--author: "Freedeck";
+	--warn: "This theme makes text unreadable and the UI will start spinning. This theme is a joke, but it may be exceedingly hard to disable if you proceed.";
 	--version: "1.0.0";
 }
 
@@ -21,6 +22,10 @@
 
 	--modal-bg: rgba(0,0,255,0.84);
 	--modal-color: green;
+
+	--text-color: red;
+	--text-color-secondary: hotpink;
+
 }
 
 @keyframes editor-pull-down {

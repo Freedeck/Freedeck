@@ -159,9 +159,17 @@
     }
 
     if (urlParameters.has("id") && urlParameters.get("id").includes("Companion")) isCompanion = true;
-
+    
     let isTryingToConnect = false;
     let isErrored = false;
+    if (urlParameters.has("force-fail") && urlParameters.get("force-fail")) isErrored = true;
+
+    if(isErrored) {
+      connection.style.display = "flex";
+      p.style.display = "none";
+      fail.innerText = "Force-failed.";
+      progressText.innerText = "";
+    }
 
     window.splashScreen?.splash()
 
@@ -178,7 +186,7 @@
       attemptConnection();
     }, 500);
     
-    attemptConnection();
+    if(!isErrored) attemptConnection();
 
     async function attemptConnection() {
       if (isTryingToConnect) return;

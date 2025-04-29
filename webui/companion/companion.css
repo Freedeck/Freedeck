@@ -143,11 +143,16 @@ input[type="color"] {
 	border-radius: calc(0.5 * var(--main-radius)) 0 0 calc(0.5 * var(--main-radius));
 	padding: 5px;
 	border: 1px solid transparent;
-	border-block-start-color: rgba(255,255,255,0.125);
-	border-inline-start-color: rgba(255,255,255,0.125);
-	border-block-end-color: rgba(255,255,255,0.125);
+	border-block-start-color: var(--border-color);
+	border-inline-start-color: var(--border-color);
+	border-block-end-color: var(--border-color);
 	cursor: pointer;
   color: var(--text-color);
+}
+
+#sidebar ul li a:hover {
+	background-color: rgba(0, 0, 0, 0.25);
+	border: var(--generic-border);
 }
 
 .sidebar {

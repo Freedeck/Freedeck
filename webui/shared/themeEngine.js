@@ -49,24 +49,23 @@ function setTheme(name, global = true) {
 
 	fetch(getPathFor(fu))
 		.then((res) => res.text())
-		.then((css) => {
-			if (document.getElementById("theme")) {
-				document.getElementById("theme").remove();
-			}
+		.then(async (css) => {
 			if(css.includes("Cannot GET")) {
 				throw new Error(`Failed to get theme ${getPathFor(fu)}`);
 			}
-			
+			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
+			const res = await parseFor(name, meta[1]);
+
+			if (document.getElementById("theme")) {
+				document.getElementById("theme").remove();
+			}
 			const stylea = document.createElement("style");
 			stylea.id = "theme";
 			stylea.innerText += css;
+		
 			document.body.appendChild(stylea);
 			
-			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
-			const res = parseFor(name, meta[1]);
-			
 			currentTheme = () => res;
-			
 			if (global) universal.send(universal.events.companion.set_theme, name);
 			universal.save("theme", name);
 		})
