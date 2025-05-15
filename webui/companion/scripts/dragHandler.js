@@ -84,10 +84,11 @@ gridItemDrag.on("drop", (event, origIndex, targIndex) => {
 });
 
 gridItemDrag.on("dragging", (e) => {
+  console.log(e)
   document.querySelector("#keys").appendChild(mtNextPage.cloneNode(true));
   document.querySelector("#keys").appendChild(mtPrevPage.cloneNode(true));
   // copy the next and prev buttons to the keys container
-
+  const currentPage = Number.parseInt(universal.load("page"))
+  if(universal.UI.Pages[currentPage - 1]) mtPrevPage.style.display = "flex";
   mtNextPage.style.display = "flex";
-  mtPrevPage.style.display = "flex";
 });

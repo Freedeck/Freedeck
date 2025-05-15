@@ -47,6 +47,8 @@ module.exports = ({debug, file, pl}) => {
     debug.log("Executing plugin...", "Plugins");
     const instantiated = entry.exec();
     instantiated.id = instantiated.id.toLowerCase();
+    instantiated.file = {filePath:file};
+    Object.freeze(instantiated.file);
     pl._plc.set(instantiated.id, { file, instance: instantiated });
     if (instantiated.disabled) {
       pl._disabled.push(file);

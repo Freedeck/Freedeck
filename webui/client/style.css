@@ -116,6 +116,11 @@ p {
 	align-items: center;
 }
 
+.opposite {
+    align-items: center;
+    justify-content: space-between;
+}
+
 .settings-menu {
     display: none;
     flex-direction: column;
@@ -562,8 +567,6 @@ input:disabled {
     background: var(--tile-bg);
     text-align: center;
     border: var(--tile-border); /* Add a border */
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     color: var(--text-color-secondary);
     display: flex;
     justify-content: center;
@@ -864,7 +867,6 @@ a:hover {
     width: calc(min-content + 1rem);
     color: var(--text-color-secondary);
     text-align: center;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-wrap: wrap;
     pointer-events: none;

@@ -162,7 +162,7 @@
     
     let isTryingToConnect = false;
     let isErrored = false;
-    if (urlParameters.has("force-fail") && urlParameters.get("force-fail")) isErrored = true;
+    if (urlParameters.has("force-fail") && urlParameters.get("force-fail") === "true") isErrored = true;
 
     if(isErrored) {
       connection.style.display = "flex";

@@ -41,6 +41,8 @@ function openPackage({debug, filePath, pluginManager, overrideExtractionPath}) {
       instantiated.author = author;
       instantiated.version = version;
       instantiated.disabled = freedeck.disabled;
+      instantiated.file = {filePath};
+      Object.freeze(instantiated.file);
       instantiated._fd_dropin();
       pluginManager._plc.set(instantiated.id, { instance: instantiated });
       if (instantiated.disabled) {

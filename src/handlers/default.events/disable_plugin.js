@@ -14,6 +14,7 @@ module.exports = ({ io, data }) => {
 		io.emit(eventNames.default.notif, {sender: "Freedeck", data: `Plugin ${data} not found.`});
 		return;
 	}
+	console.log("RH EEEE", plugin)
 	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file}`))) return;
 	if(Object.keys(plugin.instance.types).length > 0) {
 		for (const type of plugin.instance.types) {

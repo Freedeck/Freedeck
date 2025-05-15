@@ -30,6 +30,13 @@ input[type="color"] {
 	padding: 0.25rem;
 	border: var(--generic-border);
 }
+.information-border {
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.25);
+	border-radius: var(--main-radius);
+	padding: 0.25rem;
+	border: var(--generic-border);
+}
 
 .settings-section-title {
 	display: flex;

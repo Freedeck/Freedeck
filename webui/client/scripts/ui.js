@@ -148,7 +148,7 @@ function closeBootLog() {
 function initialize() {
   universal.CLU("Boot / UI", "Initializing UI");
   universal.config.iconCountPerPage =
-    Number.parseInt(universal.lclCfg().iconCountPerPage) || 12;
+    Number.parseInt(universal.lclCfg().iconCountPerPage) || 14;
   universal.CLU("Boot / UI", "Set icon count");
   universal.theming.setTheme(
     universal.config.theme ? universal.config.theme : "default.css",
@@ -495,7 +495,7 @@ function reloadSounds() {
 
     for (const e of unsetElements) {
       const tooltipContent =
-        "<h4>Nothing!</h4><p>Click this space to create a new Tile here.</p>";
+        "<h4>Empty Tile!</h4><p>Click this space to add a new Tile here.</p>";
       const tt = universal.createTooltipFor(e, tooltipContent);
       tt.classList.add("tile-tooltip");
       unsetTooltipFragment.appendChild(tt);
@@ -555,7 +555,7 @@ function clickHandleNewTile(v) {
   });
 }
 
-function _visualChange(tileId, text, matcher) {
+async function _visualChange(tileId, text, matcher) {
 	for (const button of document.querySelectorAll(".button[data-interaction]")) {
 		if (button.id === "editor-btn") continue;
 		try {
@@ -570,11 +570,11 @@ function _visualChange(tileId, text, matcher) {
   }
 }
 
-function visualIdTileChangeText(tileId, text) {
+async function visualIdTileChangeText(tileId, text) {
 	return _visualChange(tileId, text, ({data}) => data.uuid === tileId)
 }
 
-function visualTypeTileChangeText(tileId, text) {
+async function visualTypeTileChangeText(tileId, text) {
 	return _visualChange(tileId, text, ({data}) => data.type === tileId)
 }
 

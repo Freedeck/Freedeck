@@ -423,27 +423,27 @@ const universal = {
     }
 
     let builtInKeys = [
-      {
-        name: "Stop All",
-        onclick: (ev) => {
-          universal.send(universal.events.keypress, {
-            builtIn: true,
-            data: "stop-all",
-          });
-        },
-      },
-      {
-        name: "Reload",
-        onclick: (ev) => {
-          if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
-            window.location.reload();
-          }
-          UI.showBootLog(false);
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        },
-      },
+      // {
+      //   name: "Stop All",
+      //   onclick: (ev) => {
+      //     universal.send(universal.events.keypress, {
+      //       builtIn: true,
+      //       data: "stop-all",
+      //     });
+      //   },
+      // },
+      // {
+      //   name: "Reload",
+      //   onclick: (ev) => {
+      //     if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
+      //       window.location.reload();
+      //     }
+      //     UI.showBootLog(false);
+      //     setTimeout(() => {
+      //       window.location.reload();
+      //     }, 500);
+      //   },
+      // },
       {
         name: "Settings",
         onclick: (ev) => {

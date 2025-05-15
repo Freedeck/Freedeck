@@ -23,8 +23,12 @@ function recalculate() {
 recalculate();
 
 const ip = networkAddresses();
-const firstIPKey = Object.keys(ip)[0];
-const determinedIP = ip[firstIPKey][0] || null;
+let firstIPKey = "";
+let determinedIP = "";
+if(Object.keys(ip).length > 0) {
+  firstIPKey = Object.keys(ip)[0];
+  determinedIP = ip[firstIPKey][0] || null;
+}
 
 let myAppCode = "Loading...";
 const myAppUrlDisplay = "https://my.freedeck.app/";

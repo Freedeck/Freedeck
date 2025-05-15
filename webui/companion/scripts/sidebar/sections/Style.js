@@ -35,7 +35,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.font_s
 	);
 }));
 
-style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_size"), "es-bs", translationKey("sidebars.left.style.tile_size.unit"), "1", "12", "6", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_size"), "es-bs", translationKey("sidebars.left.style.tile_size.unit"), "1", "14", "6", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
 		universal.events.default.config_changed,
@@ -58,7 +58,7 @@ let cols = "15";
 if(universal.load("houston") === "true") cols = "60";
 if(universal.load("insanity") === "true") cols = "120";
 
-style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_count"), "es-tc", translationKey("sidebars.left.style.tile_count.unit"), "3", iconAmount, "12", (e) => {
+style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_count"), "es-tc", translationKey("sidebars.left.style.tile_count.unit"), "3", iconAmount, "14", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	const count = document.querySelectorAll(".fdc-placeholder").length;
 	const diff = e.target.value - count;
@@ -78,10 +78,10 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_c
 		}
 	}
 }, () => {
-  setValue("#es-tc", 12);
+  setValue("#es-tc", 14);
 	universal.send(
 		universal.events.default.config_changed,
-		setToLocalCfg("iconCountPerPage", 12),
+		setToLocalCfg("iconCountPerPage", 14),
 	);
 }));
 

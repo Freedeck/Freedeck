@@ -276,6 +276,17 @@ class Plugin {
     }
   }
 
+  _forceJsonObject(filePath) {
+    let output = {};
+    try {
+      output = JSON.parse(fs.readFileSync(filePath))
+    } catch(e) {
+      console.log("*** ERROR WHILE READING JSON FROM", filePath, "***")
+      console.error(e);
+    }
+    return output;
+  }
+
   /**
    * Get from the save data.
    * @param {String} k The key to get from the save data
@@ -283,9 +294,7 @@ class Plugin {
    */
   getFromSaveData(k) {
     this.createSaveData();
-    const data = JSON.parse(
-      fs.readFileSync(path.resolve(`./plugins/${this.id}/settings.json`)),
-    );
+    const data = this._forceJsonObject(path.resolve(`./plugins/${this.id}/settings.json`));
     this.Settings[k] = data[k];
     return data[k];
   }
@@ -297,9 +306,7 @@ class Plugin {
    */
   setToSaveData(k, v) {
     this.createSaveData();
-    const data = JSON.parse(
-      fs.readFileSync(path.resolve(`./plugins/${this.id}/settings.json`)),
-    );
+    const data = this._forceJsonObject(path.resolve(`./plugins/${this.id}/settings.json`));
     data[k] = v;
     this.Settings[k] = v;
     fs.writeFileSync(

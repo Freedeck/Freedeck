@@ -59,7 +59,7 @@ const pl = {
 		debug.log(picocolors.green(`Successfully unloaded plugin with ID ${id}`), "Plugins");
 	},
 	reloadSinglePlugin: async (id) => {
-		const file = pl.plugins().get(id).file;
+		const file = pl.plugins().get(id).instance.file.filePath;
 		pl.unload(id);
 		if (fs.existsSync(path.resolve('./plugins', file)))
 		await pl.load(file);

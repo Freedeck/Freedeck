@@ -11,7 +11,7 @@ const defaults = {
   compact: true,
   "font-size": "15",
   buttonSize: "6",
-  iconCountPerPage: "12",
+  iconCountPerPage: "14",
   longPressTime: "3",
   tileCols: "5",
 };
