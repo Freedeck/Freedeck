@@ -39,7 +39,7 @@ app.use("/handoff", handoffRouter);
 
 app.use("/api/upload", uploadRouter);
 
-app.get("/native/*", (req, res) => {
+app.get("/native/*path", (req, res) => {
   fetch(`http://localhost:5756/${req.url.split("/").slice(2).join("/")}`)
     .then((res) => res.json())
     .then((a) => {

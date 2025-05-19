@@ -1,6 +1,6 @@
 {
 	"name": "freedeck",
-	"version": "6.0.0d-rc3-042125-1",
+	"version": "6.0.0d-rc3-051825",
 	"description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
 	"main": "src/index.js",
 	"scripts": {
@@ -35,16 +35,16 @@
 		"asar-bundle-runner": "^1.6.0",
 		"babel-loader": "^10.0.0",
 		"compare-versions": "^6.1.1",
-		"electron": "^35.1.5",
-		"express": "^4.21.2",
-		"formidable": "^3.5.2",
+		"electron": "^36.2.1",
+		"express": "^5.1.0",
+		"formidable": "^3.5.4",
 		"module-alias": "^2.2.3",
 		"pako": "^2.1.0",
 		"socket.io": "^4.8.1",
 		"socket.io-client": "^4.8.1",
 		"tar": "^7.4.3",
-		"webpack": "^5.99.5",
-		"ws": "^8.18.1"
+		"webpack": "^5.99.8",
+		"ws": "^8.18.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
