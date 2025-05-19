@@ -16,3 +16,5 @@ tmp/
 # WebUI Webpacked resources
 webui/app/*
 webui/hooks/*
+
+.clinic

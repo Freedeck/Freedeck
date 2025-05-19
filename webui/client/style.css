@@ -359,9 +359,68 @@ summary ::-webkit-details-marker {
     }
 }
 
+.fill {
+    width: 100%;
+    height: -webkit-fill-available;
+    justify-content: space-between;
+}
+
+.aud-container {
+    background-color: rgba(0, 0, 0, 0.25);
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+}
+
+.vcenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.companion-wide-button {
+    min-width: unset !important;
+    min-height: unset !important;
+    width: 100% !important;
+    height: 3rem !important;
+    border-radius: 1.325rem !important;
+}
+
+.section-audiofile h3, .section-control h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.aud-item {
+    background: var(--modal-item-bg);
+    animation: var(--modal-item-bg-anim);
+    background-size: var(--modal-item-bg-size);
+    color: var(--modal-item-text);
+    height: 2rem;
+    border-radius: .75rem !important;
+}
+
+.no-gap {
+    gap: 0 !important;
+}
+
+.section-audiofile, .section-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.aud-info {
+    padding: .75rem;
+}
+
+.aud-info img {
+    cursor: pointer;
+}
+
 .flex-wrap {
 	display: flex;
 	flex-direction: column;
+    flex-wrap: wrap;
 	gap: 1rem;
 }
 

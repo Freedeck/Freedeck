@@ -422,61 +422,18 @@ const universal = {
       universal.keys.appendChild(tempDiv);
     }
 
-    let builtInKeys = [
-      // {
-      //   name: "Stop All",
-      //   onclick: (ev) => {
-      //     universal.send(universal.events.keypress, {
-      //       builtIn: true,
-      //       data: "stop-all",
-      //     });
-      //   },
-      // },
-      // {
-      //   name: "Reload",
-      //   onclick: (ev) => {
-      //     if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
-      //       window.location.reload();
-      //     }
-      //     UI.showBootLog(false);
-      //     setTimeout(() => {
-      //       window.location.reload();
-      //     }, 500);
-      //   },
-      // },
-      {
-        name: "Settings",
-        onclick: (ev) => {
-          window.AppSM();
-        },
-        handlers: ["onmousedown"],
-        onmousedown: UI.quickActions,
-      },
-    ];
+    if (universal.lclCfg()["app.freedeck.no_preset_tiles"]) return;
 
-    if (universal.lclCfg()["app.freedeck.no_preset_tiles"]) builtInKeys = [];
-
-    for (const key of builtInKeys) {
-      const tempDiv = document.createElement("div");
-      const cn = `button builtin k ${isCentered ? "tiles-center" : ""}`;
-      tempDiv.innerText = key.name;
-      tempDiv.onclick = key.onclick;
-      if (key.name === "Settings") {
-        tempDiv.innerText = "";
-        tempDiv.id = "fd-settings-button";
-        tempDiv.style.backgroundImage = "url(/assets/logo_big.png)";
-        tempDiv.style.border = "none";
-        tempDiv.style.backgroundColor = "transparent";
-        tempDiv.style.boxShadow = "none";
-      }
-      if (key.handlers) {
-        for (const h of key.handlers) {
-          tempDiv[h] = key[h];
-        }
-      }
-      tempDiv.className = cn;
-      universal.keys.appendChild(tempDiv);
-    }
+    const logoButton = document.createElement("div");
+    logoButton.onclick = () => {window.AppSM()}
+    logoButton.id = "fd-settings-button";
+    logoButton.style.backgroundImage = "url(/assets/logo_big.png)";
+    logoButton.style.border = "none";
+    logoButton.style.backgroundColor = "transparent";
+    logoButton.style.boxShadow = "none";
+    logoButton.onmousedown = () => {UI.quickActions()}
+    logoButton.className = `button builtin k ${isCentered ? "tiles-center" : ""}`;
+    universal.keys.appendChild(logoButton);
   },
   connHelpWizard() {
     return new Promise((resolve, reject) => {

@@ -21,7 +21,7 @@ const getInteractionData = () => {
 	);
 };
 
-universal._Uploads_New = (uploadsType = UploadsType.ICON) => {
+universal._Uploads_New = (uploadsType = UploadsType.ICON, closeAfter = false) => {
 	if (uploadsType === UploadsType.SOUND) {
 		upload("audio/*,video/*", (data) => {
 			UI.reloadProfile();
@@ -37,8 +37,10 @@ universal._Uploads_New = (uploadsType = UploadsType.ICON) => {
 			onlySetIfExists("#audio-file", "innerText", data.newName);
 			// onlySetIfExists("#audio-path", "innerText", "/sounds/");
 			universal.loadEditorData(previousInteractionData.data);
-			universal.ctx.destructiveView("library");
 			universal.sendToast(`Successfully uploaded ${data.newName}`, "Library");
+
+			if (!closeAfter) universal.ctx.destructiveView("library");
+			else universal.vopen("index.html");
 		});
 	} else if (uploadsType === UploadsType.ICON) {
 		upload(
@@ -66,39 +68,69 @@ universal._Uploads_New = (uploadsType = UploadsType.ICON) => {
 	}
 };
 
-const upload = (accept, callback, type = "sound") => {
-	// <iframe name="dummyFrame" id="dummyFrame" style="display: none;"></iframe>
-	const dummyFrame = document.createElement("iframe");
-	dummyFrame.style.display = "none";
-	dummyFrame.id = "dummyFrame";
-	dummyFrame.name = "dummyFrame";
-	const form = document.createElement("form");
-	form.method = "post";
-	form.enctype = "multipart/form-data";
-	form.action = `/api/upload/${type}`;
-	form.target = "dummyFrame";
-	form.style.display = "none";
-	const fileUpload = document.createElement("input");
-	fileUpload.type = "file";
-	fileUpload.name = "file";
-	fileUpload.accept = accept;
-	fileUpload.style.display = "none";
-	form.appendChild(fileUpload);
-	fileUpload.click();
-	fileUpload.onchange = () => {
-		form.submit();
-		dummyFrame.onload = () => {
-			const content = dummyFrame.contentDocument;
-			const data = JSON.parse(content.querySelector("pre").innerText);
-			callback(data);
-			form.remove();
-			fileUpload.remove();
-			setTimeout(() => {
-				// Let data process
-				dummyFrame.remove();
-			}, 500);
-		};
+const upload = async (accept, callback, type = "sound") => {
+	// Create an iframe for handling the upload
+	const createDummyFrame = () => {
+			const dummyFrame = document.createElement("iframe");
+			dummyFrame.style.display = "none";
+			dummyFrame.id = "dummyFrame";
+			dummyFrame.name = "dummyFrame";
+			document.body.appendChild(dummyFrame);
+			return dummyFrame;
 	};
-	document.body.append(form);
-	document.body.appendChild(dummyFrame);
+
+	// Create a form for file upload
+	const createForm = (accept, type) => {
+			const form = document.createElement("form");
+			form.method = "post";
+			form.enctype = "multipart/form-data";
+			form.action = `/api/upload/${type}`;
+			form.target = "dummyFrame";
+			form.style.display = "none";
+
+			const fileUpload = document.createElement("input");
+			fileUpload.type = "file";
+			fileUpload.name = "file";
+			fileUpload.accept = accept;
+			fileUpload.style.display = "none";
+
+			form.appendChild(fileUpload);
+			document.body.appendChild(form);
+
+			return { form, fileUpload };
+	};
+
+	// Main upload logic
+	try {
+			const dummyFrame = createDummyFrame();
+			const { form, fileUpload } = createForm(accept, type);
+
+			fileUpload.click();
+
+			fileUpload.onchange = () => {
+					form.submit();
+
+					dummyFrame.onload = () => {
+							try {
+									const content = dummyFrame.contentDocument;
+									const preElement = content.querySelector("pre");
+									if (!preElement) throw new Error("Invalid response format");
+
+									const data = JSON.parse(preElement.innerText);
+									callback(data);
+							} catch (error) {
+									console.error("Error processing upload response:", error);
+									callback({ error: "Failed to process upload response" });
+							} finally {
+									// Cleanup
+									form.remove();
+									fileUpload.remove();
+									setTimeout(() => dummyFrame.remove(), 500);
+							}
+					};
+			};
+	} catch (error) {
+			console.error("Error during file upload:", error);
+			callback({ error: "File upload failed" });
+	}
 };

@@ -19,14 +19,19 @@
 
 <div id="conn-content" style="display: none;">
 	<h1>Connect to Freedeck on <span class="osp-selected">iOS</span></h1>
-	<ul>
-		<li>Open <strong class="osp-browser">Safari</strong> and go to <i><strong class="osp-host"></strong></i></li>
-		<li>Type in code <i><span class="mfa-code">Loading...</span></i> and press Connect.</li>
-		<li>When you see your Freedeck, <span class="osp-add-to-home-screen">press Share at the bottom</span>.</li>
-		<li>Press <i>Add To Home Screen</i></li>
-	</ul>
+	<p>To connect to your Freedeck, all you have to do is scan the QR code. You'll instantly connect to your computer from there.</p>
+	<div id="qr-container"></div>
+	<details id="or-mfa">
+		<summary>Or, connect using my.freedeck.app</summary>
+		<ul>
+			<li>Open <strong class="osp-browser">Safari</strong> and go to <i><strong class="osp-host"></strong></i></li>
+			<li>Type in code <i><span class="mfa-code">Please accept to use this service...</span></i> and press Connect.</li>
+			<li>When you see your Freedeck, <span class="osp-add-to-home-screen">press Share at the bottom</span>.</li>
+			<li>Press <i>Add To Home Screen</i></li>
+		</ul>
+	</details>
 	<details>
-		<summary>Manual Connection</summary>
+		<summary>Or, manually connect using your local IP</summary>
 		<ul>
 			<li>Follow every instruction, but instead of going to <span class="local-ip"></span>, go to http://<span
 					class="local-net"></span>:5754 on your device.</li>
@@ -39,8 +44,36 @@
 		<button onclick="document.querySelector('#later-button').click()">Connect Later</button>
 	</div>
 </div>
-
 <script>
+	(async () => {
+		let qrCode;
+    // Dynamically load the QRCode library
+    if (typeof QRCode === "undefined") {
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js";
+        script.onload = () => {
+            initializeQRCode();
+        };
+        document.head.appendChild(script);
+    } else {
+        initializeQRCode();
+    }
+
+    function initializeQRCode() {
+      qrCode = new QRCode(document.getElementById("qr-container"), {
+            text: "https://freedeck.app/error.html",
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+		window.editQrCode= (txt)=>{
+			qrCode.clear(); // clear the code.
+			qrCode.makeCode(txt); // make another code.
+		}
+})();
 	const selection = document.querySelector(".flc");
 	const laterButton = document.querySelector('#later-button');
 	const localNet = document.querySelectorAll('.local-net');
@@ -53,7 +86,36 @@
 
 	const placeholderOs = document.querySelector('.osp-selected');
 	const placeholderBrowser = document.querySelector('.osp-browser');
+	const orMfa = document.querySelector("#or-mfa")
 	const placeholderAddToHomeScreen = document.querySelector('.osp-add-to-home-screen');
+
+	orMfa.onclick = () => {
+		if(m) return;
+		m =	window.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
+			fetch('/api/discover/code-request').then((res) => res.json()).then((res) => {
+				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = res.code);
+			})
+		}, false);
+		let count = 5;
+
+		const tclock = setInterval(() => {
+			count--;
+			if(m) {clearInterval(tclock);return;}
+			m.modal.querySelector(".realtimetc").innerText = count;
+			if(count == 0) m.modal.querySelector(".mayclose").style.display = "none";
+		}, 1000);
+		
+		const ci = setTimeout(() => {
+			if(m) {clearInterval(ci);return;}
+			m.modal.querySelector(".modal-close").onclick = () => {
+				laterButton.click();
+				m.modal.remove();
+				universal.vopen("index.html");
+				universal.vclose();
+			}
+			m.modal.querySelector(".modal-close").style.display = "block";
+		}, 5000);
+	}
 
 	const connectButton = document.querySelector('#connect-button');
 	const connectButtonAndroid = document.querySelector('#connect-button-android');
@@ -96,28 +158,7 @@
 			return;
 		}
 		ip = data.ip[Object.keys(data.ip)[0]][0];
-		m =	window.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
-			fetch('/api/discover/code-request').then((res) => res.json()).then((res) => {
-				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = res.code);
-			})
-		}, false);
-		let count = 5;
-
-		setInterval(() => {
-			count--;
-			m.modal.querySelector(".realtimetc").innerText = count;
-			if(count == 0) m.modal.querySelector(".mayclose").style.display = "none";
-		}, 1000);
-		
-		setTimeout(() => {
-			m.modal.querySelector(".modal-close").onclick = () => {
-				laterButton.click();
-				m.modal.remove();
-				universal.vopen("index.html");
-				universal.vclose();
-			}
-			m.modal.querySelector(".modal-close").style.display = "block";
-		}, 5000);
+		editQrCode("http://" + ip +":5754/")
 	});
 
 	const poll = setInterval(() => {
@@ -136,6 +177,7 @@
 			}
 			if(data.myApp?.code) {
 				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = data.myApp.code);
+				if(data.myApp.code !== "Loading...") m = true;
 			}
 			if(data.myApp?.host) {
 				document.querySelectorAll(".osp-host").forEach(e => e.innerText = data.myApp.host);
@@ -186,5 +228,11 @@
 	button:hover {
 		transform: scale(1.05);
 		filter: brightness(1.1);
+	}
+
+	#qr-container img {
+		border-radius: .5rem;
+		padding: 1rem;
+		background: white;
 	}
 </style>

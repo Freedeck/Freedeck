@@ -9,7 +9,7 @@ const debug = require("$/debug");
 
 const pluginsLocation = path.resolve("./plugins");
 
-class Plugin {
+class Plugin {  
   v2 = true;
   name;
   author;
@@ -27,11 +27,12 @@ class Plugin {
   _customLog(...msg) {
     debug.log(msg.join(" "), picocolors.yellow(`Plugin / Verbose ${this.id || "Class"}`));
   }
+  _id = Math.random().toString(36).substring(7);
   constructor() {
+    this.id = `app.freedeck.pdx${this._id}`;
     this._customLog("Plugin class constructor hit.");
     this.name = "Loading...";
     this.author = "Loading...";
-    this.id = `predropin-${Math.random().toString(36).substring(7)}`;
     this.disabled = false;
     this.types = [];
     this._callbacks = {};
@@ -44,7 +45,7 @@ class Plugin {
     this.popout = popout;
   }
   hidePopout() {
-    this._customLog("Plugin class constructor hit.");
+    this._customLog("Hiding popout.");
     this.popout = "";
   }
   setName(name) {
@@ -73,15 +74,16 @@ class Plugin {
     }
     this._customLog("Initialized plugin.");
     
+    this.id = this.id.toLowerCase();
     this.setup();
     
     this._customLog("Called setup.");
 
-    this.id = this.id.toLowerCase();
 
     this.emit(events.ready);
 
     this._customLog("Emitted ready.");
+    
   }
   onInitialize() {
     return true;

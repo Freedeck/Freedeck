@@ -112,7 +112,7 @@ const pl = {
 					pl,
 				})
 			} else if (file.endsWith(".fdpackage")) {
-				providerPackage({
+				await providerPackage({
 					debug,
 					filePath: file,
 					pluginManager: pl

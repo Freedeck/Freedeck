@@ -160,7 +160,7 @@ async function handleSock(socket) {
         debug.log(picocolors.red(e));
       }
       debug.log(
-        `${picocolors.cyan(`Added new handler ${handler.name}`)} for ${socket.user ? socket.user : socket.id}`,
+        `${picocolors.cyan(`Added new handler ${handler.name} (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
         "Socket Server",
       );
     }

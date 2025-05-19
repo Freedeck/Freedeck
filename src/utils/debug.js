@@ -12,7 +12,7 @@ const dbg = {
 	writeLogs: false,
 	log: (v, k = "_unset") => {
 		let strToBuild = "";
-		if (k !== "_unset") strToBuild += `${picocolors.blue(k)} >> `;
+		if (k !== "_unset") strToBuild += `[${new Date().toLocaleTimeString()}] ${picocolors.blue(k)} >> `;
 		strToBuild += `${v}`;
 		if (dbg.status)
 			console._log(

@@ -318,6 +318,7 @@ for (const interactionType of universal._tyc.keys()) {
 
 document.querySelector("#upload-sound").onclick = () => {
   document.querySelector("#upload-sound").disabled = true;
+  document.querySelector("#sidebar").style.right = "-20%";
   universal.uiSounds.playSound("int_confirm");
   const ito = JSON.parse(editorButton.dataset.interaction);
 
@@ -349,7 +350,35 @@ document.querySelector("#upload-sound").onclick = () => {
       };
       universal._libraryOnpaint = undefined;
       universal.vopen("index.html");
+      document.querySelector("#sidebar").style.right = "0";
     };
+  };
+  universal._Uploads_Select = (itm) => {
+    const interaction = JSON.parse(
+      editorButton.getAttribute("data-interaction")
+    );
+    interaction.data.file = itm;
+    interaction.data.path = "/sounds/";
+    editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
+    loadData(interaction.data);
+    document.querySelector("#file.editor-data").value = itm;
+    document.querySelector("#path.editor-data").value = "/sounds/";
+    document.querySelector("#audio-file").innerText = itm;
+    // document.querySelector("#audio-path").innerText = "/sounds/";
+
+    universal.uiSounds.playSound("int_yes");
+  };
+};
+
+document.querySelector("#quick-upload-sound").onclick = () => {
+  document.querySelector("#upload-sound").disabled = true;
+  universal.uiSounds.playSound("int_confirm");
+
+  universal._Uploads_View = 0;
+  universal.vopen("library");
+  universal._libraryOnload = () => {
+    universal._Uploads_New(1, true);
+    setupLibraryFor("sound");
   };
   universal._Uploads_Select = (itm) => {
     const interaction = JSON.parse(

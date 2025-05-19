@@ -3,11 +3,11 @@ const tar = require('tar');
 const picocolors = require("$/picocolors");
 const fs = require('node:fs');
 
-function openPackage({debug, filePath, pluginManager, overrideExtractionPath}) {
+async function openPackage({debug, filePath, pluginManager, overrideExtractionPath}) {
   const resolved = path.resolve(`./plugins/${filePath}`);
   let pathToEx = path.resolve(`./tmp/_${filePath.replaceAll("/", "_")}`);
   if(!overrideExtractionPath) {
-    fs.mkdirSync(pathToEx, { recursive: true });
+    // fs.mkdirSync(pathToEx, { recursive: true });
     tar.x({
       file: resolved,
       cwd: pathToEx,
@@ -44,6 +44,7 @@ function openPackage({debug, filePath, pluginManager, overrideExtractionPath}) {
       instantiated.file = {filePath};
       Object.freeze(instantiated.file);
       instantiated._fd_dropin();
+      debug.log("FD DropIn hit. (Post constructor, pre-init)", "Plugins / " + instantiated.name);
       pluginManager._plc.set(instantiated.id, { instance: instantiated });
       if (instantiated.disabled) {
         pluginManager._disabled.push(filePath);
@@ -86,7 +87,7 @@ function openPackage({debug, filePath, pluginManager, overrideExtractionPath}) {
 
     fs.appendFileSync(themeFile, fs.readFileSync(path.resolve(pathToEx, main)));
   }
-  console.log(`${picocolors.blue("Plugins / FDPackage")} >> ${picocolors.green(`${freedeck.type === 'plugin' ? "Plugin": "Theme"} loaded: ${freedeck.title} (${name})`)}`);
+  debug.log(`${picocolors.green(`${freedeck.package === 'plugin' ? "Plugin" : "Theme"} loaded: ${freedeck.title} (${name})`)}`, picocolors.blue("Plugins / FDPackage"));
 }
 
 

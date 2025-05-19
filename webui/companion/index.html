@@ -129,15 +129,34 @@
                     <h3 data-i18n-key="editor.sections.no_action.soundboard">Soundboard</h3>
                     <p data-i18n-key="editor.sections.soundboard.description">Control your Freedeck soundboard!</p>
                 </div>
-                <div class="flex-wrap-r alc" style="width: -webkit-fill-available;">
-                    <center style="width: -webkit-fill-available;">
-                        <span class="flex-wrap-r alc">
-                            <p data-i18n-key="editor.sections.soundboard.action">This tile will play</p>
-                            <h2 id="audio-file" class="information-border flex-wrap-r alc">AUDIOFILE.MP3</h2>
-                            <div class="button" id="upload-sound" data-i18n-key="editor.sections.soundboard.change">Change</div>
-                        </span>
-
-                    </center>
+                <div class="flex-wrap-r alc fill">
+                    <div class="flex-wrap aud-container aud-info">
+                        <div class="section-audiofile" style="display:none;">
+                            <span class="flex-wrap no-gap">
+                                <h3 data-i18n-key="editor.sections.soundboard.audiofile">Audio File</h3>
+                            <p data-i18n-key="editor.sections.soundboard.action">Play any audio file through your output device.</p>
+                            </span>
+                            <small id="audio-file" class="information-border flex-wrap-r alc aud-item">AUDIOFILE.MP3</small>
+                            <div class="button companion-wide-button" id="quick-upload-sound" data-i18n-key="editor.sections.soundboard.quickupload">Quick Upload</div>
+                            <div class="button companion-wide-button" id="upload-sound" data-i18n-key="editor.sections.soundboard.change">Choose From Library</div>
+                        </div>
+                        <div class="section-control" style="display:none;">
+                            <span class="flex-wrap no-gap">
+                                <h3 data-i18n-key="editor.sections.soundboard.control">Soundboard Control</h3>
+                            <p data-i18n-key="editor.sections.soundboard.control_action">Control minor aspects of the soundboard.</p>
+                            </span>
+                            <select id="section-control-selector">
+                                <option>Stop All Playing Sounds</option>
+                                <option>Pitch</option>
+                                <option>Output Volume</option>
+                                <option>Monitor Volume</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex-wrap aud-container aud-info">
+                        <img id="section-t_audio" width="50" src="/common/icons/t_audio.svg" alt="Audio File" loading="lazy">
+                        <img id="section-t_ctrl" width="50" src="/common/icons/audio.svg" alt="Audio Control" loading="lazy">
+                    </div>
                 </div>
             </div>
             <div style="display: none" id="system-only" class="editor-section generic-chips editor-section-bottom">

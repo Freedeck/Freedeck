@@ -20,11 +20,13 @@ module.exports = ({debug, file, pl}) => {
       const packagefied = path.resolve(`./tmp/_${file.replaceAll("/", "_")}`).replace(".src", ".fdpackage");
       fs.mkdirSync(packagefied, { recursive: true });
       fs.cpSync(path.resolve(`./plugins/${file}`), packagefied, { recursive: true });
-      openPackage({
-        debug,
-        filePath: path.resolve(`./tmp/_${file.replaceAll("/", "_")}`),
-        pluginManager: pl,
-        overrideExtractionPath: path.resolve(`./plugins/${file}`)});
+      (async () => {
+        await openPackage({
+          debug,
+          filePath: path.resolve(`./tmp/_${file.replaceAll("/", "_")}`),
+          pluginManager: pl,
+          overrideExtractionPath: path.resolve(`./plugins/${file}`)});
+      })();
       return;
     }
   }
