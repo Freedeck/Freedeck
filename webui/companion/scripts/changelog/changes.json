@@ -19,6 +19,7 @@
     "Fixed that theme changer bug that would delay Active theme displaying."
   ],
   "other": [
+    "(rc3-01) Fixed bug where plugins wouldn't extract",
     "Most settings are now consolidated to the local style configuration! This means settings updates are nolonger synchronous and can be applied instantaneously by listening for the config_changed event.",
     "Changed the text on Connect from compiling bundles to Freedeck is starting... for user experience"
   ],
