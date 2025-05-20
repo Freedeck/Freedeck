@@ -7,7 +7,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
   const resolved = path.resolve(`./plugins/${filePath}`);
   let pathToEx = path.resolve(`./tmp/_${filePath.replaceAll("/", "_")}`);
   if(!overrideExtractionPath) {
-    if(fs.existsSync(pathToEx)) fs.rm(pathToEx, {recursive:true,force:true})
+    if(fs.existsSync(pathToEx)) fs.rmSync(pathToEx, {recursive:true,force:true})
     fs.mkdirSync(pathToEx, { recursive: true });
     tar.x({
       file: resolved,
