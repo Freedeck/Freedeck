@@ -68,6 +68,16 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     if(!fs.existsSync()) {
       fs.mkdirSync(location, { recursive: true });
     }
+    const instantiated = {};
+    instantiated.id = name;
+    instantiated.name = `${freedeck.title} (Theme)`;
+    instantiated.author = author;
+    instantiated.hooks = [];
+    instantiated.types = [];
+    instantiated.views = {};
+    instantiated.version = version;
+    instantiated.disabled = freedeck.disabled;
+    pluginManager._plc.set(instantiated.id, { instance: instantiated });
     if(freedeck.files) {
       for(const file of freedeck.files) {
         if(!fs.existsSync(path.resolve(pathToEx, file))) {
