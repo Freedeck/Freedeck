@@ -18,9 +18,6 @@ const uploadRouter = require("@routers/uploads");
 const settings = config.settings();
 const PORT = settings.port || 5754;
 
-const networkAddresses = require("@managers/networkAddresses");
-const netAddresses = networkAddresses();
-
 module.exports = {
   http,
   server,
@@ -54,6 +51,8 @@ server.listen(PORT, () => {
   (async () => {
     compileWebpack().catch((err) => console.error(err));
   })()
+  const networkAddresses = require("@managers/networkAddresses");
+  const netAddresses = networkAddresses();
   for (const netInterface of Object.keys(netAddresses)) {
     const ipPort = `${netAddresses[netInterface][0]}:${PORT}`;
     console.log(

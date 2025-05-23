@@ -9,26 +9,29 @@ const pluginManager = require("@managers/plugins");
 
 const eventNames = require("@handlers/eventNames");
 const { server } = require("./http");
-const { startRelay } = require("./server/relay");
+// const { startRelay } = require("./server/relay");
 const io = new socketIO.Server(server);
 
 const handlers = new Map();
 const plugins = pluginManager.plugins();
 
+const handlerDirectory = path.resolve("./src/handlers");
+const handlerListing = fs.readdirSync(handlerDirectory);
+
 (async()=>{
-  for (const file of fs.readdirSync(path.resolve("./src/handlers"))) {
-    if (fs.lstatSync(path.resolve(`./src/handlers/${file}`)).isDirectory()) {
+  for (const file of handlerListing) {
+    if (fs.lstatSync(path.resolve(handlerDirectory, `${file}`)).isDirectory()) {
       continue;
     }
     const handler = require(`@handlers/${file}`);
     if (!handler.exec) continue;
-    debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing")
     handlers.set(handler.name, handler);
+    debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing")
   }
 
   pluginManager.update();
 
-  startRelay(handleSock);
+  // startRelay(handleSock);
 })();
 
 const types = pluginManager.types;
@@ -124,8 +127,8 @@ async function handleSock(socket) {
   socket.onAny((event, ...args) => {
     if (event !== eventNames.nbws.sendRequest)
     debug.log(
-      `Received event ${event} with data ${JSON.stringify(args)}`,
-      `Socket Server / ${socket.user ? socket.user : socket.id}`,
+      `Received event ${event}`,
+      `Socket Server / S<-${socket.user ? socket.user : socket.id}`,
     );
   });
   socket.onAnyOutgoing((event, args) => {
@@ -133,12 +136,14 @@ async function handleSock(socket) {
         event !== eventNames.nbws.reply &&
         !new String(event).startsWith("NBWS_") &&
         event !== 'I'
-    ) debug.log(
-      `Emitted event ${event} with data ${JSON.stringify(args)}`,
-      `Socket Server / ${socket.user ? socket.user : socket.id}`,
-    );
+    ) {
+      debug.log(
+        `Emitted event ${event}`,
+        `Socket Server / S->${socket.user ? socket.user : socket.id}`,
+      );
+    }
 
-    if(event === "I") debug.log("Emitted event I with server data", `Socket Server / ${socket.user ? socket.user : socket.id}`);
+    if(event === "I") debug.log("Emitted event I with server data", `Socket Server / S->${socket.user ? socket.user : socket.id}`);
   });
 
   clients.push(socket);

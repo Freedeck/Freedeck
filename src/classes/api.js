@@ -25,19 +25,17 @@ class Plugin {
   _hookLocation = "user-data/hooks/";
   _usesAsar = false;
   _customLog(...msg) {
-    debug.log(msg.join(" "), picocolors.yellow(`Plugin / Verbose ${this.id || "Class"}`));
+    debug.log(msg.join(" "), picocolors.blue(`Plugins / ${this.id || "Class"}`));
   }
   _id = Math.random().toString(36).substring(7);
   constructor() {
     this.id = `app.freedeck.pdx${this._id}`;
-    this._customLog("Plugin class constructor hit.");
     this.name = "Loading...";
     this.author = "Loading...";
     this.disabled = false;
     this.types = [];
     this._callbacks = {};
     this._intent = [];
-    this._customLog("Plugin class constructor finished.");
   }
 
   setPopout(popout) {
@@ -66,7 +64,6 @@ class Plugin {
   }
   
   _fd_dropin() {
-    this._customLog("FD DropIn hit. (Post constructor, pre-init)");
     if (this.disabled) return;
     this.hasInit = this.onInitialize();
     if (!this.hasInit) {
@@ -119,13 +116,13 @@ class Plugin {
   }
 
   on(ev, cb) {
-    this._customLog(`Listening for ${ev} (${Object.keys(events)[ev]}) on v2-line`);
+    this._customLog(`Listening for ${Object.keys(events)[ev]} v2-event`);
     if(!this._callbacks[ev]) this._callbacks[ev] = [];
     this._callbacks[ev].push(cb);
   }
 
   emit(ev, ...args) {
-    this._customLog(`Emitting ${ev} (${Object.keys(events)[ev]})`);
+    this._customLog(`Emitting ${Object.keys(events)[ev]} v2-event`);
     if(!this._callbacks[ev]) return;
     for(const cb of this._callbacks[ev]) {
       cb(...args);
@@ -418,18 +415,18 @@ const types = {
 }
 
 const events = {
-  connection: 0xa9,
-  button: 0xb0,
-  ready: 0xb1,
-  stopping: 0xb2,
-  stopped: 0xb3
+  connection: 0,
+  button: 1,
+  ready: 2,
+  stopping: 3,
+  stopped: 4
 }
 
 const intents = {
-  SOCKET: 0xc0,
-  IO: 0xc1,
-  CLIENTS: 0xc2,
-  HIDE: 0xf0,
+  SOCKET: 0,
+  IO: 1,
+  CLIENTS: 2,
+  HIDE: 3,
   hooks: {
     CLIENT: 0xd2,
     SERVER: 0xd3,

@@ -45,7 +45,6 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
       instantiated.file = {filePath};
       Object.freeze(instantiated.file);
       instantiated._fd_dropin();
-      debug.log("FD DropIn hit. (Post constructor, pre-init)", "Plugins / " + instantiated.name);
       pluginManager._plc.set(instantiated.id, { instance: instantiated });
       if (instantiated.disabled) {
         pluginManager._disabled.push(filePath);
