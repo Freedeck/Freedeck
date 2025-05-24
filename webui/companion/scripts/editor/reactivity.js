@@ -1,4 +1,4 @@
-import { translationKey } from "../../../shared/localization";
+import { translatePage, translationKey } from "../../../shared/localization";
 import { getAllTileData } from "./data";
 const editorButton = document.querySelector("#editor-btn");
 const color = document.querySelector("#color");
@@ -95,7 +95,9 @@ const editorContainer = document.querySelector("#editor");
 const toggleSidebarContainer = document.querySelector(".toggle-sidebar");
 const toggleSidebarButton = document.querySelector(".toggle-sidebar button");
 
-universal.createTooltipFor(editorClose, "Your unsaved changes will not be made.");
+const tt = universal.createTooltipFor(editorClose, translationKey("tooltips.editor.closing"));
+tt.setAttribute("data-i18n-key", "tooltips.editor.closing")
+translatePage(tt)
 
 editorClose.onclick = () => {
   universal.uiSounds.playSound("int_no");

@@ -162,6 +162,7 @@
 
   "settings.footer.by": "is a project by",
 
+  "tooltips.editor.closing": "Your unsaved changes will not be made.",
   "tooltips.tile.empty": "Empty Tile!",
   "tooltips.tile.empty.action": "Click this space to add a new Tile here.",
   

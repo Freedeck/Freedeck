@@ -161,6 +161,7 @@
 
   "settings.footer.by": "es un proyecto de",
 
+  "tooltips.editor.closing": "Tus cambios no guardados no se aplicarán.",
   "tooltips.tile.empty": "¡Tile vacío!",
   "tooltips.tile.empty.action": "Haz clic en este espacio para agregar un nuevo Tile aquí.",
 
