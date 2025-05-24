@@ -98,20 +98,20 @@
             <div style="display: none" id="plugins-only" class="editor-section generic-chips editor-section-bottom">
                 <div id="spi-actions" class="generic-chips">
                     <div class="information">
-                        <h3>Plugin</h3>
-                        <p>Select a plugin to control this Tile</p>
+                        <h3 data-i18n-key="editor.sections.plugin">Plugin</h3>
+                        <p data-i18n-key="editor.sections.plugin.description">Select a plugin to control this Tile</p>
                     </div>
                     <div class="spi-actions-disabled">
-                        <h1><span class="spi-actions-disabled-id"></span> is uninstalled, disabled, or failed to load!</h1>
+                        <h1><span class="spi-actions-disabled-id"></span><span data-i18n-key="editor.section.plugin.actions.disabled"></span></h1>
                         <p>
-                            Please restart Freedeck or try reinstalling <span class="spi-actions-disabled-id"></span>.
+                            <span data-i18n-key="editor.section.plugin.actions.disabled.advice"></span><span class="spi-actions-disabled-id"></span>.
                         </p>
-                        <p>You may change this Tile by pressing Back below this message.</p>
+                        <p data-i18n-key="editor.section.plugin.actions.disabled.exit_info"></p>
                     </div>
                     <div class="spi-actions-notfound">
-                        <h2>Failed to find a suitable type for <span class="spi-actions-notfound-type"></span></h2>
+                        <h2><span data-i18n-key="editor.section.plugin.actions.type.not_found"></span><span class="spi-actions-notfound-type"></span></h2>
                         <p>
-                            You may need to reload <span class="spi-actions-disabled-id"></span>.
+                            <span data-i18n-key="editor.section.plugin.actions.type.reload"></span><span class="spi-actions-disabled-id"></span>.
                         </p>
                     </div>
                 </div>
@@ -146,10 +146,10 @@
                             <p data-i18n-key="editor.sections.soundboard.control_action">Control minor aspects of the soundboard.</p>
                             </span>
                             <select id="section-control-selector">
-                                <option>Stop All Playing Sounds</option>
-                                <option>Pitch</option>
-                                <option>Output Volume</option>
-                                <option>Monitor Volume</option>
+                                <option data-i18n-key="editor.sections.soundboard.control.selector.stopall">Stop All Playing Sounds</option>
+                                <option data-i18n-key="editor.sections.soundboard.control.selector.pitch">Pitch</option>
+                                <option data-i18n-key="editor.sections.soundboard.control.selector.output_volume">Output Volume</option>
+                                <option data-i18n-key="editor.sections.soundboard.control.selector.monitor_volume">Monitor Volume</option>
                             </select>
                         </div>
                     </div>
