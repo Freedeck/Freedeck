@@ -6,13 +6,12 @@ const debug = require("$/debug");
 
 const NotificationManager = require("@managers/notifications");
 const pluginManager = require("@managers/plugins");
-
 const eventNames = require("@handlers/eventNames");
+
 const { server } = require("./http");
-// const { startRelay } = require("./server/relay");
 const io = new socketIO.Server(server);
 
-const handlers = new Map();
+const handlers = [];
 const plugins = pluginManager.plugins();
 
 const handlerDirectory = path.resolve("./src/handlers");
@@ -25,11 +24,10 @@ const handlerListing = fs.readdirSync(handlerDirectory);
     }
     const handler = require(`@handlers/${file}`);
     if (!handler.exec) continue;
-    handlers.set(handler.name, handler);
+    handlers.push(handler);
     debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing")
   }
-
-  pluginManager.update();
+  await pluginManager.update();
 
   // startRelay(handleSock);
 })();
@@ -70,7 +68,6 @@ async function handleSock(socket) {
       }
       return;
     }
-    console.log("Sending notification to client");
     socket.emit(eventNames.default.notif, notification);
     NotificationManager.once("newNotification", sendNotification);
   }
@@ -157,7 +154,7 @@ async function handleSock(socket) {
   });
 
   try {
-    for (const handler of handlers.values()) {
+    for (const handler of handlers) {
       try {
         if(io.rpcClients?.includes(socket) && handler.name !== "RPC") continue;
         handler.exec({ socket, types, plugins, io, clients });

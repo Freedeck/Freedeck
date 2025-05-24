@@ -405,20 +405,20 @@ function reloadSounds() {
       tooltipContent +=
         snd.renderType !== "text"
           ? `<p>${
-              snd.data.longPress === "true" ? "Long press" : "Short press"
-            } to activate.</p>`
-          : "<p>Not pressable.</p>";
+              snd.data.longPress === "true" ? translationKey("tile.long_press") : translationKey("tile.short_press")
+            } ${translationKey("tooltips.tile.full.action")}</p>`
+          : "<p data-i18n-key='tooltips.tile.disabled'>Not pressable.</p>";
 
       if (snd.plugin) {
         tooltipContent += universal.plugins[snd.plugin]
-          ? `<p>This tile uses ${universal.cleanHTML(
+          ? `<p><span data-i18n-key='tooltips.tile.plugin'></span>${universal.cleanHTML(
               universal.plugins[snd.plugin].name,
               false
             )}.</p>`
           : `<p>${universal.cleanHTML(
               snd.plugin,
               false
-            )} could not be found.</p>`;
+            )}<span data-i18n-key='tooltips.tile.plugin.not_found'></span></p>`;
 
         // Find matching type only once
         let typeName = null;
@@ -495,7 +495,7 @@ function reloadSounds() {
 
     for (const e of unsetElements) {
       const tooltipContent =
-        "<h4>Empty Tile!</h4><p>Click this space to add a new Tile here.</p>";
+        "<h4 data-i18n-key='tooltips.tile.empty'>Empty Tile!</h4><p data-i18n-key='tooltips.tile.empty.action'>Click this space to add a new Tile here.</p>";
       const tt = universal.createTooltipFor(e, tooltipContent);
       tt.classList.add("tile-tooltip");
       unsetTooltipFragment.appendChild(tt);

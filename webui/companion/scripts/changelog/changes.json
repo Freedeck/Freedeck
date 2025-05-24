@@ -1,27 +1,15 @@
 {
   "major": [
-    "**This update is a full UI refresh!** Look around and see a ton of redesigned controls that now integrate more seamlessly with the themes.",
-    "**Increased animations!** Most animations have been consolidated and timed up to create a more cohesive experience.",
-    "**Removed the preset Stop All and Reload tiles!** They were originally intended to only be development tiles, when the system was just getting started.",
-    "**Added ALPHA language support!** This feature is however a very early alpha, but so far some translations have been added. If you'd like to contribute, contact me (@ia.74) over Discord.",
-    "**Soundboard tiles just got a major overhaul!** You can now make any tile stop all the playing sounds, and the UI for audio files has been majorly improved!",
-    "**Smoother animations!** This may not affect you, but the loading screen and almost every transition between pages has been overhauled, and now works nicely!",
-    "**Plugin loading has been improved!** Now, plugins should be quite a bit faster to load, thus decreasing startup time!",
-    "Also, the Folder action icons on the left sidebar have been fixed, their colors are now true to how they are supposed to be.",
-    "The Marketplace now can tell you if you have a newer or older version, and has colors as well for themes!",
-    "A lot of essential UI was hardcoded, but can now be themed! You will notice this upon applying a theme.",
-    "**Catppuccin Mocha** has gotten a large overhaul as well! It now fits a lot closer to the original vision for the theme, and is much better.",
-    "Fixed a lot of bugs, but notably:",
-    "Fixed bug where user was allowed to go out of bounds during audio file selection",
-    "Fixed bug where failing to connect to an audio device would cause the app to be fully unable to play sounds.",
-    "Fixed notification log filling and exceeding quota.",
-    "Some more fix-ups to the editor and it's performance",
-    "Fixed that theme changer bug that would delay Active theme displaying."
+    "Plugins now show up as plugins that can be disabled.",
+    "User-generated plugin/temporary files are now cleaned on startup, instead of blocking shutdown time",
+    "Optimized network address gathering",
+    "Optimized startup time",
+    "Fixed disabling plugins",
+    "Stopped event queue blockage upon disconnection",
+    "Optimized server socket event handlers",
+    "Optimize various functions for slightly faster startup times."
   ],
   "other": [
-    "(rc3-01) Fixed bug where plugins wouldn't extract",
-    "Most settings are now consolidated to the local style configuration! This means settings updates are nolonger synchronous and can be applied instantaneously by listening for the config_changed event.",
-    "Changed the text on Connect from compiling bundles to Freedeck is starting... for user experience"
   ],
   "known": [
   ],

@@ -74,6 +74,8 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     instantiated.hooks = [];
     instantiated.types = [];
     instantiated.views = {};
+    instantiated.file={filePath}
+    Object.freeze(instantiated.file)
     instantiated.version = version;
     instantiated.disabled = freedeck.disabled;
     pluginManager._plc.set(instantiated.id, { instance: instantiated });

@@ -9,25 +9,26 @@ module.exports = ({ io, data }) => {
 		return;
 	}
 	const currLoaded = plugins.plugins();
-	plugin = currLoaded.get(data);
+	plugin = currLoaded.get(data)
 	if(!plugin) {
 		io.emit(eventNames.default.notif, {sender: "Freedeck", data: `Plugin ${data} not found.`});
 		return;
 	}
+	plugin = plugin.instance;
 	console.log("RH EEEE", plugin)
-	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file}`))) return;
-	if(Object.keys(plugin.instance.types).length > 0) {
-		for (const type of plugin.instance.types) {
+	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file.filePath}`))) return;
+	if(Object.keys(plugin.types).length > 0) {
+		for (const type of plugin.types) {
 			plugins._tyc.delete(type);
 		}
 	}
-	console.log(`Attempting to disable ${plugin.file} (${plugin.instance.name})...`);
-	currLoaded.delete(plugin.instance.id);
+	console.log(`Attempting to disable ${plugin.file.filePath} (${plugin.name})...`);
+	currLoaded.delete(plugin.id);
 	fs.renameSync(
-		path.resolve(`./plugins/${plugin.file}`),
-		path.resolve(`./plugins/${plugin.file}.disabled`),
+		path.resolve(`./plugins/${plugin.file.filePath}`),
+		path.resolve(`./plugins/${plugin.file.filePath}.disabled`),
 	);
-	plugins.unload(plugin.instance.id);
+	plugins.unload(plugin.id);
 	plugins._disabled.push(`${plugin.file}.disabled`);
 	io.emit(eventNames.default.reload);
 };

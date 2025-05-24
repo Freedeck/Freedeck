@@ -160,5 +160,15 @@
   "settings.sections.bug.report_reader": "Report Reader",
   "settings.sections.bug.report_reader.read": "Read Report",
 
-  "settings.footer.by": "is a project by"
+  "settings.footer.by": "is a project by",
+
+  "tooltips.tile.empty": "Empty Tile!",
+  "tooltips.tile.empty.action": "Click this space to add a new Tile here.",
+  
+  "tile.long_press": "Long press",
+  "tile.short_press": "Short press",
+  "tooltips.tile.full.action": "to activate.",
+  "tooltips.tile.disabled": "Not pressable.",
+  "tooltips.tile.plugin": "Tile tile uses ",
+  "tooltips.tile.plugin.not_found": " could not be found."
 }

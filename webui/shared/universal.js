@@ -551,15 +551,13 @@ const universal = {
       m: message,
       ov: universal.ctx?.opened
     };
-    if (
-      universal.loadObj("logs/notif").length > 0 &&
-      !universal.lclCfg()["app.freedeck.notification_log"]
-    )
+    const logNotif = universal.loadObj("logs/notif");
+    const logEnabled = universal.lclCfg()["app.freedeck.notification_log"];
+    if (logNotif.length > 0 && !logEnabled)
       universal.saveObj("logs/notif", []);
     else {
-      if (universal.loadObj("logs/notif").length > 128)
-        universal.saveObj("logs/notif", []);
-      if (universal.lclCfg()["app.freedeck.notification_log"]) {
+      if (logNotif.length > 128) universal.saveObj("logs/notif", []);
+      if (logEnabled) {
         const log = universal.loadObj("logs/notif");
         log.push(logIn);
         universal.saveObj("logs/notif", log);
@@ -567,7 +565,7 @@ const universal = {
     }
   },
   send: (event, value) => {
-    universal._socket.emit(event, value);
+    if(universal._socket.connected) universal._socket.emit(event, value);
   },
   on: (event, callback) => {
     universal._socket.on(event, callback);
