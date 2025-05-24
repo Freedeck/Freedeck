@@ -1,5 +1,6 @@
 import { universal } from "../../shared/universal.js";
 import { UI } from "../../client/scripts/ui.js";
+import { translatePage, translationKey } from "../../shared/localization.js";
 
 window.oncontextmenu = (e) => {
   const ctxMenu = document.querySelector(".contextMenu");
@@ -21,41 +22,50 @@ window.oncontextmenu = (e) => {
   const specialFlag = e.srcElement.classList.contains("unset");
 
   const custMenuTitle = document.createElement("div");
-  custMenuTitle.innerText = `Editing ${title}`;
+  custMenuTitle.innerHTML = `<span data-i18n-key="context_menu.editing"></span>${universal.cleanHTML(title)}`;
   custMenuTitle.style.fontWeight = "bold";
   custMenuTitle.style.marginBottom = "5px";
+  translatePage(custMenuTitle);
   custMenu.appendChild(custMenuTitle);
 
   let custMenuItems = [];
   if (title !== "" && !specialFlag) {
-    custMenuItems = ["Edit Tile"].concat(custMenuItems);
-    custMenuItems.push("Remove Tile");
+    custMenuItems = ["%context_menu.edit_tile%"].concat(custMenuItems);
+    custMenuItems.push("%context_menu.remove_tile%");
   } else {
-    custMenuItems = ["New Tile", "Copy Tile Here"].concat(custMenuItems);
+    custMenuItems = ["%context_menu.new_tile%", "%context_menu.copy_tile%"].concat(custMenuItems);
   }
 
   custMenuItems = custMenuItems.concat([
     "",
-    "New Page",
-    `Folder: ${universal.config.profile}`,
+    "%context_menu.new_page%",
+    `%context_menu.folder%${universal.config.profile}`,
   ]);
 
   for (const item of custMenuItems) {
     const menuItem = document.createElement("div");
-    menuItem.innerText = item;
+    const matches = item.match(/%([^%]+)%/g);
+    if (matches) {
+        let translatedText = item;
+        for(const match of matches) {
+            const key = match.slice(1, -1);
+            translatedText = translatedText.replace(match, translationKey(key));
+        };
+        menuItem.innerText = translatedText;
+    } else {
+        menuItem.innerText = item; 
+    }
     menuItem.className = "menuItem";
     menuItem.onclick = () => {
       // Handle menu item click
       switch (item) {
-        case "New Page":
+        case "%context_menu.new_page%":
           UI.Pages[Object.keys(UI.Pages).length] = [];
           universal.page = Object.keys(UI.Pages).length - 1;
           UI.reloadSounds();
           universal.sendEvent("page_change");
           break;
-        case "---":
-          break;
-        case `Folder: ${universal.config.profile}`:
+        case `%context_menu.folder%${universal.config.profile}`:
           showPick(
             "Switch to another Folder:",
             Object.keys(universal.config.profiles).map((profile) => {
@@ -73,11 +83,11 @@ window.oncontextmenu = (e) => {
             }
           );
           break;
-        case "Edit Tile":
+        case "%context_menu.edit_tile%":
           // show a modal with the editor
           universal.editTile(e);
           break;
-        case "New Tile": {
+        case "%context_menu.new_tile%": {
           const pos =
             Number.parseInt(
               e.srcElement.className.split(" ")[1].split("-")[1]
@@ -114,7 +124,7 @@ window.oncontextmenu = (e) => {
           });
           break;
         }
-        case "Remove Tile": {
+        case "%context_menu.remove_tile%": {
           UI.reloadProfile();
           const interaction = e.srcElement?.getAttribute("data-interaction")|| "{}";
           console.log(interaction)
@@ -138,7 +148,7 @@ window.oncontextmenu = (e) => {
           );
           break;
         }
-        case "Copy Tile Here":
+        case "%context_menu.copy_tile%":
           showReplaceGUI(e.srcElement);
           break;
         default:

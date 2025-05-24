@@ -63,8 +63,13 @@
   "editor.sections.no_action": "¡Sin Acción!", 
   "editor.sections.no_action.description": "¿Qué debería hacer este azulejo?", 
   "editor.sections.no_action.soundboard": "Mesa de Sonido", 
-  "editor.sections.soundboard.description": "¡Controla tu mesa de sonido Freedeck!", 
-  "editor.sections.soundboard.action": "Este azulejo reproducirá", 
+  "editor.sections.soundboard.description": "¡Controla tu soundboard de Freedeck!",
+  "editor.sections.soundboard.audiofile": "Archivo de Audio",
+  "editor.sections.soundboard.action": "Reproduce audio en tu dispositivo de salida.",
+  "editor.sections.soundboard.control": "Control del Soundboard",
+  "editor.sections.soundboard.control_action": "Controla aspectos menores del soundboard.",
+  "editor.sections.soundboard.quickupload": "Carga Rápida",
+  "editor.sections.soundboard.change": "Elegir de la Biblioteca",
   "editor.sections.sound board.change": "Cambiar", 
   "editor.sections.no_action.plugin": "Plugin", 
   "editor.sections.no_action.macro": "Macro", 
@@ -154,5 +159,31 @@
   "settings.sections.bug.report_reader": "Lector de Informes", 
   "settings.sections.bug.report_reader.read": "Leer Informe",
 
-  "settings.footer.by": "es un proyecto de"
+  "settings.footer.by": "es un proyecto de",
+
+  "tooltips.tile.empty": "¡Tile vacío!",
+  "tooltips.tile.empty.action": "Haz clic en este espacio para agregar un nuevo Tile aquí.",
+
+  "tile.long_press": "Pulsación larga",
+  "tile.short_press": "Pulsación corta",
+  "tooltips.tile.full.action": "para activar.",
+  "tooltips.tile.disabled": "No presionable.",
+  "tooltips.tile.plugin": "Este tile usa ",
+  "tooltips.tile.plugin.not_found": " no se pudo encontrar.",
+
+  "tooltips.tile.audio.soundboard": "Reproduce sonido:",
+  "tooltips.tile.audio.stopall": "Detiene todos los sonidos en reproducción",
+  "tooltips.tile.profile": "Abre carpeta:",
+  "tooltips.tile.macro.single": "Presiona:",
+  "tooltips.tile.macro.multi": "Escribe:",
+  "tooltips.tile.none": "No hace nada.",
+  "tooltips.tile.editable": "Haz clic derecho para editar.",
+
+  "context_menu.editing": "Editando ",
+  "context_menu.edit_tile": "Editar Tile",
+  "context_menu.remove_tile": "Eliminar Tile",
+  "context_menu.new_tile": "Nuevo Tile",
+  "context_menu.copy_tile": "Copiar Tile aquí",
+  "context_menu.new_page": "Nueva Página",
+  "context_menu.folder": "Carpeta: "
 }

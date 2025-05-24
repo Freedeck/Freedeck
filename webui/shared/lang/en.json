@@ -169,6 +169,22 @@
   "tile.short_press": "Short press",
   "tooltips.tile.full.action": "to activate.",
   "tooltips.tile.disabled": "Not pressable.",
-  "tooltips.tile.plugin": "Tile tile uses ",
-  "tooltips.tile.plugin.not_found": " could not be found."
+  "tooltips.tile.plugin": "This tile uses ",
+  "tooltips.tile.plugin.not_found": " could not be found.",
+
+  "tooltips.tile.audio.soundboard": "Plays sound:",
+  "tooltips.tile.audio.stopall": "Stops all playing sounds",
+  "tooltips.tile.profile": "Opens folder:",
+  "tooltips.tile.macro.single": "Presses:",
+  "tooltips.tile.macro.multi": "Types out:",
+  "tooltips.tile.none": "Does nothing.",
+  "tooltips.tile.editable": "Right click to edit.",
+
+  "context_menu.editing": "Editing ",
+  "context_menu.edit_tile": "Edit Tile",
+  "context_menu.remove_tile": "Remove Tile",
+  "context_menu.new_tile": "New Tile",
+  "context_menu.copy_tile": "Copy Tile Here",
+  "context_menu.new_page": "New Page",
+  "context_menu.folder": "Folder: "
 }

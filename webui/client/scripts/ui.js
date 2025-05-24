@@ -1,6 +1,6 @@
 const Pages = {};
 
-import { translationKey } from "../../shared/localization.js";
+import { translationKey, translatePage } from "../../shared/localization.js";
 import createTileRenderer from "./ui/createTileRenderer.js";
 import gridItemDrag from "../../companion/scripts/lib/gridItemDrag.js";
 
@@ -419,7 +419,6 @@ function reloadSounds() {
               snd.plugin,
               false
             )}<span data-i18n-key='tooltips.tile.plugin.not_found'></span></p>`;
-
         // Find matching type only once
         let typeName = null;
         for (const i of Array.from(universal._tyc.keys())) {
@@ -428,45 +427,49 @@ function reloadSounds() {
             break;
           }
         }
-        if (typeName) tooltipContent += `<code>${typeName}</code>`;
+        if (typeName && typeName.trim() !== snd.type) tooltipContent += `<code>${typeName}</code>`;
       }
 
       // Add type-specific content with switch for better performance
       switch (snd.type) {
         case "fd.sound":
-          tooltipContent += `<p>Plays sound:</p><code>${universal.cleanHTML(
+          tooltipContent += `<p data-i18n-key='tooltips.tile.audio.soundboard'></p><code>${universal.cleanHTML(
             snd.data.path,
             false
           )}${universal.cleanHTML(snd.data.file, false)}</code>`;
           break;
+        case "fd.stopall":
+          tooltipContent += `<p data-i18n-key='tooltips.tile.audio.stopall'></p>`;
+          break;
         case "fd.profile":
-          tooltipContent += `<p>Opens folder:</p><code>${universal.cleanHTML(
+          tooltipContent += `<p data-i18n-key='tooltips.tile.profile'></p><code>${universal.cleanHTML(
             snd.data.profile,
             false
           )}</code>`;
           break;
         case "fd.macro_text":
-          tooltipContent += `<p>Types out:</p><code>${universal.cleanHTML(
+          tooltipContent += `<p data-i18n-key='tooltips.tile.macro.multi'></p><code>${universal.cleanHTML(
             snd.data.macro,
             false
           )}</code>`;
           break;
         case "fd.macro":
-          tooltipContent += `<p>Presses:</p><code>${universal.cleanHTML(
+          tooltipContent += `<p data-i18n-key='tooltips.tile.macro.single'></p><code>${universal.cleanHTML(
             snd.data.macro,
             false
           )}</code>`;
           break;
         case "fd.none":
-          tooltipContent += "<p>Does nothing.</p>";
+          tooltipContent += "<p data-i18n-key='tooltips.tile.none'></p>";
           break;
       }
 
-      tooltipContent += `<p>Right click to edit.</p><i>${snd.type}</i>`;
+      tooltipContent += `<p data-i18n-key='tooltips.tile.editable'></p><i>${snd.type}</i>`;
 
       const tt = universal.createTooltipFor(keyObject, tooltipContent);
       tt.classList.add("tile-tooltip");
       tooltipFragment.appendChild(tt);
+      translatePage(tt)
     } catch (e) {
       const k = Object.keys(sound)[0];
       console.log(
@@ -495,10 +498,11 @@ function reloadSounds() {
 
     for (const e of unsetElements) {
       const tooltipContent =
-        "<h4 data-i18n-key='tooltips.tile.empty'>Empty Tile!</h4><p data-i18n-key='tooltips.tile.empty.action'>Click this space to add a new Tile here.</p>";
+        "<h4 data-i18n-key='tooltips.tile.empty'></h4><p data-i18n-key='tooltips.tile.empty.action'></p>";
       const tt = universal.createTooltipFor(e, tooltipContent);
       tt.classList.add("tile-tooltip");
       unsetTooltipFragment.appendChild(tt);
+      translatePage(tt)
 
       const pos =
         Number.parseInt(e.className.split(" ")[1].split("-")[1]) +

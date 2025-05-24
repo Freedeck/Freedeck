@@ -1,5 +1,6 @@
 {
   "major": [
+    "**Gave the tooltips/context menu translations!**",
     "Plugins now show up as plugins that can be disabled.",
     "User-generated plugin/temporary files are now cleaned on startup, instead of blocking shutdown time",
     "Optimized network address gathering",
