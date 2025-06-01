@@ -22,6 +22,14 @@ input[type="color"] {
 	background-color: transparent;
 }
 
+textarea {
+	background-color: var(--input-bg);
+	color: var(--input-color);
+	border: var(--generic-border);
+	border-radius: var(--main-radius);
+	padding: .5rem;
+}
+
 .information {
 	width: -webkit-fill-available;
 	text-align: center;

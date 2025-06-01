@@ -166,8 +166,8 @@
   "settings.sections.uis.soundpacks.current": "Current Soundpack",
 
   "settings.sections.bug": "Bug Report",
-  "settings.sections.bug.request_generate": "Click \"Generate Report\"",
-  "settings.sections.bug.generate": "Generate Report",
+  "settings.sections.bug.request_generate": "Click \"Generate Bug Report\"",
+  "settings.sections.bug.generate": "Generate Bug Report",
   "settings.sections.bug.report_reader": "Report Reader",
   "settings.sections.bug.report_reader.read": "Read Report",
 

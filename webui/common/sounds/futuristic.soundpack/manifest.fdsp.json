@@ -32,6 +32,7 @@
     "uploaded": "uploaded.mp3",
     "welcome": "welcome.mp3",
     "mobile_connect": "mobile_conn.mp3",
-    "mobile_disconnect": "mobile_disconn.mp3"
+    "mobile_disconnect": "mobile_disconn.mp3",
+    "devmode": "devmode.mp3"
   }
 }

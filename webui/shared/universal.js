@@ -247,25 +247,22 @@ const universal = {
   },
   ExportReportData: () => {
     const exportTimeStart = Date.now();
-    console.log("<h2>Exporting..</h2>");
-    const state = {};
-    Object.assign(state, universal);
-    state._socket = {
+    const universalState = {};
+    Object.assign(universalState, universal);
+    universalState._socket = {
       connected: universal._socket.connected,
       uri: universal._socket.io.uri,
     };
-    state.keys = "DOM Element";
+    universalState.keys = "DOM Element";
     const erd = {
       time: Date.now(),
       currentPage: window.location.pathname,
-      state,
-      client: {
-        localStorage,
-        notificationLog: universal.loadObj("logs/notif", []),
-        localConfiguration: universal.lclCfg(),
-        bootLog: universal.CLUL,
-        errorLog: universal.ErrorLog,
-      },
+      universalState,
+      localStorage,
+      notificationLog: universal.lclCfg()["app.freedeck.notification_log"] ? universal.loadObj("logs/notif", []):"Notification log disabled.",
+      localConfiguration: universal.lclCfg(),
+      bootLog: universal._verify(universal.CLUL),
+      errorLog: universal._verify(universal.ErrorLog),
       exportTimeStart,
     };
     const exportTimeEnd = Date.now();
@@ -273,8 +270,12 @@ const universal = {
     erd.exportTimeElapsed = exportTimeEnd - exportTimeStart;
     return JSON.stringify(erd);
   },
+  _verify: (object) => {
+    if(object.length > 0) return object;
+    return "Empty";
+  },
   CL: true,
-  CLUL: [["Page loaded", Date.now()]],
+  CLUL: [["Universal loaded", Date.now()]],
   showBootLog: UI.showBootLog,
   CLU: (s, ...m) => {
     universal.CL ? console.log(`${s}:`, ...m) : null;
