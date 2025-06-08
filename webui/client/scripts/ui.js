@@ -464,7 +464,10 @@ function reloadSounds() {
           break;
       }
 
-      tooltipContent += `<p data-i18n-key='tooltips.tile.editable'></p><i>${snd.type}</i>`;
+      tooltipContent += "<p data-i18n-key='tooltips.tile.editable'></p>";
+      if(universal.load("developer") !== "false") {
+        tooltipContent += `<i>${snd.type}</i>`;
+      }
 
       const tt = universal.createTooltipFor(keyObject, tooltipContent);
       tt.classList.add("tile-tooltip");

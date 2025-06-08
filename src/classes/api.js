@@ -89,6 +89,7 @@ class Plugin {
     this._customLog("Forwarding press interaction from v1->v2");
     this.emit(events.button, {
       interaction: e,
+      instance: this,
       io: this.io,
       socket: this.socket,
       clients: this.clients,

@@ -12,6 +12,10 @@ const webpackState = (i) => {
   iwebpackState = i;
 }
 
+const discoveryInformation = {
+  title: "Freedeck",
+  version,
+};
 const idList = [];
 function recalculate() {
   idList.length = 0;
@@ -59,7 +63,7 @@ router.get("/discover/code-request", (req, res) => {
 
 router.get("/discover", (req, res) => {
   if(plugins._plc.keys().length !== idList.length) recalculate();
-  res.send({
+  Object.assign(discoveryInformation, {
     title: "Freedeck",
     version,
     plugins: idList,
@@ -70,8 +74,9 @@ router.get("/discover", (req, res) => {
       code: myAppCode,
       host: myAppUrlDisplay,
     }
-  })
+  });
+  res.send(discoveryInformation)
 });
 
 
-module.exports = {router, webpackState, getWs:()=>iwebpackState};
+module.exports = {router, discoveryInformation, webpackState, getWs:()=>iwebpackState};
