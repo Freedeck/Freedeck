@@ -44,15 +44,24 @@ export default async function eventsHandler(universal, user) {
 			if (!universal.load("playback-mode")) {
 				universal.save("playback-mode", "play_over");
 			}
+			if(interaction.data.hold === "true") {
+				for(const sound of universal.audioClient._nowPlaying) {
+					if(sound.dataset.bind === interaction.uuid) {
+						return;
+					}
+				}
+			}
 			universal.audioClient.play({
 				file: `${interaction.data.path}/${interaction.data.file}`,
 				name: Object.keys(a)[0],
 				channel: universal.audioClient.channels.cable,
+				bind: interaction.uuid
 			});
 			universal.audioClient.play({
 				file: `${interaction.data.path}/${interaction.data.file}`,
 				name: Object.keys(a)[0],
 				channel: universal.audioClient.channels.monitor,
+				bind: interaction.uuid
 			});
 		});
 

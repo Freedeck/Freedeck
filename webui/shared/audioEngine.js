@@ -126,7 +126,8 @@ const UAE = {
 		stopPrevious = universal.load("playback-mode") === "stop_prev",
 		volume = universal.load("vol-0F") || 1,
 		pitch = universal.load("pitch") || 1,
-		channel
+		channel,
+		bind = null
 	}) => {
 		const sinks = [];
 		let vol = 1;
@@ -153,6 +154,7 @@ const UAE = {
 					pitch,
 					channel,
 					sink,
+					bind
 				});
 			} catch(err) {
 				// Remove sink from manager
@@ -169,6 +171,7 @@ const UAE = {
 		pitch = universal.load("pitch") || 1,
 		channel,
 		sink,
+		bind
 	}) => {
 		const ch = universal.audioClient.channels;
 		const audioInstance = new Audio();
@@ -181,6 +184,7 @@ const UAE = {
 		audioInstance.volume = volume;
 		audioInstance.preservesPitch = false;
 
+		audioInstance.dataset.bind = bind;
 		audioInstance.dataset.name = name;
 		audioInstance.dataset.channel = channel;
 		audioInstance.dataset.monitoring = channel === ch.monitor;
@@ -207,7 +211,7 @@ const UAE = {
 		};
 
 		universal.audioClient._nowPlaying.push(audioInstance);
-		universal.sendEvent("now-playing", { audioInstance, name, channel });
+		universal.sendEvent("now-playing", { audioInstance, name, channel, bind });
 		universal.updatePlaying();
 		return audioInstance;
 	},
