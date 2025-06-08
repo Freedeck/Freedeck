@@ -3,6 +3,8 @@ const path = require("node:path");
 const fs = require("node:fs");
 const picocolors = require("$/picocolors");
 const debug = require("$/debug");
+const {recordTime} = require("$/timer")
+
 
 const NotificationManager = require("@managers/notifications");
 const pluginManager = require("@managers/plugins");
@@ -20,16 +22,17 @@ const handlerListing = fs.readdirSync(handlerDirectory);
 (async()=>{
   for (const file of handlerListing) {
     if (fs.lstatSync(path.resolve(handlerDirectory, `${file}`)).isDirectory()) {
+      recordTime(`server:load-socket-handler-skip-folder,${file}`)
       continue;
     }
+    recordTime(`server:load-socket-handler-begin,${file}`)
     const handler = require(`@handlers/${file}`);
     if (!handler.exec) continue;
     handlers.push(handler);
     debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing")
+    recordTime(`server:load-socket-handler-complete,${file}`)
   }
-  await pluginManager.update();
-
-  // startRelay(handleSock);
+  pluginManager.update();
 })();
 
 const types = pluginManager.types;
@@ -165,6 +168,7 @@ async function handleSock(socket) {
         `${picocolors.cyan(`Added new handler ${handler.name} (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
         "Socket Server",
       );
+      recordTime(`server:load-handler,${handler.name}`)
     }
   } catch (e) {
     debug.log(picocolors.red(e));

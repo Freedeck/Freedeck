@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("node:http");
 
 const picocolors = require("$/picocolors");
-
+const {recordTime} = require("$/timer")
 const app = express();
 const server = http.createServer(app);
 const config = require("@managers/settings");
@@ -14,6 +14,7 @@ const handoffRouter = require("@routers/handoff");
 const connectRouter = require("@routers/connect").router;
 const staticRouter = require("@routers/static").router;
 const uploadRouter = require("@routers/uploads");
+recordTime("http:required-all-routers")
 
 const settings = config.settings();
 const PORT = settings.port || 5754;
@@ -46,7 +47,9 @@ app.get("/native/*path", (req, res) => {
       res.send({ _msg: "NativeBridge is not running.", error: err });
     });
 });
+recordTime("http:loaded-all-endpoints")
 
+recordTime("http:listen-begin")
 server.listen(PORT, () => {
   (async () => {
     compileWebpack().catch((err) => console.error(err));
@@ -61,4 +64,5 @@ server.listen(PORT, () => {
       ),
     );
   }
+  recordTime("http:listen-complete")
 });

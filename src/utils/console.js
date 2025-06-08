@@ -1,6 +1,7 @@
 const {compileWebpack, isCompilerFinished} = require('@src/webpack.js');
 
 const commandPrefix = "FDConsole >>";
+const {recordTime,writeFinal} = require("$/timer")
 
 function output(...args) {
   console.log(commandPrefix, ...args);
@@ -26,6 +27,17 @@ const commands = {
     description: 'Evaluate any JavaScript expression on the server side. REALLY UNSAFE.',
     usage: 'js.eval <expression>',
     handler: jseval
+  },
+  'timer': {
+    name: 'timer',
+    description: "Timer flush",
+    usage: "timer",
+    handler: () => {
+      recordTime("console:timer-exit")
+      writeFinal()
+      require("@src/../timecache-analytics")
+      process.exit(0)
+    }
   }
 }
 

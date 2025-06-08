@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const debug = require("$/debug");
+const {recordTime} = require("$/timer")
 const picocolors = require("$/picocolors");
 
 const providerPackage = require("@managers/providers/package.js");
@@ -66,6 +67,7 @@ const pl = {
 		debug.log(picocolors.green(`Successfully reloaded plugin with ID ${id}`), "Plugins");
 	},
 	update: async () => {
+		recordTime("plugins:update-plugin-manager-begin")
 		debug.log("Loading plugins.", "Plugins");
 		pl._disabled = [];
 		pl._plc.clear();
@@ -86,6 +88,7 @@ const pl = {
 		} catch (er) {
 			console.log(er);
 		}
+		recordTime("plugins:update-plugin-manager-complete")
 	},
 	load: async (file) => {
 		if(pl._disabled.includes(file)) {

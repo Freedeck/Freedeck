@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const picocolors = require("$/picocolors");
 const { paths } = require("./routers/static");
-
+const {recordTime} = require("$/timer")
 const webpackConfigLocation = path.resolve("webpack.config.js");
 const webpackBuildLocation = paths.webui_app;
 const connectRouterLocation = path.resolve("src/routers/connect.js");
@@ -21,6 +21,7 @@ process.env.NODE_ENV = "production";
  * @return {true}
  */
 function runWebpack(webpackInstance) {
+  recordTime("webpack:compile-begin")
   if (!fs.existsSync(webpackBuildLocation)) {
     console.log(
       "Welcome to Freedeck! This is your first time running Freedeck, so it will take a moment to set up."
@@ -67,6 +68,7 @@ function runWebpack(webpackInstance) {
           }),
           picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`)
         );
+        recordTime("webpack:compile-complete")
         resolve();
       }
     });

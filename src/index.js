@@ -1,4 +1,6 @@
 require('module-alias/register');
+const {recordTime} = require("$/timer")
+recordTime("STARTUP")
 
 const picocolors = require("$/picocolors");
 const fs = require("node:fs");
@@ -27,16 +29,20 @@ if(shouldExitNoSettings || runCfg.runs.setup) {
   console.log(picocolors.bgRed("Settings do not exist yet."));
   process.exit(0);
 }
+recordTime("context-switch:handoff-begin")
 
 if (runCfg.runs.companion === false) {
   console.log(picocolors.blue("Server only mode."));
+  recordTime("context-switch:is-server")
   require("./migration");
   require('$/console.js');
   (async()=>require("./server"))();
 } else if (runCfg.runs.server === false) {
+  recordTime("context-switch:is-companion")
   console.log(picocolors.blue("Companion only mode."));
   const { app } = require("electron");
   app.on("ready", () => {
     require("./app/makeWindow")("webui/client/new-connect.html", true, 420, 525, false);
   })
 }
+recordTime("context-switch:handoff-complete")
