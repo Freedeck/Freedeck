@@ -9,6 +9,43 @@ import { translationKey } from "../../../shared/localization";
 export default function (snd, keyObject, raw) {
 	const k = Object.keys(raw)[0];
 	keyObject.innerHTML = `<div class="button-text"><p>${sanitizeXSS(k)}</div></p>`;
+	if (snd.data.hold === "true" && universal.name !== "Companion") {
+		const activationMs = 5;
+		const startHolding = (e) => {
+			keyObject.dataset.time = 0;
+			keyObject.dataset.holding = true;
+			keyObject.interval = setInterval(() => {
+				if (Number.parseInt(keyObject.dataset.time) >= activationMs) {
+					send(e);
+					keyObject.dataset.time = 0;
+				}
+				keyObject.dataset.time = Number.parseInt(keyObject.dataset.time) + 1;
+			}, 1);
+		};
+
+		const stopHolding = (e) => {
+			keyObject.dataset.holding = false;
+			clearInterval(keyObject.interval);
+			if (Number.parseInt(keyObject.dataset.time) >= activationMs) {
+				send(e);
+			}
+			keyObject.dataset.time = 0;
+		};
+
+		keyObject.onmousedown = startHolding;
+		keyObject.onmouseup = stopHolding;
+		keyObject.onmouseleave = stopHolding;
+		keyObject.ontouchstart = startHolding;
+		keyObject.ontouchend = stopHolding;
+		keyObject.ontouchcancel = stopHolding;
+		keyObject.ontouchleave = stopHolding;
+		const send = (e) => {
+			universal.send(universal.events.keypress, {
+				event: e,
+				btn: snd,
+			});
+		};
+	}
 	if (snd.data.longPress === "true" && universal.name !== "Companion") {
 		const countdownTime = Number.parseInt(
 			universal.lclCfg().longPressTime ? universal.lclCfg().longPressTime : 3,

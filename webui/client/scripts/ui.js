@@ -405,7 +405,7 @@ function reloadSounds() {
       tooltipContent +=
         snd.renderType !== "text"
           ? `<p>${
-              snd.data.longPress === "true" ? translationKey("tile.long_press") : translationKey("tile.short_press")
+              snd.data.longPress === "true" ? translationKey("tile.long_press") : snd.data.hold === "true" ? translationKey("tile.hold") : translationKey("tile.short_press")
             } ${translationKey("tooltips.tile.full.action")}</p>`
           : "<p data-i18n-key='tooltips.tile.disabled'>Not pressable.</p>";
 

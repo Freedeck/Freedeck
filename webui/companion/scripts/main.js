@@ -181,6 +181,7 @@ function editTile(e) {
   setCheck("#nbo", "noBorder", interactionData);
   setCheck("#nbr", "noRounding", interactionData);
   setCheck("#nsh", "noShadow", interactionData);
+  setCheck("#ha", "hold", interactionData);
 
   document.querySelector("#lp").style.display =
     interactionData.renderType === "slider" ? "none" : "block";
@@ -223,6 +224,7 @@ createEditorCheckbox("#nbr", "noRounding");
 createEditorCheckbox("#nsh", "noShadow");
 createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
+createEditorCheckbox("#ha", "hold");
 
 
 const selectablePluginItemBack = document.querySelector("#select-plugin-back");

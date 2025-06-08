@@ -105,6 +105,7 @@
   "editor.appearance.no.shadow": "No Shadow",
 
   "editor.controls": "Controls",
+  "editor.controls.hold": "Hold Activates",
   "editor.controls.long_press": "Long Press",
   "editor.controls.on_release": "On release?",
 
@@ -179,6 +180,7 @@
   
   "tile.long_press": "Long press",
   "tile.short_press": "Short press",
+  "tile.hold": "Hold",
   "tooltips.tile.full.action": "to activate.",
   "tooltips.tile.disabled": "Not pressable.",
   "tooltips.tile.plugin": "This tile uses ",

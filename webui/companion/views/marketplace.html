@@ -151,6 +151,7 @@
                                 file.innerText = 'Update';
                                 file.dataset.HandoffUrl = file.dataset.HandoffUrl.replace('freedeck://download', 'freedeck://update') + "/" + encodeURIComponent(universal.plugins[req.id].version) + "/" + encodeURIComponent(req.version);
                                 file.style.backgroundColor = 'var(--marketplace-plugin-updatable)';
+                                universal.sendToast(`${universal.plugins[req.id].name} can be updated to ${req.version}!`, "Marketplace")
                             } else if (compareVersionOutput == 0) {
                                 file.innerText = 'Up to date';
                                 file.style.backgroundColor = 'var(--marketplace-plugin-no-updates)';
