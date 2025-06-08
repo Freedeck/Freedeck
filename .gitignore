@@ -18,3 +18,5 @@ webui/app/*
 webui/hooks/*
 
 .clinic
+
+timecache.json
