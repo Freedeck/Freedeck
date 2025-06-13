@@ -5,13 +5,9 @@ import Pako from "pako";
 
 export default async function dataHandler(universal, user) {
   universal.CLU("Incoming Data Handler", "Taking over for now.");
-  universal.on(0x01, (reason) => {
-    universal.CLU("Incoming Data Handler", `Connection failed. Retrying. Reason: ${reason}`);
-    universal.send(0x00, user);
-  })
   universal.CLU(
     "Incoming Data Handler",
-    "Created promise, listening for Identify event.",
+    "Listening for Identify event.",
   );
   universal.ui = UI;
   universal.on("I", async (gzipped) => {
@@ -24,19 +20,24 @@ export default async function dataHandler(universal, user) {
     universal.CLU("Incoming Data Handler", "Decompressed data.");
     const parsed = JSON.parse(data);
     universal.CLU("Incoming Data Handler", "Parsed data.");
-    universal._information = JSON.parse(data);
+    universal._information = parsed;
     universal.CLU("Incoming Data Handler:Setup", "Set raw server info");
     universal.events = parsed.events;
+    if(parsed.needToAuthenticate) {
+      if (window.splashScreen) window.splashScreen.unsplash();
+      universal.sendEvent('authpage')
+      return;
+    }
     universal.CLU("Incoming Data Handler:Setup", "Set events");
     universal.config = parsed.config;
+
     universal.CLU("Incoming Data Handler:Setup", "Set Config");
-    console.log(parsed)
+    universal._serverRequiresAuth = parsed.config.useAuthentication;
+    universal.CLU("Incoming Data Handler:Setup", "Set serverRequiresAuth");
     universal.app_sounds = parsed.config.profiles[parsed.config.profile];
     universal.CLU("Incoming Data Handler:Setup", "Set Config Sounds");
     universal.plugins = parsed.plugins;
     universal.CLU("Incoming Data Handler:Setup", "Set plugins");
-    universal._serverRequiresAuth = universal.config.useAuthentication;
-    universal.CLU("Incoming Data Handler:Setup", "Set serverRequiresAuth");
     universal._init = true;
     universal.CLU("Incoming Data Handler:Setup", "_init: Completed.");
 
@@ -130,5 +131,6 @@ export default async function dataHandler(universal, user) {
     universal.sendEvent("data_ready");
   });
   universal.CLU("Incoming Data Handler", "Sent Identify packet");
+  universal._user = user;
   universal.send(0x00, user);
 }

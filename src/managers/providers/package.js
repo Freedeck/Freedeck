@@ -67,11 +67,15 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     if(!fs.existsSync()) {
       fs.mkdirSync(location, { recursive: true });
     }
+    const noop = (...e)=>{};
     const instantiated = {};
     instantiated.id = name;
     instantiated.name = `${freedeck.title} (Theme)`;
     instantiated.author = author;
     instantiated.v2 = true;
+    instantiated._intent = [];
+    instantiated.emit = noop;
+    instantiated.on = noop;
     instantiated.hooks = [];
     instantiated.types = [];
     instantiated.views = {};

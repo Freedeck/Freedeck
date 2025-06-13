@@ -674,7 +674,6 @@ input:disabled {
 	width: 100vw;
 	height: 100vh;
 	background: rgba(0,0,0,0.75);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 	z-index: 9999;
 	display: flex;
 	align-items: center;

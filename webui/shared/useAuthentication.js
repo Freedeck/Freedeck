@@ -6,49 +6,37 @@ if (!HTMLElement.prototype.setHTML) {
 	};
 }
 
-universal.listenFor("init", () => {
-	if (universal._information.config.useAuthentication === false) {
-		universal._authStatus = true;
-		return;
-	};
-	if (!universal._authStatus) {
-		const login = document.createElement("li");
-		login.style.display = "none";
-		login.id = "login";
-		login.setHTML('<a href="#">Login</a>');
-		login.onclick = () => {
-			if (document.querySelector("#login-msg"))
-				document.querySelector("#login-msg").setHTML("Login to Freedeck");
-		};
-		login.click();
-		// while (!document.querySelector('#sidebar > ul')) {}
-		document.querySelector("#sidebar > ul").appendChild(login);
-	}
+const loginDialog = document.querySelector("#login-dialog")
+const loginDiv = document.querySelector("#login-div")
+const loginMsg = document.querySelector("#login-msg")
+const passwd = document.querySelector("#password")
 
-	if (universal.load("password")) {
-		universal.login(universal.load("password"));
-		document.querySelector("#login-dialog").style.display = "none";
-	} else {
-		document.querySelector("#login-dialog").style.display = "flex";
-		document.querySelector("#login-div").style.opacity = "1";
-	}
-
+universal.listenFor("authpage", () => {
 	universal.on(universal.events.login.login, (dat) => {
 		if (dat === true) {
-			if (universal.load("logintime") > Date.now())
-				universal.sendToast("Logged in!", "Authentication");
-			if (
-				document.querySelector("#password") &&
-				document.querySelector("#password").value !== ""
-			) universal.save("password", document.querySelector("#password").value);
+			if (passwd && passwd.value !== "") {
+				universal.save("password", passwd.value);
+			}
 			universal.save("logintime", Date.now());
-			document.querySelector("#login-div").style.opacity = "0";
-			document.querySelector("#login-dialog").style.opacity = "0";
+			loginDiv.style.opacity = "0";
+			loginDialog.style.opacity = "0";
 			setTimeout(() => {
-				document.querySelector("#login-dialog").remove();
+				loginDialog.remove();
 			}, 250);
+			universal.send(universal.events.client_greet, universal._user)
 		} else {
-			document.querySelector("#login-msg").setHTML("Login failed.");
+			loginMsg.setHTML("Password incorrect.");
+			loginDialog.style.display = "flex";
+			loginDiv.style.opacity = "1";
+			loginDialog.style.opacity = "1";
 		}
 	});
+	
+	if (universal.load("password")) {
+		universal.login(universal.load("password"));
+	} else {
+		loginDialog.style.display = "flex";
+		loginDialog.style.opacity = "1";
+		loginDiv.style.opacity = "1";
+	}
 });

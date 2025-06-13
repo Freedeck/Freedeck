@@ -158,7 +158,7 @@ module.exports = {
       debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
       const isMobileConnected = tsm.get("isMobileConnected");
       const nbwsState = check();
-
+      const realCfg = cfg.settings();
       const serverInfo = {
         id: socket.id,
         tempLoginID: socket.tempLoginID,
@@ -186,8 +186,15 @@ module.exports = {
           raw: thisPackage.version,
           human: `Freedeck v${thisPackage.version}`
         },
-        config: cfg.settings(),
+        config: realCfg,
       };
+      if(!socket.auth && realCfg.useAuthentication) {
+        delete serverInfo.NotificationManager;
+        delete serverInfo.hostname;
+        delete serverInfo.plugins;
+        delete serverInfo.config;
+        serverInfo.needToAuthenticate = true;
+      }
       debug.log("Setup serverInfo. GZipping.", `Socket Server / ${socket.user}`);
       zlib.gzip(JSON.stringify(serverInfo), (err, buffer) => {
         if (err) {
