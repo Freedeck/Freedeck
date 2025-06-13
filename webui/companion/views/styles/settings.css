@@ -20,6 +20,10 @@
         flex-wrap: wrap;
     }
 
+    .version {
+        font-weight: 500;
+    }
+
     .btnlist {
         display: flex;
         flex-direction: row;
