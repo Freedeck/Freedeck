@@ -701,10 +701,10 @@ window.onerror = (message, source, lineno, colno, error) => {
     content.innerHTML = `
     <h1>Freedeck</h1>
     <p>
-      Freedeck has encountered an error. This does not crash the app, but may cause unexpected behavior.
+      Freedeck has encountered an unrecoverable error. Please reload to continue.
+      If that doesn't work, you may need to close and reopen the app.
     </p>
-		<small>Handler: universal</small>
-    <details open>
+    <details open style='max-width: 90vw;'>
       <summary>Error Details</summary>
       <small>
         ${message} in ${source} at line ${lineno}:${colno}
@@ -712,10 +712,8 @@ window.onerror = (message, source, lineno, colno, error) => {
     </details>
     <br>
     <div class='flex-wrap-r'>
-    <a style='display:block;width:100%;font-size:1.5em;text-align:center;' href='javascript:window.ErrorIgnore();'>Ignore</a>
     <a style='display:block;width:100%;font-size:1.5em;text-align:center;' href='javascript:window.location.reload();'>Reload</a>
     </div>
-    <small>Ignoring the error may cause Freedeck to be unusable.</small>
     `;
 
     modal.appendChild(content);

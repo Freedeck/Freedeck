@@ -20,9 +20,7 @@ window.onerror = (message, source, lineno, colno, error) => {
     <br>
     <div class='flex-wrap-r'>
     <a style='display:block;width:100%;font-size:1.5em;text-align:center;' href='javascript:window.location.reload();'>Reload</a>
-    <a style='display:block;width:100%;font-size:1.5em;text-align:center;' href='javascript:window.ErrorIgnore();'>Ignore</a>
     </div>
-    <small>Ignoring the error may cause Freedeck to be unusable.</small>
     `
 
     modal.appendChild(content);
@@ -32,9 +30,3 @@ window.onerror = (message, source, lineno, colno, error) => {
 
   console.log(message, source, lineno, colno, error);
 };
-
-// window.onerror(JSON.stringify(localStorage))
-
-window.ErrorIgnore = () => {
-  document.querySelector("#error-dialog").remove();
-}
