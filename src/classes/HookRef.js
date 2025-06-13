@@ -1,5 +1,5 @@
 module.exports = class HookRef {
-	file;
+	#file;
 	type;
 	static types = {
 		client: 0,
@@ -17,8 +17,11 @@ module.exports = class HookRef {
 	 * @param {*} name The name (usually file) of the hook
 	 */
 	constructor(file, type, name) {
-		this.file = file;
+		this.#file = file;
 		this.type = type;
 		this.name = name;
+	}
+	execute(...args) {
+		require(this.#file)(...args)
 	}
 };

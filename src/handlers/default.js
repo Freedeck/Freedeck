@@ -97,10 +97,8 @@ module.exports = {
       } else {
         for (const hook of instance.hooks) {
           if(hook.type === HookRef.types.socket) {
-            debug.log(`Running hook ${hook.file}`, `Socket Server / ${socket.user ? socket.user : socket.id}`);
-            require(hook.file)(
-              socket, io, instance
-            )
+            debug.log(`Running hook ${hook.name}`, `Socket Server / ${socket.user ? socket.user : socket.id}`);
+            hook.execute(socket, io, instance)
           }
         }
       }
