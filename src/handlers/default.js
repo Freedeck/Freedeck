@@ -95,6 +95,7 @@ module.exports = {
           clients: instance._intent.includes(intents.CLIENTS) ? clients : null,
         });
       } else {
+        console.log(pc.bgYellow(`PLEASE TELL THE DEVELOPER OF ${instance.name} TO UPDATE THEIR PLUGIN TO USE V2'S API, OR YOU NEED TO UPDATE THE PLUGIN! FREEDECK HAS DEPRECATED V1 API PLUGINS.`))
         for (const hook of instance.hooks) {
           if(hook.type === HookRef.types.socket) {
             debug.log(`Running hook ${hook.name}`, `Socket Server / ${socket.user ? socket.user : socket.id}`);

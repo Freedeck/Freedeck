@@ -71,6 +71,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     instantiated.id = name;
     instantiated.name = `${freedeck.title} (Theme)`;
     instantiated.author = author;
+    instantiated.v2 = true;
     instantiated.hooks = [];
     instantiated.types = [];
     instantiated.views = {};
