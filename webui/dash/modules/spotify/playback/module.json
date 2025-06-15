@@ -1,0 +1,5 @@
+{
+  "name": "Currently Playing Song",
+  "type": "spotify.cps",
+  "view": "view.html"
+}

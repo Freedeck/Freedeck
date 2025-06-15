@@ -3,7 +3,6 @@ import { universal } from "../../shared/universal.js";
 import {openViewTop, closeAllViews} from "./editor/viewEngine.js";
 import {loadData, setTileData} from "./editor/data.js";
 import "./sidebar.js";
-import "../../shared/useAuthentication.js"; // Only for authenticated pages
 import "./uploadsHandler.js";
 import "./editor/loader.js";
 import "./contextMenu.js";

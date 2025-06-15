@@ -79,11 +79,11 @@ let bootLog;
 let bootLogCenter;
 let bootLogContainer;
 
-function makeBootLog() {
+function makeBootLog(title="Freedeck") {
   const thisbootLog = document.createElement("div");
   thisbootLog.id = "boot-log-div";
   thisbootLog.innerHTML =
-    "<img src='/assets/logo_big.png' class='n-icon'><h1 style='font-weight:500;'>Freedeck</h1><div style='display:none;' id='boot-log'><center class='oclb flex-wrap-r'><button id='oclb'>Close Boot Log</button></center></div>";
+    `<img src='/assets/logo_big.png' class='n-icon'><h1 style='font-weight:500;'>${title}</h1><div style='display:none;' id='boot-log'><center class='oclb flex-wrap-r'><button id='oclb'>Close Boot Log</button></center></div>`;
   document.body.appendChild(thisbootLog);
   bootLog = thisbootLog;
   bootLogCenter = document.querySelector("#boot-log-div > center");

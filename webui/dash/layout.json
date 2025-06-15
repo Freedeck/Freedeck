@@ -1,0 +1,38 @@
+{
+  "id": "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
+  "name": "Dash Layout",
+  "modules": [
+    {
+      "Currently Playing Song": {
+        "uuid": "fd.some-uuid",
+        "plugin": "Spotify",
+        "type": "spotify.cps",
+        "renderType": "dash-module",
+        "data": {
+          "position": {
+            "x": "25.01",
+            "y": "25.10",
+            "width": "defined",
+            "height": "defined"
+          } 
+        }
+      }
+    },
+    {
+      "Clock": {
+        "uuid": "fda..",
+        "plugin": "Clock",
+        "type": "clock.ct",
+        "renderType": "dash-module",
+        "data": {
+          "position": {
+            "x": "25.01",
+            "y": "25.10",
+            "width": "defined",
+            "height": "defined"
+          } 
+        }
+      }
+    }
+  ]
+}

@@ -15,6 +15,7 @@ const paths = {
   webui_client: path.resolve("webui/client"),
   webui_companion: path.resolve("webui/companion"),
   webui_common: path.resolve("webui/common"),
+  webui_dash: path.resolve("webui/dash"),
 
   webui_common_soundpacks: path.resolve("webui/common/sounds"),
   webui_common_themes: path.resolve("webui/shared/theming"),
@@ -29,6 +30,7 @@ const expressRouters = {
   "/user-data": express.static(paths.userData),
 
   "/": express.static(paths.webui_client),
+  "/dash": express.static(paths.webui_dash),
   "/companion": express.static(paths.webui_companion),
   "/common": express.static(paths.webui_common),
   "/app": express.static(paths.webui_app),

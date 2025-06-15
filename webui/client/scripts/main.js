@@ -1,5 +1,4 @@
 import { universal } from "../../shared/universal.js";
-import "../../shared/useAuthentication.js";
 
 await universal.init("Main");
 
