@@ -1,4 +1,4 @@
-{
+export default {
   "id": "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
   "name": "Dash Layout",
   "modules": [
@@ -28,11 +28,40 @@
           "position": {
             "x": "25.01",
             "y": "25.10",
-            "width": "defined",
-            "height": "defined"
+            "width": "200"
+          } 
+        }
+      }
+    },
+    {
+      "Next": {
+        "uuid": "fda..2",
+        "plugin": "Spotify",
+        "type": "sp.next",
+        "renderType": "dash-button",
+        "data": {
+          "position": {
+            "x": "25.01",
+            "y": "25.10",
+            "width": "200"
+          } 
+        }
+      }
+    },
+    {
+      "Play": {
+        "uuid": "fda..2",
+        "plugin": "Spotify",
+        "type": "sp.playpause",
+        "renderType": "dash-button",
+        "data": {
+          "position": {
+            "x": "25.01",
+            "y": "25.10",
+            "width": "200"
           } 
         }
       }
     }
   ]
-};
+}
