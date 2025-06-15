@@ -6,7 +6,7 @@
       "Currently Playing Song": {
         "uuid": "fd.some-uuid",
         "plugin": "Spotify",
-        "type": "spotify.cps",
+        "type": "spotify/playback",
         "renderType": "dash-module",
         "data": {
           "position": {
@@ -22,7 +22,7 @@
       "Clock": {
         "uuid": "fda..",
         "plugin": "Clock",
-        "type": "clock.ct",
+        "type": "clock",
         "renderType": "dash-module",
         "data": {
           "position": {
@@ -35,4 +35,4 @@
       }
     }
   ]
-}
+};

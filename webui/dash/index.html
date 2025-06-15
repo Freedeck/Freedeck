@@ -11,10 +11,32 @@
 </head>
 <style>
   #keys {display:none;}
+  #ctxl-view-cont {
+    background-color: transparent;
+  }
+
+  #ctxl-view-cont html body {
+    width: auto;
+    height: auto;
+    margin: auto;
+    padding-left: 0 !important;
+  }
+  .dash-module {
+    transition-duration: .125s;
+  }
+  .dash-module:hover {
+    transform:rotate(2deg);
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    cursor:grab;
+  }
+  .dash-module.dragging {
+    filter:opacity(0.9);
+    cursor:grabbing;
+  }
 </style>
 <body style="overflow: hidden">
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/common/error.js" type="module"></script>
-  <script src="/socket.io/socket.io.js" type="module"></script>
   <script src="/app/universal.js" type="module"></script>
   <div style="display: none; z-index: 10200" class="modal" id="login-dialog">
       <div id="login-div" class="modalContent">
@@ -31,7 +53,112 @@
       </div>
   </div>
   <script type="module">
-  await universal.init("Dash", "Freedeck Dash")
+    const layoutDefinition = {
+      "id": "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
+      "name": "Dash Layout",
+      "modules": [
+        {
+          "Currently Playing Song": {
+            "uuid": "fd.some-uuid",
+            "plugin": "Spotify",
+            "type": "spotify/playback",
+            "renderType": "dash-module",
+            "data": {
+              "position": {
+                "x": "25.01",
+                "y": "25.10",
+                "width": "defined",
+                "height": "defined"
+              } 
+            }
+          }
+        },
+        {
+          "Clock": {
+            "uuid": "fda..",
+            "plugin": "Clock",
+            "type": "clock",
+            "renderType": "dash-module",
+            "data": {
+              "position": {
+                "x": "25.01",
+                "y": "25.10",
+                "width": "200",
+              } 
+            }
+          }
+        }
+      ]
+    };
+    import mctx from './ctxl2.js'
+    window.mctx =mctx;
+    await universal.init("Dash", "Freedeck Dash")
+    
+    for(const module of layoutDefinition.modules) {
+      const name = Object.keys(module)[0];
+      const trueData = module[name];
+      if(trueData.renderType !== 'dash-module') continue;
+      let modFound = false;
+      await fetch('./views/modules/' + trueData.type +'/module.json').then((res) => {
+        modFound =true;
+        return res.json()
+      }).then((res) => {
+        universal.sendToast(`Type ${trueData.type} found`, `DashLoader`)
+        mctx.addView(`modules/${trueData.type}/${res.view}`)
+        const view = mctx.nonDestructiveView(`modules/${trueData.type}/${res.view}`)
+        view.style.position = 'absolute';
+        view.style.top = trueData.data.position.x+"px";
+        view.style.left = trueData.data.position.y+"px";
+        view.classList.add('dash-module')
+        view.style.overflow = 'hidden'
+        if(trueData.data.position.width !== "defined") {
+          view.style.width = trueData.data.position.width+"px";
+        } else {
+          view.style.width = 'min-content';
+        }
+        if(trueData.data.position.height !== "defined") {
+          view.style.height = trueData.data.position.height+"px";
+        } else {
+          view.style.height = 'min-content'
+        }
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        view.addEventListener('mousedown', (event) => {
+          event.stopPropagation()
+          isDragging = true;
+          view.classList.add('dragging');
+          startX = event.clientX - view.offsetLeft;
+          startY = event.clientY - view.offsetTop;
+          event.preventDefault()
+        })
+        const handleMouseUp = (event) => {
+          if (isDragging) {
+            isDragging = false;
+            view.classList.remove('dragging');
+          }
+        };
+
+        const handleMouseMove = (event) => {
+          if (isDragging) {
+            const newX = event.clientX - startX;
+            const newY = event.clientY - startY;
+            
+            // Keep within viewport bounds
+            const maxX = window.innerWidth - view.offsetWidth;
+            const maxY = window.innerHeight - view.offsetHeight;
+            
+            view.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
+            view.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
+          }
+
+        }
+
+        // Add event listeners
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+      }).catch((e) => {})
+    }
   </script>
 </body>
 </html>

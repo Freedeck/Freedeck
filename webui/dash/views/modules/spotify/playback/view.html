@@ -7,13 +7,9 @@
     display: flex;
     flex-direction: row;
     align-items: start;
-    position: absolute;
-    top: var(--main-radius);
-    left: var(--main-radius);
     gap: 1rem;
     background-color: var(--modal-bg);
     border-radius: var(--main-radius);
-    height: 20vh;
     width: 50vw;
     padding: calc(var(--main-radius) * 1.2);
     font-size: x-large;
@@ -42,12 +38,8 @@
   .lyric.fade-out {
     opacity: 0;
   }
-  #clock {
-    position:absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translate(-50%, 5%);
-    font-size: 6em;
+  .textbg-display {
+    display: none !important;
   }
 </style>
 
@@ -69,9 +61,7 @@
 
 
 
-    <script src="/socket.io/socket.io.js"></script>
     <script type="module">
-      if(!window.universal) window.universal = io();
       let isAuthorized = false;
 
       function forceLogin(data) {
@@ -92,60 +82,6 @@
       const artistsT = document.querySelector(".artists")
       const lyricElement = document.querySelector(".lyric")
 
-      universal.emit(0x00)
-      universal.on("I", async (d) => {
-        await import("https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js")
-        const data = pako.inflate(new Uint8Array(d), { to: "string" });
-        const scfg = JSON.parse(data);
-        setTheme(scfg.config.theme)
-      })
-      universal.emit("I", "spotifypage")
-      universal.on('ctS', (d) => {setTheme(d)})
-      async function parseFor(id, string) {
-        const theme = {};
-        const metaLines = string.split("\n");
-        for (const line of metaLines) {
-          if (!line.trim()) continue;
-          const [key, value] = line.trim().split(": ");
-          theme[key.split("--")[1]] = value.split('";')[0].split('"')[1];
-        }
-        theme.raw = string;
-        return theme;
-      }
-      function getPathFor(id) {
-        if(id.endsWith("#")) {
-          return `/user-data/themes/${id.split("#")[0]}`;
-        }
-        return `/app/shared/theming/${id}`;
-      }
-
-      function setTheme(name) {
-        const fu = name;
-
-        fetch(getPathFor(fu))
-          .then((res) => res.text())
-          .then(async (css) => {
-            if(css.includes("Cannot GET")) {
-              throw new Error(`Failed to get theme ${getPathFor(fu)}`);
-            }
-            const meta = css.match(/:theme-meta {([\s\S]*?)}/);
-            const res = await parseFor(name, meta[1]);
-
-            if (document.getElementById("theme")) {
-              document.getElementById("theme").remove();
-            }
-            const stylea = document.createElement("style");
-            stylea.id = "theme";
-            stylea.innerText += css;
-        
-            document.body.appendChild(stylea);
-            
-            currentTheme = () => res;
-          })
-          .catch((e) => {
-            console.error("Failed to load theme.",name,false,fu,e);
-          });
-      }
 
       // --- Begin smooth lyric update logic ---
 
