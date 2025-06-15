@@ -91,6 +91,7 @@ const pl = {
 		recordTime("plugins:update-plugin-manager-complete")
 	},
 	load: async (file) => {
+		recordTime(`plugins:load-plugin-begin,${file}`);
 		if(pl._disabled.includes(file)) {
 			pl._disabled = pl._disabled.filter((value) => value !== file);
 		}
@@ -135,6 +136,7 @@ const pl = {
 				"Plugins",
 			);
 		}
+		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {
 		return pl._tyc;
