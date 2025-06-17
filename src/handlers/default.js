@@ -195,6 +195,8 @@ module.exports = {
         delete serverInfo.hostname;
         delete serverInfo.plugins;
         delete serverInfo.config;
+        delete serverInfo.launcherOpen;
+        delete serverInfo.connectedToFDWS;
         serverInfo.needToAuthenticate = true;
       }
       debug.log("Setup serverInfo. GZipping.", `Socket Server / ${socket.user}`);
