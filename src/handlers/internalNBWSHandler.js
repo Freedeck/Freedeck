@@ -13,7 +13,7 @@ function checkForLauncherOpen() {
 }
 
 function checkFDWSConnection() {
-  return false;
+  return nbws.connected;
 }
 
 const nbws = {
