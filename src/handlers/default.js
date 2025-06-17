@@ -12,7 +12,7 @@ const { readFileSync, readdirSync, existsSync } = require("node:fs");
 
 const HookRef = require("../classes/HookRef");
 const {intents, events} = require("../classes/api");
-const { nbws, check } = require("./internalNBWSHandler");
+const { nbws, checkForLauncherOpen, checkFDWSConnection } = require("./internalNBWSHandler");
 const { paths } = require("../routers/static");
 
 const userThemesLocation = paths.userData_themes;
@@ -157,7 +157,8 @@ module.exports = {
       cfg.update();
       debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
       const isMobileConnected = tsm.get("isMobileConnected");
-      const nbwsState = check();
+      const launcherOpen = checkForLauncherOpen();
+      const connectedToFDWS = checkFDWSConnection();
       const realCfg = cfg.settings();
       const serverInfo = {
         id: socket.id,
@@ -181,7 +182,8 @@ module.exports = {
         plugins: pl,
         disabled: plugins._disabled,
         events: eventNames,
-        nbws: nbwsState,
+        launcherOpen,
+        connectedToFDWS,
         version: {
           raw: thisPackage.version,
           human: `Freedeck v${thisPackage.version}`

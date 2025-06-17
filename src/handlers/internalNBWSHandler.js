@@ -1,14 +1,18 @@
 const ws = require("ws");
 const { execSync } = require("node:child_process");
 
-function check() {
+function checkForLauncherOpen() {
   const out = execSync('tasklist /FI "WINDOWTITLE eq Freedeck"');
   const realOut = out.toString().trim().trim();
   if (
     realOut.includes("INFO: No tasks are running which match the specified criteria.")
   ) {
-    return true;
+    return false;
   }
+  return true;
+}
+
+function checkFDWSConnection() {
   return false;
 }
 
@@ -39,7 +43,7 @@ const nbws = {
 let retryDelay = 1000;
 
 function retryConnection() {
-  check();
+  checkForLauncherOpen();
   try {
     nbws._socket = new ws("ws://localhost:5756/");
     nbws._socket.onopen = (event) => {
@@ -81,4 +85,4 @@ nbws._socket.onmessage = (event) => {
 };
 
 
-module.exports = { nbws, check };
+module.exports = { nbws, checkFDWSConnection, checkForLauncherOpen };
