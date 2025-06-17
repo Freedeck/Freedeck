@@ -25,18 +25,22 @@
     transition-duration: .125s;
   }
   .dash-module:hover {
-    transform:rotate(2deg);
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
     cursor:grab;
   }
   .dash-module.dragging {
+    transform:rotate(2deg);
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
     filter:opacity(0.9);
     cursor:grabbing;
   }
   .dash-button {
     z-index: 9999 !important;
   }
-  #dragmode-warning {
+  #dragmode-warning, #debugmode-warning {
+    display:none;
+  }
+
+  .debug-only {
     display:none;
   }
 </style>
@@ -59,24 +63,40 @@
       </div>
   </div>
   <h1 id="dragmode-warning">Dragmode</h1>
+  <h1 id="debugmode-warning">Debugging</h1>
   <script type="module">
+    alert('THIS EXTENSION TO FREEDECK IS A HEAVY WORK IN PROGRESS! NO SAVE DATA EXCEPT FOR THE PRE-MADE LAYOUT WILL BE RETAINED.')
     import layoutDefinition from './layout.js'
     import mctx from './ctxl2.js'
     window.mctx =mctx;
     await universal.init("Dash", "Freedeck Dash")
     let dragMode = false;
+    let debugMode = false;
     const dragWarning = document.querySelector('#dragmode-warning')
+    const debugWarning = document.querySelector('#debugmode-warning')
 
     window.addEventListener('keydown', (e) => {
       if(e.key === 'd') dragMode = !dragMode;
+      if(e.key === 'f') debugMode = !debugMode;
 
       dragWarning.style.display = dragMode ? "block" : "none"
+      debugWarning.style.display = debugMode ? "block" : "none"
+      if(debugMode) {
+        document.querySelectorAll(".debug-only").forEach((enrty) => {
+          enrty.style.display = 'block';
+      })
+      } else {
+        document.querySelectorAll(".debug-only").forEach((enrty) => {
+          enrty.style.display = 'none';
+      })
+      }
     })
     
     for(const module of layoutDefinition.modules) {
       const name = Object.keys(module)[0];
       const trueData = module[name];
-      if(trueData.renderType == 'dash-module') renderModule(trueData);
+    universal.sendToast(`Module ${trueData.type} init`, `DashLoader`)
+      if(trueData.renderType == 'dash-module') renderModule(trueData, name);
       if(trueData.renderType == 'dash-button') {
         const view = document.createElement("button")
         view.innerText = name;
@@ -124,7 +144,10 @@
           }
         };
 
+        const dataTxt = document.createElement("p");
+        dataTxt.classList.add('debug-only')
         const handleMouseMove = (event) => {
+          dataTxt.innerText = `${name}, ${JSON.stringify(trueData)}, (${view.style.top} ${view.style.left} ${view.style.width} ${view.style.height})`;
           if (isDragging) {
             const newX = event.clientX - startX;
             const newY = event.clientY - startY;
@@ -138,6 +161,7 @@
           }
 
         }
+        document.body.appendChild(dataTxt)
 
         // Add event listeners
         document.addEventListener('mousemove', handleMouseMove);
@@ -147,13 +171,12 @@
       
     }
 
-    async function renderModule(trueData) {
+    async function renderModule(trueData, name) {
       let modFound = false;
       await fetch('./views/modules/' + trueData.type +'/module.json').then((res) => {
         modFound =true;
         return res.json()
       }).then((res) => {
-        universal.sendToast(`Type ${trueData.type} found`, `DashLoader`)
         mctx.addView(`modules/${trueData.type}/${res.view}`)
         const view = mctx.nonDestructiveView(`modules/${trueData.type}/${res.view}`)
         view.style.position = 'absolute';
@@ -190,7 +213,10 @@
           }
         };
 
+        const dataTxt = document.createElement("p");
+        dataTxt.classList.add('debug-only')
         const handleMouseMove = (event) => {
+          dataTxt.innerText = `${name}, ${JSON.stringify(trueData)}, (${view.style.top} ${view.style.left} ${view.style.width} ${view.style.height})`;
           if (isDragging) {
             const newX = event.clientX - startX;
             const newY = event.clientY - startY;
@@ -204,6 +230,7 @@
           }
 
         }
+        document.body.appendChild(dataTxt)
 
         // Add event listeners
         document.addEventListener('mousemove', handleMouseMove);

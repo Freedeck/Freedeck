@@ -10,8 +10,8 @@ export default {
         "renderType": "dash-module",
         "data": {
           "position": {
-            "x": "25.01",
-            "y": "25.10",
+            "x": "322.01",
+            "y": "745.10",
             "width": "defined",
             "height": "defined"
           } 
@@ -26,8 +26,8 @@ export default {
         "renderType": "dash-module",
         "data": {
           "position": {
-            "x": "25.01",
-            "y": "25.10",
+            "x": "252.01",
+            "y": "751.10",
             "width": "200"
           } 
         }
@@ -41,8 +41,8 @@ export default {
         "renderType": "dash-button",
         "data": {
           "position": {
-            "x": "25.01",
-            "y": "25.10",
+            "x": "594.01",
+            "y": "1546.10",
             "width": "200"
           } 
         }
@@ -56,8 +56,8 @@ export default {
         "renderType": "dash-button",
         "data": {
           "position": {
-            "x": "25.01",
-            "y": "25.10",
+            "x": "605.01",
+            "y": "1220",
             "width": "200"
           } 
         }

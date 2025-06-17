@@ -152,7 +152,6 @@
         const {playbackState} = data;
         if(((playbackState.error?.status === 400 || playbackState.error?.status===401) || playbackState === "FIRST_TIME") && !isAuthorized) {
           isAuthorized = true;
-          forceLogin(playbackState.authorizationUrl)
         } else {
           isAuthorized = true;
         }
