@@ -2,7 +2,7 @@ const ws = require("ws");
 const { execSync } = require("node:child_process");
 
 function checkForLauncherOpen() {
-  const out = execSync('tasklist /FI "WINDOWTITLE eq Freedeck"');
+  const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
   const realOut = out.toString().trim().trim();
   if (
     realOut.includes("INFO: No tasks are running which match the specified criteria.")

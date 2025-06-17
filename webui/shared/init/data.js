@@ -114,13 +114,10 @@ export default async function dataHandler(universal, user) {
       handler();
       UI.reloadPluginViews();
       universal.CLU("Incoming Data Handler", "Native handler created.");
-      if(universal._information.launcherOpen === false) {
-        universal.CLU("Incoming Data Handler", "Attempting to open NB socket / FreedeckApp");
-        const iframe = document.createElement("iframe");
-        iframe.src = "/companion/open_native.html";
-        iframe.style.display = "none";
-        document.body.appendChild(iframe);
-      }
+      universal.CLU("Incoming Data Handler", "Attempting to open NB socket / FreedeckApp");
+      const iframe = document.createElement("iframe");
+      iframe.src = "/companion/open_native.html";
+      iframe.style.display = "none";
     }
 
     generic();
