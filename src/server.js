@@ -54,12 +54,6 @@ async function handleSock(socket) {
         const requestId = notification.data.split("hid.s ")[1].split(" |")[0];
         const requestData = JSON.parse(notification.data.split(`hid.s ${requestId} |`)[1]);
         switch(requestId) {
-          case 'slider': {
-            const slider = requestData.uuid;
-            const value = requestData.value;
-            io.emit(eventNames.default.slider_update, { slider, value });
-            break;
-          }
           case "reload-plugins": {
             io.emit(eventNames.default.reload);
             break;
@@ -142,16 +136,16 @@ async function handleSock(socket) {
   NotificationManager.once("newNotification", sendNotification);
 
   socket.onAny((event, ...args) => {
-    if (event !== eventNames.nbws.sendRequest)
+    if (event !== eventNames.fdws.sendRequest)
     debug.log(
       `Received event ${event}`,
       `Socket Server / S<-${socket.user ? socket.user : socket.id}`,
     );
   });
   socket.onAnyOutgoing((event, args) => {
-    if (event !== eventNames.nbws.sendRequest &&
-        event !== eventNames.nbws.reply &&
-        !new String(event).startsWith("NBWS_") &&
+    if (event !== eventNames.fdws.sendRequest &&
+        event !== eventNames.fdws.reply &&
+        !new String(event).startsWith("fdws_") &&
         event !== 'I'
     ) {
       debug.log(

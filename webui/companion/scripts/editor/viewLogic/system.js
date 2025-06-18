@@ -10,8 +10,8 @@ class System extends EditorViewLogic {
     super("system", "fd.sys.volume", "fd.sys.volume.sys");
   
     this.setOnRun(({interactionData}) => {
-      universal.nbws.send("get_apps", "");
-      universal.nbws.once("apps", (rawData) => {
+      universal.fdws.send("get_apps", "");
+      universal.fdws.once("apps", (rawData) => {
         const data = rawData;
         const int = JSON.parse(editorButton.getAttribute("data-interaction"));
         systemSelect.innerHTML = "";
@@ -52,7 +52,7 @@ class System extends EditorViewLogic {
     })
 
     this.setOnFirstSetup(() => {
-      universal.nbws.send("get_apps", "");
+      universal.fdws.send("get_apps", "");
       const int = JSON.parse(editorButton.getAttribute("data-interaction"));
 
       int.type = "fd.sys.volume.sys";

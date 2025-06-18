@@ -14,12 +14,11 @@ const makeThanks = (force=false) => {
 
   const close = document.createElement("button");
   close.onclick = () => {
-    universal.uiSounds.playSound("welcome");
     universal.send(
-      universal.events.default.config_changed,
+      universal.events.default.serverStyleFlagUpdated,
       setToLocalCfg("app.freedeck.last_changelog_viewed", universal._information.version.raw),
     );
-    container.close(false); // No sound.
+    container.close("welcome");
   }
   close.innerText = "OK";
 

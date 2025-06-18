@@ -6,6 +6,9 @@ module.exports = {
 	name: "Login",
 	id: "fd.handlers.login",
 	exec: ({ socket }) => {
+		if (debug.status) {
+			socket.auth = true;
+		}
 		socket.on(eventNames.login.login_data, (data) => {
 			if (data === socket.tempLoginID) {
 				// yes

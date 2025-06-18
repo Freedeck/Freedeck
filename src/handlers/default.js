@@ -12,7 +12,7 @@ const { readFileSync, readdirSync, existsSync } = require("node:fs");
 
 const HookRef = require("../classes/HookRef");
 const {intents, events} = require("../classes/api");
-const { nbws, checkForLauncherOpen, checkFDWSConnection } = require("./internalNBWSHandler");
+const fdws = require("../managers/fdws");
 const { paths } = require("../routers/static");
 
 const userThemesLocation = paths.userData_themes;
@@ -30,7 +30,7 @@ module.exports = {
   name: "Main",
   id: "fd.handlers.main",
   exec: ({ socket, io, clients }) => {
-    nbws._io = io;
+    fdws._io = io;
     socket.tempLoginID = `${Math.random() * 1024}.tlid.fd`;
     socket._clientInfo = {};
 
@@ -48,9 +48,9 @@ module.exports = {
       );
     });
 
-    socket.on(eventNames.nbws.sendRequest, (data) => {
-      if (nbws.connected) {
-        nbws.send(data[0], ...data[1]);
+    socket.on(eventNames.fdws.sendRequest, (data) => {
+      if (fdws.connected) {
+        fdws.send(data[0], ...data[1]);
       } else {
       }
     });
@@ -115,50 +115,23 @@ module.exports = {
     socket.on(eventNames.client_greet, (user) => {
       socket.user = user;
       debug.log("Migrating to username.", `Socket Server / ${socket.user}`);
-      if (user === "Main") {
+      if (user === "Main" && socket.auth) {
         debug.log("Mobile device.", `Socket Server / ${socket.user}`);
         if (tsm.get("isMobileConnected") === undefined)
           tsm.set("isMobileConnected", false);
         io.emit(eventNames.user_mobile_conn, true);
         tsm.set("isMobileConnected", true);
       }
-      if (user === "Companion") {
+      if (user === "Companion" && socket.auth) {
         debug.log("Not a mobile device.", `Socket Server / ${socket.user}`);
         if (tsm.get("IC") === undefined) tsm.set("IC", socket.id);
         tsm.set("IC", socket.id);
       }
       console.log(`Freedeck ${socket.user} connected to server at ${new Date()}`);
-      const pl = {};
-      const plset = {};
-      const plu = plugins.plugins();
-      for (const plugin of plu) {
-        const { name, id, author, version, popout, types, imports, hooks, views, disabled, stopped } = plugin[1].instance;
-        pl[plugin[1].instance.id] = {
-          name,
-          id,
-          author,
-          version,
-          intents: plugin[1].instance._intent || [],
-          Settings: {},
-          popout,
-          types,
-          imports,
-          hooks,
-          views,
-          disabled,
-          stopped,
-        }
-
-        plset[plugin[1].instance.id] = plugins._settings.get(
-          plugin[1].instance.id,
-        );
-      }
       debug.log("Fetched plugin information", `Socket Server / ${socket.user}`);
       cfg.update();
       debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
       const isMobileConnected = tsm.get("isMobileConnected");
-      const launcherOpen = checkForLauncherOpen();
-      const connectedToFDWS = checkFDWSConnection();
       const realCfg = cfg.settings();
       const serverInfo = {
         id: socket.id,
@@ -179,26 +152,27 @@ module.exports = {
         ],
         mobileConnected: isMobileConnected || false,
         style: styleManager.get(),
-        plugins: pl,
         disabled: plugins._disabled,
         events: eventNames,
-        launcherOpen,
-        connectedToFDWS,
+        launcherOpen: fdws.isLauncherOpen(),
+        connectedToFDWS: fdws.connected,
         version: {
           raw: thisPackage.version,
           human: `Freedeck v${thisPackage.version}`
         },
-        config: realCfg,
       };
       if(!socket.auth && realCfg.useAuthentication) {
         delete serverInfo.NotificationManager;
         delete serverInfo.hostname;
-        delete serverInfo.plugins;
         delete serverInfo.config;
         delete serverInfo.launcherOpen;
         delete serverInfo.connectedToFDWS;
         serverInfo.needToAuthenticate = true;
       }
+      if(socket.auth) {
+        serverInfo.config = realCfg;
+        serverInfo.plugins = plugins.sanitizeInfo();
+    }
       debug.log("Setup serverInfo. GZipping.", `Socket Server / ${socket.user}`);
       zlib.gzip(JSON.stringify(serverInfo), (err, buffer) => {
         if (err) {
@@ -209,12 +183,7 @@ module.exports = {
 
         socket.emit(eventNames.information, buffer);
       });
-
-      socket.emit(eventNames.default.notif, {
-        sender: "Server",
-        data: "Connected to server!",
-        isCon: true,
-      });
+      
       debug.log(
         "Letting user know they're connected.",
         `Socket Server / ${socket.user}`

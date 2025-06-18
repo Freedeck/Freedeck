@@ -19,62 +19,62 @@ const updateKeys = (data) => {
 };
 
 export function grabAndHandle() {
-	if(universal.nbws)
-	universal.nbws.send("get_apps", "");
+	if(universal.fdws)
+	universal.fdws.send("get_apps", "");
 }
 
-const nbws = {
+const fdws = {
 	cache: [],
 	send: (data, ...args) => {
-		universal.send(universal.events.nbws.sendRequest, [data, args]);
+		universal.send(universal.events.fdws.sendRequest, [data, args]);
 	},
 	on: (event, callback) => {
-		universal.on(`NBWS_${event}`, (data) => {
+		universal.on(`fdws_${event}`, (data) => {
 			callback(data);
 		});
 	},
 	once: (event, callback) => {
-		universal.once(`NBWS_${event}`, (data) => {
+		universal.once(`fdws_${event}`, (data) => {
 			callback(data);
 		});
 	},
 	setVolume: (app, volume) => {
-		nbws.send("set_volume", app, `${volume}`);
-		nbws.once("volume_set", (data) => {
-			nbws.cache = data;
-			updateKeys(nbws.cache);
+		fdws.send("set_volume", app, `${volume}`);
+		fdws.once("volume_set", (data) => {
+			fdws.cache = data;
+			updateKeys(fdws.cache);
 		});
 	}
 }
 
 export function generic() {
 	
-	universal.nbws = nbws;
+	universal.fdws = fdws;
 
-	universal.nbws.on("error", (data) => {
+	universal.fdws.on("error", (data) => {
 		universal.sendToast("Native WebSocket", data);
 	});
 
-	universal.nbws.on("apps", (data) => {
-		universal.nbws.cache = data;
+	universal.fdws.on("apps", (data) => {
+		universal.fdws.cache = data;
 		updateKeys(data);
 	});
 
-	if(Object.values(universal.nbws.cache).length !== 0) updateKeys(universal.nbws.cache);
+	if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
 	grabAndHandle();
 	grabAndHandle();
 	universal.listenFor("page_change", () => {
-		if(Object.values(universal.nbws.cache).length !== 0) updateKeys(universal.nbws.cache);
+		if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
 		grabAndHandle();
 	});
 	setInterval(() => {
-		if(Object.values(universal.nbws.cache).length !== 0) updateKeys(universal.nbws.cache);
+		if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
 		grabAndHandle();
 	}, 250);
 }
 
 const sendVolume = (app, volume) => {
-	universal.nbws.setVolume(app, volume);
+	universal.fdws.setVolume(app, volume);
 };
 
 export function handler() {
@@ -89,10 +89,10 @@ export function handler() {
 			universal.send(universal.events.companion.set_profile, data.data.profile);
 		}
 		if(data.type === "fd.macro_text") {
-			universal.nbws.send("macro_text", data.data.macro);
+			universal.fdws.send("macro_text", data.data.macro);
 		}
 		if(data.type === "fd.macro") {
-			universal.nbws.send("macro", data.data.macro);
+			universal.fdws.send("macro", data.data.macro);
 		}
 		if(data.type === "fd.fullscreen") {
 			// request fullscreen

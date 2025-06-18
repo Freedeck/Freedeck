@@ -18,6 +18,28 @@ const pl = {
 	_typeCache: new Map(),
 	_ch: new Map(),
 	_settings: new Map(),
+	sanitizeInfo: () => {
+		const sanitizedList = {};
+    for (const plugin of pl.plugins()) {
+      const { name, id, author, version, popout, types, imports, hooks, views, disabled, stopped } = plugin[1].instance;
+      sanitizedList[id] = {
+        name,
+        id,
+        author,
+        version,
+        intents: plugin[1].instance._intent || [],
+        Settings: {},
+        popout,
+        types,
+        imports,
+        hooks,
+        views,
+        disabled,
+        stopped,
+      }
+    }
+		return sanitizedList;
+	},
 	plugins: () => {
 		if (pl._pluginCache.length >= 0) {
 			(async () => await pl.update())();

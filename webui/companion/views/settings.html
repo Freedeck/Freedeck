@@ -151,7 +151,7 @@
     });
 
     function restChnglog() {
-        universal.send(universal.events.default.config_changed,setToLocalCfg('app.freedeck.last_changelog_viewed', null));
+        universal.send(universal.events.default.serverStyleFlagUpdated,setToLocalCfg('app.freedeck.last_changelog_viewed', null));
     }
     window.restChnglog = restChnglog;
 
@@ -597,7 +597,7 @@
                 if(option.handler === "flag") {
                     universal.flags.set(optionId, ""+input.checked);
                 } else {
-                    universal.send(universal.events.default.config_changed, setToLocalCfg(optionId, input.checked));
+                    universal.send(universal.events.default.serverStyleFlagUpdated, setToLocalCfg(optionId, input.checked));
                 }
                 if(input.checked) {
                     universal.uiSounds.playSound("select_option");

@@ -6,7 +6,7 @@ const style = new SidebarSection(translationKey("sidebars.left.style.title"), "S
 
 const handleCheckFor = (e, property) => {
   universal.send(
-    universal.events.default.config_changed,
+    universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg(property, e.target.checked),
 	);
   universal.getServerStyleFlags()[property] = e.target.checked;
@@ -22,7 +22,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.font_s
 		`${e.target.value}px`,
 	);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("font-size", e.target.value),
 	);
 }, () => {
@@ -30,7 +30,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.font_s
 	document.documentElement.style.setProperty("--font-size", "15px");
 	setValue("#es-fs", 15);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("font-size", 15),
 	);
 }));
@@ -38,14 +38,14 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.font_s
 style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_size"), "es-bs", translationKey("sidebars.left.style.tile_size.unit"), "1", "14", "6", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("buttonSize", e.target.value),
 	);
 }, () => {
   universal.uiSounds.playSound("fdc_slider");
 	setValue("#es-bs", 6);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("buttonSize", 6),
 	);
 }));
@@ -68,7 +68,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_c
 		UI.reloadSounds();
 
 		universal.send(
-			universal.events.default.config_changed,
+			universal.events.default.serverStyleFlagUpdated,
 			setToLocalCfg("iconCountPerPage", universal.getServerStyleFlags().iconCountPerPage),
 		);
 	} else {
@@ -80,7 +80,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_c
 }, () => {
   setValue("#es-tc", 14);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("iconCountPerPage", 14),
 	);
 }));
@@ -88,7 +88,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_c
 style.children.push(new SidebarSlider(translationKey("sidebars.left.style.columns"), "es-tr", translationKey("sidebars.left.style.columns.unit"), "2", cols, "5", (e) => {
   universal.uiSounds.playSound("fdc_slider");
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("tileCols", e.target.value),
 	);
 	let tc = "repeat(5, 2fr)";
@@ -98,7 +98,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.column
   universal.uiSounds.playSound("fdc_slider");
 	setValue("#es-tr", 5);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("tileCols", 5),
 	);
 	document.documentElement.style.setProperty("--tile-columns", "repeat(5, 2fr)");
@@ -107,14 +107,14 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.column
 style.children.push(new SidebarSlider(translationKey("sidebars.left.style.hold_time"), "es-lp", translationKey("sidebars.left.style.hold_time.unit"), "2", "6", "3", (e) => {
   universal.uiSounds.playSound("fdc_slider");
   universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("longPressTime", e.target.value),
 	);
 }, () => {
   universal.uiSounds.playSound("fdc_slider");
 	setValue("#es-lp", 3);
 	universal.send(
-		universal.events.default.config_changed,
+		universal.events.default.serverStyleFlagUpdated,
 		setToLocalCfg("longPressTime", 3),
 	);
 }));

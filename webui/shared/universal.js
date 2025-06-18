@@ -327,8 +327,6 @@ const universal = {
             universal.name = user;
             if (universal.lastRetry !== -1) {
               universal.CLU("InitFN", "This is a reconnection.");
-              universal.sendToast("Reconnected to server.");
-              // tell server we're disconnecting
               universal._socket.disconnect();
               window.location.reload();
               return;

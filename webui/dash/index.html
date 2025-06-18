@@ -64,8 +64,8 @@
   </div>
   <h1 id="dragmode-warning">Dragmode</h1>
   <h1 id="debugmode-warning">Debugging</h1>
+  <h1>THIS EXTENSION TO FREEDECK IS A HEAVY WORK IN PROGRESS! NO SAVE DATA EXCEPT FOR THE PRE-MADE LAYOUT WILL BE RETAINED.</h1>
   <script type="module">
-    alert('THIS EXTENSION TO FREEDECK IS A HEAVY WORK IN PROGRESS! NO SAVE DATA EXCEPT FOR THE PRE-MADE LAYOUT WILL BE RETAINED.')
     import layoutDefinition from './layout.js'
     import mctx from './ctxl2.js'
     window.mctx =mctx;
@@ -95,7 +95,6 @@
     for(const module of layoutDefinition.modules) {
       const name = Object.keys(module)[0];
       const trueData = module[name];
-    universal.sendToast(`Module ${trueData.type} init`, `DashLoader`)
       if(trueData.renderType == 'dash-module') renderModule(trueData, name);
       if(trueData.renderType == 'dash-button') {
         const view = document.createElement("button")

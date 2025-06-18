@@ -225,15 +225,7 @@
           duration: (durationMs/1000)
         }).toString()
         console.log("Fetching lyrics", url.toString())
-        fetch(url).then(async (res) => {
-          let out = await res.text();
-          try {
-            out = JSON.parse(out)
-          } catch(err) {
-            console.log("Error", err)
-          }
-          return out;
-        }).then((res) => {
+        fetch(url).then(res=>res.json()).then((res) => {
           lyrics.not_exist = false;
           lyrics.current = {name, artist, album};
           if(res.syncedLyrics) {
@@ -253,7 +245,9 @@
             lyrics.type = "generic";
             lyrics.values = res.plainLyrics || res || "";
           }
-        });
+        }).catch((err) => {
+          console.error('Error while grabbing lyrics', err);
+        })
       }
 
       function makeAll(type, color) {

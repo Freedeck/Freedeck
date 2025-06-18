@@ -150,16 +150,17 @@
     const existing = window.location.href.split("/new-connect.html")[0];
     const urlParameters = new URLSearchParams(window.location.search);
     
-    let isCompanion = false;
+    let pathAddon = "";
     let url = urlEle.value;
     
     url = existing;
     if (existing.includes('file:')) {
       url = "http://localhost:5754";
-      isCompanion = true;
+      pathAddon = "/companion";
     }
 
-    if (urlParameters.has("id") && urlParameters.get("id").includes("Companion")) isCompanion = true;
+    if (urlParameters.has("id") && urlParameters.get("id").includes("Companion")) pathAddon = "/companion";
+    if (urlParameters.has("id") && urlParameters.get("id").includes("Dash")) pathAddon = "/dash";
     
     let isTryingToConnect = false;
     let isErrored = false;
@@ -220,7 +221,7 @@
       
       animateProgressTo(100);
 
-      if(isCompanion) url += "/companion";
+      url += pathAddon;
 
       p.style.opacity = '0';
       

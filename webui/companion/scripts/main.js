@@ -312,7 +312,7 @@ document.querySelector("#quick-upload-sound").onclick = () => {
 };
 
 
-universal.nbws.on("apps", (rawData) => {
+universal.fdws.on("apps", (rawData) => {
   const data = rawData;
   const int = JSON.parse(editorButton.getAttribute("data-interaction"));
   const select = document.querySelector("#system-select");

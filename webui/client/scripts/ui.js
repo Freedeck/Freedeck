@@ -42,10 +42,10 @@ function makeGenericModal(
   return {
     modal,
     content: modal.querySelector(".modal-body"),
-    close: (playSound=true) => {
+    close: (playSound="int_no") => {
       modal.classList.add("closing");
       modal.querySelector(".modal-body").classList.add("closing");
-      if(playSound)universal.uiSounds.playSound("int_no");
+      universal.uiSounds.playSound(playSound);
       setTimeout(() => {
         modal.remove();
       }, 250);

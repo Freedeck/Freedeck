@@ -13,10 +13,9 @@ const eventNames = {
 		session_validation_failure: "daMF",
 		unauthorized: "daCF",
 	},
+
 	default: {		
 		notif: "dN",
-
-		plugin_info: "dP",
 
 		reload: "dR",
 		reload_sounds: "dRS",
@@ -26,8 +25,8 @@ const eventNames = {
 		reload_single_plugin: "dRSP",
 		enable_plugin: "dEP",
 		update_plugins: "dUP",
-		config_changed: "dCC",
-		slider_update: "sU",
+		serverStyleFlagUpdated: "dCC",
+		update_tile: "sU",
 	},
 
 	companion: {
@@ -52,7 +51,7 @@ const eventNames = {
 		set: "RPC.Set"
 	},
 
-	nbws: {
+	fdws: {
 		sendRequest: "n-r",
 		reply: "n-R",
 	},

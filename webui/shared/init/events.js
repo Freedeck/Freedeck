@@ -119,16 +119,12 @@ export default async function eventsHandler(universal, user) {
 		};
 
 		universal.on(universal.events.default.notif, (data) => {
-			console.log(data)
-			// if (data.incoming) return;
 			if (data.sender === 'RPC') {
 				handoffApiNotif(data);
 				return;
 			};
-			if (!data.isCon) {
-				universal.sendToast(`${data.data}`, data.sender);
-			}
-			if (data.isCon) universal.sendEvent("notif", data);
+			universal.sendToast(`${data.data}`, data.sender);
+			universal.sendEvent("notification", data);
 		});
 
 		universal._socket.on("disconnect", () => {
@@ -153,7 +149,7 @@ export default async function eventsHandler(universal, user) {
 			window.location.reload(),
 		);
 
-		universal.on(universal.events.default.config_changed, (e) => {
+		universal.on(universal.events.default.serverStyleFlagUpdated, (e) => {
 			document.documentElement.style.setProperty(
 				"--font-size",
 				`${e["font-size"]}px`,
