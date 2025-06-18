@@ -378,7 +378,7 @@ function reloadSounds() {
           keyObject.appendChild(indicator);
         } else {
           let typeExists = false;
-          for (const tyc of universal._tyc.keys()) {
+          for (const tyc of universal._matchTypeToPlugin.keys()) {
             if (tyc.type === snd.type) {
               typeExists = true;
               break; // Early exit when found

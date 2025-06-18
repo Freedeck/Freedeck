@@ -17,7 +17,7 @@ class EditorViewLogic {
   }
   forwardRunningEvent(currentType, prerun, ...args) {
     let isRunning = false;
-    if (this.types.includes(currentType)) {
+    if (this.types.includes(currentType) || this.types.includes("#*")) {
       console.log("RUNNING", args, currentType)
       isRunning = true;
       prerun();

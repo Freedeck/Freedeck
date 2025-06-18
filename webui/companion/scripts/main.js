@@ -8,22 +8,28 @@ import "./editor/loader.js";
 import "./contextMenu.js";
 import { makeThanks } from "./changelog/create.js";
 import Sound from "./editor/viewLogic/sound.js";
+import Plugins from "./editor/viewLogic/plugins.js";
 import System from "./editor/viewLogic/system.js";
 import EditorViewLogic from "./editor/viewLogic/EditorViewLogic.js";
 import Macro from "./editor/viewLogic/macro.js";
 import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
+const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
 
-universal.connectionTest = true;
+if (universal.load("has_setup") === "false") {
+  universal.ctx.destructiveView("setup");
+  const view_container = document.querySelector(universal.ctx.view_container);
+  view_container.style.display = "block";
+  leftSidebar.style.display = "none";
+}
 
 const editorButton = document.querySelector("#editor-btn");
 const editorContainer = document.querySelector("#editor");
 const editorDiv = document.querySelector("#editor-div");
 
-const leftSidebar = document.querySelector(".sidebar");
 const toggleSidebarContainer = document.querySelector(".toggle-sidebar");
 const toggleSidebarButton = document.querySelector(".toggle-sidebar button");
 
@@ -46,37 +52,36 @@ toggleSidebarButton.onclick = (ev) => {
   }
 };
 
+class EditorView {
+  /**@type {any} Any universal unique ID. */
+  id;
+  /**@type {EditorViewLogic} The EditorViewLogic used for this view */
+  logic;
+  /**@type {string} A translation key to use for the no-action screen. */
+  noActionTranslationKey;
+  /**@type {string} Path to the icon */
+  icon;
+  /**
+   * Create an EditorView
+   * @param {any} id Any universal unique ID.
+   * @param {EditorViewLogic} logic The EditorViewLogic used for this view
+   * @param {string} noActionTranslationKey A translation key to use for the no-action screen.
+   * @param {string} icon Path to the icon
+   */
+  constructor(id, logic, noActionTranslationKey, icon) {
+    this.id = id;
+    this.logic = logic;
+    this.noActionTranslationKey = noActionTranslationKey;
+    this.icon = icon;
+  }
+}
+
 const editorBuiltInViews = [
-  {
-    "id": "audio",
-    "logic": new Sound(),
-    "noActionTranslationKey": "editor.sections.no_action.soundboard",
-    "icon": "/common/icons/t_audio.svg"
-  },
-  {
-    "id": "plugins",
-    "logic": new EditorViewLogic(),
-    "noActionTranslationKey": "editor.sections.no_action.plugin",
-    "icon": "/common/icons/t_plugin.svg"
-  },
-  {
-    "id": "macro",
-    "logic": new Sound(),
-    "noActionTranslationKey": "editor.sections.no_action.macro",
-    "icon": "/common/icons/t_macro.svg"
-  },
-  {
-    "id": "system",
-    "logic": new Sound(),
-    "noActionTranslationKey": "editor.sections.no_action.app_volume",
-    "icon": "/common/icons/t_app_volume.svg"
-  },
-  {
-    "id": "profiles",
-    "logic": new Sound(),
-    "noActionTranslationKey": "editor.sections.no_action.folder_changer",
-    "icon": "/common/icons/t_folder.svg"
-  },
+  new EditorView("audio", new Sound(), "editor.sections.no_action.soundboard", "/common/icons/t_audio.svg"),
+  new EditorView("plugins", new Plugins(), "editor.sections.no_action.plugin", "/common/icons/t_plugin.svg"),
+  new EditorView("macro", new Macro(), "editor.sections.no_action.macro", "/common/icons/t_plugin.svg"),
+  new EditorView("system", new System(), "editor.sections.no_action.app_volume", "/common/icons/t_app_volume.svg"),
+  new EditorView("profiles", new Profile(), "editor.sections.no_action.folder_changer", "/common/icons/t_folder.svg")
 ]
 
 const pluginListing = document.querySelector(".plugin-view-listing");
@@ -91,7 +96,7 @@ for(const view of editorBuiltInViews) {
   keyIcon.loading = 'lazy';
   viewButton.onclick = (e) => {
     e.preventDefault();
-    openViewTop(k);
+    openViewTop(view.logic.view);
     view.logic.onFirstSetup({
       interactionData: JSON.parse(editorButton.getAttribute("data-interaction")),
     })
@@ -101,16 +106,6 @@ for(const view of editorBuiltInViews) {
   pluginListing.appendChild(viewButton);
 }
 UI.reloadPluginViews();
-
-
-const selectPluginDisabled = document.querySelector('.spi-actions-disabled');
-const selectPluginNotFound = document.querySelector('.spi-actions-notfound')
-const selectPluginDisabledId = document.querySelectorAll('.spi-actions-disabled-id');
-const selectPluginType = document.querySelectorAll(".spi-actions-notfound-type");
-function setDisabledMessageFor(id, type) {
-  for(const i of selectPluginDisabledId) i.innerText = id;
-  for(const i of selectPluginType) i.innerText = type;
-}
 
 /**
  * Edit a tile
@@ -135,7 +130,6 @@ function editTile(e) {
   for (const el of document.querySelectorAll(".plugin-view")) {
     el.style.display = "none";
   }
-  document.querySelector("#advanced-view").style.display = "none";
   
   editorContainer.style.display = "block";
 
@@ -144,69 +138,34 @@ function editTile(e) {
     "data-interaction",
     e.srcElement.getAttribute("data-interaction")
   );
-  for (const a of document.querySelectorAll(".selectable-plugin-tile-action")) {
-    a.style.display = "none";
-    a.classList.remove("active");
-    if (!interactionData.plugin) continue;
-    if (a.dataset.plugin === interactionData.plugin) {
-      if (a.dataset.type === interactionData.type) a.classList.add("active");
-      a.style.display = "block";
-    }
-  }
 
-  if (interactionData.plugin === "Freedeck" || !interactionData.plugin) {
-    document.querySelector("#plugin").style.display = "none";
-    document.querySelector('label[for="plugin"]').style.display = "none";
-  }
   document.querySelector("#editor-back").style.display = "flex";
   
   closeAllViews();
-  selectPluginDisabled.style.display = "none";
-  selectPluginNotFound.style.display = "none";
-
-  const allSelectablePluginListers = document.querySelectorAll(".selectable-plugin-lister");
-  if (!interactionData.type.startsWith("fd.")) {
-    const selectableItemsOfType = document.querySelectorAll(`.selectable-plugin-tile-action[data-plugin="${universal.cleanHTML(interactionData.plugin)}"]`)
-    for (const el of selectableItemsOfType) {
-      el.style.display = "block";
-    }
-    for (const el of allSelectablePluginListers) {
-      el.style.display = "none";
-    }
-
-    setDisabledMessageFor(interactionData.plugin, interactionData.type);
-    if (!doesInteractionTypeExist(interactionData.type)) {
-      selectPluginNotFound.style.display = "block";
-    }
-    if (universal.plugins[interactionData.plugin] === undefined) {
-      selectPluginDisabled.style.display = "block";
-    }
-    selectablePluginItemBack.style.display = "flex";
-    openViewTop("plugins");
-  } else {
-    for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
-      el.style.display = "none";
-    }
-    for (const el of allSelectablePluginListers) {
-      el.style.display = "block";
-    }
-  }
-  if (interactionData.type === "fd.none" && !interactionData.data._view) {
-    openViewTop("none");
-    document.querySelector("#editor-back").style.display = "none";
-  } else {
-    for(const v of editorViewLogics) {
-      v[1].forwardRunningEvent(interactionData.type, () => {
-        openViewTop(v[1].view);
-      }, {interactionData});
-    }
-  } 
-  
-
   if (interactionData.data) {
     const itm = interactionData.data;
     loadData(itm);
   }
+
+  if (!interactionData.type.startsWith("fd.")) {
+    editorBuiltInViews[1].logic.forwardRunningEvent(interactionData.type, () => {
+      openViewTop("plugins");
+    }, {interactionData});
+  }
+  
+  if (interactionData.type === "fd.none" && !interactionData.data._view) {
+    openViewTop("none");
+    document.querySelector("#editor-back").style.display = "none";
+  } else {
+    for(const v of editorBuiltInViews) {
+      v.logic.forwardRunningEvent(interactionData.type, () => {
+        openViewTop(v.logic.view);
+      }, {interactionData});
+    }
+  } 
+  
+  document.querySelector("#plugin").style.display = interactionData.plugin!=="Freedeck"?"flex":"none";
+  document.querySelector('label[for="plugin"]').style.display = interactionData.plugin!=="Freedeck"?"flex":"none";
 
   document.querySelector("#sbg").style.display =
     interactionData.renderType === "button"
@@ -221,6 +180,11 @@ function editTile(e) {
       ? "none"
       : "block";
 
+  document.querySelector("#lp").style.display =
+    interactionData.renderType === "slider" ? "none" : "block";
+  document.querySelector('label[for="lp"]').style.display =
+    interactionData.renderType === "slider" ? "none" : "block";
+
   setCheck("#orl", "onRelease", interactionData);
   setCheck("#lp", "longPress", interactionData);
   setCheck("#sbg", "showBg", interactionData);
@@ -229,11 +193,6 @@ function editTile(e) {
   setCheck("#nsh", "noShadow", interactionData);
   setCheck("#ha", "hold", interactionData);
 
-  document.querySelector("#lp").style.display =
-    interactionData.renderType === "slider" ? "none" : "block";
-  document.querySelector('label[for="lp"]').style.display =
-    interactionData.renderType === "slider" ? "none" : "block";
-  // make it fade in
   editorDiv.style.animationName ="editor-pull-down";
   universal.keys.parentElement.style.transform = "translate(-50%, -115%)" 
   toggleSidebarButton.style.display = "none";
@@ -272,97 +231,6 @@ createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
 createEditorCheckbox("#ha", "hold");
 
-
-const selectablePluginItemBack = document.querySelector("#select-plugin-back");
-const disabledActions = document.querySelector(".spi-actions-disabled"); 
-selectablePluginItemBack.onclick = (e) => {
-  disabledActions.style.display = "none";
-  for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
-    el.style.display = "none";
-  }
-  for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
-    el.style.display = "block";
-  }
-  selectablePluginItemBack.style.display = "none";
-};
-
-document.querySelector("#spiav").onclick = () => {
-  const interaction = JSON.parse(editorButton.getAttribute("data-interaction"));
-  if (!interaction.data || Object.keys(interaction.data).length === 0) {
-    document.querySelector("#tiledata").style.display = "none";
-  } else {
-    document.querySelector("#tiledata").style.display = "flex";
-  }
-  if (document.querySelector("#advanced-view").style.display === "block")
-    document.querySelector("#advanced-view").style.display = "none";
-  else document.querySelector("#advanced-view").style.display = "block";
-};
-
-const spiContainer = document.querySelector("#spi-actions");
-const createdIdentifiers = [];
-function doesInteractionTypeExist(type) {
-  for(const it of universal._matchTypeToPlugin.keys()) {
-    if(it.type === type) return true;
-  }
-  return false;
-}
-for (const interactionType of universal._matchTypeToPlugin.keys()) {
-  if (interactionType.hidden) continue;
-  if (!createdIdentifiers.includes(interactionType.pluginId)) {
-    const element = document.createElement("div");
-    element.classList.add("generic-chip");
-    element.classList.add("selectable-plugin-lister");
-    element.innerText = interactionType.display;
-    element.onclick = (e) => {
-      for (const el of document.querySelectorAll(
-        `.selectable-plugin-tile-action[data-plugin="${interactionType.pluginId}"]`
-      )) {
-        el.style.display = "block";
-      }
-
-      selectablePluginItemBack.style.display = 'flex';
-
-      for (const el of document.querySelectorAll(".selectable-plugin-lister")) {
-        el.style.display = "none";
-      }
-    };
-    spiContainer.appendChild(element);
-    createdIdentifiers.push(interactionType.pluginId);
-  }
-  const element = document.createElement("div");
-  element.classList.add("generic-chip");
-  element.classList.add("selectable-plugin-tile-action");
-  element.setAttribute("data-type", interactionType.type);
-  element.setAttribute("data-plugin", interactionType.pluginId);
-  element.innerText = `${interactionType.display}: ${interactionType.name}`;
-  element.onclick = (e) => {
-    const interaction = JSON.parse(
-      editorButton.getAttribute("data-interaction")
-    );
-
-    const tileToSelect = document.querySelector(
-      `.selectable-plugin-tile-action[data-type="${interactionType.type}"][data-plugin="${interactionType.pluginId}"]`
-    )
-
-    for(const i of document.querySelectorAll(".selectable-plugin-tile-action")) {
-      i.classList.remove("active");
-    }
-    
-    if (interaction.plugin) {
-      if (tileToSelect) tileToSelect.classList.remove("active");
-    }
-    
-    interaction.type = interactionType.type;
-    interaction.plugin = interactionType.pluginId;
-    interaction.renderType = interactionType.renderType;
-    interaction.data = { ...interaction.data, ...interactionType.templateData };
-    tileToSelect.classList.add("active");
-    editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
-    document.querySelector("#type").value = interactionType.type;
-    loadData(interaction.data);
-  };
-  spiContainer.appendChild(element);
-}
 
 document.querySelector("#upload-sound").onclick = () => {
   document.querySelector("#upload-sound").disabled = true;
@@ -479,18 +347,6 @@ universal.nbws.on("apps", (rawData) => {
     editorButton.setAttribute("data-interaction", JSON.stringify(int));
   };
 });
-
-document.querySelector("#macro-macro").onchange = (e) => {
-  const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-  setTileData("macro", e.srcElement.value, int);
-  int.data.macro = e.srcElement.value;
-};
-document.querySelector("#macro-type").onchange = (e) => {
-  const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-  int.type = e.srcElement.value === "text" ? "fd.macro_text" : "fd.macro";
-  document.querySelector("#type").innerText = int.type;
-  editorButton.setAttribute("data-interaction", JSON.stringify(int));
-};
 
 function setupLibraryFor(type){
   if (type === "icon") {
@@ -800,43 +656,6 @@ document.addEventListener("keydown", (ev) => {
   }
 });
 
-
-// get url params
-const editing = universal.load("now-editing");
-
-if (editing) {
-  setTimeout(() => {
-    const interaction = universal.app_sounds.filter((sound) => {
-      const k = Object.keys(sound)[0];
-      return sound[k].uuid === editing;
-    })[0];
-    if (interaction) {
-      editTile({
-        srcElement: {
-          getAttribute: (attr) => {
-            return JSON.stringify(interaction[Object.keys(interaction)[0]]);
-          },
-          dataset: {
-            name: Object.keys(interaction)[0],
-            interaction: JSON.stringify(
-              interaction[Object.keys(interaction)[0]]
-            ),
-          },
-          className: "button k-0",
-        },
-      });
-    }
-    universal.remove("now-editing");
-  }, 250);
-}
-
-if (universal.load("has_setup") === "false") {
-  universal.ctx.destructiveView("setup");
-  const view_container = document.querySelector(universal.ctx.view_container);
-  view_container.style.display = "block";
-  leftSidebar.style.display = "none";
-}
-
 universal.on(universal.events.user_mobile_conn, (isConn) => {
   if (universal.load("has_setup") === "false") return;
   universal.waitForElement(".mobd", (ele) => {
@@ -850,7 +669,6 @@ if (universal._information.mobileConnected) {
     ele.style.display = "none";
   })
 }
-
 
 const lcfg = universal.getServerStyleFlags();
 document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);
