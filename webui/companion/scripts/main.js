@@ -13,6 +13,7 @@ import EditorViewLogic from "./editor/viewLogic/EditorViewLogic.js";
 import Macro from "./editor/viewLogic/macro.js";
 import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
+import { translationKey } from "../../shared/localization.js";
 
 await universal.init("Companion");
 
@@ -45,16 +46,62 @@ toggleSidebarButton.onclick = (ev) => {
   }
 };
 
-const editorViewLogics = new Map(
-  [
-    ["audio", new Sound()],
-    ["system", new System()],
-    ["plugins", new EditorViewLogic()],
-    ["macro", new Macro()],
-    ["profiles", new Profile()],
-    ["none", new EditorViewLogic()],
-  ]
-)
+const editorBuiltInViews = [
+  {
+    "id": "audio",
+    "logic": new Sound(),
+    "noActionTranslationKey": "editor.sections.no_action.soundboard",
+    "icon": "/common/icons/t_audio.svg"
+  },
+  {
+    "id": "plugins",
+    "logic": new EditorViewLogic(),
+    "noActionTranslationKey": "editor.sections.no_action.plugin",
+    "icon": "/common/icons/t_plugin.svg"
+  },
+  {
+    "id": "macro",
+    "logic": new Sound(),
+    "noActionTranslationKey": "editor.sections.no_action.macro",
+    "icon": "/common/icons/t_macro.svg"
+  },
+  {
+    "id": "system",
+    "logic": new Sound(),
+    "noActionTranslationKey": "editor.sections.no_action.app_volume",
+    "icon": "/common/icons/t_app_volume.svg"
+  },
+  {
+    "id": "profiles",
+    "logic": new Sound(),
+    "noActionTranslationKey": "editor.sections.no_action.folder_changer",
+    "icon": "/common/icons/t_folder.svg"
+  },
+]
+
+const pluginListing = document.querySelector(".plugin-view-listing");
+for(const view of editorBuiltInViews) {
+  console.log(`Setting up ${view.id}`);
+  const viewButton = document.createElement("button");
+  const keyInfo = document.createElement("p");
+  const keyIcon = document.createElement("img");
+  keyInfo.setAttribute("data-i18n-key", view.noActionTranslationKey);
+  keyInfo.innerText = translationKey(view.noActionTranslationKey);
+  keyIcon.src = view.icon;
+  keyIcon.loading = 'lazy';
+  viewButton.onclick = (e) => {
+    e.preventDefault();
+    openViewTop(k);
+    view.logic.onFirstSetup({
+      interactionData: JSON.parse(editorButton.getAttribute("data-interaction")),
+    })
+  };
+  viewButton.appendChild(keyInfo);
+  viewButton.appendChild(keyIcon);
+  pluginListing.appendChild(viewButton);
+}
+UI.reloadPluginViews();
+
 
 const selectPluginDisabled = document.querySelector('.spi-actions-disabled');
 const selectPluginNotFound = document.querySelector('.spi-actions-notfound')
@@ -395,18 +442,6 @@ document.querySelector("#quick-upload-sound").onclick = () => {
     universal.uiSounds.playSound("int_yes");
   };
 };
-
-editorViewLogics.forEach((logic, k) => {
-  console.log(`Setting up ${k}`);
-  if(!document.querySelector(`#none-${k}`)) return;
-  document.querySelector(`#none-${k}`).onclick = (e) => {
-    e.preventDefault();
-    openViewTop(k);
-    logic.onFirstSetup({
-      interactionData: JSON.parse(editorButton.getAttribute("data-interaction")),
-    })
-  };
-})
 
 
 universal.nbws.on("apps", (rawData) => {

@@ -99,7 +99,6 @@ export default function (snd, keyObject, raw) {
 			});
 		};
 	} else {
-		if(universal.load("cct") === "true") return;
 		if(universal.name === "Companion") {
 			keyObject.onpointerup = (ev) => {
 				if(!universal.flags.isEnabled("try_buttons")) {

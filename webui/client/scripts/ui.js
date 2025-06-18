@@ -199,6 +199,7 @@ function reloadProfile() {
     }
   }
 }
+const pluginListing = document.querySelector(".plugin-view-listing");
 
 /**
  * @name reloadPluginViews
@@ -252,7 +253,7 @@ function reloadPluginViews() {
           `#plugin-view-${btoa(view).toLowerCase().split("=")[0]}`
         ).style.display = "block";
       };
-      document.querySelector(".plugin-view-listing").appendChild(selectorBtn);
+      pluginListing.appendChild(selectorBtn);
     }
   }
 }
@@ -377,7 +378,7 @@ function reloadSounds() {
           keyObject.appendChild(indicator);
         } else {
           let typeExists = false;
-          for (const tyc of universal._matchTypeToPlugin.keys()) {
+          for (const tyc of universal._tyc.keys()) {
             if (tyc.type === snd.type) {
               typeExists = true;
               break; // Early exit when found

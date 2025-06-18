@@ -112,7 +112,6 @@ export default async function dataHandler(universal, user) {
 
     if (user === "Companion") {
       handler();
-      UI.reloadPluginViews();
       universal.CLU("Incoming Data Handler", "Native handler created.");
       universal.CLU("Incoming Data Handler", "Attempting to open NB socket / FreedeckApp");
       const iframe = document.createElement("iframe");
