@@ -254,12 +254,12 @@ document.querySelector("#spiav").onclick = () => {
 const spiContainer = document.querySelector("#spi-actions");
 const createdIdentifiers = [];
 function doesInteractionTypeExist(type) {
-  for(const it of universal._tyc.keys()) {
+  for(const it of universal._matchTypeToPlugin.keys()) {
     if(it.type === type) return true;
   }
   return false;
 }
-for (const interactionType of universal._tyc.keys()) {
+for (const interactionType of universal._matchTypeToPlugin.keys()) {
   if (interactionType.hidden) continue;
   if (!createdIdentifiers.includes(interactionType.pluginId)) {
     const element = document.createElement("div");
@@ -820,7 +820,7 @@ if (universal._information.mobileConnected) {
 }
 
 
-const lcfg = universal.lclCfg();
+const lcfg = universal.getServerStyleFlags();
 document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);
 
 universal.listenFor("audio-end", (data) => {

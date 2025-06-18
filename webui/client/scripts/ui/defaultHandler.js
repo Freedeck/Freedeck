@@ -48,7 +48,7 @@ export default function (snd, keyObject, raw) {
 	}
 	if (snd.data.longPress === "true" && universal.name !== "Companion") {
 		const countdownTime = Number.parseInt(
-			universal.lclCfg().longPressTime ? universal.lclCfg().longPressTime : 3,
+			universal.getServerStyleFlags().longPressTime ? universal.getServerStyleFlags().longPressTime : 3,
 		);
 		const startHolding = (e) => {
 			keyObject.dataset.time = 0;
@@ -137,7 +137,7 @@ export default function (snd, keyObject, raw) {
 		}
 	}
 	// check if text is bigger than 2 lines (by font size)
-	if (universal.lclCfg().scroll) {
+	if (universal.getServerStyleFlags().scroll) {
 		const txth = keyObject.querySelector("p");
 		const size = txth.clientHeight;
 		if (size > 40) {

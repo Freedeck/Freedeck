@@ -45,7 +45,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
       instantiated.file = {filePath};
       Object.freeze(instantiated.file);
       instantiated._fd_dropin();
-      pluginManager._plc.set(instantiated.id, { instance: instantiated });
+      pluginManager.plugins().set(instantiated.id, { instance: instantiated });
       if (instantiated.disabled) {
         pluginManager._disabled.push(filePath);
         return;
@@ -83,7 +83,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     Object.freeze(instantiated.file)
     instantiated.version = version;
     instantiated.disabled = freedeck.disabled;
-    pluginManager._plc.set(instantiated.id, { instance: instantiated });
+    pluginManager.plugins().set(instantiated.id, { instance: instantiated });
     if(freedeck.files) {
       for(const file of freedeck.files) {
         if(!fs.existsSync(path.resolve(pathToEx, file))) {

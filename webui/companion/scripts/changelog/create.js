@@ -2,7 +2,7 @@ import changes from './changes.json';
 
 const makeThanks = (force=false) => {
   if(!force) {
-    if(universal.lclCfg()["app.freedeck.last_changelog_viewed"] === universal._information.version.raw) return;
+    if(universal.getServerStyleFlags()["app.freedeck.last_changelog_viewed"] === universal._information.version.raw) return;
     if(universal.load("has_setup") === 'false') return;
   }
   const {major, other, known} = changes;
@@ -125,7 +125,7 @@ const makeNested = (data, parent) => {
 }
 
 const setToLocalCfg = (key, value) => {
-	const cfg = universal.lclCfg();
+	const cfg = universal.getServerStyleFlags();
 	cfg[key] = value;
 	return cfg;
 };

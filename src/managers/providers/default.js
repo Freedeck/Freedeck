@@ -18,7 +18,7 @@ module.exports = async ({ debug, file, pl }) => {
     ),
     "Plugins / ASAR"
   );
-  pl._plc.set(instantiated.id, { file, instance: instantiated });
+  pl.plugins().set(instantiated.id, { file, instance: instantiated });
   if (instantiated.disabled) {
     pl._disabled.push(file);
   }

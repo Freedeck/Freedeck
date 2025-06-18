@@ -35,7 +35,7 @@ universal.reloadRight = () => {
 		{ Marketplace: "marketplace.html" },
 		{ Settings: "settings.html" },
 	];
-	if(universal.lclCfg()["app.freedeck.sidebar.connect_tab"]) {
+	if(universal.getServerStyleFlags()["app.freedeck.sidebar.connect_tab"]) {
 		sidebar.push({ Connect: "/new-connect.html?id=Companion&new_ip=true" })
 	}
 	if(universal.load("has_setup") === "false") {

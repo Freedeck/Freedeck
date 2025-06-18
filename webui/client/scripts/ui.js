@@ -125,7 +125,7 @@ function closeBootLog() {
     resolve(true);
     bootLogContainer.style.scale = "0";
     openCloseBootLog.style.display = "none";
-    if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
+    if (universal.getServerStyleFlags()["app.freedeck.skip_boot_animation"]) {
       bootLog.style.display = "none";
       if (window.splashScreen) window.splashScreen.unsplash();
     } else {
@@ -148,17 +148,17 @@ function closeBootLog() {
 function initialize() {
   universal.CLU("Boot / UI", "Initializing UI");
   universal.config.iconCountPerPage =
-    Number.parseInt(universal.lclCfg().iconCountPerPage) || 14;
+    Number.parseInt(universal.getServerStyleFlags().iconCountPerPage) || 14;
   universal.CLU("Boot / UI", "Set icon count");
   universal.theming.setTheme(
     universal.config.theme ? universal.config.theme : "default.css",
     false
   );
   universal.CLU("Boot / UI", "Set local theme");
-  if (universal.lclCfg()["font-size"] !== 15) {
+  if (universal.getServerStyleFlags()["font-size"] !== 15) {
     document.documentElement.style.setProperty(
       "--font-size",
-      `${universal.lclCfg()["font-size"]}px`
+      `${universal.getServerStyleFlags()["font-size"]}px`
     );
   }
   universal.CLU("Boot / UI", "Set font size");
@@ -265,13 +265,13 @@ function reloadSounds() {
     ? Number.parseInt(universal.load("page"))
     : 0);
   const iconsPerPage = (universal.config.iconCountPerPage =
-    universal.lclCfg().iconCountPerPage);
+    universal.getServerStyleFlags().iconCountPerPage);
   const startIndex = iconsPerPage * currentPage;
   const endIndex = iconsPerPage * (currentPage + 1);
   const isCompanionMode = universal.name === "Companion";
 
   // Handle fill style - batch style operations
-  if (universal.lclCfg()['app.freedeck.ui.fill_tiles']) {
+  if (universal.getServerStyleFlags()['app.freedeck.ui.fill_tiles']) {
     let fillStyle = document.getElementById("fill");
     if (!fillStyle) {
       fillStyle = document.createElement("style");
@@ -290,10 +290,10 @@ function reloadSounds() {
   }
 
   // Handle compact mode in one operation
-  keysContainer.style.width = universal.lclCfg().compact ? "unset" : "100%";
-  keysContainer.style.height = universal.lclCfg().compact ? "unset" : "100%";
+  keysContainer.style.width = universal.getServerStyleFlags().compact ? "unset" : "100%";
+  keysContainer.style.height = universal.getServerStyleFlags().compact ? "unset" : "100%";
   if(universal.name !== "Companion") {
-    keysContainer.style.padding = universal.lclCfg().compact ? ".25rem" : "1rem";
+    keysContainer.style.padding = universal.getServerStyleFlags().compact ? ".25rem" : "1rem";
   }
 
   // Don't remove the keys, we'll update them in place
@@ -377,7 +377,7 @@ function reloadSounds() {
           keyObject.appendChild(indicator);
         } else {
           let typeExists = false;
-          for (const tyc of universal._tyc.keys()) {
+          for (const tyc of universal._matchTypeToPlugin.keys()) {
             if (tyc.type === snd.type) {
               typeExists = true;
               break; // Early exit when found
@@ -421,7 +421,7 @@ function reloadSounds() {
             )}<span data-i18n-key='tooltips.tile.plugin.not_found'></span></p>`;
         // Find matching type only once
         let typeName = null;
-        for (const i of Array.from(universal._tyc.keys())) {
+        for (const i of Array.from(universal._matchTypeToPlugin.keys())) {
           if (i.type === snd.type) {
             typeName = i.name;
             break;

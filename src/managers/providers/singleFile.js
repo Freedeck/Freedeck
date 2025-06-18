@@ -11,7 +11,7 @@ module.exports = ({ debug, file, pl }) => {
   const instantiated = new ipl();
   instantiated.file = {filePath:file};
   Object.freeze(instantiated.file);
-  pl._plc.set(instantiated.id, { file, instance: instantiated });
+  pl.plugins().set(instantiated.id, { file, instance: instantiated });
   if (instantiated.disabled) {
     pl._disabled.push(file);
   }

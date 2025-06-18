@@ -19,7 +19,7 @@ module.exports = ({ io, data }) => {
 	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file.filePath}`))) return;
 	if(Object.keys(plugin.types).length > 0) {
 		for (const type of plugin.types) {
-			plugins._tyc.delete(type);
+			plugins.types().delete(type);
 		}
 	}
 	console.log(`Attempting to disable ${plugin.file.filePath} (${plugin.name})...`);

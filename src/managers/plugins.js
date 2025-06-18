@@ -13,17 +13,17 @@ const tmpLocation = path.resolve("./tmp");
 const pluginsLocation = path.resolve("./plugins");
 
 const pl = {
-	_plc: new Map(),
+	_pluginCache: new Map(),
 	_disabled: [],
-	_tyc: new Map(),
+	_typeCache: new Map(),
 	_ch: new Map(),
 	_settings: new Map(),
 	plugins: () => {
-		if (pl._plc.length >= 0) {
+		if (pl._pluginCache.length >= 0) {
 			(async () => await pl.update())();
 			debug.log("Plugins updated.", "Plugins");
 		}
-		return pl._plc;
+		return pl._pluginCache;
 	},
 	reload: async () => {
 		const plList = pl.plugins();
@@ -33,7 +33,7 @@ const pl = {
 		}
 		for (const type of pl.types()) {
 			if(type.instance?.stop) type.instance.stop();
-			pl._tyc.delete(type.id);
+			pl.types().delete(type.id);
 		}
 		for (const key in require.cache) {
 			if (key.startsWith(tmpLocation)) {
@@ -70,8 +70,8 @@ const pl = {
 		recordTime("plugins:update-plugin-manager-begin")
 		debug.log("Loading plugins.", "Plugins");
 		pl._disabled = [];
-		pl._plc.clear();
-		pl._tyc.clear();
+		pl._pluginCache.clear();
+		pl._typeCache.clear();
 		const files = fs.readdirSync(pluginsLocation);
 		const loadPromises = files
 			.filter(
@@ -139,7 +139,7 @@ const pl = {
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {
-		return pl._tyc;
+		return pl._typeCache;
 	},
 };
 

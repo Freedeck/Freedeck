@@ -9,7 +9,7 @@ const handleCheckFor = (e, property) => {
     universal.events.default.config_changed,
 		setToLocalCfg(property, e.target.checked),
 	);
-  universal.lclCfg()[property] = e.target.checked;
+  universal.getServerStyleFlags()[property] = e.target.checked;
   UI.reloadSounds();
 }
 let fontSize = "25";
@@ -63,13 +63,13 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.tile_c
 	const count = document.querySelectorAll(".fdc-placeholder").length;
 	const diff = e.target.value - count;
 	if (diff > 0) {
-		universal.lclCfg().iconCountPerPage = e.target.value;
+		universal.getServerStyleFlags().iconCountPerPage = e.target.value;
 		universal.config.iconCountPerPage = e.target.value;
 		UI.reloadSounds();
 
 		universal.send(
 			universal.events.default.config_changed,
-			setToLocalCfg("iconCountPerPage", universal.lclCfg().iconCountPerPage),
+			setToLocalCfg("iconCountPerPage", universal.getServerStyleFlags().iconCountPerPage),
 		);
 	} else {
 		for (let i = 0; i < Math.abs(diff); i++) {
@@ -92,7 +92,7 @@ style.children.push(new SidebarSlider(translationKey("sidebars.left.style.column
 		setToLocalCfg("tileCols", e.target.value),
 	);
 	let tc = "repeat(5, 2fr)";
-	if (universal.lclCfg().tileCols) tc = tc.replace("5", e.target.value);
+	if (universal.getServerStyleFlags().tileCols) tc = tc.replace("5", e.target.value);
 	document.documentElement.style.setProperty("--tile-columns", tc);
 }, () => {
   universal.uiSounds.playSound("fdc_slider");
@@ -127,16 +127,16 @@ universal.listenFor("launch", update);
 update();
 
 function update() {
-	console.log(universal.lclCfg());
-  setValue("#es-fs", universal.lclCfg()["font-size"]);
-  setValue("#es-bs", universal.lclCfg().buttonSize);
-  setValue("#es-tc", universal.lclCfg().iconCountPerPage);
-  setValue("#es-tr", universal.lclCfg().tileCols);
-  setValue("#es-lp", universal.lclCfg().longPressTime);
+	console.log(universal.getServerStyleFlags());
+  setValue("#es-fs", universal.getServerStyleFlags()["font-size"]);
+  setValue("#es-bs", universal.getServerStyleFlags().buttonSize);
+  setValue("#es-tc", universal.getServerStyleFlags().iconCountPerPage);
+  setValue("#es-tr", universal.getServerStyleFlags().tileCols);
+  setValue("#es-lp", universal.getServerStyleFlags().longPressTime);
 }
 
 const setToLocalCfg = (key, value) => {
-	const cfg = universal.lclCfg();
+	const cfg = universal.getServerStyleFlags();
 	cfg[key] = value;
 	return cfg;
 };

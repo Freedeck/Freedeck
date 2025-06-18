@@ -46,6 +46,9 @@ window.fetch = async (url, options) => {
   return window._OldFetch(url, options);
 };
 
+/**
+ * Unicversal
+ */
 const universal = {
   compareVersions,
   relay: "",
@@ -76,11 +79,11 @@ const universal = {
       }
     },
   },
-  lclCfg: () => universal._information.style || { compact: false },
+  getServerStyleFlags: () => universal._information.style || { compact: false },
   _information: {},
   _init: false,
   _authStatus: false,
-  _tyc: new Map(),
+  _matchTypeToPlugin: new Map(),
   _serverRequiresAuth: true,
   page: 0,
   events: {},
@@ -259,8 +262,8 @@ const universal = {
       currentPage: window.location.pathname,
       universalState,
       localStorage,
-      notificationLog: universal.lclCfg()["app.freedeck.notification_log"] ? universal.loadObj("logs/notif", []):"Notification log disabled.",
-      localConfiguration: universal.lclCfg(),
+      notificationLog: universal.getServerStyleFlags()["app.freedeck.notification_log"] ? universal.loadObj("logs/notif", []):"Notification log disabled.",
+      localConfiguration: universal.getServerStyleFlags(),
       bootLog: universal._verify(universal.CLUL),
       errorLog: universal._verify(universal.ErrorLog),
       exportTimeStart,
@@ -423,7 +426,7 @@ const universal = {
       universal.keys.appendChild(tempDiv);
     }
 
-    if (universal.lclCfg()["app.freedeck.no_preset_tiles"]) return;
+    if (universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"]) return;
 
     const logoButton = document.createElement("div");
     logoButton.onclick = () => {window.AppSM()}
@@ -553,7 +556,7 @@ const universal = {
       ov: universal.ctx?.opened
     };
     const logNotif = universal.loadObj("logs/notif");
-    const logEnabled = universal.lclCfg()["app.freedeck.notification_log"];
+    const logEnabled = universal.getServerStyleFlags()["app.freedeck.notification_log"];
     if (logNotif.length > 0 && !logEnabled)
       universal.saveObj("logs/notif", []);
     else {
@@ -736,7 +739,7 @@ if (!universal.UI) universal.UI = UI;
 universal.listenFor(
   "animate_page",
   (type = "automated", direction = "left") => {
-    // if (!universal.lclCfg()['app.freedeck.animate_page_changes']) return;
+    // if (!universal.getServerStyleFlags()['app.freedeck.animate_page_changes']) return;
     // const keys = document.getElementById("keys");
     // if (type === "automated") {
     //   keys.style.animation = `pull-${direction} 0.5s`;

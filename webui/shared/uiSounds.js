@@ -47,7 +47,7 @@ async function playSound(name) {
 }
 
 const uiSoundEngine = {
-  enabled: () => universal.lclCfg()["app.freedeck.ui_sounds"],
+  enabled: () => universal.getServerStyleFlags()["app.freedeck.ui_sounds"],
   currentSoundpack: "futuristic.soundpack",
   info: {},
   sounds: {},

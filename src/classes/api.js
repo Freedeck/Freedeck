@@ -28,6 +28,14 @@ class Plugin {
     debug.log(msg.join(" "), picocolors.blue(`Plugins / ${this.id || "Class"}`));
   }
   _id = Math.random().toString(36).substring(7);
+  _callbacks = {};
+  _intent = [];
+
+  io = {
+    active: false,
+    emit:()=>{},
+  }
+  
   constructor() {
     this.id = `app.freedeck.pdx${this._id}`;
     this.name = "Loading...";
@@ -38,31 +46,59 @@ class Plugin {
     this._intent = [];
   }
 
+  /**
+   * Set a popout to be shown
+   * @param {string} popout HTML inline string
+   */
   setPopout(popout) {
     this._customLog("Setting custom popout content.");
     this.popout = popout;
   }
+
+  /**
+   * Set popout data to hide the button
+   */
   hidePopout() {
     this._customLog("Hiding popout.");
     this.popout = "";
   }
+
+  /**
+   * Set the plugin's name
+   * @param {string} name Plugin name
+   */
   setName(name) {
     this._customLog("Set plugin name.");
     this.name = name;
   }
+  /**
+   * Set the plugin's author
+   * @param {string} name Plugin author
+   */
   setAuthor(author) {
     this._customLog("Set plugin author.");
     this.author = author;
   }
+  /**
+   * Set the plugin's ID
+   * @param {string} name Plugin ID
+   */
   setID(id) {
     this._customLog("Set plugin ID.");
     this.id = id;
   }
+  /**
+   * Set the plugin's disabled
+   * @param {string} name Plugin disabled
+   */
   setDisabled(disabled) {
     this._customLog("Set plugin disabled.");
     this.disabled = disabled;
   }
   
+  /**
+   * Internal function used for backwards/forwards compatibility
+   */
   _fd_dropin() {
     if (this.disabled) return;
     this.hasInit = this.onInitialize();
@@ -79,12 +115,19 @@ class Plugin {
 
     this.emit(events.ready);
 
-    this._customLog("Emitted ready.");
-    
+    this._customLog("Emitted ready.");  
   }
+
+  /**
+   * Internal function used for backwards/forwards compatibility
+   */
   onInitialize() {
     return true;
   }
+
+  /**
+   * Internal function used for backwards/forwards compatibility. Event is forwarded upwards for compatibility
+   */
   onButton(e) {
     this._customLog("Forwarding press interaction from v1->v2");
     this.emit(events.button, {
@@ -95,15 +138,30 @@ class Plugin {
       clients: this.clients,
     });
   }
+
+  /**
+   * Internal function used for backwards/forwards compatibility. Event is forwarded upwards for compatibility
+   */
   onStopping() {
     this._customLog("Forwarding stopping interaction from v1->v2");
     this.emit(events.stopping);
   }
 
+  /**
+   * This code will be ran once upon initialization
+   */
   setup() {};
+
+  /**
+   * @deprecated Backwards/forwards compatability
+   */
   exec() {};
-  _callbacks = {};
-  _intent = [];
+
+  /**
+   * Request an intent for usage of special private APIs.
+   * This is just to tell the Freedeck server what you will be doing.
+   * @param {number} intent The intent's ID. Can be gotten from 'api.js' object "intents"
+   */
   requestIntent(intent) {
     if(!Object.values(intents).includes(intent)) return;
     if(this._intent.includes(intent)) return;
@@ -111,17 +169,22 @@ class Plugin {
     this._intent.push(intent);
   }
 
-  io = {
-    active: false,
-    emit:()=>{},
-  }
-
+  /**
+   * Register a callback to run when an ID gets emitted
+   * @param {number} ev Event ID. Can be gotten from 'api.js' object "events"
+   * @param {void} cb The callback you wish to supply to the event upon it's calling
+   */
   on(ev, cb) {
     this._customLog(`Listening for ${Object.keys(events)[ev]} v2-event`);
     if(!this._callbacks[ev]) this._callbacks[ev] = [];
     this._callbacks[ev].push(cb);
   }
 
+  /**
+   * Emit an event, run all registered specific callbacks on this plugin
+   * @param {number} ev Event ID. Can be gotten from 'api.js' object "events"
+   * @param {any[]} args Any arguments you want the callback to be supplied with
+   */
   emit(ev, ...args) {
     this._customLog(`Emitting ${Object.keys(events)[ev]} v2-event`);
     if(!this._callbacks[ev]) return;
@@ -196,42 +259,25 @@ class Plugin {
   internalAdd(type, hook, copyTo) {
     let foundPath = `tmp/_${this.id}.fdpackage`;
     if(this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
-    const hp = path.resolve(foundPath, hook);
+    const hookPath = path.resolve(foundPath, hook);
 
-    if (!fs.existsSync(hp)) {
-      console.log(`Source file does not exist: ${hp}`);
+    if (!fs.existsSync(hookPath)) {
+      console.log(`Source file does not exist: ${hookPath}`);
       return;
     }
 
-    this.hooks.push(new HookRef(hp, type, hook));
+    this.hooks.push(new HookRef(hookPath, type, hook));
 
     const destination = path.resolve(copyTo, path.dirname(hook));
 
     if (!fs.existsSync(destination)) {
       fs.mkdirSync(destination, { recursive: true });
     }
-    const dt = {force:true};
-    if(type === HookRef.types.view) {
-      dt.recursive = true; 
-    }
+    
+    const copyOpts = {force:true};
+    copyOpts.recursive = (type === HookRef.types.view); 
 
-    let _count = 0;
-    function _retry() {
-      fs.cp(hp, path.resolve(destination, path.basename(hook)), dt, (err) => {
-        if (err) {
-          _count++;
-          console.log(`Failed to copy hook: ${err}`);
-          if(_count < 5) {
-            console.log('Retrying....')
-            _retry();
-          } else {
-            console.log(`Not retrying. Failed to copy hook: ${err}`);
-          }
-        } else {
-        }
-      });
-    }
-    _retry();
+    fs.cpSync(hookPath, path.resolve(destination, path.basename(hook)), copyOpts)
   }
 
   /**

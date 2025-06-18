@@ -106,7 +106,7 @@ export default async function dataHandler(universal, user) {
           "Incoming Data Handler",
           `Type: ${type.name} -> ${plug.name} (aka. ${plug.id})`,
         );
-        universal._tyc.set(type, plug);
+        universal._matchTypeToPlugin.set(type, plug);
       }
     }
 

@@ -66,7 +66,7 @@ export default async function eventsHandler(universal, user) {
 		});
 
 		universal.on(universal.events.default.recompile, () => {
-			if (universal.lclCfg()["app.freedeck.skip_boot_animation"]) {
+			if (universal.getServerStyleFlags()["app.freedeck.skip_boot_animation"]) {
 				window.location.href = `/new-connect.html?id=${user}`;
 			}
 			UI.showBootLog(false);
@@ -169,8 +169,8 @@ export default async function eventsHandler(universal, user) {
 				);
 			}
 			document.documentElement.style.setProperty("--tile-columns", `repeat(${e.tileCols ? e.tileCols : "5"}, 2fr)`);
-			universal.lclCfg = () => e;
-			universal.lclCfg().iconCountPerPage = Number.parseInt(e.iconCountPerPage);
+			universal.getServerStyleFlags = () => e;
+			universal.getServerStyleFlags().iconCountPerPage = Number.parseInt(e.iconCountPerPage);
 			universal.sendEvent("local-config", e);
 			UI.reloadSounds();
 		});

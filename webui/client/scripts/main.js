@@ -30,7 +30,7 @@ if (universal.config.profile !== universal.load("profile")) {
   universal.setPage(0);
 }
 
-const lcfg = universal.lclCfg();
+const lcfg = universal.getServerStyleFlags();
 document.documentElement.style.setProperty(
   "--font-size",
   `${lcfg["font-size"]}px`,
@@ -79,6 +79,6 @@ const fdSettingsButton = document.querySelector("#fd-settings-button");
 fdSettingsButton.onmousedown = downEvent;
 fdSettingsButton.ontouchstart = downEvent;
 
-if(universal.lclCfg()["app.freedeck.last_changelog_viewed"] !== universal._information.version.raw) {
+if(universal.getServerStyleFlags()["app.freedeck.last_changelog_viewed"] !== universal._information.version.raw) {
   universal.sendToast("Check your computer for the changelog!", "Freedeck");
 }

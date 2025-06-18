@@ -19,7 +19,7 @@ const discoveryInformation = {
 const idList = [];
 function recalculate() {
   idList.length = 0;
-  const pl = plugins._plc.keys();
+  const pl = plugins.plugins().keys();
   for (const key of pl) {
     idList.push(key);
   }
@@ -62,7 +62,7 @@ router.get("/discover/code-request", (req, res) => {
 
 
 router.get("/discover", (req, res) => {
-  if(plugins._plc.keys().length !== idList.length) recalculate();
+  if(plugins.plugins().keys().length !== idList.length) recalculate();
   Object.assign(discoveryInformation, {
     title: "Freedeck",
     version,
