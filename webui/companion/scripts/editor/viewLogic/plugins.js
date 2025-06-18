@@ -43,6 +43,7 @@ class Plugins extends EditorViewLogic {
     })
 
     this.setOnFirstSetup(() => {
+      const allSelectablePluginListers = document.querySelectorAll(".selectable-plugin-lister");
       for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
         el.style.display = "none";
       }

@@ -1,28 +1,32 @@
 :theme-meta {
 	--name: "Blue";
-	--description: "This is a very light blue theme. Dark mode users beware!";
+	--description: "This is a blue theme. Dark mode users beware!";
 	--author: "Freedeck";
 	--version: "1.0.0";
 }
 
 :root {
-	--blue-gradient: linear-gradient(45deg, rgba(0, 183, 255, 1) 0%, rgb(34, 178, 235) 33%, rgba(0, 183, 255, 1) 66%, rgb(34, 178, 235) 100%);
+	--blue-1: hsl(225, 100%, 50%);
+	--blue-2: hsl(221, 100%, 53%);
+	--blue-gradient: linear-gradient(45deg, var(--blue-1) 0%, var(--blue-2) 33%, var(--blue-1) 66%, var(--blue-2) 100%);
 	
 	--main-bg: var(--blue-gradient);
-	--modal-bg: rgba(33, 192, 255, 1);
+
+	--tile-bg: hsla(225, 100%, 40% ,0.5);
+
+	--modal-bg: var(--blue-1);
 	--modal-color: black;
 	 
 	--modal-item-bg: var(--blue-gradient);
 	--modal-item-text: black;
 
-	--input-bg: rgba(33, 192, 255, 1);
+	--input-bg: hsl(225, 100%, 35%);
 
-	--companion-left-sidebar-bg: rgb(31, 139, 182);
-	--companion-right-sidebar-bg: rgb(25, 152, 202);
+	--companion-left-sidebar-bg: hsl(225, 100%, 40%);
+	--companion-right-sidebar-bg: hsl(225, 100%, 40%);
 
 	--companion-left-sidebar-color: white;
 	--companion-right-sidebar-color: white;
 
-	--companion-sidebar-item-bg: rgba(30, 111, 143, 0.37);
+	--companion-sidebar-item-bg: hsl(225, 100%, 39%);
 }
---companion-sidebar-item-color: white;

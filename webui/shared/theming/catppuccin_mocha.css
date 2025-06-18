@@ -6,6 +6,7 @@
 }
 
 :root {
+	--ctp-mocha-lavender: #b4befe;
 	--ctp-text: #cdd6f4;
 	--ctp-subtext-1: #bac2de;
 	--ctp-subtext-0: #a6adc8;
@@ -24,12 +25,14 @@
 	
 	--tile-bg: rgba(180, 190, 254, 0.125);
 	
+	--slider-background: rgba(147, 153, 178, 0.5);
+
 	--text-color: var(--ctp-text);
 	--text-color-secondary:  var(--ctp-subtext-1);
 
 	--tile-border: 1px solid rgba(147, 153, 178, 0.5);
 	
-	--modal-color: #cdd6f4;
+	--modal-color: var(--ctp-text);
 	--modal-bg: var(--ctp-crust);
 
 	--input-bg: var(--ctp-surface-1);

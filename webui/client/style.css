@@ -17,7 +17,7 @@
     --button-height: 6rem;
     
     --tile-bg: rgba(0, 0, 0, 0.5);
-    --tile-border: 2px solid #f8f9fa;
+    --tile-border: 1px solid rgba(255,255,255,0.825);
     --tile-width: var(--button-width);
     --tile-height: var(--button-height);
     
