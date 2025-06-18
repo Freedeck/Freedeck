@@ -24,9 +24,9 @@ name.onkeyup = (e) => {
 
 const wants = [
   {
-      class: "no-bg",
-      data: "showBg",
-      selector: "#sbg"
+    class: "no-bg",
+    data: "showBg",
+    selector: "#sbg"
   },
   {
     class: "no-border",
@@ -38,11 +38,6 @@ const wants = [
     data: "noRounding",
     selector: "#nbr"
   },
-  {
-    class: "no-shadow",
-    data: "noShadow",
-    selector: "#nsh"
-  }
 ]
 
 for(const w of wants) {

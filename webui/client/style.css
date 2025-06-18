@@ -589,10 +589,6 @@ input:disabled {
     border-radius: 0 !important;
 }
 
-.no-shadow {
-    box-shadow: none !important;
-}
-
 #keys {
 	display: grid;
 	gap: .65rem;

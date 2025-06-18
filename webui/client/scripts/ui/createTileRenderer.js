@@ -20,9 +20,6 @@ export default function (sndType, keyObject, snd, rawDat) {
 	if (snd.data.noRounding === "true") {
 		keyObject.classList.add("no-rounding");
 	}
-	if (snd.data.noShadow === "true") {
-		keyObject.classList.add("no-shadow");
-	}
 		
 	if (sndType === "fd.sound") defaultHandler(snd, keyObject, rawDat);
 	else if (sndType === "fd.none") noneHandler(snd, keyObject, rawDat, true);

@@ -66,19 +66,3 @@
   z-index: 1;
   background-color: white;
 }
-
-.glow {
-  animation: glow 1s infinite alternate;
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 40px rgba(255, 0, 89, 0.9);
-    transform: scale(1);
-  }
-
-  100% {
-    box-shadow: 0 0 40px rgb(0, 179, 255);
-    transform: scale(1.1);
-  }
-}

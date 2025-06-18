@@ -190,7 +190,6 @@ function editTile(e) {
   setCheck("#sbg", "showBg", interactionData);
   setCheck("#nbo", "noBorder", interactionData);
   setCheck("#nbr", "noRounding", interactionData);
-  setCheck("#nsh", "noShadow", interactionData);
   setCheck("#ha", "hold", interactionData);
 
   editorDiv.style.animationName ="editor-pull-down";
