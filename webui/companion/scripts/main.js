@@ -323,7 +323,6 @@ document.querySelector("#upload-sound").onclick = () => {
   universal.uiSounds.playSound("int_confirm");
   const ito = JSON.parse(editorButton.dataset.interaction);
 
-  universal._Uploads_View = 0;
   universal.vopen("library");
   universal._libraryOnload = () => {
     setupLibraryFor("sound");
@@ -375,7 +374,6 @@ document.querySelector("#quick-upload-sound").onclick = () => {
   document.querySelector("#upload-sound").disabled = true;
   universal.uiSounds.playSound("int_confirm");
 
-  universal._Uploads_View = 0;
   universal.vopen("library");
   universal._libraryOnload = () => {
     universal._Uploads_New(1, true);
@@ -506,7 +504,6 @@ function setupLibraryFor(type){
 
 document.querySelector("#upload-icon").onclick = (e) => {
   universal.uiSounds.playSound("int_confirm");
-  universal._Uploads_View = 1;
   universal.vopen("library");
   const ito = JSON.parse(editorButton.dataset.interaction);
   universal._libraryOnload = () => {

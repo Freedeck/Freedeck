@@ -53,15 +53,12 @@ const universal = {
   compareVersions,
   relay: "",
   _socket: null,
-  _ca: [],
-  _Uploads_View: 0,
   lastRetry: -1,
   connected: false,
   reconnect: () => {
     universal.connected = false;
     universal.lastRetry = new Date();
     universal._socket.connect();
-    universal._ca.push(universal.lastRetry);
   },
   wakeLock: {
     sentinel: null,
@@ -118,7 +115,7 @@ const universal = {
     universal.CLU("Default", `Setting ${k} to ${v}`);
     return universal.exists(k) ? universal.load(k) : universal.save(k, v);
   },
-  loadObj: (k, d = {}) => {
+  loadObject: (k, d = {}) => {
     try {
       return JSON.parse(universal.load(k)) || d;
     } catch (e) {
@@ -126,13 +123,13 @@ const universal = {
       return d;
     }
   },
-  saveObj: (k, v) => {
+  saveObject: (k, v) => {
     return universal.save(k, JSON.stringify(v));
   },
   flags: {
     _cache: {},
     reload: () => {
-      universal.flags._cache = universal.loadObj("flags") || {};
+      universal.flags._cache = universal.loadObject("flags") || {};
     },
     isEnabled: (flag) => {
       return universal.flags._cache[flag] === "true";
@@ -262,7 +259,7 @@ const universal = {
       currentPage: window.location.pathname,
       universalState,
       localStorage,
-      notificationLog: universal.getServerStyleFlags()["app.freedeck.notification_log"] ? universal.loadObj("logs/notif", []):"Notification log disabled.",
+      notificationLog: universal.getServerStyleFlags()["app.freedeck.notification_log"] ? universal.loadObject("logs/notif", []):"Notification log disabled.",
       localConfiguration: universal.getServerStyleFlags(),
       bootLog: universal._verify(universal.CLUL),
       errorLog: universal._verify(universal.ErrorLog),
@@ -555,16 +552,16 @@ const universal = {
       m: message,
       ov: universal.ctx?.opened
     };
-    const logNotif = universal.loadObj("logs/notif");
+    const logNotif = universal.loadObject("logs/notif");
     const logEnabled = universal.getServerStyleFlags()["app.freedeck.notification_log"];
     if (logNotif.length > 0 && !logEnabled)
-      universal.saveObj("logs/notif", []);
+      universal.saveObject("logs/notif", []);
     else {
-      if (logNotif.length > 128) universal.saveObj("logs/notif", []);
+      if (logNotif.length > 128) universal.saveObject("logs/notif", []);
       if (logEnabled) {
-        const log = universal.loadObj("logs/notif");
+        const log = universal.loadObject("logs/notif");
         log.push(logIn);
-        universal.saveObj("logs/notif", log);
+        universal.saveObject("logs/notif", log);
       }
     }
   },

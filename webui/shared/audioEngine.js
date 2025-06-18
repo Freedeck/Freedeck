@@ -41,11 +41,11 @@ const UAE = {
 		initialize: () => {
 			UAE.sinkManager.reloadDevices();
 			if(universal.exists("audio/sinks")) {
-				UAE.sinkManager.sinks = universal.loadObj("audio/sinks");
+				UAE.sinkManager.sinks = universal.loadObject("audio/sinks");
 				universal.CLU("Boot / Universal:AudioEngine", "Loaded audio/sinks");
 			} else {
 				universal.CLU("Boot / Universal:AudioEngine", "No audio/sinks found, creating new");
-				universal.saveObj("audio/sinks", UAE.sinkManager.sinks);
+				universal.saveObject("audio/sinks", UAE.sinkManager.sinks);
 			}
 		},
 		addAndRemoveSink: async (type, id, remove) => {
@@ -56,12 +56,12 @@ const UAE = {
 		removeSink: async (id) => {
 			UAE.sinkManager.sinks = UAE.sinkManager.sinks.filter((sink) => sink.id !== id);
 			universal.CLU("Boot / Universal:AudioEngine", "Removed sink");
-			universal.saveObj("audio/sinks", UAE.sinkManager.sinks);
+			universal.saveObject("audio/sinks", UAE.sinkManager.sinks);
 		},
 		addSink: async (type, id) => {
 			UAE.sinkManager.sinks.push({ type, id });
 			universal.CLU("Boot / Universal:AudioEngine", "Added sink");
-			universal.saveObj("audio/sinks", UAE.sinkManager.sinks);
+			universal.saveObject("audio/sinks", UAE.sinkManager.sinks);
 		},
 		getSinksForType: (type) => {
 			return UAE.sinkManager.sinks.filter((sink) => sink.type === type);

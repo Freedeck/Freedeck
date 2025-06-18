@@ -94,7 +94,7 @@ export default async function dataHandler(universal, user) {
 
     if(universal.name === "Companion") {
       universal.repositoryManager.unofficial =
-      universal.loadObj("repos.community", []) || [];
+      universal.loadObject("repos.community", []) || [];
     universal.CLU("Incoming Data Handler", "Setup unofficial repositories.");
     }
 
