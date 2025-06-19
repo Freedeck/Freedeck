@@ -127,11 +127,11 @@ module.exports = {
         if (tsm.get("IC") === undefined) tsm.set("IC", socket.id);
         tsm.set("IC", socket.id);
       }
+
       console.log(`Freedeck ${socket.user} connected to server at ${new Date()}`);
       debug.log("Fetched plugin information", `Socket Server / ${socket.user}`);
       cfg.update();
       debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
-      const isMobileConnected = tsm.get("isMobileConnected");
       const realCfg = cfg.settings();
       const serverInfo = {
         id: socket.id,
@@ -150,7 +150,7 @@ module.exports = {
                 (e) => e.endsWith(".css"),
               ).map(e=>`${e}#`)
         ],
-        mobileConnected: isMobileConnected || false,
+        mobileConnected: tsm.get("isMobileConnected") || false,
         style: styleManager.get(),
         disabled: plugins._disabled,
         events: eventNames,

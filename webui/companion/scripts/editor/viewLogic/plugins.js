@@ -79,6 +79,8 @@ class Plugins extends EditorViewLogic {
     })
 
     this.setOnFirstSetup(() => {
+      selectPluginDisabled.style.display = "none";
+      selectPluginNotFound.style.display = "none";
       const allSelectablePluginListers = document.querySelectorAll(".selectable-plugin-lister");
       for (const el of document.querySelectorAll(".selectable-plugin-tile-action")) {
         el.style.display = "none";
@@ -125,7 +127,7 @@ function setupListers() {
       element.classList.add("selectable-plugin-tile-action");
       element.setAttribute("data-type", interactionType.type);
       element.setAttribute("data-plugin", interactionType.pluginId);
-      element.innerText = `${interactionType.display}: ${interactionType.name}`;
+      element.innerText = `${interactionType.name}`;
       element.onclick = (e) => {
         const interaction = JSON.parse(
           editorButton.getAttribute("data-interaction")

@@ -61,7 +61,7 @@
   "sidebars.left.footer.need_help.wiki": "¡Consulta la Wiki!",
 
   "editor.sections.no_action": "¡Sin Acción!", 
-  "editor.sections.no_action.description": "¿Qué debería hacer este azulejo?", 
+  "editor.sections.no_action.description": "tabla", 
   "editor.sections.no_action.soundboard": "Mesa de Sonido", 
   "editor.sections.soundboard.description": "¡Controla tu soundboard de Freedeck!",
   "editor.sections.soundboard.audiofile": "Archivo de Audio",

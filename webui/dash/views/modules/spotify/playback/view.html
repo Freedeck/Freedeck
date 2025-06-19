@@ -6,7 +6,7 @@
   #songinfo-container {
     display: flex;
     flex-direction: row;
-    align-items: start;
+    align-items: cemter;
     gap: 1rem;
     background-color: var(--modal-bg);
     border: var(--generic-border);
@@ -51,6 +51,9 @@
     -webkit-appearance: none;
     --thumb-width: 0%;
     background: linear-gradient(to right, var(--indicator-green) var(--thumb-width), var(--slider-background) var(--thumb-width));
+    position:absolute;
+    bottom: calc(var(--main-radius) * 1.2);
+    width: 50%;
   }
   #pbt::-webkit-slider-thumb, #pbt::-moz-range-thumb {
     -webkit-appearance: none;

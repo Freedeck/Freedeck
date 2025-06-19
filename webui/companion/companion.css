@@ -581,6 +581,7 @@ textarea {
 	flex-direction: row;
 	justify-content: space-between;
 	background-color: rgba(0, 0, 0, 0.25);
+	width: -webkit-fill-available;
 	border-radius: var(--main-radius);
 	padding: 0.5rem;
 }
