@@ -5,6 +5,7 @@ const folders = [
   "sounds",
   "hooks",
   "plugin-views",
+  "dash-modules",
   "themes",
   "soundpacks"
 ]

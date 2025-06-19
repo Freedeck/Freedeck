@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@root/*": ["./*"],
+      "@src/*": ["./src/*"],
+      "@routers/*": ["./src/routers/*"],
+      "@public/*": ["./src/public/*"],
+      "@managers/*": ["./src/managers/*"],
+      "@handlers/*": ["./src/handlers/*"],
+      "$/*": ["./src/utils/*"],
+      "@freedeck/*": ["./src/classes/*"],
+    }
+  }
+}

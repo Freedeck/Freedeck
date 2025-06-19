@@ -9,6 +9,25 @@ const debug = require("$/debug");
 
 const pluginsLocation = path.resolve("./plugins");
 
+/**
+ * @class Freedeck PluginV2! Powerful plugin system that allows you to extend any functionality of Freedeck.
+ * 
+ * @example
+ * class MyPlugin extends Plugin {
+ *    setup() {
+ *        this.register({
+ *            display: "My Type",
+ *            type: "mp.type" 
+ *        })
+ *        this.on(events.button, this.btn); // Listen for when any button we registered is pressed
+ *        return true; 
+ *    }
+ *    btn({interaction}) {
+ *        // 'interaction' contains all of the data we registered - for multiple types this allows us to identify which one is being called.
+ *        console.log("My Type pressed!")   
+ *    }
+ * }
+ */
 class Plugin {  
   v2 = true;
   name;
@@ -17,6 +36,7 @@ class Plugin {
   Settings = {};
   hooks = [];
   views = {};
+  dashModules = {};
   id;
   disabled = false;
   stopped = false;
@@ -219,6 +239,8 @@ class Plugin {
       case HookRef.types.import:
         this.addImport(file);
         break;
+      case HookRef.types.dashModule:
+        this.addDashImport(file)
     }
   }
   /**
@@ -250,6 +272,13 @@ class Plugin {
     this.internalAdd(HookRef.types.view, viewFolder, path.resolve(viewBase, this.id));
   }
 
+  addDashImport(file) {
+    const viewFolder = file;
+    this.dashModules[file] = viewFolder;
+    const viewBase = "user-data/dash-modules/";
+    this.internalAdd(HookRef.types.dashModule, viewFolder, path.resolve(viewBase));
+  }
+
   /**
    Internal method for adding hookrefs
    @param {*} type the HookRef type
@@ -275,7 +304,7 @@ class Plugin {
     }
     
     const copyOpts = {force:true};
-    copyOpts.recursive = (type === HookRef.types.view); 
+    copyOpts.recursive = (type === HookRef.types.view || type === HookRef.types.dashModule); 
 
     fs.cpSync(hookPath, path.resolve(destination, path.basename(hook)), copyOpts)
   }
@@ -379,11 +408,7 @@ class Plugin {
   }
 
   /**
-   * Register a new type for Companion
-   * @param {String} name The name of the button type
-   * @param {String} type The identifier for the button type
-   * @param {Object} templateData The data for the button type
-   * @param {String} renderType The type of button to render
+   * @deprecated Use register(). This method just calls back to it anyway.
    */
   registerNewType(name, type, templateData = {}, renderType = "button") {
     return this.register({
@@ -394,12 +419,22 @@ class Plugin {
     });
   }
 
-  register(opt={display:"abc",type:"abc",templateData:{},renderType:types.button}) {
-    if (!opt.display || !opt.type) return false;
+  /**
+   * Register a new type for Companion
+   * @param {Object} typeData
+   * @param {String} typeData.display The display name of the button type
+   * @param {String} typeData.type The type identifier
+   * @param {String} typeData.templateData The template data to be overlayed with the existing tile data
+   * @param {String} typeData.renderType The name of the button type
+   * @example register({display: "Button 1", type: "plugin.btn1"}) 
+   * // Makes a simple Tile type that can be set and listened for
+   */
+  register(typeData={display:"abc",type:"abc",templateData:{},renderType:types.button}) {
+    if (!typeData.display || !typeData.type) return false;
     const basic = {
-      type: opt.type,
-      renderType: opt.renderType || types.button,
-      templateData: opt.templateData || {},
+      type: typeData.type,
+      renderType: typeData.renderType || types.button,
+      templateData: typeData.templateData || {},
     }
     const existingType = this.types.filter((e) => {e.type === basic.type});
     if(existingType.length > 0) {
@@ -407,14 +442,14 @@ class Plugin {
     }
     this.types.push({
       ...basic,
-      name: opt.display,
+      name: typeData.display,
       pluginId: this.id,
-      hidden: opt.hidden? opt.hidden : false,
+      hidden: typeData.hidden? typeData.hidden : false,
       display: this.name,
     });
     return pluginManager
       .types()
-      .set(opt.type, { instance: this, ...basic, display: opt.display });
+      .set(typeData.type, { instance: this, ...basic, display: typeData.display });
   }
 
   /**
@@ -431,6 +466,9 @@ class Plugin {
     return false;
   }
 
+  /**
+   * Removes all types this plugin has registered.
+   */
   deregisterAllTypes() {
     for (const type of this.types) {
       this.deregisterType(type.type);
@@ -455,32 +493,42 @@ class Plugin {
   }
 };
 
+/**List of all capable render types for buttons. */
 const types = {
+  /**Classic, pressable button. Can be listened for with {@link events.button} */
   button: "button",
+  /**New, movable slider. Sends an update everytime it's changed. Can be listened for with {@link events.button} */
   slider: "slider",
+  /**Not pressable. Not updatable without a server hook at the moment. Hook type: {@link HookRef.types.server}*/ 
   text: "text"
 }
 
+/**
+ * PluginV2 events. These are required to be used for all events listed.
+ */
 const events = {
+  /**A socket has connected to the server! */
   connection: 0,
+  /**A Tile with a type this plugin registered has been pressed */
   button: 1,
+  /**The plugin is fully initialized. */
   ready: 2,
+  /**The plugin should be stopping.*/
   stopping: 3,
+  /**Unused, but should be the final event emitted in the plugin's lifecycle.*/
   stopped: 4
 }
 
+/**Intents: Inform the Freedeck Server you want to do some action. You must request these with Plugin.requestIntent to use them. */
 const intents = {
+  /** You want to get access to the user's socket -- you'll be given it on connection and every Tile press you listen for. */
   SOCKET: 0,
+  /** You want to get access to the server's socket -- you'll be given it on connection and every Tile press you listen for. This is dangerous and should only be used for broadcasting wide events where all clients must receive data. */
   IO: 1,
+  /** You want to get access to the list of verified connected sockets -- you'll be given it on connection and every Tile press you listen for. */
   CLIENTS: 2,
+  /** You want to hide your plugin in settings. If you submit a plugin with this intent to the Community Marketplace, you will be rejected unless you have a reason.*/
   HIDE: 3,
-  hooks: {
-    CLIENT: 0xd2,
-    SERVER: 0xd3,
-    SOCKET: 0xd4,
-    IMPORT: 0xd5,
-    VIEW: 0xd6
-  }
 }
 
 module.exports = {

@@ -21,7 +21,7 @@ const pl = {
 	sanitizeInfo: () => {
 		const sanitizedList = {};
     for (const plugin of pl.plugins()) {
-      const { name, id, author, version, popout, types, imports, hooks, views, disabled, stopped } = plugin[1].instance;
+      const { name, id, author, version, popout, dashModules, types, imports, hooks, views, disabled, stopped } = plugin[1].instance;
       sanitizedList[id] = {
         name,
         id,
@@ -30,6 +30,7 @@ const pl = {
         intents: plugin[1].instance._intent || [],
         Settings: {},
         popout,
+				dashModules,
         types,
         imports,
         hooks,
