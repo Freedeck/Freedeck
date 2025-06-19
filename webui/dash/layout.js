@@ -10,8 +10,8 @@ export default {
         "renderType": "dash-module",
         "data": {
           "position": {
-            "x": "322.01",
-            "y": "745.10",
+            "x": "133",
+            "y": "92",
             "width": "defined",
             "height": "defined"
           } 
@@ -26,8 +26,8 @@ export default {
         "renderType": "dash-module",
         "data": {
           "position": {
-            "x": "252.01",
-            "y": "751.10",
+            "x": "0",
+            "y": "892",
             "width": "200"
           } 
         }
@@ -41,8 +41,8 @@ export default {
         "renderType": "dash-button",
         "data": {
           "position": {
-            "x": "594.01",
-            "y": "1546.10",
+            "x": "245",
+            "y": "1557",
             "width": "200"
           } 
         }
@@ -56,9 +56,24 @@ export default {
         "renderType": "dash-button",
         "data": {
           "position": {
-            "x": "605.01",
-            "y": "1220",
+            "x": "247",
+            "y": "1186",
             "width": "200"
+          } 
+        }
+      }
+    },
+    {
+      "Logo": {
+        "uuid": "fda..3",
+        "plugin": "Freedeck",
+        "type": "freedeck/logo",
+        "renderType": "dash-module",
+        "data": {
+          "position": {
+            "x": "0",
+            "y": "0",
+            "width": "450"
           } 
         }
       }

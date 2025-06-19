@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/companion/companion.css" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Freedeck" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
     <title>Freedeck</title>
 </head>
 <style>
@@ -24,6 +29,9 @@
   .dash-module {
     transition-duration: .125s;
   }
+  .dash-button {
+    z-index: 1001 !important;
+  }
   .dash-module:hover {
     cursor:grab;
   }
@@ -33,15 +41,29 @@
     filter:opacity(0.9);
     cursor:grabbing;
   }
-  .dash-button {
-    z-index: 9999 !important;
-  }
   #dragmode-warning, #debugmode-warning {
     display:none;
   }
 
   .debug-only {
     display:none;
+  }
+
+  .alpha-warning, .debug-only {
+    background-color: rgba(0,0,0,0.5);
+    padding: .5rem;
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+  }
+
+  .warnings {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: var(--main-radius);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
   }
 </style>
 <body style="overflow: hidden">
@@ -62,9 +84,16 @@
           </div>
       </div>
   </div>
-  <h1 id="dragmode-warning">Dragmode</h1>
-  <h1 id="debugmode-warning">Debugging</h1>
-  <h1>THIS EXTENSION TO FREEDECK IS A HEAVY WORK IN PROGRESS! NO SAVE DATA EXCEPT FOR THE PRE-MADE LAYOUT WILL BE RETAINED.</h1>
+  <span class="warnings">
+    <span class="alpha-warning" id="debugmode-warning"><strong>Debug Mode is activated.</strong> Above text is the on-screen module data.</span>
+    <span class="alpha-warning" id="dragmode-warning">Drag mode activated. Click and drag a module to move it.</span>
+    <span class="alpha-warning">
+    Freedeck Dash v0.0.0 is a public <strong>ALPHA</strong> product. For this test, preset layouts cannot be saved or updated.
+    </span>
+    <span class="alpha-warning">
+      Press 'd' to start drag mode, 'f' for debug mode, and 'r' to reload all modules.
+    </span>
+  </span>
   <script type="module">
     import layoutDefinition from './layout.js'
     import mctx from './ctxl2.js'
@@ -72,12 +101,14 @@
     await universal.init("Dash", "Freedeck Dash")
     let dragMode = false;
     let debugMode = false;
+    const debugContainer = document.querySelector(".warnings")
     const dragWarning = document.querySelector('#dragmode-warning')
     const debugWarning = document.querySelector('#debugmode-warning')
 
     window.addEventListener('keydown', (e) => {
       if(e.key === 'd') dragMode = !dragMode;
       if(e.key === 'f') debugMode = !debugMode;
+      if(e.key === 'r') reloadModules();
 
       dragWarning.style.display = dragMode ? "block" : "none"
       debugWarning.style.display = debugMode ? "block" : "none"
@@ -91,8 +122,12 @@
       })
       }
     })
+    reloadModules();
     
-    for(const module of layoutDefinition.modules) {
+    function reloadModules() {
+      for(const i of mctx.opened) {mctx.closeView(i)}
+      document.querySelectorAll(".dash-button").forEach((e)=>e.remove())
+      for(const module of layoutDefinition.modules) {
       const name = Object.keys(module)[0];
       const trueData = module[name];
       if(trueData.renderType == 'dash-module') renderModule(trueData, name);
@@ -143,7 +178,7 @@
           }
         };
 
-        const dataTxt = document.createElement("p");
+        const dataTxt = document.createElement("span");
         dataTxt.classList.add('debug-only')
         const handleMouseMove = (event) => {
           dataTxt.innerText = `${name}, ${JSON.stringify(trueData)}, (${view.style.top} ${view.style.left} ${view.style.width} ${view.style.height})`;
@@ -160,7 +195,7 @@
           }
 
         }
-        document.body.appendChild(dataTxt)
+        debugContainer.prepend(dataTxt)
 
         // Add event listeners
         document.addEventListener('mousemove', handleMouseMove);
@@ -168,6 +203,7 @@
         document.querySelector("body").appendChild(view)
       }
       
+    }
     }
 
     async function renderModule(trueData, name) {
@@ -212,7 +248,7 @@
           }
         };
 
-        const dataTxt = document.createElement("p");
+        const dataTxt = document.createElement("span");
         dataTxt.classList.add('debug-only')
         const handleMouseMove = (event) => {
           dataTxt.innerText = `${name}, ${JSON.stringify(trueData)}, (${view.style.top} ${view.style.left} ${view.style.width} ${view.style.height})`;
@@ -229,7 +265,7 @@
           }
 
         }
-        document.body.appendChild(dataTxt)
+        debugContainer.prepend(dataTxt)
 
         // Add event listeners
         document.addEventListener('mousemove', handleMouseMove);

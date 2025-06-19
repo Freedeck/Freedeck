@@ -43,6 +43,23 @@
   .textbg-display {
     display: none !important;
   }
+
+  #pbt {
+    height: 5px;
+    border-radius: var(--main-radius);
+    outline: none;
+    -webkit-appearance: none;
+    --thumb-width: 0%;
+    background: linear-gradient(to right, var(--indicator-green) var(--thumb-width), var(--slider-background) var(--thumb-width));
+  }
+  #pbt::-webkit-slider-thumb, #pbt::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    /* border-radius: 50%; */
+    cursor: pointer;
+  }
 </style>
 
 <freedeck-dash-module>
@@ -57,6 +74,7 @@
         <div class="artists">Artists</div>
       </div>
       <p class="lyric">ooh</p>
+      <input type="range" id="pbt">
     </span>
   </div>
 </freedeck-dash-module>
@@ -66,28 +84,11 @@
     <script type="module">
       let isAuthorized = false;
 
-      function forceLogin(data) {
-        if(isTryingToLogin) return;
-        const win = window.open(data, "_blank")
-        isTryingToLogin = true;
-        if(win) {
-          const timer = setInterval(() => {
-            if (win.closed) {
-              clearInterval(timer);
-              isTryingToLogin = false;
-            }
-          }, 500)
-        }
-      }
       const title = document.querySelector(".songtitle")
       const album = document.querySelector(".albumtitle")
       const artistsT = document.querySelector(".artists")
       const lyricElement = document.querySelector(".lyric")
 
-
-      // --- Begin smooth lyric update logic ---
-
-      // Store current playback progress & state for smooth interpolation
       let currentProgressMs = 0;
       let lastUpdateTimestamp = 0;
       let playbackIsPlaying = false;
@@ -149,6 +150,7 @@
         }
         return currentProgressMs;
       }
+      const pbt = document.getElementById("pbt");
 
       universal.on("spotify_data", (data) =>{
         const {playbackState} = data;
@@ -190,6 +192,13 @@
         const ttime = msToTimestamp(playbackState.item.duration_ms);
         // const currentLyric = lastLyric; // removed old direct usage
         getLyricAt(playbackState.progress_ms);
+
+        pbt.min = 0;
+        pbt.max = playbackState.item.duration_ms;
+        pbt.value = currentProgressMs;
+        const playbackPercent = (currentProgressMs / playbackState.item.duration_ms) * 100;
+        pbt.style.setProperty('--thumb-width', `${playbackPercent}%`);
+
 
         const isPaused = playbackState.is_playing ? "" : " (Paused)";
         const tbgTitle = `${lastLyric.lyric}`;

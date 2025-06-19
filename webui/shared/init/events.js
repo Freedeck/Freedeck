@@ -190,6 +190,7 @@ export default async function eventsHandler(universal, user) {
 		universal.sendEvent("init");
 		universal.CLU("Event Handler", "Created event handlers, sending init event.");
 		
+		if(universal.name === "Dash") return;
 		const hookType = universal.name === "Main" ? "client" : "companion";
 		universal.CLU("Event Handler", "Loading hooks...");
 		let hookCount = 0;

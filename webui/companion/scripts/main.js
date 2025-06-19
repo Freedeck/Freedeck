@@ -95,11 +95,11 @@ for(const view of editorBuiltInViews) {
   keyIcon.src = view.icon;
   keyIcon.loading = 'lazy';
   viewButton.onclick = (e) => {
-    e.preventDefault();
     openViewTop(view.logic.view);
     view.logic.onFirstSetup({
       interactionData: JSON.parse(editorButton.getAttribute("data-interaction")),
     })
+    e.preventDefault();
   };
   viewButton.appendChild(keyInfo);
   viewButton.appendChild(keyIcon);
@@ -225,7 +225,6 @@ function createEditorCheckbox(selector, dataKey) {
 createEditorCheckbox("#sbg", "showBg");
 createEditorCheckbox("#nbo", "noBorder");
 createEditorCheckbox("#nbr", "noRounding");
-createEditorCheckbox("#nsh", "noShadow");
 createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
 createEditorCheckbox("#ha", "hold");

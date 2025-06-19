@@ -49,7 +49,6 @@ function translatePage(specific = document) {
 function translateElement(element) {
   const key = element.getAttribute("data-i18n-key");
   let translation = translations[key];
-  console.log("Localizing:", key, translation);
   if(translation === undefined) translation = key;
   element.innerText = translation;
 }
