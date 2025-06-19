@@ -27,7 +27,7 @@ const ctxl = {
 		const view_html = document.createElement(ctxl.as);
 		view_html.setAttribute("ctxl-id", view);
 		view_html.innerHTML = ctxl.loadingHTML;
-		fetch(`./views/${view}.${ctxl.as}`)
+		fetch(`${view}.${ctxl.as}`)
 			.then((response) => response.text())
 			.then((data) => {
 				view_html.innerHTML = data;

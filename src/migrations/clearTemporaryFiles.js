@@ -7,6 +7,7 @@ const routines = [
   "./tmp",
   "./user-data/hooks",
   "./user-data/plugin-views",
+  "./user-data/dash-modules",
   "./user-data/themes"
 ]
 

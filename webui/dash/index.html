@@ -125,6 +125,9 @@
     reloadModules();
     
     function reloadModules() {
+      document.querySelectorAll(".debug-only").forEach((enrty) => {
+         enrty.remove();
+      })
       for(const i of mctx.opened) {mctx.closeView(i)}
       document.querySelectorAll(".dash-button").forEach((e)=>e.remove())
       for(const module of layoutDefinition.modules) {
@@ -206,14 +209,15 @@
     }
     }
 
-    async function renderModule(trueData, name) {
+    async function renderModule(trueData, name, prefix='/user-data/dash-modules/') {
       let modFound = false;
-      await fetch('./views/modules/' + trueData.type +'/module.json').then((res) => {
+      trueData.from=prefix;
+      await fetch(prefix + trueData.type +'/module.json').then((res) => {
         modFound =true;
         return res.json()
       }).then((res) => {
-        mctx.addView(`modules/${trueData.type}/${res.view}`)
-        const view = mctx.nonDestructiveView(`modules/${trueData.type}/${res.view}`)
+        mctx.addView(`${prefix}${trueData.type}/${res.view}`)
+        const view = mctx.nonDestructiveView(`${prefix}${trueData.type}/${res.view}`)
         view.style.position = 'absolute';
         view.style.top = trueData.data.position.x+"px";
         view.style.left = trueData.data.position.y+"px";
@@ -270,7 +274,13 @@
         // Add event listeners
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
-      }).catch((e) => {})
+      }).catch((e) => {
+        if(prefix === '/user-data/dash-modules/') {
+          renderModule(trueData, name, './views/modules/')
+        } else {
+          universal.sendToast(`Failed to add ${name}`, "Dash");
+        }
+      })
     }
   </script>
 </body>
