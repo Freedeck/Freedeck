@@ -11,7 +11,7 @@ const paths = {
   userData_dashModules: path.resolve("user-data/dash-modules"),
   userData_hooks: path.resolve("user-data/hooks"),
   userData_icons: path.resolve("user-data/icons"),
-  userData_pluginViews: path.resolve("user-data/plugin-vioews"),
+  userData_pluginViews: path.resolve("user-data/plugin-views"),
   userData_soundpacks: path.resolve("user-data/soundpacks"),
   userData_sounds: path.resolve("user-data/sounds"),
   userData_themes: path.resolve("user-data/themes"),

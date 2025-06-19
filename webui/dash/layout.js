@@ -67,7 +67,7 @@ export default {
       "Logo": {
         "uuid": "fda..3",
         "plugin": "Freedeck",
-        "type": "freedeck/logo",
+        "type": "freedeck",
         "renderType": "dash-module",
         "data": {
           "position": {
@@ -82,7 +82,7 @@ export default {
       "Demo": {
         "uuid": "fda..4",
         "plugin": "Freedeck",
-        "type": "freedeck/demo",
+        "type": "demo",
         "renderType": "dash-module",
         "data": {
           "position": {

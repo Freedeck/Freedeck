@@ -214,6 +214,7 @@
       trueData.from=prefix;
       await fetch(prefix + trueData.type +'/module.json').then((res) => {
         modFound =true;
+        trueData.from=prefix+trueData.type+"/module.json";
         return res.json()
       }).then((res) => {
         mctx.addView(`${prefix}${trueData.type}/${res.view}`)
@@ -276,7 +277,7 @@
         document.addEventListener('mouseup', handleMouseUp);
       }).catch((e) => {
         if(prefix === '/user-data/dash-modules/') {
-          renderModule(trueData, name, './views/modules/')
+          renderModule(trueData, name, './modules/')
         } else {
           universal.sendToast(`Failed to add ${name}`, "Dash");
         }
