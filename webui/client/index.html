@@ -95,14 +95,6 @@
     <script src="/common/error.js" type="module"></script>
     <script src="/app/clientMain.js" type="module"></script>
     <script src="/app/settingsThemes.js" type="module"></script>
-    <script>
-        window.addEventListener("message", (event) => {
-            if (event.data === "close") {
-                console.log(true);
-                document.querySelector(".prompt").style.display = "none";
-            }
-        });
-    </script>
 </body>
 
 </html>

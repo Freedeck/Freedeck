@@ -4,6 +4,7 @@ const picocolors = require("./picocolors");
 const os = require("node:os");
 
 const dbg = {
+	logPath: path.resolve("./user-data/logs/debug-write.txt"),
 	status: process.argv.includes("--debug"),
 	mode: "Debug",
 	setMode: (k) => {
@@ -20,8 +21,8 @@ const dbg = {
 			);
 		if (dbg.writeLogs === true) {
 			fs.appendFile(
-				path.resolve("./FreedeckCore.log"),
-				`D{${Date.now()}} ${strToBuild}\n`,
+				logPath,
+				`debug.log {${Date.now()}} | ${strToBuild}\n`,
 				(err) => {
 					if (err) console.error(err);
 				},
@@ -42,8 +43,8 @@ console.log = (...e) => {
 			}
 		} catch (er) {}
 		fs.appendFile(
-			path.resolve("./FreedeckCore.log"),
-			`C{${Date.now()}} ${rebuilt.join(",")}\n`,
+			this.logPath,
+			`console.log {${Date.now()}} | ${rebuilt.join(",")}\n`,
 			(err) => {
 				if (err) console.error(err);
 			},

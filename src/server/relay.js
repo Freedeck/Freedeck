@@ -42,7 +42,6 @@ function startRelay(handleSock) {
       if(upath.includes("app")) folder = "app";
       if(upath.includes(".ttf")) folder = "client/fonts";
       if(upath.includes("common")) folder = "common";
-      // /app/shared/theming/a.css -> ["", "app", "shared", "theming", "a.css"]
       
       if(upath.includes("connect/webpack")) {
         relayClient.emit(eventNames.relay.file,[JSON.stringify({compiled:getWs()}), 'text/plain', upath]);

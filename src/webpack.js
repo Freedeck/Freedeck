@@ -5,7 +5,7 @@ const picocolors = require("$/picocolors");
 const { paths } = require("./routers/static");
 const {recordTime} = require("$/timer")
 const webpackConfigLocation = path.resolve("webpack.config.js");
-const webpackBuildLocation = paths.webui_app;
+const webpackBuildLocation = paths.userData_bundles;
 const connectRouterLocation = path.resolve("src/routers/connect.js");
 
 const webpackConfig = require(webpackConfigLocation);

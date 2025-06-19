@@ -9,7 +9,7 @@ const cfg = {
     clientMain: path.resolve("webui/client/scripts/main.js"),
   },
   output: {
-    path: path.resolve("webui/app"),
+    path: path.resolve("user-data/bundles"),
     filename: "[name].js",
   },
   module: {

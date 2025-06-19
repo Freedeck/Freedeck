@@ -6,11 +6,15 @@ const router = express.Router();
 // User data
 
 const paths = {
-  userData_themes: path.resolve("user-data/themes"),
+  userData: path.resolve("user-data"),
+  userData_bundles: path.resolve("user-data/bundles"),
+  userData_dashModules: path.resolve("user-data/dash-modules"),
+  userData_hooks: path.resolve("user-data/hooks"),
+  userData_icons: path.resolve("user-data/icons"),
+  userData_pluginViews: path.resolve("user-data/plugin-vioews"),
   userData_soundpacks: path.resolve("user-data/soundpacks"),
   userData_sounds: path.resolve("user-data/sounds"),
-  userData_icons: path.resolve("user-data/icons"),
-  userData: path.resolve("user-data"),
+  userData_themes: path.resolve("user-data/themes"),
 
   webui_client: path.resolve("webui/client"),
   webui_companion: path.resolve("webui/companion"),
@@ -20,20 +24,23 @@ const paths = {
   webui_common_soundpacks: path.resolve("webui/common/sounds"),
   webui_common_themes: path.resolve("webui/shared/theming"),
 
-  webui_app: path.resolve("webui/app"),
   webui_shared: path.resolve("webui/shared")
 }
 
 const expressRouters = {
-  "/sounds": express.static(paths.userData_sounds),
+  "/app": express.static(paths.userData_bundles),
+  "/user-data/dash-modules": express.static(paths.userData_dashModules),
+  "/user-data/hooks": express.static(paths.userData_hooks),
   "/icons": express.static(paths.userData_icons),
-  "/user-data": express.static(paths.userData),
+  "/user-data/plugin-views": express.static(paths.userData_pluginViews),
+  "/user-data/soundpacks": express.static(paths.userData_soundpacks),
+  "/sounds": express.static(paths.userData_sounds),
+  "/user-data/themes": express.static(paths.userData_themes),
 
   "/": express.static(paths.webui_client),
   "/dash": express.static(paths.webui_dash),
   "/companion": express.static(paths.webui_companion),
   "/common": express.static(paths.webui_common),
-  "/app": express.static(paths.webui_app),
   "/app/shared": express.static(paths.webui_shared),
 }
 

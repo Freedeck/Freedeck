@@ -1,4 +1,12 @@
-const metrics = require('./timecache.json')
+let metrics;
+
+try {
+  metrics = require('./user-data/logs/timecache.json');
+} catch(err) {
+  console.error(err);
+  console.log('Please generate a timecache report by running the server, and typing \'timer\' and pressing enter. It will generate a readable report and use this script correctly.')
+  process.exit(0)
+}
 
 metrics.sort((a, b) => a.time - b.time);
 const startTime = metrics[0].time;
@@ -45,7 +53,7 @@ const pairs = matchBeginComplete(metrics);
 
 const sortedPairs = Object.values(pairs)
   .sort((a, b) => b.duration - a.duration);
-
+console.log("\nFreedeck Timecache loaded!")
 console.log("\n=== Begin/Complete Pairs (sorted by duration) ===");
 for(const { name, start, end, duration } of sortedPairs) {
   console.log(

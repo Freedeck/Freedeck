@@ -1,22 +1,11 @@
 node_modules
 
 # User-specific files
-FreedeckCore.log
-
 src/configs/*
 *.fd.js
 
+# Plugin extractions
 user-data/
 plugins/*
-
-
-# Plugin extractions
 tmp/
 
-# WebUI Webpacked resources
-webui/app/*
-webui/hooks/*
-
-.clinic
-
-timecache.json

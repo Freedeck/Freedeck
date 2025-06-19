@@ -1,6 +1,6 @@
 import Pako from "pako";
 import { compareVersions } from "compare-versions";
-import repositoryManager from "./lib/repositoryManager";
+import repositoryManager from "./repositoryManager";
 import dataHandler from "./init/data";
 import eventsHandler from "./init/events";
 import { UI } from "../client/scripts/ui";

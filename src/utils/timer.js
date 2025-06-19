@@ -8,7 +8,7 @@ function recordTime(tag) {
 }
 
 function writeFinal() {
-  fs.writeFileSync("timecache.json", JSON.stringify(timeCache))
+  fs.writeFileSync("user-data/logs/timecache.json", JSON.stringify(timeCache))
 }
 
 module.exports = {recordTime, writeFinal}
