@@ -77,6 +77,21 @@ export default {
           } 
         }
       }
+    },
+    {
+      "Demo": {
+        "uuid": "fda..4",
+        "plugin": "Freedeck",
+        "type": "freedeck/demo",
+        "renderType": "dash-module",
+        "data": {
+          "position": {
+            "x": "480",
+            "y": "0",
+            "width": "450"
+          } 
+        }
+      }
     }
   ]
 }
