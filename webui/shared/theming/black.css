@@ -21,7 +21,7 @@
     --input-slider-bg: #1a1a1a;
     --input-color: var(--text-color);
 
-    --modal-item-bg: linear-gradient(105deg,rgba(0, 0, 0, 1) 0%, rgba(0, 25, 25, 1) 50%, rgba(0, 0, 0, 1) 100%);
+    --modal-item-bg: linear-gradient(105deg,rgba(0, 0, 0, 1) 0%, rgba(, 25, 25, 1) 50%, rgba(0, 0, 0, 1) 100%);
     --modal-item-bg-size: 400% 400%;
     --modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     --modal-item-text: white;
