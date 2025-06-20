@@ -201,5 +201,24 @@
   "context_menu.new_tile": "New Tile",
   "context_menu.copy_tile": "Copy Tile Here",
   "context_menu.new_page": "New Page",
-  "context_menu.folder": "Folder: "
+  "context_menu.folder": "Folder: ",
+
+  "warnings.language": "Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.",
+
+  "marketplace": "Marketplace",
+  "marketplace.info.repository": "From $1",
+  "marketplace.info.title": "$1 • by $2",
+  "marketplace.info.repo_title": "$1 ➤ ",
+  "marketplace.action.remove": "Remove",
+  "marketplace.action.download": "Download",
+  "marketplace.action.installed": "Installed",
+  "marketplace.action.update": "Update",
+  "marketplace.action.up_to_date": "Up to date",
+  "marketplace.action.user_has_newer": "You have a newer version",
+  "marketplace.install": "install",
+  "marketplace.update": "update",
+  "marketplace.downgrade_fallback": "... downgrade? You shouldn't be seeing this, but",
+  "marketplace.message_warning_prefix": "Before you ",
+  "marketplace.message_warning_suffix": "...",
+  "marketplace.update_notification": "$1 can be updated to $2!"
 }

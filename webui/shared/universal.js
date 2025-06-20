@@ -370,7 +370,7 @@ const universal = {
               await UI.closeBootLog();
               universal.CLU("Boot", "Launching -- closing splash screen.");
               if(universal.load("locale") !== "en") {
-                universal.sendToast("Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.", "Freedeck");
+                universal.sendToast(translationKey("warnings.language"), "Freedeck");
                 universal.CLU("Boot", "User is using a non-default language.");
               }
               resolve();

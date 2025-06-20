@@ -53,7 +53,7 @@
         document.querySelector('.message').innerHTML = 'Fetching Marketplace repository: ' + repo.title;
         const li = document.createElement('li');
         const btn = document.createElement("button");
-        btn.innerText = "Remove";
+        btn.innerText = universal.translationKey("marketplace.action.remove");
         li.setAttribute('hovereffect', 'yes');
         li.style.cursor = 'default';
         if (!isUnofficial) {
@@ -61,8 +61,8 @@
             li.style.backgroundSize = 'var(--main-bg-size)';
             li.style.animation = 'error-bg 5s linear infinite';
         }
-        li.innerText += repo.title;
-        li.innerHTML += " &#10148; ";
+        li.innerText = universal.translationKey("marketplace.info.repo_title").replace("$1", repo.title);
+
         if (isUnofficial) {
             btn.onclick = () => {
                 universal.repositoryManager.unofficial = universal.repositoryManager.unofficial.filter((r) => {
@@ -104,9 +104,7 @@
                     officialTag.loading = 'lazy';
                     officialTag.style.width = '8rem';
                     const name = document.createElement('div');
-                    name.innerText += plugin.title;
-                    name.innerHTML += ' &bull; by ';
-                    name.innerText += req.author;
+                    name.innerText = universal.translationKey("marketplace.info.title").replace("$1", plugin.title).replace("$2", req.author);
                     name.style.fontWeight = 'bold';
                     li.appendChild(name);
                     const version = document.createElement('div');
@@ -117,20 +115,20 @@
                     desc.classList.add("plugin-ifo")
                     li.appendChild(desc);
                     const rl = document.createElement('div');
-                    rl.innerText = "From " + repo.title;
+                    rl.innerText = universal.translationKey("marketplace.info.repository").replace("$1", repo.title);
                     li.appendChild(rl);
                     const file = document.createElement('button');
                     file.dataset.HandoffUrl = 'freedeck://download/' + req.id + '/' + encodeURIComponent(req.download) + '/' + encodeURIComponent(req.description) + '/' + encodeURIComponent(repo.title);
                     file.onclick = () => {
                         if (req.message) {
                             // create a yes/no modal
-                            let str = "install";
+                            let str = universal.translationKey("marketplace.install");
                             if (universal.plugins[req.id]) {
                                 let compareVersionOutput = universal.compareVersions(universal.plugins[req.id].version, req.version);
-                                if (compareVersionOutput == -1) str = "update";
-                                if (compareVersionOutput == 1) str = "... downgrade? You shouldn't be seeing this, but";
+                                if (compareVersionOutput == -1) str = universal.translationKey("marketplace.update")
+                                if (compareVersionOutput == 1) str = universal.translationKey("marketplace.downgrade_fallback")
                             }
-                            window.UniversalUI.show.showYesNo("Before you " + str + " " + req.title + "...", req.message, (yes) => {
+                            window.UniversalUI.show.showYesNo(universal.translationKey("marketplace.message_warning_prefix") + str + " " + req.title + universal.translationKey("marketplace.message_warning_suffix"), req.message, (yes) => {
                                 window.location.href = file.dataset.HandoffUrl;
                                 universal.uiSounds.playSound('step_2');
                             }, true);
@@ -139,24 +137,24 @@
                             universal.uiSounds.playSound('step_2');
                         }
                     };
-                    file.innerText = 'Download';
+                    file.innerText = universal.translationKey("marketplace.action.download");
                     if (universal.plugins[req.id]) {
-                        file.innerText = 'Installed';
+                        file.innerText = universal.translationKey("marketplace.action.installed");
                         file.style.backgroundColor = 'var(--marketplace-plugin-installed)';
                         if (!universal.plugins[req.id].version) universal.plugins[req.id].version = '1.0.0';
                         else {
                             let compareVersionOutput = universal.compareVersions(universal.plugins[req.id].version, req.version);
                             if (compareVersionOutput == -1) {
-                                file.innerText = 'Update';
+                                file.innerText = universal.translationKey("marketplace.action.update");
                                 file.dataset.HandoffUrl = file.dataset.HandoffUrl.replace('freedeck://download', 'freedeck://update') + "/" + encodeURIComponent(universal.plugins[req.id].version) + "/" + encodeURIComponent(req.version);
                                 file.style.backgroundColor = 'var(--marketplace-plugin-updatable)';
-                                universal.sendToast(`${universal.plugins[req.id].name} can be updated to ${req.version}!`, "Marketplace")
+                                universal.sendToast(universal.translationKey("marketplace.update_notification").replace("$1", universal.plugins[req.id].name).replace("$2", req.version), universal.translationKey("marketplace"))
                             } else if (compareVersionOutput == 0) {
-                                file.innerText = 'Up to date';
+                                file.innerText = universal.translationKey("marketplace.action.up_to_date");
                                 file.style.backgroundColor = 'var(--marketplace-plugin-no-updates)';
                                 file.onclick = () => { };
                             } else if (compareVersionOutput == 1) {
-                                file.innerText = 'You have a newer version';
+                                file.innerText = universal.translationKey("marketplace.action.user_has_newer");
                                 file.style.backgroundColor = 'var(--marketplace-plugin-installed)';
                                 file.onclick = () => { };
                             }

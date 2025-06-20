@@ -197,5 +197,7 @@
   "context_menu.new_tile": "Nuevo Tile",
   "context_menu.copy_tile": "Copiar Tile aquí",
   "context_menu.new_page": "Nueva Página",
-  "context_menu.folder": "Carpeta: "
+  "context_menu.folder": "Carpeta: ",
+
+  "warnings.language": "El soporte de idiomas está en fase alfa y todavía se está desarrollando. Por favor, informa de cualquier problema al equipo de Freedeck."
 }
