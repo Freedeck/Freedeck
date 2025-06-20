@@ -1,28 +1,24 @@
 <link rel="stylesheet" href="/companion/views/styles/library.css">
 
-<h1 class="settings-section-title"><span data-i18n-key="library.title">Library</span> <span><img src="/common/icons/library.svg" width="50" height="50" loading="lazy"></span></h1>
-<center><p data-i18n-key="library.description">Here you will find every sound or icon you've uploaded.</p></center>
-<button class="save-changes" data-i18n-key="library.save">Save Changes</button>
+<h1 class="settings-section-title"><span data-i18n-key="library.title"></span><span><img src="/common/icons/library.svg" width="50" height="50" loading="lazy"></span></h1>
+<center><p data-i18n-key="library.description"></p></center>
+<button class="save-changes" data-i18n-key="library.save" onclick="universal.vopen('index.html')"></button>
 
 <h2 id="uploads-0-title">
-  <span data-i18n-key="library.sounds">Sounds</span>
-  <button onclick="universal._Uploads_New(1)" data-i18n-key="library.sounds.add">
-    Add a Sound
-  </button>
+  <span data-i18n-key="library.sounds"></span>
+  <button onclick="universal._Uploads_New(1)" data-i18n-key="library.sounds.add"></button>
 </h2>
 <details id="library-view-sounds">
-  <summary><strong data-i18n-key="library.sounds.view">View Sounds</strong></summary>
+  <summary><strong data-i18n-key="library.sounds.view"></strong></summary>
   <div class="uploads uploads-0"></div>
 </details>
 
 <h2 id="uploads-1-title">
   <span data-i18n-key="library.icons"></span>
-  <button onclick="universal._Uploads_New(0)" data-i18n-key="library.icons.add">
-    Add a Icon
-  </button>
+  <button onclick="universal._Uploads_New(0)" data-i18n-key="library.icons.add"></button>
 </h2>
 <details id="library-view-icons">
-  <summary><strong data-i18n-key="library.icons.view">View Icons</strong></summary>
+  <summary><strong data-i18n-key="library.icons.view"></strong></summary>
   <div class="uploads uploads-1"></div>
 </details>
 
@@ -52,7 +48,8 @@
       }
       cc++;
     }
-    if (universal._libraryOnpaint) universal._libraryOnpaint();
+    universal.sendEvent("library_paint")
   })
+  universal.sendEvent("library_load")
   if (universal._libraryOnload) universal._libraryOnload();
 </script>

@@ -64,6 +64,9 @@
     --modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
     --modal-item-text: white;
 
+    --glow-unlift: rgba(0, 179, 255,1);
+    --glow-lifted: rgba(255, 0, 89, 1);
+
     --selected-item-bg: var(--modal-item-bg);
     --selected-item-bg-size: var(--modal-item-bg-size);
     --selected-item-bg-anim: var(--modal-item-bg-anim);
@@ -968,23 +971,23 @@ a:hover {
     animation: fade-in 0.5s;
 }
 
-.glow, .glow-tile {
-    animation: glow 1s infinite alternate;
-}
-
 @keyframes glow {
     0%{
-        box-shadow: 0 0 20px rgba(255, 0, 89, 1);
+        box-shadow: 0 0 20px var(--glow-unlift);
         transform: scale(1);
     }
     100% {
-        box-shadow: 0 0 20px rgba(0, 179, 255,1);
+        box-shadow: 0 0 20px var(--glow-lifted);
         transform: scale(1.25);
     }
+}
+
+.glow, .glow-tile {
+    animation: glow 1s infinite alternate !important;
+    z-index: 1002;
 }
 
 .duplicate {
     background-color: yellow;
     color: black;
-    border: 3px solid yellow;
 }
