@@ -18,6 +18,7 @@ window.onerror = (message, source, lineno, colno, error) => {
     <br>
     <div class='flex-wrap-r alc'>
     <a style='padding:.5rem;' href='javascript:window.location.reload();'>Reload</a>
+    <a style='padding:.5rem;' href='javascript:window.errorRecompile();'>Recompile</a>
     <a style='padding:.5rem;' href='javascript:window.errorIgnore();'>Ignore</a>
     </div>
     `
@@ -31,3 +32,4 @@ window.onerror = (message, source, lineno, colno, error) => {
 };
 
 window.errorIgnore = () => {document.querySelector("#error-dialog").remove()}
+window.errorRecompile = () => {document.querySelector("#error-dialog").remove();universal.send(universal.events.default.recompile);}

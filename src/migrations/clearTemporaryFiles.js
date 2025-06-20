@@ -11,7 +11,6 @@ const routines = [
   ["./user-data/plugin-views",true],
   ["./user-data/dash-modules",true],
   ["./user-data/themes",true],
-  ["./user-data/logs",true],
   ["./webui/hooks",false],
   ["./webui/app",false],
 ]

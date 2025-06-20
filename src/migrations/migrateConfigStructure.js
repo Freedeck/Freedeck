@@ -9,7 +9,6 @@ if(existsSync(oldCfgLoc)) {
   console.log("Migrating your v1 configuration to v2 schema")
   const thatConfig = require(oldCfgLoc);
   const newMainConfig = {
-    writeLogs: thatConfig.writeLogs || false,
     release: thatConfig.release || "stable",
     theme: thatConfig.theme || "default.css",
     profile: thatConfig.profile || "Default",

@@ -10,7 +10,6 @@ const dbg = {
 	setMode: (k) => {
 		dbg.mode = k;
 	},
-	writeLogs: false,
 	log: (v, k = "_unset") => {
 		let strToBuild = "";
 		if (k !== "_unset") strToBuild += `[${new Date().toLocaleTimeString()}] ${picocolors.blue(k)} >> `;
@@ -19,9 +18,9 @@ const dbg = {
 			console._log(
 				strToBuild,
 			);
-		if (dbg.writeLogs === true) {
+		if (require("@src/configs/style.json")['app.freedeck.debug.write_log']) {
 			fs.appendFile(
-				logPath,
+				dbg.logPath,
 				`debug.log {${Date.now()}} | ${strToBuild}\n`,
 				(err) => {
 					if (err) console.error(err);
@@ -34,7 +33,7 @@ const dbg = {
 console._log = console.log;
 console.log = (...e) => {
 	console._log(...e);
-	if (dbg.writeLogs === true) {
+	if (require("@src/configs/style.json")['app.freedeck.debug.write_log']) {
 		const rebuilt = [];
 		try {
 			for (const item of e) {
@@ -43,7 +42,7 @@ console.log = (...e) => {
 			}
 		} catch (er) {}
 		fs.appendFile(
-			this.logPath,
+			dbg.logPath,
 			`console.log {${Date.now()}} | ${rebuilt.join(",")}\n`,
 			(err) => {
 				if (err) console.error(err);

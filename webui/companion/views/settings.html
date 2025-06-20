@@ -473,7 +473,6 @@
                 "compact": {
                     "type": "checkbox",
                     "key": "settings.sections.general.compact",
-                    "description": "Fit Screen",
                     "default": universal.getServerStyleFlags()["compact"] || false,
                     "onchange": () => {
                         universal.UI.reloadSounds();
@@ -482,7 +481,6 @@
                 "scroll": {
                     "type": "checkbox",
                     "key": "settings.sections.general.scroll",
-                    "description": "Scroll Long Text",
                     "default": universal.getServerStyleFlags()["scroll"] || false,
                     "onchange": () => {
                         universal.UI.reloadSounds();
@@ -491,7 +489,6 @@
                 "app.freedeck.ui.fill_tiles": {
                     "type": "checkbox",
                     "key": "settings.sections.general.fill",
-                    "description": "Fill Tiles",
                     "default": universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"] || false,
                     "onchange": () => {
                         universal.UI.reloadSounds();
@@ -500,7 +497,6 @@
                 "app.freedeck.ui_sounds": {
                     "type": "checkbox",
                     "key": "settings.sections.general.ui_sounds",
-                    "description": "UI Sounds",
                     "flag": "uis",
                     "default": universal.getServerStyleFlags()["app.freedeck.ui_sounds"] || false,
                     "onchange": () => {
@@ -512,13 +508,11 @@
                 "app.freedeck.tiles.force_deletion": {
                     "type": "checkbox",
                     "key": "settings.sections.general.dont_ask",
-                    "description": "Don't ask to delete Tiles",
                     "default": universal.getServerStyleFlags()["app.freedeck.tiles.force_deletion"] || false,
                 },
                 "app.freedeck.sidebar.connect_tab": {
                     "type": "checkbox",
                     "key": "settings.sections.general.fdc_tab",
-                    "description": "Show Connect as a tab",
                     "default": universal.getServerStyleFlags()["app.freedeck.sidebar.connect_tab"] || false,
                     "onchange": () => {
                         universal.reloadRight();
@@ -527,28 +521,29 @@
                 "app.freedeck.notification_log": {
                     "type": "checkbox",
                     "key": "settings.sections.general.notification_log",
-                    "description": "Notification Log",
                     "flag": "notl",
                     "default": universal.getServerStyleFlags()["app.freedeck.notification_log"] || false,
                 },
                 "app.freedeck.skip_boot_animation": {
                     "type": "checkbox",
                     "key": "settings.sections.general.skip_boot_animation",
-                    "description": "Skip Boot Animation",
                     "default": universal.getServerStyleFlags()["app.freedeck.skip_boot_animation"] || false,
                 },
                 "app.freedeck.no_preset_tiles": {
                     "type": "checkbox",
                     "key": "settings.sections.experiments.no_preset_tiles",
-                    "description": "No Logo Tile",
                     "default": universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"] || false,
                 },
                 "app.freedeck.demo.disable_new_repo": {
                     "handler": "flag",
                     "type": "checkbox",
                     "key": "settings.sections.experiments.disable_new_repo",
-                    "description": "Disable new repo addition",
                     "default": universal.flags.isEnabled("app.freedeck.demo.disable_new_repo") || false,
+                },
+                "app.freedeck.debug.write_log": {
+                    "type": "checkbox",
+                    "key": "settings.sections.debug.write_log",
+                    "default": universal.getServerStyleFlags()["app.freedeck.demo.write_debug_log"] || false,
                 }
             }
         },
@@ -591,7 +586,7 @@
             const label = document.createElement("label");
             label.setAttribute("data-i18n-key", translationKey);
             label.setAttribute("for", optionId);
-            label.innerText = option.description;
+            label.innerText = universal.translationKey(option.key);
             const input = document.createElement("input");
             input.type = option.type;
             input.id = optionId;

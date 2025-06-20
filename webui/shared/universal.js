@@ -7,7 +7,7 @@ import { UI } from "../client/scripts/ui";
 import audioEngine from "./audioEngine";
 import themeEngine from "./themeEngine";
 import uiSounds from "./uiSounds";
-import { doLocalization } from "./localization";
+import { doLocalization, translatePage, translateElement, translationKey } from "./localization";
 
 /**
  * Open the settings menu (on clients only)
@@ -685,6 +685,7 @@ const universal = {
     // Otherwise, pass a sanitized string back
     return nodes ? html.childNodes : html.innerHTML;
   },
+  translatePage, translateElement, translationKey
 };
 
 export { universal };

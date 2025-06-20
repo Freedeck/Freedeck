@@ -24,7 +24,6 @@ const sc = {
     const thatConfig = sc.settings();
 
     const newMainConfig = {
-      writeLogs: thatConfig.writeLogs || false,
       release: thatConfig.release || "stable",
       theme: thatConfig.theme || "default.css",
       profile: thatConfig.profile || "Default",
