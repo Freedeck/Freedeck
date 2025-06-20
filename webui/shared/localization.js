@@ -10,6 +10,7 @@ if (!localStorage.getItem("freedeck:locale")) {
 const locales = {
   en: "English",
   es: "Español",
+  debug: "Debug",
 };
 
 let locale;

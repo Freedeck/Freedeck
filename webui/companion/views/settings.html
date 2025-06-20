@@ -1,16 +1,16 @@
 <link rel="stylesheet" href="/companion/views/styles/settings.css">
-<h1 class="settings-section-title"><span data-i18n-key="settings.title">Settings</span> <span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy"></span>
+<h1 class="settings-section-title"><span data-i18n-key="settings.title"></span> <span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy"></span>
 </h1>
 <div id="settings-menu-full">
     <details>
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.style">Themes</span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.style"></span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div class="themelist"></div>
     </details>
     <details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
         <summary class="settings-section-title">
-            <span><span data-i18n-key="settings.sections.language">Language </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
+            <span><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <br>
         <p id="clang">Loading...</p>
@@ -18,39 +18,39 @@
     </details>
     <details>
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.plugins">Plugins</span> <span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.plugins"></span> <span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <br>
         <div class="experiments">
             <ul id="actl" class="btnlist"></ul>
         </div>
-        <button id="upd" data-i18n-key="settings.sections.plugins.reload_all">Reload All Plugins</button>
+        <button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
             <div class="flex-wrap">
-                <h2 data-i18n-key="settings.sections.plugins.disabled.title">Disabled Plugins</h2>
+                <h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
                 <div id="disbl-list" class="row"></div>
             </div>
         <details id="tile-prev">
-            <summary><strong data-i18n-key="settings.sections.plugins.tile_previews">Tile Previews</strong></summary>
+            <summary><strong data-i18n-key="settings.sections.plugins.tile_previews"></strong></summary>
             <div class="btns"></div>
         </details>
     </details>
     <details>
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.audio_devices">Output Devices</span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.audio_devices"></span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div class="monitor-devices audio-device-picker"></div>
-        <span data-i18n-key="settings.sections.audio_devices.vb">VB-Cable Devices</span>
+        <span data-i18n-key="settings.sections.audio_devices.vb"></span>
         <div class="vb-cables audio-device-picker"></div>
     </details>
     <settings section="generale"></settings>
     <details class="experiment-exist soundpack">
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.uis">UI Sounds</span> <span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.uis"></span> <span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div>
-            <h4 data-i18n-key="settings.sections.uis.soundpacks">Soundpacks</h4>
+            <h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
             <ul class="soundpacks"></ul>
-            <h2 data-i18n-key="settings.sections.uis.soundpacks.current">Current Soundpack</h2>
+            <h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
             <div class="experiment-exist">
                 <h3 id="soundpack-title">Soundpack</h3>
                 <span>(<span id="soundpack-id">id.soundpack</span>)
@@ -62,15 +62,15 @@
     </details>
     <details>
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.bug">Bug Report</span> <span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.bug"></span> <span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy"></span>
         </summary>
-        <textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate">Click "Generate Report"</textarea>
+        <textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
         <p id="hostname">Your hostname here</p>
-        <button id="genr" data-i18n-key="settings.sections.bug.generate">Generate Report</button>
+        <button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
     </details>
     <details style="display:none;" id="dev-tools">
         <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.developer_tools">Developer Tools</span> <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
+            <span data-i18n-key="settings.sections.developer_tools"></span> <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
         </summary>
         <div class="flex-wrap-r">
             <button onclick="restChnglog();window.location.reload()">
@@ -103,10 +103,9 @@
         <br>
         <details>
             <summary data-i18n-key="settings.sections.bug.report_reader">
-                Report Reader
             </summary>
             <textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
-            <button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read">Read Report</button>
+            <button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read"></button>
             <div class="report-details">
     
             </div>
@@ -118,7 +117,7 @@
             <img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy">
         </summary>
         <center>
-            <span data-i18n-key="settings.footer.by">is a project by</span> <a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a>
+            <span data-i18n-key="settings.footer.by"></span> <a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a>
         </center>
     </details>
 </div>
@@ -466,7 +465,6 @@
 
     const setupMenu = {
         "generale": {
-            "title": "General",
             "key": "settings.sections.general.title",
             "icon": "/common/icons/settings.svg",
             "options": {
@@ -560,7 +558,7 @@
 
         const title = document.createElement("p");
         title.setAttribute("data-i18n-key", _setupMenu.key);
-        title.innerText = _setupMenu.title;
+        title.innerText = universal.translationKey(_setupMenu.key);
         summary.classList.add("settings-section-title");
         summary.prepend(title);
         const icon = document.createElement("img");
