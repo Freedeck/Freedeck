@@ -29,6 +29,7 @@ const ctxl = {
 			.then((response) => response.text())
 			.then((data) => {
 				view_html.innerHTML = data;
+				universal.translatePage(view_html)
 			})
 			.then(() => {
 				const scripts = view_html.getElementsByTagName("script");

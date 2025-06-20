@@ -102,9 +102,6 @@ universal.vopen = (v) => {
 	if(leftSidebar.style.display === 'flex') document.querySelector(".toggle-sidebar button").click();
 	universal.ctx.destructiveView(v);
 	setAnim(view_container, "view-in 0.5s");
-	setTimeout(() => {
-		translatePage(view_container);
-	},250);
 };
 
 function setDisplay(ele, val) {
