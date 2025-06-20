@@ -22,35 +22,35 @@
     if(universal.flags.isEnabled("app.freedeck.demo.disable_new_repo")) {
         document.querySelector('#repo').remove();
     }
-    const dialog = universal.UI.makeGenericModal("Add Repository", "Enter the information for the repository.", [], true, `
+    const dialog = universal.UI.makeGenericModal(universal.translationKey("marketplace.add.title"), universal.translationKey("marketplace.add.description"), [], true, `
         <small class="add-msg"></small>
         <details>
-            <summary>Presets</summary>
+            <summary data-i18n-key="marketplace.add.presets"></summary>
             <div class="flex-wrap-r">
                 <button class="repo-preset" data-repo='{"t":"Freedeck Main","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
                 <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json","y":"new"}'>FreedeckEx Repository</button>
             </div>
-            <small>Want to add your own repository? <a href="https://wiki.freedeck.app/marketplace/custom_repo" target="_blank">Learn how</a></small>
+            <small><span data-i18n-key="marketplace.add.ask"></span><a href="https://wiki.freedeck.app/marketplace/custom_repo" target="_blank" data-i18n-key="marketplace.add.ask.inner"></a></small>
         </details>
-        <label for="title">Title</label><input type="text" id="title" placeholder="Freedeck Main">
-        <label for="url">URL</label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
-        <label for="mktr_type">Type</label>
+        <label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="Freedeck Main">
+        <label for="url" data-i18n-key="marketplace.add.input_url"></label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
+        <label for="mktr_type" data-i18n-key="marketplace.add.input_type"></label>
         <select id="mktr_type">
             <option value="new" selected disabled hidden>Select a repository type</option>    
-            <option value="new" >Marketplace (.json)</option>    
-            <option value="legacy">Legacy Manifest (.fdr.txt)</option>    
+            <option value="new" data-i18n-key="marketplace.add.types.new"></option>    
+            <option value="legacy" data-i18n-key="marketplace.add.types.legacy"></option>    
         </select>
         <br>
-        <button id="submit">Add</button>
+        <button id="submit" data-i18n-key="marketplace.add.input_submit"></button>
     `, true);
+    universal.translatePage(dialog.content)
     dialog.modal.id = "add-repo";
     dialog.forceHide();
     const dialogC = dialog.content;
     dialogC.style.alignItems = 'start';
-    document.body.appendChild(dialog.modal)
 
     const loadRepo = (repo, isUnofficial = false) => {
-        document.querySelector('.message').innerHTML = 'Fetching Marketplace repository: ' + repo.title;
+        document.querySelector('.message').innerHTML = universal.translationKey("marketplace.message.fetching") + repo.title;
         const li = document.createElement('li');
         const btn = document.createElement("button");
         btn.innerText = universal.translationKey("marketplace.action.remove");
@@ -180,14 +180,13 @@
         universal.repositoryManager.getLegacyRepository(url).then((plugins) => {
             plugins.forEach((plugin) => {
                 const req = plugin;
+                req.id = req.id.toLowerCase();
                 const li = document.createElement('div');
                 li.setAttribute('hovereffect', 'yes');
                 li.style.cursor = 'default';
                 li.className = 'item';
                 const name = document.createElement('div');
-                name.innerText = isUnofficial ? '(!) ' + req.name : req.name;
-                name.innerHTML += ' &bull; by ';
-                name.innerText += req.author;
+                name.innerText = universal.translationKey("marketplace.info.title").replace("$1", plugin.title).replace("$2", req.author);
                 name.style.fontWeight = 'bold';
                 li.appendChild(name);
                 const version = document.createElement('div');
@@ -198,7 +197,7 @@
                 desc.classList.add("plugin-ifo")
                 li.appendChild(desc);
                 const rl = document.createElement('div');
-                rl.innerText = "From " + repo.title;
+                rl.innerText = universal.translationKey("marketplace.info.repository").replace("$1", repo.title);
                 li.appendChild(rl);
                 const file = document.createElement('button');
                 file.dataset.HandoffUrl = 'freedeck://download/' + req.id + '/' + encodeURIComponent(req.file) + '/' + encodeURIComponent(req.description) + '/' + encodeURIComponent(repo.title);
@@ -206,18 +205,18 @@
                     window.location.href = file.dataset.HandoffUrl;
                     universal.uiSounds.playSound('int_confirm');
                 };
-                file.innerText = 'Download';
+                file.innerText = universal.translationKey("marketplace.action.download");
                 if (universal.plugins[req.id]) {
-                    file.innerText = 'Installed';
+                    file.innerText = universal.translationKey("marketplace.action.installed");
                     file.style.backgroundColor = 'var(--marketplace-plugin-installed)';
                     if (!universal.plugins[req.id].version) universal.plugins[req.id].version = '1.0.0';
                     if (universal.plugins[req.id].version != req.version) {
-                        file.innerText = 'Update';
+                        file.innerText = universal.translationKey("marketplace.action.update");
                         file.dataset.HandoffUrl = file.dataset.HandoffUrl.replace('freedeck://download', 'freedeck://update') + "/" + encodeURIComponent(universal.plugins[req.id].version) + "/" + encodeURIComponent(req.version);
                         file.style.backgroundColor = 'var(--marketplace-plugin-updatable)';
                     } else
                         if (universal.plugins[req.id].version == req.version) {
-                            file.innerText = 'Up to date';
+                            file.innerText = universal.translationKey("marketplace.action.up_to_date");
                             file.style.backgroundColor = 'var(--marketplace-plugin-no-updates)';
                             file.onclick = () => { };
                         } else {
@@ -234,9 +233,9 @@
             txt.innerHTML = `${repo.title}`;
             const er = document.createElement("p");
             er.classList.add("plugin-ifo");
-            er.innerHTML = err.msg || err.toString() || err || "An error occurred while fetching the repository.";
+            er.innerHTML = err.msg || err.toString() || err || universal.translationKey("marketplace.message.error")
             if (err.toString().includes("Failed to fetch"))
-                er.innerHTML += `<br>(Could not reach ${repo.link}, is the internet down?)`;
+                er.innerHTML += `<br>${universal.cleanHTML(universal.translationKey("marketplace.message.internet").replace("$1", repo.title))}`;
             cnt.appendChild(txt);
             cnt.appendChild(er);
             document.querySelector(".marketplace").appendChild(cnt);

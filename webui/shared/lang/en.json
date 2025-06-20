@@ -220,5 +220,20 @@
   "marketplace.downgrade_fallback": "... downgrade? You shouldn't be seeing this, but",
   "marketplace.message_warning_prefix": "Before you ",
   "marketplace.message_warning_suffix": "...",
-  "marketplace.update_notification": "$1 can be updated to $2!"
+  "marketplace.update_notification": "$1 can be updated to $2!",
+  "marketplace.add.title": "Add Repository",
+  "marketplace.add.description": "Enter the information for the repository.",
+  "marketplace.add.presets": "Presets",
+  "marketplace.add.ask": "Want to add your own repository? ",
+  "marketplace.add.ask.inner": "Learn how!",
+  "marketplace.add.types.default": "Select a repository type",
+  "marketplace.add.types.new": "Marketplace (.json)",
+  "marketplace.add.types.legacy": "Legacy (.fdr.txt)",
+  "marketplace.add.input_title": "Title",
+  "marketplace.add.input_url": "URL",
+  "marketplace.add.input_type": "Type",
+  "marketplace.add.input_submit": "Add",
+  "marketplace.message.fetching": "Fetching marketplace repository: ",
+  "marketplace.message.error": "An error occurred while fetching the repository.",
+  "marketplace.message.internet": "(Could not fetch $1, is the internet down?)"
 }
