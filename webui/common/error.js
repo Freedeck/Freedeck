@@ -5,12 +5,10 @@ window.onerror = (message, source, lineno, colno, error) => {
     modal.classList.add("modal");
     const content = document.createElement("div");
     content.innerHTML = `
-    <h1>Freedeck</h1>
+    <h2>Freedeck</h2>
     <p>
-      Freedeck has encountered an unrecoverable error. Please reload the app to continue.
-      If that doesn't work, you may need to close and reopen the app.
+      Freedeck has encountered an error. Please see the details for more information.
     </p>
-    <small>Handler: common/error.js</small>
     <details open style='max-width: 90vw;'>
       <summary>Error Details</summary>
       <small>
@@ -18,8 +16,9 @@ window.onerror = (message, source, lineno, colno, error) => {
       </small>
     </details>
     <br>
-    <div class='flex-wrap-r'>
-    <a style='display:block;width:100%;font-size:1.5em;text-align:center;' href='javascript:window.location.reload();'>Reload</a>
+    <div class='flex-wrap-r alc'>
+    <a style='padding:.5rem;' href='javascript:window.location.reload();'>Reload</a>
+    <a style='padding:.5rem;' href='javascript:window.errorIgnore();'>Ignore</a>
     </div>
     `
 
@@ -30,3 +29,5 @@ window.onerror = (message, source, lineno, colno, error) => {
 
   console.log(message, source, lineno, colno, error);
 };
+
+window.errorIgnore = () => {document.querySelector("#error-dialog").remove()}

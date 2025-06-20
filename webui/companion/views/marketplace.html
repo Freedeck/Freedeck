@@ -27,22 +27,21 @@
         <details>
             <summary>Presets</summary>
             <div class="flex-wrap-r">
-                <button class="repo-preset" data-repo='{"t":"freedeck.app","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
+                <button class="repo-preset" data-repo='{"t":"Freedeck Main","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
                 <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json","y":"new"}'>FreedeckEx Repository</button>
             </div>
             <small>Want to add your own repository? <a href="https://wiki.freedeck.app/marketplace/custom_repo" target="_blank">Learn how</a></small>
         </details>
-        <label for="title">Title</label><input type="text" id="title" placeholder="freedeck.app">
+        <label for="title">Title</label><input type="text" id="title" placeholder="Freedeck Main">
         <label for="url">URL</label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
         <label for="mktr_type">Type</label>
-        <select id="mktr_type" value="new">
-            <option value="new" selected>Marketplace V3 (.json)</option>    
-            <option value="legacy">Old Manifest Type (.fdr.txt)</option>    
+        <select id="mktr_type">
+            <option value="new" selected disabled hidden>Select a repository type</option>    
+            <option value="new" >Marketplace (.json)</option>    
+            <option value="legacy">Legacy Manifest (.fdr.txt)</option>    
         </select>
         <br>
-        <div class="flex-wrap-r space-evenly">
-        <button class="tint-green" id="submit">Add</button>
-        </div>
+        <button id="submit">Add</button>
     `, true);
     dialog.modal.id = "add-repo";
     dialog.forceHide();
@@ -330,6 +329,7 @@
                         message: "Please select the channel of the repository you are adding.",
                         options
                     }, ({ value }) => {
+                        submit.disabled = false;
                         if (value.id == "main" && url == "https://releases.freedeck.app/index.json") {
                             document.querySelector('.add-msg').innerText = 'You can\'t re-add the main repository!';
                             submit.disabled = false;
@@ -357,7 +357,7 @@
     }
 
     function selectModal(opt, cb, submit) {
-        const modal = showPick(opt.title, opt.options, cb, opt.message);
+        const modal = showPick(opt.title, opt.options, cb, opt.message, false);
         return modal;
     }
 

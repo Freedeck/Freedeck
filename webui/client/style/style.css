@@ -547,24 +547,6 @@ input[type="checkbox"]:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.tint-green {
-    background-color: rgba(0, 255, 0, 0.125);
-}
-
-.space-evenly {
-    justify-content: space-evenly;
-    align-items: center;
-}  
-
-.full-center {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height:100%;
-    width: 100%;
-    z-index: 9999;
-}
-
 input:disabled {
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid black;
