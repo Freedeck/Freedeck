@@ -92,6 +92,21 @@ export default {
           } 
         }
       }
+    },
+    {
+      "Desmo": {
+        "uuid": "fda..5",
+        "plugin": "Freedeck",
+        "type": "universal",
+        "renderType": "dash-module",
+        "data": {
+          "position": {
+            "x": "480",
+            "y": "480",
+            "width": "450"
+          } 
+        }
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&display=swap'); */
 
-@import url("fonts.css");
+@import url("/style/fonts.css");
 
 :root {
     --tile-columns: repeat(5, 2fr);
