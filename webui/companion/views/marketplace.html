@@ -130,10 +130,10 @@
                                 if (compareVersionOutput == -1) str = "update";
                                 if (compareVersionOutput == 1) str = "... downgrade? You shouldn't be seeing this, but";
                             }
-                            window.showYesNo("Before you " + str + " " + req.title + "...", req.message, (yes) => {
+                            window.UniversalUI.show.showYesNo("Before you " + str + " " + req.title + "...", req.message, (yes) => {
                                 window.location.href = file.dataset.HandoffUrl;
                                 universal.uiSounds.playSound('step_2');
-                            }, () => { });
+                            }, true);
                         } else {
                             window.location.href = file.dataset.HandoffUrl;
                             universal.uiSounds.playSound('step_2');
@@ -357,7 +357,7 @@
     }
 
     function selectModal(opt, cb, submit) {
-        const modal = showPick(opt.title, opt.options, cb, opt.message, false);
+        const modal = window.UniversalUI.show.showPick(opt.title, opt.options, cb, opt.message, false);
         return modal;
     }
 

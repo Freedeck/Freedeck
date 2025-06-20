@@ -7,7 +7,7 @@ const newBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
 		translationKey("sidebars.left.style.folders.popups.new"),
 		translationKey("sidebars.left.style.folders.popups.new.description"),
-		(modal, value, feedback, title, button, input, content) => {
+		({value, feedback}) => {
 			if (value.length < 1) {
 				feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 				return false;
@@ -39,7 +39,7 @@ const dupBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
 		translationKey("sidebars.left.style.folders.popups.duplicate"),
 		translationKey("sidebars.left.style.folders.popups.duplicate.description"),
-		(modal, value, feedback, title, button, input, content) => {
+		({value, feedback}) => {
 			if (value.length < 1) {
 				feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 				return false;
@@ -54,17 +54,17 @@ const importBtn = new SidebarSvgButton("", ()=>{
   window.UniversalUI.show.showEditModal(
 		translationKey("sidebars.left.style.folders.popups.import"),
 		translationKey("sidebars.left.style.folders.popups.import.description"),
-		(modal, pfData, feedback, title, button, input, content) => {
+		({value, feedback}) => {
 			try {
-				if(!pfData.startsWith("[")) {
+				if(!value.startsWith("[")) {
 					feedback.innerText = translationKey("sidebars.left.style.folders.popups.import.error_json_format");
 					return false;
 				}
-				const data = JSON.parse(pfData);
+				const data = JSON.parse(value);
 				window.UniversalUI.show.showEditModal(
 					translationKey("sidebars.left.style.folders.popups.import"),
 					translationKey("sidebars.left.style.folders.popups.import.ask_name"),
-					(modal, value, feedback, title, button, input, content) => {
+					({value, feedback}) => {
 						if (value.length < 1) {
 							feedback.innerText = translationKey("sidebars.left.style.folders.popups.require_name");
 							return false;

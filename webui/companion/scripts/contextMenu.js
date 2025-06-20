@@ -66,7 +66,7 @@ window.oncontextmenu = (e) => {
           universal.sendEvent("page_change");
           break;
         case `%context_menu.folder%${universal.config.profile}`:
-          showPick(
+          window.UniversalUI.show.showPick(
             "Switch to another Folder:",
             Object.keys(universal.config.profiles).map((profile) => {
               return {
@@ -132,7 +132,7 @@ window.oncontextmenu = (e) => {
             universal.send(universal.events.companion.del_tile, interaction);
             return;
           }
-          window.showPick(
+          window.UniversalUI.show.showPick(
             `Are you sure you want to remove ${universal.cleanHTML(
               e.srcElement.dataset.name
             )}?`,
@@ -168,7 +168,7 @@ window.oncontextmenu = (e) => {
  */
 function showReplaceGUI(srcElement) {
   UI.reloadProfile();
-  showPick(
+  window.UniversalUI.show.showPick(
     "Copy from:",
     universal.app_sounds.map((sound) => {
       const k = Object.keys(sound)[0];

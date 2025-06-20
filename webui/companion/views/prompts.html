@@ -91,7 +91,7 @@
 
 	orMfa.onclick = () => {
 		if(m) return;
-		m =	window.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
+		m =	window.UniversalUI.show.showYesNo("By pressing Accept, you are willing to share:",  "- your local IP (" + ip + ")<br>- your PC's hostname (" + universal._information.hostname + ")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>", (yes) => {
 			fetch('/api/discover/code-request').then((res) => res.json()).then((res) => {
 				document.querySelectorAll('.mfa-code').forEach(e => e.innerText = res.code);
 			})

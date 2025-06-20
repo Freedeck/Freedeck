@@ -2,7 +2,7 @@
 
 <h1 class="settings-section-title"><span data-i18n-key="library.title"></span><span><img src="/common/icons/library.svg" width="50" height="50" loading="lazy"></span></h1>
 <center><p data-i18n-key="library.description"></p></center>
-<button class="save-changes" data-i18n-key="library.save" onclick="universal.vopen('index.html')"></button>
+<button class="save-changes" data-i18n-key="library.save" onclick="window.saveChanges()"></button>
 
 <h2 id="uploads-0-title">
   <span data-i18n-key="library.sounds"></span>
@@ -21,7 +21,6 @@
   <summary><strong data-i18n-key="library.icons.view"></strong></summary>
   <div class="uploads uploads-1"></div>
 </details>
-
 
 <script>
   fetch("/api/upload/report").then((res) => res.json()).then((data) => {
@@ -51,5 +50,10 @@
     universal.sendEvent("library_paint")
   })
   universal.sendEvent("library_load")
-  if (universal._libraryOnload) universal._libraryOnload();
+
+  window.saveChanges = () => {
+    universal.sendEvent("library_save");
+    window.saveChanges = undefined;
+    universal.vopen('index.html')
+  }
 </script>

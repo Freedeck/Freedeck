@@ -688,7 +688,7 @@ input:disabled {
 
 .modal-body {
     display: flex;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
     width: 100%;
     max-height: none;

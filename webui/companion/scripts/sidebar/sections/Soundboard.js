@@ -23,6 +23,12 @@ universal.listenFor("now-playing", (data) => {
 	document.querySelector("#np-sb").appendChild(newEle);
 });
 
+universal.listenFor("audio-end", (data) => {
+  const filname = data.name.replace(/[^a-zA-Z0-9]/g, "");
+  if (document.querySelector(`.s-${filname}`))
+    document.querySelector(`.s-${filname}`).remove();
+});
+
 style.children.push(new SidebarButton(translationKey("sidebars.left.soundboard.stop_all"), (e) => {universal.audioClient.stopAll();}));
 
 style.children.push(new SidebarSlider(translationKey("sidebars.left.soundboard.sliders.pitch"), "pitch", translationKey("sidebars.left.soundboard.sliders.pitch.unit"), "0.1", "2", "1", (e) => {

@@ -206,7 +206,7 @@
         a.innerText = 'Disable';
         a.onclick = () => {
             universal.uiSounds.playSound('int_confirm');
-            window.showPick('Are you sure you want to disable ' + req.name + '?', [{ name: 'Yes', value: true }, { name: 'No', value: false }], ({modal, value}) => {
+            window.UniversalUI.show.showPick('Are you sure you want to disable ' + req.name + '?', [{ name: 'Yes', value: true }, { name: 'No', value: false }], ({modal, value}) => {
                 if (value.value == true) {
                     universal.send(universal.events.default.disable_plugin, req.id);
                 }
@@ -360,7 +360,7 @@
 
     getElement("#erals").onclick = () => {
         //(NO UNDOING, WILL HAPPEN ON CLICK.)
-        window.showYesNo("Are you sure you want to erase the LocalStorage?", "Upon clicking  Proceed, your LocalStorage will be completely cleared. Most local configuration will be lost, minus your Tiles. THIS IS THE LAST WARNING.", (yes) => {
+        window.UniversalUI.show.showYesNo("Are you sure you want to erase the LocalStorage?", "Upon clicking Continue, your LocalStorage will be completely cleared. Most local configuration will be lost, minus your Tiles. THIS IS THE LAST WARNING.", (yes) => {
             localStorage.clear();
             universal.sendToast("Erased all LocalStorage data! Cleaning up...", "Settings: Developer Tools");
             window.location.reload();

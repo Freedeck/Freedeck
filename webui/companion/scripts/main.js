@@ -1,7 +1,7 @@
 import { UI } from "../../client/scripts/ui.js";
 import { universal } from "../../shared/universal.js";
 import {openViewTop, closeAllViews} from "./editor/viewEngine.js";
-import {loadData, setTileData} from "./editor/data.js";
+import {loadData} from "./editor/data.js";
 import "./sidebar.js";
 import "./uploadsHandler.js";
 import "./editor/loader.js";
@@ -10,11 +10,11 @@ import { makeThanks } from "./changelog/create.js";
 import Sound from "./editor/viewLogic/sound.js";
 import Plugins from "./editor/viewLogic/plugins.js";
 import System from "./editor/viewLogic/system.js";
-import EditorViewLogic from "./editor/viewLogic/EditorViewLogic.js";
 import Macro from "./editor/viewLogic/macro.js";
 import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
+import EditorView from "./classes/EditorView.js";
 const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
@@ -51,30 +51,6 @@ toggleSidebarButton.onclick = (ev) => {
     toggleSidebarContainer.style.left = "calc(11.5%)";
   }
 };
-
-class EditorView {
-  /**@type {any} Any universal unique ID. */
-  id;
-  /**@type {EditorViewLogic} The EditorViewLogic used for this view */
-  logic;
-  /**@type {string} A translation key to use for the no-action screen. */
-  noActionTranslationKey;
-  /**@type {string} Path to the icon */
-  icon;
-  /**
-   * Create an EditorView
-   * @param {any} id Any universal unique ID.
-   * @param {EditorViewLogic} logic The EditorViewLogic used for this view
-   * @param {string} noActionTranslationKey A translation key to use for the no-action screen.
-   * @param {string} icon Path to the icon
-   */
-  constructor(id, logic, noActionTranslationKey, icon) {
-    this.id = id;
-    this.logic = logic;
-    this.noActionTranslationKey = noActionTranslationKey;
-    this.icon = icon;
-  }
-}
 
 const editorBuiltInViews = [
   new EditorView("audio", new Sound(), "editor.sections.no_action.soundboard", "/common/icons/t_audio.svg"),
@@ -229,372 +205,99 @@ createEditorCheckbox("#orl", "onRelease");
 createEditorCheckbox("#lp", "longPress");
 createEditorCheckbox("#ha", "hold");
 
-
-document.querySelector("#upload-sound").onclick = () => {
-  document.querySelector("#upload-sound").disabled = true;
-  document.querySelector("#sidebar").style.right = "-20%";
-  universal.uiSounds.playSound("int_confirm");
-  const ito = JSON.parse(editorButton.dataset.interaction);
-
-  universal._libraryOnload = () => {
-    setupLibraryFor("sound");
-  };
-  universal.listenForOnce("library_paint", () => {
-    if (
-      ito.data.file &&
-      document.querySelector(`.upload[data-name='${ito.data.file}']`)
-    )
-      document
-        .querySelector(`.upload[data-name='${ito.data.file}']`)
-        .classList.add("glow");
-    for (const el of document.querySelectorAll(".uploads-0 .upload")) {
-      el.onclick = () => {
-        for (const el of document.querySelectorAll(".upload")) {
-          el.classList.remove("glow");
-        }
-        el.classList.add("glow");
-        universal._Uploads_Select(el.dataset.name);
-      };
-    }
-    document.querySelector(".save-changes").onclick = () => {
-      universal._libraryOnload = () => {
-        setupLibraryFor("");
-      };
-      universal.vopen("index.html");
-      document.querySelector("#sidebar").style.right = "0";
-    };
-  })
-  universal._Uploads_Select = (itm) => {
-    const interaction = JSON.parse(
-      editorButton.getAttribute("data-interaction")
-    );
-    interaction.data.file = itm;
-    interaction.data.path = "/sounds/";
-    editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
-    loadData(interaction.data);
-    document.querySelector("#file.editor-data").value = itm;
-    document.querySelector("#path.editor-data").value = "/sounds/";
-    document.querySelector("#audio-file").innerText = itm;
-    // document.querySelector("#audio-path").innerText = "/sounds/";
-
-    universal.uiSounds.playSound("int_yes");
-  };
-  universal.vopen("library");
-};
-
-document.querySelector("#quick-upload-sound").onclick = () => {
-  document.querySelector("#upload-sound").disabled = true;
-  universal.uiSounds.playSound("int_confirm");
-
-  universal.vopen("library");
-  universal._libraryOnload = () => {
-    universal._Uploads_New(1, true);
-    setupLibraryFor("sound");
-  };
-  universal._Uploads_Select = (itm) => {
-    const interaction = JSON.parse(
-      editorButton.getAttribute("data-interaction")
-    );
-    interaction.data.file = itm;
-    interaction.data.path = "/sounds/";
-    editorButton.setAttribute("data-interaction", JSON.stringify(interaction));
-    loadData(interaction.data);
-    document.querySelector("#file.editor-data").value = itm;
-    document.querySelector("#path.editor-data").value = "/sounds/";
-    document.querySelector("#audio-file").innerText = itm;
-    // document.querySelector("#audio-path").innerText = "/sounds/";
-
-    universal.uiSounds.playSound("int_yes");
-  };
-};
-
-
-universal.fdws.on("apps", (rawData) => {
-  const data = rawData;
-  const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-  const select = document.querySelector("#system-select");
-  select.innerHTML = "";
-
-  for (const app of data) {
-    const option = document.createElement("option");
-    let friendly =
-      app.friendly !== "" ? `${app.friendly} (${app.name})` : app.name;
-    if (app.name === "_fd.System") friendly = "System Volume";
-    option.innerText = friendly;
-    option.value = app.name;
-    if (int?.data?.app && int.data.app === app.name) option.selected = true;
-    select.appendChild(option);
-  }
-
-  select.onchange = (e) => {
-    const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-    const dt =
-      e.srcElement.value !== "_fd.System"
-        ? "fd.sys.volume"
-        : "fd.sys.volume.sys";
-    document.querySelector("#type").value = dt;
-    int.type = dt;
-    int.renderType = "slider";
-    setTileData("app", e.srcElement.value, int);
-    setTileData("min", 0, int);
-    setTileData("max", 100, int);
-    setTileData("value", 50, int);
-    setTileData("format", "%", int);
-    setTileData("direction", "vertical", int);
-    editorButton.setAttribute("data-interaction", JSON.stringify(int));
-  };
-});
-
-function setupLibraryFor(type){
-  if (type === "icon") {
-    document.querySelector("#library-view-sounds").style.display = "none";
-    document.querySelector("#library-view-icons").style.display = "block";
-    document.querySelector("#library-view-sounds").open = false;
-    document.querySelector("#library-view-icons").open = true;
-    document.querySelector(".uploads-0").style.display = "none";
-    document.querySelector("#uploads-0-title").style.display = "none";
-    document.querySelector(".uploads-1").style.display = "flex";
-    document.querySelector("#uploads-1-title").style.display = "block";
-    document.querySelector("#library > body> center p").textContent =
-      "Select an icon to use, or upload a new one!";
-    document.querySelector("#library > body> h1").textContent =
-      "Available Icons";
-    document.querySelector(".save-changes").style.display = "block";
-  } else if (type === "sound") {
-    document.querySelector("#library-view-sounds").style.display = "block";
-    document.querySelector("#library-view-icons").style.display = "none";
-    document.querySelector("#library-view-sounds").open = true;
-    document.querySelector("#library-view-icons").open = false;
-    document.querySelector(".uploads-0").style.display = "flex";
-    document.querySelector("#uploads-0-title").style.display = "block";
-    document.querySelector(".uploads-1").style.display = "none";
-    document.querySelector("#uploads-1-title").style.display = "none";
-    document.querySelector("#library > body> center p").textContent =
-      "Select an sound to use, or upload a new one!";
-    document.querySelector("#library > body> h1").textContent =
-      "Available Sounds";
-    document.querySelector(".save-changes").style.display = "block";
-  } else {
-    document.querySelector("#library-view-sounds").style.display = "block";
-    document.querySelector("#library-view-icons").style.display = "block";
-    document.querySelector("#library-view-sounds").open = false;
-    document.querySelector("#library-view-icons").open = false;
-    document.querySelector(".uploads-0").style.display = "flex";
-    document.querySelector("#uploads-0-title").style.display = "block";
-    document.querySelector(".uploads-1").style.display = "flex";
-    document.querySelector("#uploads-1-title").style.display = "block";
-    document.querySelector("#library > body> center p").textContent =
-      "Here you will find every sound or icon you've uploaded.";
-    document.querySelector("#library > body> h1").textContent = "Library";
-    document.querySelector(".save-changes").style.display = "none";
-  }
-};
-
-document.querySelector("#upload-icon").onclick = (e) => {
-  universal.uiSounds.playSound("int_confirm");
-  const ito = JSON.parse(editorButton.dataset.interaction);
-  universal.listenForOnce("library_load", ()=>{setupLibraryFor("icon")});
-  universal.listenForOnce("library_paint", () => {
-    const preselectedElement = document.querySelector(`.upload[data-name='${ito.data.icon.split("/icons/")[1]}']`);
-    if (ito.data.icon && preselectedElement) preselectedElement.classList.add("glow");
-    for (const uploadedIcon of document.querySelectorAll(".uploads-1 .upload")) {
-      uploadedIcon.onclick = () => {
-        for (const glowingIcon of document.querySelectorAll(".glow")) {
-          glowingIcon.classList.remove("glow");
-        }
-        uploadedIcon.classList.add("glow");
-
-        ito.data.icon = `/icons/${uploadedIcon.dataset.name}`;
-        editorButton.setAttribute("data-interaction", JSON.stringify(ito));
-        editorButton.style.backgroundImage = `url("${`/icons/${uploadedIcon.dataset.name}`}")`;
-        loadData(ito.data);
-        universal.uiSounds.playSound("uploaded");
-      };
-    }
-  });
-  universal.vopen("library");
-};
-
-/**
- * Create a text input modal.
- * @param {String} title The title of the modal
- * @param {String} content The placeholder text for the input
- * @param {void} callback What to do when submitted
- */
-function showEditModal(title, content, callback) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-
-  const modalContent = document.createElement("div");
-  modalContent.className = "modalContent";
-
-  const modalClose = document.createElement("button");
-  modalClose.innerText = "Close";
-  modalClose.classList.add("modalClose");
-  modalClose.onclick = () => {
-    modal.remove();
-  };
-  modalContent.appendChild(modalClose);
-
-  const modalTitle = document.createElement("h2");
-  modalTitle.innerText = title;
-  modalTitle.classList.add("modalTitle");
-  modalContent.appendChild(modalTitle);
-
-  const modalFeedback = document.createElement("div");
-  modalFeedback.classList.add("modalFeedback");
-  modalContent.appendChild(modalFeedback);
-
-  const modalInput = document.createElement("input");
-  modalInput.type = "text";
-  modalInput.placeholder = content;
-  modalInput.classList.add("modalInput_text");
-  modalContent.appendChild(modalInput);
-
-  const modalButton = document.createElement("button");
-  modalButton.innerText = "Save";
-  modalButton.onclick = () => {
-    const returned = callback(
-      modal,
-      modalInput.value,
-      modalFeedback,
-      modalTitle,
-      modalButton,
-      modalInput,
-      modalContent
-    );
-    if (returned === false) return;
-    modal.remove();
-  };
-  modalContent.appendChild(modalButton);
-
-  modal.appendChild(modalContent);
-
-  document.body.appendChild(modal);
-}
-
-function showText(title, content, callback, closable = true) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-
-  const modalContent = document.createElement("div");
-  modalContent.classList.add("modalContent");
-
-  if (closable) {
-    const modalClose = document.createElement("button");
-    modalClose.innerText = "Close";
-    modalClose.classList.add("modalClose");
-    modalClose.onclick = () => {
-      modal.remove();
-    };
-    modalContent.appendChild(modalClose);
-  }
-
-  const modalTitle = document.createElement("h2");
-  modalTitle.innerText = title;
-  modalTitle.classList.add("modalTitle");
-  modalContent.appendChild(modalTitle);
-
-  const modalTextContent = document.createElement("div");
-  modalTextContent.innerText = content;
-  modalTextContent.classList.add("modalTextContent");
-  modalContent.appendChild(modalTextContent);
-
-  const modalButton = document.createElement("button");
-  modalButton.innerText = "Next";
-  modalButton.onclick = () => {
-    modal.remove();
-    callback();
-  };
-  modalContent.appendChild(modalButton);
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  universal.uiSounds.playSound("int_prompt");
-  return modal;
-}
-
-/**
- * Create a list picker modal.
- * @param {String} title The title of the modal
- * @param {Array} listContent The content of the list
- * @param {void} callback What to do when submitted
- */
-function showPick(
-  title,
-  listContent,
-  callback,
-  extraM = "",
-  closable = true
-) {
-  const modalFeedback = document.createElement("div");
-  modalFeedback.classList.add("modalFeedback");
-  
-  const modalList = document.createElement("select");
-  modalList.className = "modalList";
-  modalList.style.marginBottom = "20px";
-
-  const modal = UI.makeGenericModal(title, extraM, [{
-    text: "Save",
-    onclick: () => {
-      const selectedItem = modalList.options[modalList.selectedIndex];
-      const value = JSON.parse(selectedItem.value);
-      const returned = callback(
-       {
-        modal,
-        value,
-        modalFeedback,
-        modalContent
-       }
-      );
-      if (returned === false) return;
-      modal.close();
-    },
-  }], closable);
-
-  const modalContent = modal.content;
-
-  modalContent.appendChild(modalFeedback);
-  modalContent.appendChild(modalList);
-
-  for (const item of listContent) {
-    const modalItem = document.createElement("option");
-    modalItem.className = "modalItem";
-    modalItem.setAttribute("value", JSON.stringify(item));
-    modalItem.innerText = item.name || item.display;
-    modalList.appendChild(modalItem);
-  }
-
-  document.body.appendChild(modal.modal);
-  universal.uiSounds.playSound("int_prompt");
-  return modal;
-}
-
-function showYesNo(title, content, yesCallback, closable = true) {
-  const modal = universal.UI.makeGenericModal(title, content, [], closable);
-  const modalContent = modal.content;
-
-  const yesnoc = document.createElement("div");
-  yesnoc.classList.add("flex-wrap-r");
-
-  const modalButton = document.createElement("button");
-  modalButton.innerText = "Proceed";
-  modalButton.onclick = () => {
-    modal.close();
-    yesCallback();
-  };
-  yesnoc.appendChild(modalButton);
-
-  modalContent.appendChild(yesnoc);
-  document.body.appendChild(modal.modal);
-  universal.uiSounds.playSound("int_confirm");
-  return modal;
-}
-
 window.UniversalUI = {
   show: {
-    showEditModal,
-    showPick,
-    showText,
+    showEditModal: () => {
+      const modal = universal.ui.makeGenericModal(title, "", [{
+        text: "Submit",
+        onclick: () => {
+          const returned = callback(
+            {
+              value: modalInput.value,
+              feedback: modalFeedback
+            }
+          );
+          if (returned === false) return;
+          modal.close();
+        }
+      }], false)
+    
+      const modalFeedback = document.createElement("div");
+      modalFeedback.classList.add("modalFeedback");
+      modal.content.appendChild(modalFeedback);
+    
+      const modalInput = document.createElement("input");
+      modalInput.type = "text";
+      modalInput.placeholder = content;
+      modalInput.classList.add("modalInput_text");
+      modal.content.appendChild(modalInput);
+    
+      modal.show();
+      return modal;
+    },
+    showPick(
+      title,
+      listContent,
+      callback,
+      extraM = "",
+      closable = true
+    ) {
+      const modal = UI.makeGenericModal(title, extraM, [{
+        text: "Save",
+        onclick: () => {
+          const selectedItem = modalList.options[modalList.selectedIndex];
+          const value = JSON.parse(selectedItem.value);
+          const returned = callback(
+           {
+            modal,
+            value,
+            modalFeedback,
+            modalContent
+           }
+          );
+          if (returned === false) return;
+          modal.close();
+        },
+      }], closable);
+    
+      const modalContent = modal.content;
+    
+      const modalFeedback = document.createElement("div");
+      modalFeedback.classList.add("modalFeedback");
+      
+      const modalList = document.createElement("select");
+      modalList.className = "modalList";
+      modalList.style.marginBottom = "20px";
+    
+      modalContent.appendChild(modalFeedback);
+      modalContent.appendChild(modalList);
+    
+      for (const item of listContent) {
+        const modalItem = document.createElement("option");
+        modalItem.className = "modalItem";
+        modalItem.setAttribute("value", JSON.stringify(item));
+        modalItem.innerText = item.name || item.display;
+        modalList.appendChild(modalItem);
+      }
+    
+      universal.uiSounds.playSound("int_prompt");
+      modal.show();
+      return modal;
+    },
+    showYesNo(title, content, yesCallback, closable = true) {
+      const modal = universal.UI.makeGenericModal(title, content, [{
+        text: "Continue",
+        onclick: ()=>{
+          modal.close();
+          yesCallback();
+        }
+      }], closable);
+    
+      modal.show();
+      universal.uiSounds.playSound("int_confirm");
+      return modal;
+    }
+    
   },
 };
 
@@ -607,7 +310,7 @@ window.onclick = (e) => {
 };
 
 document.addEventListener("keydown", (ev) => {
-  if (editorButton.dataset.state != "not") return;
+  if (editorButton.dataset.state !== "not") return;
   if (ev.key === "ArrowLeft") {
     if (UI.Pages[universal.page - 1]) {
       universal.page--;
@@ -646,16 +349,5 @@ if (universal._information.mobileConnected) {
 
 const lcfg = universal.getServerStyleFlags();
 document.documentElement.style.setProperty("--tile-columns", `repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`);
-
-universal.listenFor("audio-end", (data) => {
-  const filname = data.name.replace(/[^a-zA-Z0-9]/g, "");
-  if (document.querySelector(`.s-${filname}`))
-    document.querySelector(`.s-${filname}`).remove();
-});
-
-window.showPick = showPick;
-window.showText = showText;
-window.showYesNo = showYesNo;
-window.showEditModal = showEditModal;
 
 makeThanks(false);

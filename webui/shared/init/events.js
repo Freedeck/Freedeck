@@ -78,7 +78,7 @@ export default async function eventsHandler(universal, user) {
 
 		function handoffApiNotif(dat) {
 			if (dat.data === "Authorize" && dat.incoming && universal.name === 'Companion') {
-				showPick(
+				window.UniversalUI.show.showPick(
 					`${dat.incoming.appInformation.title} wants to connect to your Freedeck!`,
 					[
 						{
