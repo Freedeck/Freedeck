@@ -324,6 +324,9 @@ textarea {
 			bottom: -100vh;
 	}
 }
+#keys.smaller {
+	padding: .5rem;
+}
 .smaller {
 	transform: scale(0.825);
 }

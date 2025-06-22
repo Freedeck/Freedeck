@@ -903,7 +903,7 @@ a:hover {
 
 .button-text {
     font-size: var(--font-size);
-    width: calc(min-content + 1rem);
+    width: fit-content;
     color: var(--text-color-secondary);
     text-align: center;
     display: flex;

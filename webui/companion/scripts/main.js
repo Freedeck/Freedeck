@@ -98,6 +98,7 @@ function editTile(e) {
     el.classList.add("smaller");
     el.classList.add("blur");
   }
+  
   e.srcElement?.classList?.remove("smaller");
 
   const contextMenu = document.querySelector(".contextMenu");
@@ -207,7 +208,7 @@ createEditorCheckbox("#ha", "hold");
 
 window.UniversalUI = {
   show: {
-    showEditModal: () => {
+    showEditModal: (title, description, callback) => {
       const modal = universal.ui.makeGenericModal(title, "", [{
         text: "Submit",
         onclick: () => {
@@ -221,16 +222,17 @@ window.UniversalUI = {
           modal.close();
         }
       }], false)
+      const modalContent = modal.content;
     
       const modalFeedback = document.createElement("div");
       modalFeedback.classList.add("modalFeedback");
-      modal.content.appendChild(modalFeedback);
+      modalContent.appendChild(modalFeedback);
     
       const modalInput = document.createElement("input");
       modalInput.type = "text";
-      modalInput.placeholder = content;
+      modalInput.placeholder = description;
       modalInput.classList.add("modalInput_text");
-      modal.content.appendChild(modalInput);
+      modalContent.appendChild(modalInput);
     
       modal.show();
       return modal;
