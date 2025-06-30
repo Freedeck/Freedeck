@@ -3,6 +3,9 @@ const path = require("node:path");
 const plugins = require("@managers/plugins");
 const tsm = require("@managers/temporarySettings");
 const networkAddresses = require("@managers/networkAddresses");
+const { settings } = require("../managers/settings");
+const sec = require("../managers/secrets");
+const aac = require("../managers/apiAuthCache");
 const router = express.Router();
 const { version } = require(path.resolve("package.json"));
 
@@ -19,9 +22,9 @@ const discoveryInformation = {
 const idList = [];
 function recalculate() {
   idList.length = 0;
-  const pl = plugins.plugins().keys();
-  for (const key of pl) {
-    idList.push(key);
+  const pl = plugins.plugins();
+  for (const key of pl.keys()) {
+    idList.push([key, pl.get(key).instance.version]);
   }
 }
 recalculate();
@@ -78,5 +81,28 @@ router.get("/discover", (req, res) => {
   res.send(discoveryInformation)
 });
 
+router.get("/auth/:identifier/:password/:hashType", (req, res) => {
+  if(req.params.hashType === 'hashed') {
+    res.send(aac.register(req.params.identifier, `fd.${req.params.password}`, true))
+  } else {
+    res.send(aac.register(req.params.identifier, req.params.password))
+  }
+})
+
+router.get("/plugin/:pluginId/:token", (req, res) => {
+  if(settings().useAuthentication) {
+    if(!req.params.hashedPassword) res.send({error:true, message:"Authentication required!"})
+    if(sec.match("password", req.params.hashedPassword)) {
+      res.send(plugins.plugins().get(req.params.pluginId));
+    } else {
+      res.send({
+        error: true,
+        message: "Incorrect password!"
+      })
+    }
+  } else {
+    res.send(plugins.plugins().get(req.params.pluginId));
+  }
+})
 
 module.exports = {router, discoveryInformation, webpackState, getWs:()=>iwebpackState};
