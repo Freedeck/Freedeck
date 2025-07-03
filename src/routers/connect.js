@@ -20,11 +20,13 @@ const discoveryInformation = {
   version,
 };
 const idList = [];
-function recalculate() {
+function recalculate(userHasAuth=false) {
+  const auth = settings().useAuthentication;
   idList.length = 0;
   const pl = plugins.plugins();
   for (const key of pl.keys()) {
-    idList.push([key, pl.get(key).instance.version]);
+    const v = pl.get(key).instance.version;
+    idList.push([key, (auth ? userHasAuth ? v : "-1" : v)]);
   }
 }
 recalculate();
@@ -83,7 +85,7 @@ router.get("/discover", (req, res) => {
 
 router.get("/auth/:identifier/:password/:hashType", (req, res) => {
   if(req.params.hashType === 'hashed') {
-    res.send(aac.register(req.params.identifier, `fd.${req.params.password}`, true))
+    res.send(aac.register(req.params.identifier, `${req.params.password}`, true))
   } else {
     res.send(aac.register(req.params.identifier, req.params.password))
   }

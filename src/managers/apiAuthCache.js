@@ -6,7 +6,7 @@ const aac = {
 	register: (id, password, hashed=false) => {
 		if((hashed ? match("password", password) : equals("password", password)) && (!aac._registry[id] || Math.abs(aac._registry[id].given - Date.now()) <= aac.expiryInMs)) {
 			const token = hash(`${id}.FD_AAC`).substring(0,32);
-			this._registry[id] = {
+			aac._registry[id] = {
 				token,
 				given: Date.now()
 			}
@@ -16,7 +16,7 @@ const aac = {
 	},
 	check: (ctoken) => {
 		for(const key in aac._registry) {
-			const {token, given} = aac._registry
+			const {token, given} = aac._registry[key];
 			if(ctoken === token) {
 				const i = Math.abs(given - Date.now()) <= aac.expiryInMs;
 				if(!i) delete aac._registry[key];
