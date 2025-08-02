@@ -187,7 +187,7 @@ export default async function eventsHandler(universal, user) {
 			universal.sendEvent("auth", auth);
 		});
 
-		universal.on(universal.events.set_tile_icon, (type, registryFilename) => {
+		universal.on(universal.events.companion.set_tile_icon, (type, registryFilename) => {
 			for (const button of document.querySelectorAll(".button[data-interaction]")) {
 				if (button.id === "editor-btn") continue;
 				try {
