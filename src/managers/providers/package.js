@@ -32,6 +32,16 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     return;
   }
   if(freedeck.package === 'plugin') {
+    if(freedeck.icons) {
+      const iconEntryPath = path.resolve(pathToEx, freedeck.icons);
+      const iconEntry = require(iconEntryPath);
+      try {
+        iconEntry(pathToEx);
+      }catch(err) {
+        console.error(err);
+      }
+    }
+
     const entryPath = path.resolve(pathToEx, main);
     const entry = require(entryPath);
     try {

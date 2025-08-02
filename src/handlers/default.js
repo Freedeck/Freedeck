@@ -24,6 +24,7 @@ const commonThemes = paths.webui_common_themes;
 const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
 const os = require("node:os");
+const iconRegistry = require("../managers/iconRegistry");
 const hostname = os.hostname()
 
 module.exports = {
@@ -152,6 +153,7 @@ module.exports = {
         ],
         mobileConnected: tsm.get("isMobileConnected") || false,
         style: styleManager.get(),
+        iconRegistry: iconRegistry.map,
         disabled: plugins._disabled,
         events: eventNames,
         launcherOpen: fdws.isLauncherOpen(),
@@ -167,6 +169,7 @@ module.exports = {
         delete serverInfo.config;
         delete serverInfo.launcherOpen;
         delete serverInfo.connectedToFDWS;
+        delete serverInfo.iconRegistry;
         serverInfo.needToAuthenticate = true;
       }
       if(socket.auth) {

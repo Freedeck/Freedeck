@@ -359,6 +359,13 @@ function reloadSounds() {
 
       // Batch style changes
       const styleChanges = {};
+      for(const iconName in universal.iconRegistry) {
+        const icon = universal.iconRegistry[iconName];
+        if(icon.types?.includes(snd.type)) {
+          styleChanges.backgroundImage = `url("/user-data/hooks/fd.iconregistry/${icon.identifier}.${icon.img.split(".").at(-1)}")`;
+        }
+      }
+
       if (snd.data.icon)
         styleChanges.backgroundImage = `url("${snd.data.icon}")`;
       if (snd.data.color) styleChanges.backgroundColor = snd.data.color;
