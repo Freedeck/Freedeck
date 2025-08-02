@@ -42,8 +42,8 @@ const pl = {
 		return sanitizedList;
 	},
 	plugins: () => {
-		if (pl._pluginCache.length >= 0) {
-			(async () => await pl.update())();
+		if (pl._pluginCache.length === 0) {
+			pl.update();
 			debug.log("Plugins updated.", "Plugins");
 		}
 		return pl._pluginCache;

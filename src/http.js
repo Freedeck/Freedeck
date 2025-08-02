@@ -6,7 +6,6 @@ const {recordTime} = require("$/timer")
 const app = express();
 const server = http.createServer(app);
 const config = require("@managers/settings");
-const notifMan = require("@managers/notifications");
 const { compileWebpack } = require("@src/webpack");
 
 /** ROUTERS */

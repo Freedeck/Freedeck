@@ -16,12 +16,12 @@ const io = new socketIO.Server(server);
 const handlers = [];
 const plugins = pluginManager.plugins();
 
-const handlerDirectory = path.resolve("./src/handlers");
-const handlerListing = fs.readdirSync(handlerDirectory);
 
 (async()=>{
+  const handlerDirectory = path.resolve("./src/handlers");
+  const handlerListing = await fs.promises.readdir(handlerDirectory);
   for (const file of handlerListing) {
-    if (fs.lstatSync(path.resolve(handlerDirectory, `${file}`)).isDirectory()) {
+    if ((await fs.promises.lstat(path.resolve(handlerDirectory, `${file}`))).isDirectory()) {
       recordTime(`server:load-socket-handler-skip-folder,${file}`)
       continue;
     }

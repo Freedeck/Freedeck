@@ -7,8 +7,8 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
   const resolved = path.resolve(`./plugins/${filePath}`);
   let pathToEx = path.resolve(`./tmp/_${filePath.replaceAll("/", "_")}`);
   if(!overrideExtractionPath) {
-    if(fs.existsSync(pathToEx)) fs.rmSync(pathToEx, {recursive:true,force:true})
-    fs.mkdirSync(pathToEx, { recursive: true });
+    if(fs.existsSync(pathToEx)) await fs.promises.rm(pathToEx, {recursive:true,force:true})
+    await fs.promises.mkdir(pathToEx, { recursive: true });
     tar.x({
       file: resolved,
       cwd: pathToEx,
@@ -52,7 +52,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
       }
       if (fs.existsSync(path.resolve(`./plugins/${instantiated.id}/settings.json`))) {
         const settings = JSON.parse(
-          fs.readFileSync(
+          await fs.promises.readFile(
             path.resolve(`./plugins/${instantiated.id}/settings.json`),
           ),
         );
@@ -65,7 +65,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
     const location = path.resolve(`user-data/themes/${name}`);
     const themeFile = path.resolve(`user-data/themes/${name}.css`);
     if(!fs.existsSync()) {
-      fs.mkdirSync(location, { recursive: true });
+      await fs.promises.mkdir(location, { recursive: true });
     }
     const noop = (...e)=>{};
     const instantiated = {};
@@ -91,7 +91,7 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
           continue;
         }
         const dest = path.resolve(location, file);
-        fs.copyFileSync(path.resolve(pathToEx, file), dest);
+        await fs.promises.copyFile(path.resolve(pathToEx, file), dest);
       }
     }
     const themeMeta = `:theme-meta {
@@ -100,9 +100,9 @@ async function openPackage({debug, filePath, pluginManager, overrideExtractionPa
       --author: "${author}";
       --version: "${version}";
       }\n`;  
-    fs.appendFileSync(themeFile, themeMeta);
+    await fs.promises.appendFile(themeFile, themeMeta);
 
-    fs.appendFileSync(themeFile, fs.readFileSync(path.resolve(pathToEx, main)));
+    await fs.promises.appendFile(themeFile, fs.readFileSync(path.resolve(pathToEx, main)));
   }
   debug.log(`${picocolors.green(`${freedeck.package === 'plugin' ? "Plugin" : "Theme"} loaded: ${freedeck.title} (${name})`)}`, picocolors.blue("Plugins / FDPackage"));
 }
