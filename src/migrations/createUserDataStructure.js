@@ -9,7 +9,8 @@ const folders = [
   "dash-modules",
   "logs",
   "themes",
-  "soundpacks"
+  "soundpacks",
+  "icon-registry"
 ]
 if(!fs.existsSync(path.resolve("user-data"))) fs.mkdirSync(path.resolve("user-data"));
 for(const folder of folders) {

@@ -362,7 +362,7 @@ function reloadSounds() {
       for(const iconName in universal.iconRegistry) {
         const icon = universal.iconRegistry[iconName];
         if(icon.types?.includes(snd.type)) {
-          styleChanges.backgroundImage = `url("/user-data/hooks/fd.iconregistry/${icon.identifier}.${icon.img.split(".").at(-1)}")`;
+          styleChanges.backgroundImage = `url("/user-data/icon-registry/${icon.identifier}.${icon.img.split(".").at(-1)}")`;
         }
       }
 

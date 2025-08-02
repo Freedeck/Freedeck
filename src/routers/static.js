@@ -11,6 +11,7 @@ const paths = {
   userData_dashModules: path.resolve("user-data/dash-modules"),
   userData_hooks: path.resolve("user-data/hooks"),
   userData_icons: path.resolve("user-data/icons"),
+  userData_iconRegistry: path.resolve("user-data/icon-registry"),
   userData_pluginViews: path.resolve("user-data/plugin-views"),
   userData_soundpacks: path.resolve("user-data/soundpacks"),
   userData_sounds: path.resolve("user-data/sounds"),
@@ -29,6 +30,7 @@ const paths = {
 
 const expressRouters = {
   "/app": express.static(paths.userData_bundles),
+  "/user-data/icon-registry": express.static(paths.userData_iconRegistry),
   "/user-data/dash-modules": express.static(paths.userData_dashModules),
   "/user-data/hooks": express.static(paths.userData_hooks),
   "/icons": express.static(paths.userData_icons),
