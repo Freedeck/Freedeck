@@ -187,6 +187,18 @@ export default async function eventsHandler(universal, user) {
 			universal.sendEvent("auth", auth);
 		});
 
+		universal.on(universal.events.set_tile_icon, (type, registryFilename) => {
+			for (const button of document.querySelectorAll(".button[data-interaction]")) {
+				if (button.id === "editor-btn") continue;
+				try {
+					const dat = JSON.parse(button.getAttribute("data-interaction"));
+					if (dat.type === type) {
+						button.style.backgroundImage = `url("/user-data/icon-registry/${registryFilename}`;
+					}
+				} catch (error) {}
+			}
+		})
+
 		universal.sendEvent("init");
 		universal.CLU("Event Handler", "Created event handlers, sending init event.");
 		

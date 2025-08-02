@@ -34,6 +34,7 @@ const eventNames = {
 		new_tile: "ckN",
 		del_tile: "ckD",
 		edit_tile: "ckE",
+		set_tile_icon: "ckI",
 		move_tile: "ckM",
 		set_profile: "cpS",
 		add_profile: "cpA",
