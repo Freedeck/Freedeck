@@ -1,18 +1,22 @@
-const { match, hash, equals } = require("./secrets");
+const { match, hash, equals } = require("@managers/secrets");
 
 const aac = {
 	expiryInMs: 3000 * 10, // 3000ms * 10 = 30 seconds
 	_registry: {},
 	register: (id, password, hashed=false) => {
-		if((hashed ? match("password", password) : equals("password", password)) && (!aac._registry[id] || Math.abs(aac._registry[id].given - Date.now()) <= aac.expiryInMs)) {
+		const passwordEquality = (hashed ? match("password", password) : equals("password", password));
+		const notInRegistryOrExpired = (!aac._registry[id] || Math.abs(aac._registry[id].given - Date.now()) >= aac.expiryInMs);
+		if(passwordEquality && notInRegistryOrExpired) {
 			const token = hash(`${id}.FD_AAC`).substring(0,32);
+			const hashed = Date.now();
 			aac._registry[id] = {
 				token,
-				given: Date.now()
+				given: hashed,
+				expiresAt: hashed + aac.expiryInMs
 			}
-			return token;
+			return aac._registry[id];
 		}
-		return false;
+		return {token: null, given: -1, expiresIn: -1 + aac.expiryInMs};
 	},
 	check: (ctoken) => {
 		for(const key in aac._registry) {

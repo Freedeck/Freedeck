@@ -1,0 +1,157 @@
+openapi: 3.0.4
+info:
+  title: Freedeck Connect (Local) API
+  description: Remember, this API can change at any time! Remember to check the docs every once in a while if something stops working. **NOTE THAT ALL METHODS WITH AUTHORIZATION ARE ONLY IF THE SERVER HAS THE AUTHORIZATION/PASSWORD FEATURE ENABLED. IF NOT, YOU MAY IGNORE IT.** These docs will assume you have the authorization/password feature enabled.
+  version: 6.0.0
+
+servers:
+  - url: http://localhost:5754/
+    description: Freedeck Connect API
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Freedeck API token beginning with "fd."
+      type: apiKey
+      in: header 
+      name: Authorization
+
+paths:
+  /:
+    get:
+      summary: Returns the Freedeck Client UI
+      responses:
+        "200":
+          description: OK
+  /api/discover:
+    get:
+      summary: Returns a simple identification of the Freedeck Server.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Freedeck
+                  version:
+                    type: string
+                    example: 6.0.0-rc4
+                  plugins:
+                    type: array
+                    description: A list of currently installed plugins.
+                    items:
+                      type: string
+                      example:
+                        - obscontrol
+                        - v2.0.0
+                  webpackStatus:
+                    type: string
+                    description: Can be any of 'uninitialized', 'compiling', or 'ready'. Used to halt immediate Companion connection to await bundles being fresh and ready.
+                    example: compiling
+                  deviceStatus:
+                    description: Whether or not the user's external Freedeck Client is connected
+                    type: boolean
+                  ip:
+                    description: The local IPs discovered on the machine.
+                    type: string
+                  myApp:
+                    description: MyFreedeck properties
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        description: The generated code to connect locally
+                        example: ABCDEF
+                      host:
+                        type: string
+                        description: The MyFreedeck server host.
+                        example: https://my.freedeck.app/
+  /api/discover/code-request:
+    get:
+      summary: Request a MyFreedeck code forcefully. Not recommended, as it will send the IP and hostname without consent if not done by Companion. Will be removed in the full stable release of Freedeck v6.0.0.
+      deprecated: true
+      responses: 
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ABCDEF
+  /api/auth:
+    post:
+      summary: Create a AuthenticatedAPIToken to re-use and identify the client as authenticated.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: 'fd.a3dafc9d044e40fae380f9789567b'
+                  given:
+                    description: When the API token was issued (created hash) on the server.
+                    type: number
+                    example: 1754299957498
+                  expiresAt:
+                    description: When the API token will expire. Upon expiry, the token is granted 1 final use.
+                    type: number
+                    example: 1754299987502
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: A simple way for Freedeck to identify who you are through token.
+                  example: myApp
+                password:
+                  type: string
+                  description: The Freedeck server's password
+                  example: fd.093153af95a8ea96bd0526030a782691d3f001d2eb6996af86852bd202b73275654761ae8aac1c32d2e675c75088da8425f4bf4ac7061561af64e38314ff1f2e
+                preHashed:
+                  description: State if your token is already hashed (with the prefix "fd.")
+                  type: boolean
+                  example: true
+  /api/plugin/{pluginId}:
+    get:
+      parameters:
+        - in: path
+          name: pluginId
+          schema:
+            type: string
+            example: obscontrol
+          required: true
+          description: ID of the plugin to get.
+
+      summary: Get information on a specific plugin.
+      responses: 
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: gui
+              examples:
+                auth:
+                  summary: Authorized
+                  value: {"instance":{"v2":true,"name":"OBS Control","author":"Freedeck","imports":[],"Settings":{"password":"-REDACTED-"},"hooks":[{"type":4,"name":"editor.view"},{"type":1,"name":"oc/server.js"},{"type":0,"name":"oc/server.js"}],"views":{"OBS Control":"editor.view"},"dashModules":{},"id":"obscontrol","stopped":false,"hasInit":true,"popout":"","_hookLocation":"user-data/hooks/","_usesAsar":false,"_id":"opi9xi","_callbacks":{"0":[null]},"_intent":[0,1],"io":{"active":false},"types":[{"type":"obs.cf","renderType":"button","templateData":{"password":"change-me"},"name":"Reconnect to OBS","pluginId":"obscontrol","hidden":true,"display":"OBS Control"}],"currentDataPacket":{},"version":"2.0.0","file":{"filePath":"obscontrol.fdpackage"}}}
+                err_login:
+                  summary: "Error: Invalid Token"
+                  value: {"error":true,"message":"Invalid token"}
+                err_no_token:
+                  summary: "Error: No Token"
+                  value: {"error":true,"message":"No token provided"}
+      security:
+        - ApiKeyAuth: []

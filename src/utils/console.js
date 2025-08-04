@@ -136,5 +136,8 @@ function wasEntered(g) {
 
 module.exports = {
   dataListeners,
-  wasEntered
+  wasEntered,
+  addCommand: (i,d) => {
+    commands[i] = d;
+  }
 }

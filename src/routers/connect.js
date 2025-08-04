@@ -50,6 +50,8 @@ appCodeRequest.searchParams.set("code", randomlyGenerated);
 appCodeRequest.searchParams.set("name", "Companion");
 appCodeRequest.searchParams.set("local_ip", determinedIP);
 
+router.use(express.json())
+
 router.get("/discover/code-request", (req, res) => {
   if(myAppCode === "Loading..." || !myAppCode) {
     fetch(appCodeRequest).then((res) => res.text()).then((res) => {
@@ -83,23 +85,26 @@ router.get("/discover", (req, res) => {
   res.send(discoveryInformation)
 });
 
-router.get("/auth/:identifier/:password/:hashType", (req, res) => {
-  if(req.params.hashType === 'hashed') {
-    res.send(aac.register(req.params.identifier, `${req.params.password}`, true))
-  } else {
-    res.send(aac.register(req.params.identifier, req.params.password))
-  }
+router.post("/auth", (req, res) => {
+  const {
+    id,
+    password,
+    preHashed = false
+  } = req.body;
+  console.log(req.body)
+  res.send(aac.register(id, password, !preHashed))
 })
 
-router.get("/plugin/:pluginId/:token", (req, res) => {
+router.get("/plugin/:pluginId", (req, res) => {
   if(settings().useAuthentication) {
-    if(!req.params.hashedPassword) res.send({error:true, message:"Authentication required!"})
-    if(sec.match("password", req.params.hashedPassword)) {
+    if(!req.headers.authorization) res.send({error:true, message:"No token provided"})
+    
+    if(aac.check(req.headers.authorization)) {
       res.send(plugins.plugins().get(req.params.pluginId));
     } else {
       res.send({
         error: true,
-        message: "Incorrect password!"
+        message: "Invalid token"
       })
     }
   } else {
