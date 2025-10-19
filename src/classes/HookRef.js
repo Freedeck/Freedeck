@@ -16,7 +16,7 @@ module.exports = class HookRef {
 		/** Used to specify an editor view/button for deeply integrated button types.*/
 		view: 4,
 		/** Used to specify a Dash module-- part of the Freedeck NewUI update.*/
-		dashModule: 5
+		dashModule: 5,
 	};
 
 	/**
@@ -36,6 +36,6 @@ module.exports = class HookRef {
 	 * @param  {...any} args Any arguments you want to pass to the server-side hook
 	 */
 	execute(...args) {
-		require(this.#file)(...args)
+		require(this.#file)(...args);
 	}
 };

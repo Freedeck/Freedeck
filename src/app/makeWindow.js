@@ -16,18 +16,16 @@ module.exports = (
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
-			preload: path.resolve("src/app/preload.js")
-		}
+			preload: path.resolve("src/app/preload.js"),
+		},
 	});
-
-
 
 	const dimensions = {
 		splashScreen: [420, 525],
 		default: [1400, 850],
 		// emu: [1136, 640],
 		emu: [570, 370],
-	}
+	};
 
 	ipcMain.handle("resize-splash", () => _handle(...dimensions.splashScreen));
 	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
@@ -37,9 +35,9 @@ module.exports = (
 		mainWindow.setSize(w, h);
 		mainWindow.center();
 	}
-	
+
 	console.log(`Here we go! Launching the requested page ${_page}`);
-	
+
 	if (!isUrl) mainWindow.loadFile(path.resolve(_page));
 	else mainWindow.loadURL(_page);
 

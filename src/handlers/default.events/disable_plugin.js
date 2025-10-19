@@ -4,25 +4,33 @@ const eventNames = require("../eventNames");
 const fs = require("node:fs");
 
 module.exports = ({ io, data }) => {
-	if(!data) {
-		io.emit(eventNames.default.notif, {sender: "Freedeck", data: "No plugin provided."});
+	if (!data) {
+		io.emit(eventNames.default.notif, {
+			sender: "Freedeck",
+			data: "No plugin provided.",
+		});
 		return;
 	}
 	const currLoaded = plugins.plugins();
-	plugin = currLoaded.get(data)
-	if(!plugin) {
-		io.emit(eventNames.default.notif, {sender: "Freedeck", data: `Plugin ${data} not found.`});
+	plugin = currLoaded.get(data);
+	if (!plugin) {
+		io.emit(eventNames.default.notif, {
+			sender: "Freedeck",
+			data: `Plugin ${data} not found.`,
+		});
 		return;
 	}
 	plugin = plugin.instance;
-	console.log("RH EEEE", plugin)
-	if(!fs.existsSync(path.resolve(`./plugins/${plugin.file.filePath}`))) return;
-	if(Object.keys(plugin.types).length > 0) {
+	console.log("RH EEEE", plugin);
+	if (!fs.existsSync(path.resolve(`./plugins/${plugin.file.filePath}`))) return;
+	if (Object.keys(plugin.types).length > 0) {
 		for (const type of plugin.types) {
 			plugins.types().delete(type);
 		}
 	}
-	console.log(`Attempting to disable ${plugin.file.filePath} (${plugin.name})...`);
+	console.log(
+		`Attempting to disable ${plugin.file.filePath} (${plugin.name})...`,
+	);
 	currLoaded.delete(plugin.id);
 	fs.renameSync(
 		path.resolve(`./plugins/${plugin.file.filePath}`),

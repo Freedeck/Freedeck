@@ -1,35 +1,43 @@
 <div class="flex-wrap-r alc">
-	<img src="/assets/logo_big.png" alt="Freedeck" width="75" height="75">
+	<img src="/assets/logo_big.png" alt="Freedeck" width="75" height="75" />
 	<h1>Audio Setup</h1>
 </div>
 <p>
-	You're almost there! We just need to configure your outputs and connect your phone.
+	You're almost there! We just need to configure your outputs and connect your
+	phone.
 </p>
 <div class="item">
 	<h3>Monitor Device</h3>
-	<p>This will be where you hear the sounds. Freedeck now supports playing through multiple devices at once, so pick as
-		many as you like.</p>
+	<p>
+		This will be where you hear the sounds. Freedeck now supports playing
+		through multiple devices at once, so pick as many as you like.
+	</p>
 	<div class="monitor-devices audio-device-picker"></div>
 </div>
-<br>
+<br />
 <div class="item">
 	<h3>VB-Cable device</h3>
-	<p>This is where Freedeck will also send audio. If you do not have VB-Cable, install it from <a target="_blank"
-			href="https://vb-audio.com/Cable/">https://vb-audio.com/Cable/</a></p>
+	<p>
+		This is where Freedeck will also send audio. If you do not have VB-Cable,
+		install it from
+		<a target="_blank" href="https://vb-audio.com/Cable/"
+			>https://vb-audio.com/Cable/</a
+		>
+	</p>
 	<div class="vb-cables audio-device-picker"></div>
 </div>
-<br>
-<button id="nexta">
-	Next
-</button>
-<br>
+<br />
+<button id="nexta">Next</button>
+<br />
 <details id="fas">
 	<summary>
 		<strong>Developer Mode</strong>
 	</summary>
 	<button id="bypass">Partial Setup Bypass</button>
 	<button id="bypasssi">Full Setup Bypass</button>
-	<p>If you bypass with sidebar, you will not be able to come back without resetting "has_setup" from the Settings tab.
+	<p>
+		If you bypass with sidebar, you will not be able to come back without
+		resetting "has_setup" from the Settings tab.
 	</p>
 	<button id="recom">Toggle Recompile on Right</button>
 </details>
@@ -39,9 +47,9 @@
 		display: flex;
 		flex-direction: column;
 		flex-wrap: wrap;
-		gap: .5rem;
+		gap: 0.5rem;
 		background-color: rgba(0, 0, 0, 0.25);
-		padding: .5rem;
+		padding: 0.5rem;
 		border-radius: var(--main-radius);
 	}
 
@@ -52,8 +60,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: start;
-		padding: .25rem;
-		gap: .5rem;
+		padding: 0.25rem;
+		gap: 0.5rem;
 		border-radius: var(--main-radius);
 		background-color: rgba(0, 0, 0, 0.25);
 	}

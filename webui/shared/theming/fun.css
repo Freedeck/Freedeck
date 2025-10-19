@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
 
 :theme-meta {
 	--name: "Fun";
@@ -10,22 +10,33 @@
 
 :root {
 	--font: "Style Script", cursive, "Comic Sans MS", Rubik, sans-serif;
-	
-	--main-bg:linear-gradient(45deg, rgba(245, 75, 66, 1) 0%, rgba(245, 162, 29, 1) 33%, rgba(195, 245, 29, 1) 66%, rgba(0, 179, 255, 1) 100%);
+
+	--main-bg: linear-gradient(
+		45deg,
+		rgba(245, 75, 66, 1) 0%,
+		rgba(245, 162, 29, 1) 33%,
+		rgba(195, 245, 29, 1) 66%,
+		rgba(0, 179, 255, 1) 100%
+	);
 
 	--companion-right-sidebar-bg: blue;
 
-	--tile-bg: rgba(255,0,0,0.6675);
+	--tile-bg: rgba(255, 0, 0, 0.6675);
 	--tile-border: 5px solid #f8f9fa;
 
-	--modal-item-bg:linear-gradient(45deg, rgba(245, 75, 66, 1) 0%, rgba(245, 162, 29, 1) 33%, rgba(195, 245, 29, 1) 66%, rgba(0, 179, 255, 1) 100%);
+	--modal-item-bg: linear-gradient(
+		45deg,
+		rgba(245, 75, 66, 1) 0%,
+		rgba(245, 162, 29, 1) 33%,
+		rgba(195, 245, 29, 1) 66%,
+		rgba(0, 179, 255, 1) 100%
+	);
 
-	--modal-bg: rgba(0,0,255,0.84);
+	--modal-bg: rgba(0, 0, 255, 0.84);
 	--modal-color: green;
 
 	--text-color: red;
 	--text-color-secondary: hotpink;
-
 }
 
 @keyframes editor-pull-down {
@@ -86,7 +97,6 @@
 	filter: blur(10px) brightness(30%) contrast(30%);
 }
 
-
 #sidebar ul {
 	width: max-content;
 	height: max-content;
@@ -137,6 +147,11 @@
 	}
 }
 
-button:hover, a:hover, h1:hover,div:hover, details:hover, summary:hover {
-	animation: 60s weee cubic-bezier(0.1, 0.7, 1.0, 0.1) infinite;
+button:hover,
+a:hover,
+h1:hover,
+div:hover,
+details:hover,
+summary:hover {
+	animation: 60s weee cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
 }

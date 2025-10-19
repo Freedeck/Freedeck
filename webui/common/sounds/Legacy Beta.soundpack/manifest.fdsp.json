@@ -1,24 +1,24 @@
 {
-	"info": {
-		"name": "Legacy Beta",
-		"version": "1.0.0",
-		"author": "Freedeck",
-		"description": "The OLD Futuristic soundpack for Freedeck",
-		"id": "Legacy Beta.soundpack"
-	},
-	"sounds": {
-		"click": "click.mp3",
-		"page_enter": "page_enter.mp3",
-		"slide_open": "slide_open.mp3",
-		"slide_close": "slide_close.mp3",
-		"int_yes": "iyes.mp3",
-		"int_no": "ino.mp3",
-		"int_type": "itype.mp3",
-		"int_confirm": "iprompt.mp3",
-		"int_prompt": "isuperprompt.mp3",
-		"editor_open": "editor_open.mp3",
-		"page_up": "page_tile_up.mp3",
-		"page_down": "page_tile_down.mp3",
-		"webpack_awaiting": "webpack_awaiting.wav"
-	}
+  "info": {
+    "name": "Legacy Beta",
+    "version": "1.0.0",
+    "author": "Freedeck",
+    "description": "The OLD Futuristic soundpack for Freedeck",
+    "id": "Legacy Beta.soundpack"
+  },
+  "sounds": {
+    "click": "click.mp3",
+    "page_enter": "page_enter.mp3",
+    "slide_open": "slide_open.mp3",
+    "slide_close": "slide_close.mp3",
+    "int_yes": "iyes.mp3",
+    "int_no": "ino.mp3",
+    "int_type": "itype.mp3",
+    "int_confirm": "iprompt.mp3",
+    "int_prompt": "isuperprompt.mp3",
+    "editor_open": "editor_open.mp3",
+    "page_up": "page_tile_up.mp3",
+    "page_down": "page_tile_down.mp3",
+    "webpack_awaiting": "webpack_awaiting.wav"
+  }
 }

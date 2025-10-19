@@ -27,7 +27,7 @@ textarea {
 	color: var(--input-color);
 	border: var(--generic-border);
 	border-radius: var(--main-radius);
-	padding: .5rem;
+	padding: 0.5rem;
 }
 
 .information {
@@ -105,7 +105,7 @@ textarea {
 	font-size: 1.75em;
 	color: var(--companion-right-sidebar-color);
 	z-index: 1002;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 .prompt {
@@ -131,7 +131,7 @@ textarea {
 	border-radius: var(--main-radius);
 	padding: 1.5rem;
 	z-index: 1000;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
@@ -155,14 +155,15 @@ textarea {
 	text-align: end;
 	align-items: end;
 	align-content: end;
-	border-radius: calc(0.5 * var(--main-radius)) 0 0 calc(0.5 * var(--main-radius));
+	border-radius: calc(0.5 * var(--main-radius)) 0 0
+		calc(0.5 * var(--main-radius));
 	padding: 5px;
 	border: 1px solid transparent;
 	border-block-start-color: var(--border-color);
 	border-inline-start-color: var(--border-color);
 	border-block-end-color: var(--border-color);
 	cursor: pointer;
-  color: var(--text-color);
+	color: var(--text-color);
 }
 
 #sidebar ul li a:hover {
@@ -174,7 +175,7 @@ textarea {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	gap: .5rem;
+	gap: 0.5rem;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -189,7 +190,7 @@ textarea {
 	height: 100%;
 	z-index: 1002;
 	overflow-y: scroll;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 .sidebar.disabled {
@@ -214,13 +215,13 @@ textarea {
 	border: var(--generic-border);
 	padding: 0.5rem;
 	z-index: 1021;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 	cursor: default;
 }
 
 .menuItem {
 	padding: 0.5rem;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 .menuItem:hover {
@@ -244,14 +245,14 @@ textarea {
 	align-items: start;
 	justify-content: center;
 	flex-direction: column;
-	gap: .5rem;
-	overflow: hidden
+	gap: 0.5rem;
+	overflow: hidden;
 }
 
 .horizontal-seperator {
 	height: 3px;
 	width: 95%;
-	background-color: rgba(255,255,255,0.125);
+	background-color: rgba(255, 255, 255, 0.125);
 	border-radius: var(--main-radius);
 }
 
@@ -276,8 +277,8 @@ textarea {
 
 .esection {
 	background: rgba(0, 0, 0, 0.125);
-	border: 1px solid rgba(255,255,255,0.225);
-	padding: .5rem;
+	border: 1px solid rgba(255, 255, 255, 0.225);
+	padding: 0.5rem;
 	border-radius: var(--main-radius);
 	display: flex;
 	align-items: center;
@@ -297,7 +298,7 @@ textarea {
 	background-color: transparent;
 	pointer-events: none;
 	z-index: 1000;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 .editor-options {
@@ -306,26 +307,26 @@ textarea {
 }
 
 @keyframes editor-pull-down {
-	from{
-			bottom: -100vh;
+	from {
+		bottom: -100vh;
 	}
 
 	to {
-			bottom: 0;
-		}
+		bottom: 0;
+	}
 }
 
 @keyframes editor-pull-up {
-	from{
-			bottom: 0;
-		}
+	from {
+		bottom: 0;
+	}
 
 	to {
-			bottom: -100vh;
+		bottom: -100vh;
 	}
 }
 #keys.smaller {
-	padding: .5rem;
+	padding: 0.5rem;
 }
 .smaller {
 	transform: scale(0.825);
@@ -336,20 +337,19 @@ textarea {
 
 .message-editor {
 	position: relative;
-	top: .25rem;
+	top: 0.25rem;
 	left: 50%;
 	border: 0;
 	transform: translate(-50%, 0);
-	background-color: rgba(0,0,0,0.125);
+	background-color: rgba(0, 0, 0, 0.125);
 	border: var(--generic-border);
 	width: max-content;
 	padding: 0.5rem;
 	border-radius: var(--main-radius);
 	pointer-events: none;
 	z-index: 1000;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
-
 
 #editor-div {
 	position: absolute;
@@ -368,17 +368,17 @@ textarea {
 	z-index: 1000;
 	overflow-y: scroll;
 	border: var(--generic-border);
-	scrollbar-color: rgba(0,0,0,0);
+	scrollbar-color: rgba(0, 0, 0, 0);
 	scrollbar-width: none;
 	overflow-x: hidden;
-	animation-duration: .325s;
+	animation-duration: 0.325s;
 	display: flex;
 	flex-direction: row;
 	gap: 1rem;
 }
 
-#editor-div>h1,
-#editor-div>.notice {
+#editor-div > h1,
+#editor-div > .notice {
 	text-align: center;
 }
 
@@ -386,7 +386,7 @@ textarea {
 	background-color: transparent;
 	border: 0;
 	cursor: pointer;
-	transition-duration: .45s;
+	transition-duration: 0.45s;
 	transform: rotate(180deg);
 }
 
@@ -409,31 +409,31 @@ textarea {
 }
 
 @keyframes view-in {
-	from{
+	from {
 		width: 0;
 		left: 100%;
 	}
 
 	to {
-			width: 100%;
-			left: 0;
+		width: 100%;
+		left: 0;
 	}
 }
 
 @keyframes view-out {
-	from{
+	from {
 		width: 100%;
 		left: 0;
 	}
 
 	to {
-			width: 0;
-			left: 100%;
+		width: 0;
+		left: 100%;
 	}
 }
 
 .toggle-sidebar {
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 	position: fixed;
 	top: 50%;
 	left: 11.5%;
@@ -444,19 +444,19 @@ textarea {
 
 #keys {
 	padding: 1rem;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 	background-color: rgba(0, 0, 0, 0.25);
 }
 
 .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 .disabled:not(.sidebar) {
@@ -478,7 +478,7 @@ textarea {
 	background-color: rgba(255, 0, 0, 0.25);
 	border-radius: var(--main-radius);
 	cursor: pointer;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 #editor-close:hover {
@@ -489,7 +489,6 @@ textarea {
 	background-color: rgba(0, 0, 0, 0.74);
 	color: white;
 }
-
 
 .fdc-slider {
 	-webkit-appearance: none;
@@ -518,7 +517,6 @@ textarea {
 .fdc-slider::-webkit-slider-thumb:hover {
 	background-color: #555;
 }
-
 
 .fdc-slider::-moz-range-thumb {
 	width: 20px;
@@ -556,13 +554,14 @@ textarea {
 	border: var(--generic-border);
 	color: var(--companion-sidebar-item-color);
 	border-radius: var(--main-radius);
-	padding: .5rem;
-	transition-duration: .25s;
+	padding: 0.5rem;
+	transition-duration: 0.25s;
 	display: flex;
 	flex-direction: column;
 }
 
-.slider-container, .slider-thumb {
+.slider-container,
+.slider-thumb {
 	pointer-events: none;
 }
 
@@ -574,7 +573,7 @@ textarea {
 .generic-chips {
 	display: flex;
 	flex-direction: column;
-	gap: .5rem;
+	gap: 0.5rem;
 	align-items: start;
 	justify-content: start;
 }
@@ -634,7 +633,7 @@ textarea {
 	text-align: center;
 }
 
-#Profiles>div button {
+#Profiles > div button {
 	background-color: rgba(0, 0, 0, 0.25);
 	border-radius: 100%;
 	width: 3rem;
@@ -661,10 +660,9 @@ textarea {
 }
 
 #constat {
-	font-size: .75em;
+	font-size: 0.75em;
 	display: block;
 }
-
 
 #ctxl-view-cont {
 	position: fixed;
@@ -674,7 +672,7 @@ textarea {
 	height: 100%;
 	background: var(--modal-bg);
 	color: var(--modal-color);
-	scrollbar-width: none;  /* Firefox */
+	scrollbar-width: none; /* Firefox */
 	overflow-y: scroll;
 	overflow-x: hidden;
 	/* margin-right: 10rem; */
@@ -700,12 +698,12 @@ textarea {
 #ctxl-view-cont html body {
 	background: none;
 	background-image: none;
-	width:100%;
-	color:var(--modal-color);
+	width: 100%;
+	color: var(--modal-color);
 	padding-left: 1rem;
 }
 #ctxl-view-cont html body::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 @keyframes opacity {
@@ -727,7 +725,7 @@ textarea {
 }
 
 .modalTitle {
-	margin-bottom: 20px; 
+	margin-bottom: 20px;
 }
 
 .modalFeedback {

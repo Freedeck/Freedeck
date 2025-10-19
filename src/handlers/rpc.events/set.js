@@ -14,11 +14,11 @@ module.exports = ({ io, socket, data }) => {
 	}
 	if (exist) return;
 	if (!io.rpcClients.includes(socket)) {
-		io.rpcClients.push({ id:socket.id, socket, data });
+		io.rpcClients.push({ id: socket.id, socket, data });
 	}
 	socket.on("disconnect", () => {
-		console.log(socket.id, "disconnected")
-		const index = io.rpcClients.map((e) => e.id===socket.id);
+		console.log(socket.id, "disconnected");
+		const index = io.rpcClients.map((e) => e.id === socket.id);
 		if (index !== -1) {
 			io.rpcClients.splice(index, 1);
 		}

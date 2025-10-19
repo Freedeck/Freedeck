@@ -3,9 +3,14 @@ const eventNames = require("../eventNames");
 
 let timeAtLastTileCreation = 0;
 module.exports = ({ socket, io, data }) => {
-	const [userBlocked, newTime] = socket.abuse.isUserBlocked(timeAtLastTileCreation, "tiles", "ioAbuse", "Deleting tiles inhumanly fast! File I/O abuse.");
+	const [userBlocked, newTime] = socket.abuse.isUserBlocked(
+		timeAtLastTileCreation,
+		"tiles",
+		"ioAbuse",
+		"Deleting tiles inhumanly fast! File I/O abuse.",
+	);
 	timeAtLastTileCreation = newTime;
-	if(userBlocked) return;
+	if (userBlocked) return;
 	const deletingItem = JSON.parse(data);
 	const settings = config.settings();
 	const currentProfile = settings.profiles[settings.profile];
@@ -15,6 +20,8 @@ module.exports = ({ socket, io, data }) => {
 	});
 
 	config.save();
-	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
+	io.emit(
+		eventNames.default.reload_sounds,
+		settings.profiles[settings.profile],
+	);
 };
- 

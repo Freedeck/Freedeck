@@ -1,16 +1,15 @@
 <center>
-    <h1>Freedeck</h1>
-    <p>Freedeck detected that the launcher is not open.</p>
-    <p>This page will automatically close.</p>
+	<h1>Freedeck</h1>
+	<p>Freedeck detected that the launcher is not open.</p>
+	<p>This page will automatically close.</p>
 </center>
 
 <script>
-    window.location.href = "freedeck://startup";
-    const conn = new WebSocket("ws://localhost:5756");
-    conn.onopen = () => {
-        conn.send("open");
-        conn.close();
-        window.close();
-    };
+	window.location.href = "freedeck://startup";
+	const conn = new WebSocket("ws://localhost:5756");
+	conn.onopen = () => {
+		conn.send("open");
+		conn.close();
+		window.close();
+	};
 </script>
-

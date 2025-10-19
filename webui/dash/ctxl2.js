@@ -19,11 +19,13 @@ const ctxl = {
 			ele.innerText = `View ${view} not found.`;
 			return ele;
 		}
-		if(document.querySelectorAll(`script[ctxl-id="${view}"]`).length > 0) {
-      for(const script of document.querySelectorAll(`script[ctxl-id="${view}"]`)) {
+		if (document.querySelectorAll(`script[ctxl-id="${view}"]`).length > 0) {
+			for (const script of document.querySelectorAll(
+				`script[ctxl-id="${view}"]`,
+			)) {
 				script.remove();
 			}
-    }
+		}
 		const view_html = document.createElement(ctxl.as);
 		view_html.setAttribute("ctxl-id", view);
 		view_html.innerHTML = ctxl.loadingHTML;
@@ -33,30 +35,30 @@ const ctxl = {
 				view_html.innerHTML = data;
 			})
 			.then(async () => {
-				await ctxl.processViewScripts(view_html, view)
+				await ctxl.processViewScripts(view_html, view);
 			});
 		return view_html;
 	},
-	processViewScripts: async (view_html, view)=> {
+	processViewScripts: async (view_html, view) => {
 		const scripts = view_html.getElementsByTagName("script");
-	
+
 		for (let i = 0; i < scripts.length; i++) {
 			const original = scripts[i];
 			const handleAsCjs = original.hasAttribute("ctxl-cjs");
 			const handleAsExternalImport = original.hasAttribute("ctxl-import");
 			const block = original.hasAttribute("ctxl-block");
-	
+
 			const script = document.createElement("script");
 			script.type = handleAsCjs ? "" : "module";
 			script.classList.add("ctxl-view-script");
 			script.setAttribute("ctxl-id", view);
-	
+
 			if (handleAsExternalImport) {
 				script.src = original.src;
 			} else {
 				script.text = original.text;
 			}
-	
+
 			if (block) {
 				await new Promise((resolve, reject) => {
 					script.onload = resolve;
@@ -67,7 +69,7 @@ const ctxl = {
 				document.body.appendChild(script);
 			}
 		}
-	},	
+	},
 	opened: [],
 	createViewContainer: () => {
 		const view_container = document.createElement("div");
@@ -76,14 +78,15 @@ const ctxl = {
 	},
 	nonDestructiveView: (view) => {
 		ctxl.forceViewContainer();
-		const lookupExistingView = document.querySelector(`${ctxl.as}[ctxl-id="${view}`)
-    const nView = ctxl.generateView(view)
+		const lookupExistingView = document.querySelector(
+			`${ctxl.as}[ctxl-id="${view}`,
+		);
+		const nView = ctxl.generateView(view);
 		if (lookupExistingView)
-			ctxl.viewContainer().replaceChild(lookupExistingView,nView,);
-		else
-			ctxl.viewContainer().appendChild(nView);
+			ctxl.viewContainer().replaceChild(lookupExistingView, nView);
+		else ctxl.viewContainer().appendChild(nView);
 		ctxl.opened.push(view);
-    return nView;
+		return nView;
 	},
 	destructiveView: (view) => {
 		ctxl.forceViewContainer();
@@ -92,7 +95,8 @@ const ctxl = {
 		ctxl.opened = [view];
 	},
 	forceViewContainer: () => {
-		if (!document.querySelector(ctxl.view_container)) document.body.appendChild(ctxl.createViewContainer());
+		if (!document.querySelector(ctxl.view_container))
+			document.body.appendChild(ctxl.createViewContainer());
 	},
 	viewContainer: () => document.querySelector(ctxl.view_container),
 	reloadView: (view) => {
@@ -103,7 +107,9 @@ const ctxl = {
 		for (let i = 0; i < scripts.length; i++) {
 			scripts[i].remove();
 		}
-		ctxl.viewContainer().replaceChild(
+		ctxl
+			.viewContainer()
+			.replaceChild(
 				ctxl.generateView(view),
 				document.querySelector(`${ctxl.as}[ctxl-id="${view}"]`),
 			);

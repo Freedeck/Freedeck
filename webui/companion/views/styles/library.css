@@ -1,68 +1,68 @@
 #library h2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 #library-view-sounds,
 #library-view-icons {
-  width: unset;
+	width: unset;
 }
 
 .save-changes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  margin: 1rem;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	margin: 1rem;
 }
 
 .uploads {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	flex-wrap: wrap;
 }
 
 .upload {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--modal-item-text);
-  border: var(--generic-border);
-  border-radius: var(--main-radius);
-  gap: 0.25rem;
-  width: min-content;
-  height: min-content;
-  text-overflow: ellipsis;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--modal-item-text);
+	border: var(--generic-border);
+	border-radius: var(--main-radius);
+	gap: 0.25rem;
+	width: min-content;
+	height: min-content;
+	text-overflow: ellipsis;
 
-  background: var(--modal-item-bg);
-  background-size: var(--modal-item-bg-size);
-  animation: var(--modal-item-bg-anim);
+	background: var(--modal-item-bg);
+	background-size: var(--modal-item-bg-size);
+	animation: var(--modal-item-bg-anim);
 }
 
 .uploads-0 .upload audio {
-  transform: scale(0.9);
-  border: none;
+	transform: scale(0.9);
+	border: none;
 }
 
 .uploads-0 .upload p {
-  padding: 0.5rem;
+	padding: 0.5rem;
 }
 
 .uploads-1 .upload {
-  width: var(--tile-width);
-  height: var(--tile-height);
+	width: var(--tile-width);
+	height: var(--tile-height);
 }
 
 .upload img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: relative;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  background-color: white;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background-color: white;
 }

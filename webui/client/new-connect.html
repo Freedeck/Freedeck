@@ -1,242 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
+		/>
+		<meta content="Freedeck" property="og:title" />
+		<meta content="#00b3ff" data-react-helmet="true" name="theme-color" />
+		<meta name="theme-color" content="#00b3ff" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="Freedeck" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="msapplication-TileColor" content="#00b3ff" />
+		<title>Freedeck is connecting...</title>
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
-  <meta content="Freedeck" property="og:title" />
-  <meta content="#00b3ff" data-react-helmet="true" name="theme-color" />
-  <meta name="theme-color" content="#00b3ff" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Freedeck" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="msapplication-TileColor" content="#00b3ff" />
-  <title>Freedeck is connecting...</title>
-</head>
+	<body>
+		<h1>Freedeck</h1>
+		<div class="center">
+			<div class="col-start">
+				<progress id="progress" value="0" max="100"></progress>
+			</div>
+		</div>
+		<div class="connection">
+			<small id="failure">Connection Settings</small>
+			<input type="text" value="http://localhost:5754" id="url" />
+			<button id="retry">Retry</button>
+		</div>
+		<img src="./assets/logo_big.png" class="icon" />
+		<p class="progress-text">Freedeck is starting...</p>
+		<style>
+			@import url("style/fonts.css");
+			button {
+				background-color: #17212a;
+				border: 1px solid rgba(255, 255, 255, 0.1);
 
-<body>
-  <h1>Freedeck</h1>
-  <div class="center">
-    <div class="col-start">
-      <progress id="progress" value="0" max="100"></progress>
-    </div>
-  </div>
-  <div class="connection">
-    <small id="failure">Connection Settings</small>
-    <input type="text" value="http://localhost:5754" id="url">
-    <button id="retry">Retry</button>
-  </div>
-  <img src="./assets/logo_big.png" class="icon">
-  <p class="progress-text">Freedeck is starting...</p>
-  <style>
-    @import url("style/fonts.css");
-    button {
-      background-color: #17212a;
-      border: 1px solid rgba(255,255,255,0.1);
+				color: white;
+				border-radius: 1.25rem;
+				padding: 0.5rem;
+				transition-duration: 0.125s;
+			}
 
-      color: white;
-      border-radius: 1.25rem;
-      padding: .5rem;
-      transition-duration: .125s;
-    }
+			button:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+				cursor: pointer;
+			}
+			.connection {
+				position: fixed;
+				bottom: 50%;
+				left: 50%;
+				transform: translateX(-50%);
+				background-color: #17212a;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 1.5rem;
+				padding: 0.5rem;
+				display: none;
+				text-align: center;
+				flex-direction: column;
+				gap: 5px;
+			}
 
-    button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-    }
-    .connection {
-      position: fixed;
-      bottom: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #17212a;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 1.5rem;
-      padding: .5rem;
-      display: none;
-      text-align: center;
-      flex-direction: column;
-      gap: 5px;
-    }
+			.progress-text {
+				position: fixed;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-50%);
+			}
 
-    .progress-text {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+			input {
+				background-color: rgba(0, 0, 0, 0.25);
+				color: white;
+				border: 0;
+				border-radius: 1.5rem;
+				padding: 5px;
+				transition-duration: 0.125s;
+			}
 
-    input {
-      background-color: rgba(0, 0, 0, 0.25);
-      color: white;
-      border: 0;
-      border-radius: 1.5rem;
-      padding: 5px;
-      transition-duration: .125s;
-    }
+			h1 {
+				position: absolute;
+				top: 6%;
+				font-weight: 500;
+			}
 
-    h1 {
-      position: absolute;
-      top: 6%;
-      font-weight: 500;
-    }
+			.col-start {
+				/* width: 100%; */
+				position: fixed;
+				top: 43.5%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 
-    .col-start {
-      /* width: 100%; */
-      position: fixed;
-      top: 43.5%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+			.center {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				position: relative;
+			}
 
-    .center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      position: relative;
-    }
+			progress {
+				width: 300px;
+				background-color: #17212a;
+				border: 1px solid #f8f9fa;
+				border-radius: 1.5rem;
+				transition-duration: 0.125s;
+			}
 
-    progress {
-      width: 300px;
-      background-color: #17212a;
-      border: 1px solid #f8f9fa;
-      border-radius: 1.5rem;
-      transition-duration: .125s;
-    }
+			progress::-webkit-progress-bar {
+				background-color: #17212a;
+				border: 1px solid #f8f9fa;
+				border-radius: 1.5rem;
+			}
 
-    progress::-webkit-progress-bar {
-      background-color: #17212a;
-      border: 1px solid #f8f9fa;
-      border-radius: 1.5rem;
-    }
+			progress::-webkit-progress-value {
+				background-color: #f8f9fa;
+				padding: 0.2rem;
+				/* border-radius: 1.5rem; */
+			}
 
-    progress::-webkit-progress-value {
-      background-color: #f8f9fa;
-      padding: .2rem;
-      /* border-radius: 1.5rem; */
-    }
+			body {
+				background-color: #17212a;
+				color: white;
+				font-family:
+					Rethink Sans,
+					Arial,
+					sans-serif;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				overflow: hidden;
+				margin: 0;
+			}
 
-    body {
-      background-color: #17212a;
-      color: white;
-      font-family: Rethink Sans, Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      margin: 0;
-    }
+			.icon {
+				width: 100px;
+				height: 100px;
+				position: fixed;
+				bottom: 6%;
+				left: 49.8%;
+				transform: translate(-50%, -49.8%);
+			}
+		</style>
+		<script>
+			const p = document.getElementById("progress");
+			const progressText = document.querySelector(".progress-text");
+			const connection = document.querySelector(".connection");
+			const fail = document.querySelector("#failure");
+			const retry = document.querySelector("#retry");
+			const urlEle = document.getElementById("url");
+			const existing = window.location.href.split("/new-connect.html")[0];
+			const urlParameters = new URLSearchParams(window.location.search);
 
-    .icon {
-      width: 100px;
-      height: 100px;
-      position: fixed;
-      bottom: 6%;
-      left: 49.8%;
-      transform: translate(-50%, -49.8%);
-    }
-  </style>
-  <script>
-    const p = document.getElementById("progress");
-    const progressText = document.querySelector(".progress-text");
-    const connection = document.querySelector(".connection");
-    const fail = document.querySelector("#failure");
-    const retry = document.querySelector("#retry");
-    const urlEle = document.getElementById("url");
-    const existing = window.location.href.split("/new-connect.html")[0];
-    const urlParameters = new URLSearchParams(window.location.search);
-    
-    let pathAddon = "";
-    let url = urlEle.value;
-    
-    url = existing;
-    if (existing.includes('file:')) {
-      url = "http://localhost:5754";
-      pathAddon = "/companion";
-    }
+			let pathAddon = "";
+			let url = urlEle.value;
 
-    if (urlParameters.has("id") && urlParameters.get("id").includes("Companion")) pathAddon = "/companion";
-    if (urlParameters.has("id") && urlParameters.get("id").includes("Dash")) pathAddon = "/dash";
-    
-    let isTryingToConnect = false;
-    let isErrored = false;
-    if (urlParameters.has("force-fail") && urlParameters.get("force-fail") === "true") isErrored = true;
+			url = existing;
+			if (existing.includes("file:")) {
+				url = "http://localhost:5754";
+				pathAddon = "/companion";
+			}
 
-    if(isErrored) {
-      connection.style.display = "flex";
-      p.style.display = "none";
-      fail.innerText = "Force-failed.";
-      progressText.innerText = "";
-    }
+			if (
+				urlParameters.has("id") &&
+				urlParameters.get("id").includes("Companion")
+			)
+				pathAddon = "/companion";
+			if (urlParameters.has("id") && urlParameters.get("id").includes("Dash"))
+				pathAddon = "/dash";
 
-    window.splashScreen?.splash()
+			let isTryingToConnect = false;
+			let isErrored = false;
+			if (
+				urlParameters.has("force-fail") &&
+				urlParameters.get("force-fail") === "true"
+			)
+				isErrored = true;
 
-    retry.onclick = () => {
-      attemptConnection();
-      connection.style.display = "none";
-      p.style.display = "block";
-      progressText.innerText = "Retrying...";
-      urlEle.value = url;
-    }
+			if (isErrored) {
+				connection.style.display = "flex";
+				p.style.display = "none";
+				fail.innerText = "Force-failed.";
+				progressText.innerText = "";
+			}
 
-    setInterval(() => {
-      if (isTryingToConnect || isErrored) return;
-      attemptConnection();
-    }, 500);
-    
-    if(!isErrored) attemptConnection();
+			window.splashScreen?.splash();
 
-    async function attemptConnection() {
-      if (isTryingToConnect) return;
-      animateProgressTo(0);
+			retry.onclick = () => {
+				attemptConnection();
+				connection.style.display = "none";
+				p.style.display = "block";
+				progressText.innerText = "Retrying...";
+				urlEle.value = url;
+			};
 
-      async function webpackStillBuilding() {
-        const res = await fetch(url + "/api/discover").catch((err) => {
-          connection.style.display = "flex";
-          p.style.display = "none";
-          fail.innerText = "Error while fetching status.";
-          progressText.innerText = "";
-          isErrored = true;
-          return;
-        });
-        const data = await res.json();
-        const isBuilding = data.webpackStatus != "ready";
-        progressText.innerText = (isBuilding ? "Freedeck is starting..." : "Freedeck is ready!");
-        animateProgressTo(50);
-        return isBuilding;
-      }
-      
-      if(await webpackStillBuilding()) {
-        const timer = setInterval(async () => {
-          if (!await webpackStillBuilding()) clearInterval(timer);
-        }, 500);
-        return;
-      };
+			setInterval(() => {
+				if (isTryingToConnect || isErrored) return;
+				attemptConnection();
+			}, 500);
 
-      isTryingToConnect = true;
-      
-      animateProgressTo(100);
+			if (!isErrored) attemptConnection();
 
-      url += pathAddon;
+			async function attemptConnection() {
+				if (isTryingToConnect) return;
+				animateProgressTo(0);
 
-      p.style.opacity = '0';
-      
-      progressText.innerText = url;
-      window.location.replace(url);
-    }
+				async function webpackStillBuilding() {
+					const res = await fetch(url + "/api/discover").catch((err) => {
+						connection.style.display = "flex";
+						p.style.display = "none";
+						fail.innerText = "Error while fetching status.";
+						progressText.innerText = "";
+						isErrored = true;
+						return;
+					});
+					const data = await res.json();
+					const isBuilding = data.webpackStatus != "ready";
+					progressText.innerText = isBuilding
+						? "Freedeck is starting..."
+						: "Freedeck is ready!";
+					animateProgressTo(50);
+					return isBuilding;
+				}
 
-    function animateProgressTo(num) {
-      p.value += (num - p.value) / 50;
-      if (p.value < num) {
-        requestAnimationFrame(() => animateProgressTo(num));
-      }
-    }
-  
-  </script>
-</body>
+				if (await webpackStillBuilding()) {
+					const timer = setInterval(async () => {
+						if (!(await webpackStillBuilding())) clearInterval(timer);
+					}, 500);
+					return;
+				}
 
+				isTryingToConnect = true;
+
+				animateProgressTo(100);
+
+				url += pathAddon;
+
+				p.style.opacity = "0";
+
+				progressText.innerText = url;
+				window.location.replace(url);
+			}
+
+			function animateProgressTo(num) {
+				p.value += (num - p.value) / 50;
+				if (p.value < num) {
+					requestAnimationFrame(() => animateProgressTo(num));
+				}
+			}
+		</script>
+	</body>
 </html>

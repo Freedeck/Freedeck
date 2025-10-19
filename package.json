@@ -1,55 +1,62 @@
 {
-	"name": "freedeck",
-	"version": "6.0.0d-rc4",
-	"description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
-	"main": "src/index.js",
-	"scripts": {
-		"start": "electron .",
-		"companion": "electron . --companion-only",
-		"server": "node src/index.js --server-only",
-		"debug-server": "node src/index.js --server-only --debug",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"docs:debug": "swagger-cli validate -d docs/index.yaml",
-		"docs:generate": "swagger-cli bundle docs/index.yaml --outfile openapi.json"
-	},
-	"keywords": [
-		"streamdeck",
-		"stream deck",
-		"elgato",
-		"stream",
-		"freedeck",
-		"streaming",
-		"alternative"
-	],
-	"_moduleAliases": {
-		"@root": "/",
-		"@src": "src",
-		"@routers": "src/routers",
-		"@public": "src/public",
-		"@managers": "src/managers",
-		"@handlers": "src/handlers",
-		"$": "src/utils",
-		"@freedeck": "src/classes"
-	},
-	"author": "ia74",
-	"license": "ISC",
-	"dependencies": {
-		"asar-bundle-runner": "^1.6.0",
-		"babel-loader": "^10.0.0",
-		"compare-versions": "^6.1.1",
-		"electron": "^36.2.1",
-		"express": "^5.1.0",
-		"formidable": "^3.5.4",
-		"module-alias": "^2.2.3",
-		"pako": "^2.1.0",
-		"socket.io": "^4.8.1",
-		"socket.io-client": "^4.8.1",
-		"tar": "^7.4.3",
-		"webpack": "^5.99.8",
-		"ws": "^8.18.2"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"webpack-cli": "^6.0.1"
-	}
+  "name": "freedeck",
+  "version": "6.0.0d-rc4",
+  "description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron .",
+    "companion": "electron . --companion-only",
+    "server": "node src/index.js --server-only",
+    "debug-server": "node src/index.js --server-only --debug",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "posttest": "npm run format",
+    "docs:debug": "swagger-cli validate -d docs/index.yaml",
+    "docs:generate": "swagger-cli bundle docs/index.yaml --outfile openapi.json",
+    "prepare": "husky install",
+    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
+  },
+  "keywords": [
+    "streamdeck",
+    "stream deck",
+    "elgato",
+    "stream",
+    "freedeck",
+    "streaming",
+    "alternative"
+  ],
+  "_moduleAliases": {
+    "@root": "/",
+    "@src": "src",
+    "@routers": "src/routers",
+    "@public": "src/public",
+    "@managers": "src/managers",
+    "@handlers": "src/handlers",
+    "$": "src/utils",
+    "@freedeck": "src/classes"
+  },
+  "author": "ia74",
+  "license": "ISC",
+  "dependencies": {
+    "asar-bundle-runner": "^1.6.0",
+    "babel-loader": "^10.0.0",
+    "compare-versions": "^6.1.1",
+    "electron": "^36.2.1",
+    "express": "^5.1.0",
+    "formidable": "^3.5.4",
+    "module-alias": "^2.2.3",
+    "pako": "^2.1.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tar": "^7.4.3",
+    "webpack": "^5.99.8",
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "prettier": "3.6.2",
+    "webpack-cli": "^6.0.1"
+  },
+  "lint-staged": {
+    "*.{js,css,md,html}": "prettier --write"
+  }
 }

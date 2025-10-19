@@ -9,7 +9,11 @@ const updateKeys = (data) => {
 		if (el.id === "editor-btn") continue;
 		let interact = el.getAttribute("data-interaction");
 		interact = JSON.parse(interact);
-		if (interact.renderType === 'slider' && interact.data.app && formatted[interact.data.app]) {
+		if (
+			interact.renderType === "slider" &&
+			interact.data.app &&
+			formatted[interact.data.app]
+		) {
 			interact.data.value = formatted[interact.data.app][1] * 100;
 			el.setAttribute("data-interaction", JSON.stringify(interact));
 			el.querySelector(".slider-container").dataset.value =
@@ -19,8 +23,7 @@ const updateKeys = (data) => {
 };
 
 export function grabAndHandle() {
-	if(universal.fdws)
-	universal.fdws.send("get_apps", "");
+	if (universal.fdws) universal.fdws.send("get_apps", "");
 }
 
 const fdws = {
@@ -44,11 +47,10 @@ const fdws = {
 			fdws.cache = data;
 			updateKeys(fdws.cache);
 		});
-	}
-}
+	},
+};
 
 export function generic() {
-	
 	universal.fdws = fdws;
 
 	universal.fdws.on("error", (data) => {
@@ -60,15 +62,18 @@ export function generic() {
 		updateKeys(data);
 	});
 
-	if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
+	if (Object.values(universal.fdws.cache).length !== 0)
+		updateKeys(universal.fdws.cache);
 	grabAndHandle();
 	grabAndHandle();
 	universal.listenFor("page_change", () => {
-		if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
+		if (Object.values(universal.fdws.cache).length !== 0)
+			updateKeys(universal.fdws.cache);
 		grabAndHandle();
 	});
 	setInterval(() => {
-		if(Object.values(universal.fdws.cache).length !== 0) updateKeys(universal.fdws.cache);
+		if (Object.values(universal.fdws.cache).length !== 0)
+			updateKeys(universal.fdws.cache);
 		grabAndHandle();
 	}, 250);
 }
@@ -88,22 +93,25 @@ export function handler() {
 			universal.save("page", universal.page);
 			universal.send(universal.events.companion.set_profile, data.data.profile);
 		}
-		if(data.type === "fd.macro_text") {
+		if (data.type === "fd.macro_text") {
 			universal.fdws.send("macro_text", data.data.macro);
 		}
-		if(data.type === "fd.macro") {
+		if (data.type === "fd.macro") {
 			universal.fdws.send("macro", data.data.macro);
 		}
-		if(data.type === "fd.fullscreen") {
+		if (data.type === "fd.fullscreen") {
 			// request fullscreen
 			const elem = document.documentElement; // This can be any element
 			if (elem.requestFullscreen) {
 				elem.requestFullscreen();
-			} else if (elem.mozRequestFullScreen) { // Firefox
+			} else if (elem.mozRequestFullScreen) {
+				// Firefox
 				elem.mozRequestFullScreen();
-			} else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
+			} else if (elem.webkitRequestFullscreen) {
+				// Chrome, Safari, Opera
 				elem.webkitRequestFullscreen();
-			} else if (elem.msRequestFullscreen) { // IE/Edge
+			} else if (elem.msRequestFullscreen) {
+				// IE/Edge
 				elem.msRequestFullscreen();
 			}
 		}

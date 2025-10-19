@@ -1,18 +1,18 @@
 <style>
-  #clock {
-    text-align: center;
-  }
+	#clock {
+		text-align: center;
+	}
 </style>
 <freedeck-dash-module>
-  <h1 id="clock"></h1>
+	<h1 id="clock"></h1>
 </freedeck-dash-module>
 <script>
-  const cl = document.querySelector("#clock");
-  function timestring() {
-    return new Date().toLocaleTimeString();
-  }
-  cl.innerText = timestring();
-  setInterval(() => {
-    cl.innerText = timestring();
-  }, 700)
+	const cl = document.querySelector("#clock");
+	function timestring() {
+		return new Date().toLocaleTimeString();
+	}
+	cl.innerText = timestring();
+	setInterval(() => {
+		cl.innerText = timestring();
+	}, 700);
 </script>

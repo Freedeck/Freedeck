@@ -20,7 +20,7 @@ export default function (sndType, keyObject, snd, rawDat) {
 	if (snd.data.noRounding === "true") {
 		keyObject.classList.add("no-rounding");
 	}
-		
+
 	if (sndType === "fd.sound") defaultHandler(snd, keyObject, rawDat);
 	else if (sndType === "fd.none") noneHandler(snd, keyObject, rawDat, true);
 	else {
@@ -39,5 +39,5 @@ export default function (sndType, keyObject, snd, rawDat) {
 				break;
 		}
 	}
-	universal.sendEvent("keyRendered", {keyObject, snd, sndType, rawDat});
+	universal.sendEvent("keyRendered", { keyObject, snd, sndType, rawDat });
 }

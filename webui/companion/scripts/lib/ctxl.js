@@ -7,7 +7,8 @@ const ctxl = {
 	view_container: "#ctxl-view-cont",
 	as: "html",
 	version: "1.0.0",
-	loadingHTML: "<div class='center-container'><div class='alc'><h1>Freedeck</h1><p>is loading a view...</p></div></div>",
+	loadingHTML:
+		"<div class='center-container'><div class='alc'><h1>Freedeck</h1><p>is loading a view...</p></div></div>",
 	views: [],
 	addView: (view) => {
 		if (!ctxl.views.includes(view)) ctxl.views.push(view);
@@ -17,11 +18,11 @@ const ctxl = {
 			console.log(`View ${view} not found.`);
 			return `<p>View ${view} not found.</p>`;
 		}
-		if(document.querySelectorAll(`.ctxv-${view}`).length > 0) {
-      for(const script of document.querySelectorAll(`.ctxv-${view}`)) {
+		if (document.querySelectorAll(`.ctxv-${view}`).length > 0) {
+			for (const script of document.querySelectorAll(`.ctxv-${view}`)) {
 				script.remove();
 			}
-    }
+		}
 		const view_html = document.createElement(ctxl.as);
 		view_html.id = view;
 		view_html.innerHTML = ctxl.loadingHTML;
@@ -29,7 +30,7 @@ const ctxl = {
 			.then((response) => response.text())
 			.then((data) => {
 				view_html.innerHTML = data;
-				universal.translatePage(view_html)
+				universal.translatePage(view_html);
 			})
 			.then(() => {
 				const scripts = view_html.getElementsByTagName("script");

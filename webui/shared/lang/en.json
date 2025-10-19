@@ -1,4 +1,4 @@
-{ 
+{
   "locale.display": "English",
   "app.error.test_buttons_is_off": "You can't press Tiles here before enabling 'Test Tiles'.",
   "sidebars.right.Tiles": "Tiles",
@@ -10,7 +10,7 @@
   "sidebars.right.Setup": "Setup",
   "sidebars.right.Pair Device": "Pair Device",
   "sidebars.right.Themer": "Themer",
-  
+
   "sidebars.left.mobd": "Mobile Device",
   "sidebars.left.mobd.pair": "Pair Mobile Device",
 
@@ -29,7 +29,7 @@
   "sidebars.left.soundboard.mode.title": "Playback Mode",
   "sidebars.left.soundboard.mode.play_over": "Play Over",
   "sidebars.left.soundboard.mode.stop_previous": "Stop Previous",
-  
+
   "sidebars.left.style.title": "Tile Style",
   "sidebars.left.style.font_size": "Font Size",
   "sidebars.left.style.font_size.unit": "px",
@@ -54,7 +54,6 @@
   "sidebars.left.style.folders.popups.import.ask_name": "Enter a name for the folder",
   "sidebars.left.style.folders.popups.import.error_json": "Invalid JSON folder data",
   "sidebars.left.style.folders.popups.import.error_json_format": "Folder data not in Freedeck-ready format.",
-
 
   "sidebars.left.footer.thanks": "Thank you for using Freedeck!",
   "sidebars.left.footer.github_pre": "Freedeck is open-source and can be found on",
@@ -96,7 +95,7 @@
 
   "editor.title": "Title",
   "editor.set_icon": "Set Icon",
-  
+
   "editor.appearance": "Appearance",
   "editor.appearance.background": "Background Color",
   "editor.appearance.no.background": "No Background",
@@ -120,7 +119,7 @@
   "library.sounds": "Sounds",
   "library.sounds.add": "Add a Sound",
   "library.sounds.view": "View Sounds",
-  
+
   "library.icons": "Icons",
   "library.icons.add": "Add a Icon",
   "library.icons.view": "View Icons",
@@ -129,7 +128,7 @@
   "marketplace.description": "Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your Freedeck.",
   "marketplace.add": "Add Repository",
   "marketplace.repositories": "Repositories",
-  
+
   "settings.title": "Settings",
 
   "settings.sections.style": "Themes",
@@ -178,7 +177,7 @@
   "tooltips.editor.closing": "Your unsaved changes will not be made.",
   "tooltips.tile.empty": "Empty Tile!",
   "tooltips.tile.empty.action": "Click this space to add a new Tile here.",
-  
+
   "tile.long_press": "Long press",
   "tile.short_press": "Short press",
   "tile.hold": "Hold",

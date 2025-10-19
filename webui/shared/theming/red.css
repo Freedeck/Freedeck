@@ -6,26 +6,33 @@
 }
 
 :root {
-    --red-gradient: linear-gradient(105deg, rgba(140, 0, 89, 1) 0%, rgba(140, 10, 0, 1) 33%, rgba(140, 50, 0, 1) 66%, rgba(140, 0, 89, 1) 100%);
+	--red-gradient: linear-gradient(
+		105deg,
+		rgba(140, 0, 89, 1) 0%,
+		rgba(140, 10, 0, 1) 33%,
+		rgba(140, 50, 0, 1) 66%,
+		rgba(140, 0, 89, 1) 100%
+	);
 
-    --main-bg: var(--red-gradient);
-    
-    --modal-bg: rgba(140, 10, 0, 1);
-    --modal-color: white;
+	--main-bg: var(--red-gradient);
 
-    --input-bg: rgba(140, 10, 0, 1);
+	--modal-bg: rgba(140, 10, 0, 1);
+	--modal-color: white;
 
-    --modal-item-bg: var(--red-gradient);
-    --modal-item-bg-size: 400% 400%;
-    --modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
-    --modal-item-text: white;
+	--input-bg: rgba(140, 10, 0, 1);
 
-    --companion-left-sidebar-bg: rgba(120,25,25,0.5);
-    --companion-right-sidebar-bg: rgba(120,25,25,0.5);
+	--modal-item-bg: var(--red-gradient);
+	--modal-item-bg-size: 400% 400%;
+	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)
+		infinite;
+	--modal-item-text: white;
 
-    --companion-left-sidebar-color: white;
-    --companion-right-sidebar-color: white;
+	--companion-left-sidebar-bg: rgba(120, 25, 25, 0.5);
+	--companion-right-sidebar-bg: rgba(120, 25, 25, 0.5);
 
-    --companion-sidebar-item-bg: rgba(120,25,25,0.5);
-    --companion-sidebar-item-color: white;
+	--companion-left-sidebar-color: white;
+	--companion-right-sidebar-color: white;
+
+	--companion-sidebar-item-bg: rgba(120, 25, 25, 0.5);
+	--companion-sidebar-item-color: white;
 }

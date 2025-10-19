@@ -48,7 +48,9 @@ export default function (snd, keyObject, raw) {
 	}
 	if (snd.data.longPress === "true" && universal.name !== "Companion") {
 		const countdownTime = Number.parseInt(
-			universal.getServerStyleFlags().longPressTime ? universal.getServerStyleFlags().longPressTime : 3,
+			universal.getServerStyleFlags().longPressTime
+				? universal.getServerStyleFlags().longPressTime
+				: 3,
 		);
 		const startHolding = (e) => {
 			keyObject.dataset.time = 0;
@@ -99,10 +101,13 @@ export default function (snd, keyObject, raw) {
 			});
 		};
 	} else {
-		if(universal.name === "Companion") {
+		if (universal.name === "Companion") {
 			keyObject.onpointerup = (ev) => {
-				if(!universal.flags.isEnabled("try_buttons")) {
-					universal.sendToast(translationKey("app.error.test_buttons_is_off"), "Freedeck");
+				if (!universal.flags.isEnabled("try_buttons")) {
+					universal.sendToast(
+						translationKey("app.error.test_buttons_is_off"),
+						"Freedeck",
+					);
 					return;
 				}
 				if (ev.which !== 1) return;
@@ -111,23 +116,26 @@ export default function (snd, keyObject, raw) {
 					btn: snd,
 				});
 			};
-		} else if(snd.data.onRelease === 'true') {
+		} else if (snd.data.onRelease === "true") {
 			keyObject.onpointerup = (ev) => {
 				if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
-					btn: snd,  
+					btn: snd,
 				});
 			};
 		} else {
 			keyObject.onpointerdown = (ev) => {
-				if(universal.name === "Companion") {
-					if(!universal.flags.isEnabled("try_buttons")) {
-						universal.sendToast(translationKey("app.error.test_buttons_is_off"), "Freedeck");
+				if (universal.name === "Companion") {
+					if (!universal.flags.isEnabled("try_buttons")) {
+						universal.sendToast(
+							translationKey("app.error.test_buttons_is_off"),
+							"Freedeck",
+						);
 						return;
 					}
 				}
-					if (ev.which !== 1) return;
+				if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
 					btn: snd,

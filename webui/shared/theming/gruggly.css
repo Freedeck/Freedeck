@@ -6,16 +6,16 @@
 }
 
 :root {
-	--main-bg: #4A412A;
-	
-	--modal-bg: #4A412A;
-	--modal-color:white;
-	
+	--main-bg: #4a412a;
+
+	--modal-bg: #4a412a;
+	--modal-color: white;
+
 	--input-bg: rgba(255, 215, 59, 0.25);
-	
-	--tile-bg:#4A412A;
-	--tile-border: 2px solid rgba(0,0,0,0.125);
-	
+
+	--tile-bg: #4a412a;
+	--tile-border: 2px solid rgba(0, 0, 0, 0.125);
+
 	--modal-item-bg: #5c4f30;
 
 	--companion-left-sidebar-bg: #5c5137;
@@ -24,6 +24,6 @@
 	--companion-left-sidebar-color: white;
 	--companion-right-sidebar-color: white;
 
-	--companion-sidebar-item-bg: #4A412A;
+	--companion-sidebar-item-bg: #4a412a;
 	--companion-sidebar-item-color: white;
 }

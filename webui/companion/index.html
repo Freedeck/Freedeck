@@ -1,236 +1,396 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta content="Freedeck" property="og:title" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			href="/assets/favicon-96x96.png"
+			sizes="96x96"
+		/>
+		<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+		<link rel="shortcut icon" href="/assets/favicon.ico" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/assets/apple-touch-icon.png"
+		/>
+		<link rel="manifest" href="/assets/site.webmanifest" />
+		<link rel="stylesheet" href="../style/style.css" />
+		<link rel="stylesheet" href="companion.css" />
+		<title>Freedeck</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta content="Freedeck" property="og:title" />
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-        <link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/site.webmanifest" />
-    <link rel="stylesheet" href="../style/style.css" />
-    <link rel="stylesheet" href="companion.css" />
-    <title>Freedeck</title>
-</head>
-
-<body style="overflow: hidden">
-    <div style="display: none; z-index: 10200" class="modal" id="login-dialog">
-        <div id="login-div" class="modalContent">
-            <h1 id="login-msg">Login to Freedeck</h1>
-            <p>Enter the password to gain access.</p>
-            <input type="password" id="password" />
-            <br/>
-            <div class="flex-wrap-r">
-                <button onclick="universal.login(document.getElementById('password').value)">
-                    Login
-                </button>
-                <button onclick="window.location.reload();">Reload</button>
-            </div>
-        </div>
-    </div>
-    <dialog id="editor">
-        <div id="editor-div">
-            <div class="x" id="editor-close" data-i18n-key="editor.close"></div>
-            <div class="editor-section editor-info">
-                <div data-state="not" class="button" id="editor-btn"></div>
-                <div class="flex-wrap-r alc">
-                    <label for="name" data-i18n-key="editor.title"></label>
-                    <input type="text" id="name" value="Not Loaded" />
-                </div>
-                <div class="button" style="height:30px;min-height:30px;" id="upload-icon" data-i18n-key="editor.set_icon"></div>
-                <details>
-                    <summary>
-                        <strong data-i18n-key="editor.appearance"></strong>
-                    </summary>
-                    <div class="flex-wrap-r alc">
-                        <label for="color" data-i18n-key="editor.appearance.background"></label>
-                        <input type="color" id="color" data-has_set="false" value="#000" />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="sbg" data-i18n-key="editor.appearance.no.background"></label>
-                        <input class="fdc-checkbox" type="checkbox" id="sbg" />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="nbo" data-i18n-key="editor.appearance.no.border"></label>
-                        <input class="fdc-checkbox" type="checkbox" id="nbo" />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="nbr" data-i18n-key="editor.appearance.no.rounding"></label>
-                        <input class="fdc-checkbox" type="checkbox" id="nbr" />
-                    </div>
-                </details>
-                <details>
-                    <summary>
-                        <strong data-i18n-key="editor.controls"></strong>
-                    </summary>
-                    <div class="flex-wrap-r alc">
-                        <label for="ha" data-i18n-key="editor.controls.hold"></label>
-                        <input class="fdc-checkbox" type="checkbox" id="ha" />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="lp" data-i18n-key="editor.controls.long_press"></label>
-                        <input class="fdc-checkbox" type="checkbox" id="lp" />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="orl" data-i18n-key="editor.controls.on_release">On release?</label>
-                        <input class="fdc-checkbox" type="checkbox" id="orl" />
-                    </div>
-                </details>
-                <details>
-                    <summary><strong data-i18n-key="editor.advanced"></strong></summary>
-                    <div class="flex-wrap-r alc">
-                        <label for="type" data-i18n-key="editor.advanced.type"></label>
-                        <input style="color:white;" type="text" id="type" value="fd.sound" disabled />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="plugin" data-i18n-key="editor.advanced.plugin"></label>
-                        <input style="color:white;" type="text" id="plugin" value="Freedeck" disabled />
-                    </div>
-                    <div class="flex-wrap-r alc">
-                        <label for="rendertype" data-i18n-key="editor.advanced.renderer"></label>
-                        <input style="color:white;" type="text" id="rendertype" value="button" disabled />
-                    </div>
-                    <div class="horizontal-seperator"></div>
-                    <div class="flex-wrap-r" id="editor-data"></div>
-                </details>
-                <br />
-            </div>
-            <div style="display: none" id="plugins-only" class="editor-section generic-chips editor-section-bottom">
-                <div id="plugin-actions" class="generic-chips">
-                    <div class="information">
-                        <h3 data-i18n-key="editor.sections.plugin"></h3>
-                        <p data-i18n-key="editor.sections.plugin.description"></p>
-                    </div>
-                    <div class="plugin-actions-disabled">
-                        <h1><span class="plugin-actions-disabled-id"></span><span data-i18n-key="editor.sections.plugin.actions.disabled"></span></h1>
-                        <p>
-                            <span data-i18n-key="editor.sections.plugin.actions.disabled.advice"></span><span class="plugin-actions-disabled-id"></span>.
-                        </p>
-                        <p data-i18n-key="editor.sections.plugin.actions.disabled.exit_info"></p>
-                    </div>
-                    <div class="plugin-actions-notfound">
-                        <h2><span data-i18n-key="editor.sections.plugin.actions.type.not_found"></span><span class="plugin-actions-notfound-type"></span></h2>
-                        <p>
-                            <span data-i18n-key="editor.sections.plugin.actions.type.reload"></span><span class="plugin-actions-disabled-id"></span>.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex-wrap-r">
-                    <button id="select-plugin-back" style="display: none" data-i18n-key="editor.back_to_plugins"></button>
-                </div>
-            </div>
-            <div style="display: none" id="audio-only" class="editor-section generic-chips editor-section-bottom">
-                <div class="information">
-                    <h3 data-i18n-key="editor.sections.no_action.soundboard"></h3>
-                    <p data-i18n-key="editor.sections.soundboard.description"></p>
-                </div>
-                <div class="flex-wrap-r alc fill">
-                    <div class="flex-wrap aud-container aud-info">
-                        <div class="section-audiofile" style="display:none;">
-                            <span class="flex-wrap no-gap">
-                                <h3 data-i18n-key="editor.sections.soundboard.audiofile"></h3>
-                            <p data-i18n-key="editor.sections.soundboard.action"></p>
-                            </span>
-                            <small id="audio-file" class="information-border flex-wrap-r alc aud-item"></small>
-                            <div class="button companion-wide-button" id="quick-upload-sound" data-i18n-key="editor.sections.soundboard.quickupload"></div>
-                            <div class="button companion-wide-button" id="upload-sound" data-i18n-key="editor.sections.soundboard.change"></div>
-                        </div>
-                        <div class="section-control" style="display:none;">
-                            <span class="flex-wrap no-gap">
-                                <h3 data-i18n-key="editor.sections.soundboard.control"></h3>
-                                <p data-i18n-key="editor.sections.soundboard.control_action"></p>
-                            </span>
-                            <select id="section-control-selector">
-                                <option data-i18n-key="editor.sections.soundboard.control.selector.stopall"></option>
-                                <option data-i18n-key="editor.sections.soundboard.control.selector.pitch"></option>
-                                <option data-i18n-key="editor.sections.soundboard.control.selector.output_volume"></option>
-                                <option data-i18n-key="editor.sections.soundboard.control.selector.monitor_volume"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="flex-wrap aud-container aud-info">
-                        <img id="section-t_audio" width="50" src="/common/icons/t_audio.svg" alt="Audio File" loading="lazy">
-                        <img id="section-t_ctrl" width="50" src="/common/icons/audio.svg" alt="Audio Control" loading="lazy">
-                    </div>
-                </div>
-            </div>
-            <div style="display: none" id="system-only" class="editor-section generic-chips editor-section-bottom">
-                <div class="information">
-                    <h3><span data-i18n-key="editor.sections.no_action.app_volume"></span><span class="tag-beta">BETA</span></h3>
-                    <p>This tile will change the volume of the app selected.</p>
-                </div>
-                <div id="sys-actions" class="generic-chips">
-                    <select name="system-select" id="system-select"></select>
-                </div>
-            </div>
-            <div style="display: none" id="macro-only" class="editor-section generic-chips editor-section-bottom">
-                <div class="information">
-                    <h3><span data-i18n-key="editor.sections.no_action.macro">Macro</span><span class="tag-beta">BETA</span></h3>
-                    <p>Type or press a key combination!</p>
-                </div>
-                <div id="sys-actions" class="generic-chips">
-                    <p>When pressed, this tile will perform a</p>
-                    <select name="macro-type" id="macro-type">
-                        <option value="text">Text (only text)</option>
-                        <option value="macro">Keypress (allows CTRL, ALT, etc...)</option>
-                    </select>
-                    <p>macro, which will type</p>
-                    <input type="text" name="macro-macro" id="macro-macro">
-                </div>
-            </div>
-            <div style="display: none" id="profiles-only" class="editor-section generic-chips editor-section-bottom">
-                <div class="information">
-                    <h3>Folder Switcher</h3>
-                    <p>This tile will switch to the folder selected!</p>
-                </div>
-                <div class="generic-chips">
-                </div>
-                <select name="eprofile-select" id="eprofile-select"></select>
-            </div>
-            <div style="display: none" id="none-only" class="generic-chips editor-section editor-section-bottom" >
-                <div class="information">
-                    <h3 data-i18n-key="editor.sections.no_action"></h3>
-                    <p data-i18n-key="editor.sections.no_action.description"></p>
-                </div>
-                <div class="flex-wrap-r plugin-view-listing tile-selection"></div>
-            </div>
-            <div id="advanced-view" style="display: none;">
-                <div class="flex-wrap">
-                    <div class="esection" id="tiledata">
-                        <h2>Tile Data</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-wrap-r editor-options">
-                <div class="button" id="editor-back" style="display:none;" data-i18n-key="editor.change_tile_type"></div>
-                <div class="button" id="editor-save" data-i18n-key="editor.save"></div>
-            </div>
-        </div>
-    </dialog>
-    <div class="toggle-sidebar" style="display: none">
-        <button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-        </button>
-    </div>
-    <div class="sidebar" style="display: flex"></div>
-    <div class="center">
-        <div id="keys"></div>
-    </div>
-    <div class="mt-next-page sal">
-        <p>Move the tile here to drop it onto the next page</p>
-    </div>
-    <div class="mt-prev-page sal">
-        <p>Move the tile here to drop it onto the previous page</p>
-    </div>
-    <script src="/common/error.js" type="module"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/app/main.js" type="module"></script>
-</body>
-
+	<body style="overflow: hidden">
+		<div style="display: none; z-index: 10200" class="modal" id="login-dialog">
+			<div id="login-div" class="modalContent">
+				<h1 id="login-msg">Login to Freedeck</h1>
+				<p>Enter the password to gain access.</p>
+				<input type="password" id="password" />
+				<br />
+				<div class="flex-wrap-r">
+					<button
+						onclick="universal.login(document.getElementById('password').value)"
+					>
+						Login
+					</button>
+					<button onclick="window.location.reload();">Reload</button>
+				</div>
+			</div>
+		</div>
+		<dialog id="editor">
+			<div id="editor-div">
+				<div class="x" id="editor-close" data-i18n-key="editor.close"></div>
+				<div class="editor-section editor-info">
+					<div data-state="not" class="button" id="editor-btn"></div>
+					<div class="flex-wrap-r alc">
+						<label for="name" data-i18n-key="editor.title"></label>
+						<input type="text" id="name" />
+					</div>
+					<div
+						class="button"
+						style="height: 30px; min-height: 30px"
+						id="upload-icon"
+						data-i18n-key="editor.set_icon"
+					></div>
+					<details>
+						<summary>
+							<strong data-i18n-key="editor.appearance"></strong>
+						</summary>
+						<div class="flex-wrap-r alc">
+							<label
+								for="color"
+								data-i18n-key="editor.appearance.background"
+							></label>
+							<input type="color" id="color" data-has_set="false" />
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="sbg"
+								data-i18n-key="editor.appearance.no.background"
+							></label>
+							<input class="fdc-checkbox" type="checkbox" id="sbg" />
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="nbo"
+								data-i18n-key="editor.appearance.no.border"
+							></label>
+							<input class="fdc-checkbox" type="checkbox" id="nbo" />
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="nbr"
+								data-i18n-key="editor.appearance.no.rounding"
+							></label>
+							<input class="fdc-checkbox" type="checkbox" id="nbr" />
+						</div>
+					</details>
+					<details>
+						<summary>
+							<strong data-i18n-key="editor.controls"></strong>
+						</summary>
+						<div class="flex-wrap-r alc">
+							<label for="ha" data-i18n-key="editor.controls.hold"></label>
+							<input class="fdc-checkbox" type="checkbox" id="ha" />
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="lp"
+								data-i18n-key="editor.controls.long_press"
+							></label>
+							<input class="fdc-checkbox" type="checkbox" id="lp" />
+						</div>
+						<div class="flex-wrap-r alc">
+							<label for="orl" data-i18n-key="editor.controls.on_release"
+								>On release?</label
+							>
+							<input class="fdc-checkbox" type="checkbox" id="orl" />
+						</div>
+					</details>
+					<details>
+						<summary><strong data-i18n-key="editor.advanced"></strong></summary>
+						<div class="flex-wrap-r alc">
+							<label for="type" data-i18n-key="editor.advanced.type"></label>
+							<input
+								style="color: white"
+								type="text"
+								id="type"
+								value="fd.sound"
+								disabled
+							/>
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="plugin"
+								data-i18n-key="editor.advanced.plugin"
+							></label>
+							<input
+								style="color: white"
+								type="text"
+								id="plugin"
+								value="Freedeck"
+								disabled
+							/>
+						</div>
+						<div class="flex-wrap-r alc">
+							<label
+								for="rendertype"
+								data-i18n-key="editor.advanced.renderer"
+							></label>
+							<input
+								style="color: white"
+								type="text"
+								id="rendertype"
+								value="button"
+								disabled
+							/>
+						</div>
+						<div class="horizontal-seperator"></div>
+						<div class="flex-wrap-r" id="editor-data"></div>
+					</details>
+					<br />
+				</div>
+				<div
+					style="display: none"
+					id="plugins-only"
+					class="editor-section generic-chips editor-section-bottom"
+				>
+					<div id="plugin-actions" class="generic-chips">
+						<div class="information">
+							<h3 data-i18n-key="editor.sections.plugin"></h3>
+							<p data-i18n-key="editor.sections.plugin.description"></p>
+						</div>
+						<div class="plugin-actions-disabled">
+							<h1>
+								<span class="plugin-actions-disabled-id"></span
+								><span
+									data-i18n-key="editor.sections.plugin.actions.disabled"
+								></span>
+							</h1>
+							<p>
+								<span
+									data-i18n-key="editor.sections.plugin.actions.disabled.advice"
+								></span
+								><span class="plugin-actions-disabled-id"></span>.
+							</p>
+							<p
+								data-i18n-key="editor.sections.plugin.actions.disabled.exit_info"
+							></p>
+						</div>
+						<div class="plugin-actions-notfound">
+							<h2>
+								<span
+									data-i18n-key="editor.sections.plugin.actions.type.not_found"
+								></span
+								><span class="plugin-actions-notfound-type"></span>
+							</h2>
+							<p>
+								<span
+									data-i18n-key="editor.sections.plugin.actions.type.reload"
+								></span
+								><span class="plugin-actions-disabled-id"></span>.
+							</p>
+						</div>
+					</div>
+					<div class="flex-wrap-r">
+						<button
+							id="select-plugin-back"
+							style="display: none"
+							data-i18n-key="editor.back_to_plugins"
+						></button>
+					</div>
+				</div>
+				<div
+					style="display: none"
+					id="audio-only"
+					class="editor-section generic-chips editor-section-bottom"
+				>
+					<div class="information">
+						<h3 data-i18n-key="editor.sections.no_action.soundboard"></h3>
+						<p data-i18n-key="editor.sections.soundboard.description"></p>
+					</div>
+					<div class="flex-wrap-r alc fill">
+						<div class="flex-wrap aud-container aud-info">
+							<div class="section-audiofile" style="display: none">
+								<span class="flex-wrap no-gap">
+									<h3 data-i18n-key="editor.sections.soundboard.audiofile"></h3>
+									<p data-i18n-key="editor.sections.soundboard.action"></p>
+								</span>
+								<small
+									id="audio-file"
+									class="information-border flex-wrap-r alc aud-item"
+								></small>
+								<div
+									class="button companion-wide-button"
+									id="quick-upload-sound"
+									data-i18n-key="editor.sections.soundboard.quickupload"
+								></div>
+								<div
+									class="button companion-wide-button"
+									id="upload-sound"
+									data-i18n-key="editor.sections.soundboard.change"
+								></div>
+							</div>
+							<div class="section-control" style="display: none">
+								<span class="flex-wrap no-gap">
+									<h3 data-i18n-key="editor.sections.soundboard.control"></h3>
+									<p
+										data-i18n-key="editor.sections.soundboard.control_action"
+									></p>
+								</span>
+								<select id="section-control-selector">
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.stopall"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.pitch"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.output_volume"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.monitor_volume"
+									></option>
+								</select>
+							</div>
+						</div>
+						<div class="flex-wrap aud-container aud-info">
+							<img
+								id="section-t_audio"
+								width="50"
+								src="/common/icons/t_audio.svg"
+								alt="Audio File"
+								loading="lazy"
+							/>
+							<img
+								id="section-t_ctrl"
+								width="50"
+								src="/common/icons/audio.svg"
+								alt="Audio Control"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+				</div>
+				<div
+					style="display: none"
+					id="system-only"
+					class="editor-section generic-chips editor-section-bottom"
+				>
+					<div class="information">
+						<h3>
+							<span data-i18n-key="editor.sections.no_action.app_volume"></span
+							><span class="tag-beta">BETA</span>
+						</h3>
+						<p>This tile will change the volume of the app selected.</p>
+					</div>
+					<div id="sys-actions" class="generic-chips">
+						<select name="system-select" id="system-select"></select>
+					</div>
+				</div>
+				<div
+					style="display: none"
+					id="macro-only"
+					class="editor-section generic-chips editor-section-bottom"
+				>
+					<div class="information">
+						<h3>
+							<span data-i18n-key="editor.sections.no_action.macro">Macro</span
+							><span class="tag-beta">BETA</span>
+						</h3>
+						<p>Type or press a key combination!</p>
+					</div>
+					<div id="sys-actions" class="generic-chips">
+						<p>When pressed, this tile will perform a</p>
+						<select name="macro-type" id="macro-type">
+							<option value="text">Text (only text)</option>
+							<option value="macro">Keypress (allows CTRL, ALT, etc...)</option>
+						</select>
+						<p>macro, which will type</p>
+						<input type="text" name="macro-macro" id="macro-macro" />
+					</div>
+				</div>
+				<div
+					style="display: none"
+					id="profiles-only"
+					class="editor-section generic-chips editor-section-bottom"
+				>
+					<div class="information">
+						<h3>Folder Switcher</h3>
+						<p>This tile will switch to the folder selected!</p>
+					</div>
+					<div class="generic-chips"></div>
+					<select name="eprofile-select" id="eprofile-select"></select>
+				</div>
+				<div
+					style="display: none"
+					id="none-only"
+					class="generic-chips editor-section editor-section-bottom"
+				>
+					<div class="information">
+						<h3 data-i18n-key="editor.sections.no_action"></h3>
+						<p data-i18n-key="editor.sections.no_action.description"></p>
+					</div>
+					<div class="flex-wrap-r plugin-view-listing tile-selection"></div>
+				</div>
+				<div id="advanced-view" style="display: none">
+					<div class="flex-wrap">
+						<div class="esection" id="tiledata">
+							<h2>Tile Data</h2>
+						</div>
+					</div>
+				</div>
+				<div class="flex-wrap-r editor-options">
+					<div
+						class="button"
+						id="editor-back"
+						style="display: none"
+						data-i18n-key="editor.change_tile_type"
+					></div>
+					<div
+						class="button"
+						id="editor-save"
+						data-i18n-key="editor.save"
+					></div>
+				</div>
+			</div>
+		</dialog>
+		<div class="toggle-sidebar" style="display: none">
+			<button>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-6 h-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m8.25 4.5 7.5 7.5-7.5 7.5"
+					/>
+				</svg>
+			</button>
+		</div>
+		<div class="sidebar" style="display: flex"></div>
+		<div class="center">
+			<div id="keys"></div>
+		</div>
+		<div class="mt-next-page sal">
+			<p>Move the tile here to drop it onto the next page</p>
+		</div>
+		<div class="mt-prev-page sal">
+			<p>Move the tile here to drop it onto the previous page</p>
+		</div>
+		<script src="/common/error.js" type="module"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/app/main.js" type="module"></script>
+	</body>
 </html>

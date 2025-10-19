@@ -10,7 +10,7 @@
       "@managers/*": ["./src/managers/*"],
       "@handlers/*": ["./src/handlers/*"],
       "$/*": ["./src/utils/*"],
-      "@freedeck/*": ["./src/classes/*"],
+      "@freedeck/*": ["./src/classes/*"]
     }
   }
 }

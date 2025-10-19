@@ -5,44 +5,42 @@ const editorButton = document.querySelector("#editor-btn");
 
 const select = document.querySelector("#eprofile-select");
 const generateProfileSelect = () => {
-  select.innerHTML = "";
-  for (const profile of Object.keys(universal.config.profiles)) {
-    const option = document.createElement("option");
-    option.innerText = profile;
-    option.value = profile;
-    select.appendChild(option);
-  }
-  select.onchange = (e) => {
-    const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-    int.data.profile = e.srcElement.value;
-    editorButton.setAttribute("data-interaction", JSON.stringify(int));
-    loadData(int.data);
-  };
+	select.innerHTML = "";
+	for (const profile of Object.keys(universal.config.profiles)) {
+		const option = document.createElement("option");
+		option.innerText = profile;
+		option.value = profile;
+		select.appendChild(option);
+	}
+	select.onchange = (e) => {
+		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
+		int.data.profile = e.srcElement.value;
+		editorButton.setAttribute("data-interaction", JSON.stringify(int));
+		loadData(int.data);
+	};
 };
 const typeField = document.querySelector("#type");
 
 class Profile extends EditorViewLogic {
-  constructor() {
-    super("profiles", "fd.profile");
-    generateProfileSelect();
-  
-    this.setOnRun(({interactionData}) => {
-      generateProfileSelect();
-      select.value =
-        interactionData.data.profile;
-    })
+	constructor() {
+		super("profiles", "fd.profile");
+		generateProfileSelect();
 
-    this.setOnFirstSetup(({interactionData}) => {
-      const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-      int.type = "fd.profile";
-      int.data.profile = "Default";
-      editorButton.setAttribute("data-interaction", JSON.stringify(int));
-      typeField.value = "fd.profile";
-      generateProfileSelect();
-      select.value = int.data.profile;
-    });
-  }
+		this.setOnRun(({ interactionData }) => {
+			generateProfileSelect();
+			select.value = interactionData.data.profile;
+		});
+
+		this.setOnFirstSetup(({ interactionData }) => {
+			const int = JSON.parse(editorButton.getAttribute("data-interaction"));
+			int.type = "fd.profile";
+			int.data.profile = "Default";
+			editorButton.setAttribute("data-interaction", JSON.stringify(int));
+			typeField.value = "fd.profile";
+			generateProfileSelect();
+			select.value = int.data.profile;
+		});
+	}
 }
-
 
 export default Profile;

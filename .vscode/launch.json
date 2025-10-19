@@ -9,6 +9,6 @@
       "name": "Run npm debug-server",
       "request": "launch",
       "type": "node-terminal"
-    },
+    }
   ]
 }

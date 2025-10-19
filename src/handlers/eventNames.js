@@ -2,7 +2,7 @@ const eventNames = {
 	/* These shouldn't be changed */
 	client_greet: 0x00,
 	information: "I",
-	/* These shouldn't be changed */ 
+	/* These shouldn't be changed */
 
 	keypress: "k",
 	user_mobile_conn: "U",
@@ -14,7 +14,7 @@ const eventNames = {
 		unauthorized: "daCF",
 	},
 
-	default: {		
+	default: {
 		notif: "dN",
 
 		reload: "dR",
@@ -49,7 +49,7 @@ const eventNames = {
 	rpc: {
 		authorize: "RPC.Authorize",
 		reply: "RPC.Reply",
-		set: "RPC.Set"
+		set: "RPC.Set",
 	},
 
 	fdws: {
@@ -63,7 +63,7 @@ const eventNames = {
 		opened: "RelayOpened",
 		request: "RelayRequest",
 		file: "RelayFile",
-	}
+	},
 };
 
 if ("exports" in module) module.exports = eventNames;

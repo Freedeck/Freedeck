@@ -1,10 +1,14 @@
 universal.listenFor("launch", () => {
 	loadThemeListing();
-	universal.on(universal.events.companion.set_theme, () => {loadThemeListing()});
+	universal.on(universal.events.companion.set_theme, () => {
+		loadThemeListing();
+	});
 });
 
-if(universal.events?.companion?.set_theme) {
-		universal.on(universal.events.companion.set_theme, () => {loadThemeListing()});
+if (universal.events?.companion?.set_theme) {
+	universal.on(universal.events.companion.set_theme, () => {
+		loadThemeListing();
+	});
 }
 
 window.loadThemeListing = async () => {
@@ -14,7 +18,7 @@ window.loadThemeListing = async () => {
 		if (!theme) {
 			theme = await universal.theming.fetchAndParse(id);
 		}
-		if(theme.showing && theme.showing === "false") continue;
+		if (theme.showing && theme.showing === "false") continue;
 		const element = document.createElement("div");
 		element.className = "theme";
 		const title = document.createElement("h2");
@@ -25,9 +29,7 @@ window.loadThemeListing = async () => {
 		const apply = document.createElement("i");
 		apply.innerText = "Click to apply.";
 		element.onclick = () => {
-			universal.theming.setTheme(
-				id, true
-			);
+			universal.theming.setTheme(id, true);
 			loadThemeListing();
 		};
 		if (universal.load("theme") === id) {

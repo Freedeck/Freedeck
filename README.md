@@ -1,4 +1,4 @@
-# Freedeck 
+# Freedeck
 
 <center>
 <img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/Freedeck@2k.png" width="120" height="120">
@@ -23,7 +23,7 @@
 
 - Clone the repo
   - Run this in your terminal to clone the repo (to retain git info for autoupdater)
-  - ` git clone https://github.com/Freedeck/Freedeck.git `
+  - `git clone https://github.com/Freedeck/Freedeck.git`
 - Go to where you cloned the repo in File Explorer
 - Run `init.bat`
 - Profit
@@ -31,7 +31,7 @@
 ### Instructions (Semi-Advanced)
 
 - Clone the repo
-  - ` git clone https://github.com/Freedeck/Freedeck.git `
+  - `git clone https://github.com/Freedeck/Freedeck.git`
 - Download NPM packages
   - `npm i`
 - Run the program!
@@ -42,7 +42,7 @@
 
 For those who want the simplicity of the Installer, but need the complexity of the codebase.
 
-- Follow the *Instructions (Easier Than Easy)*
+- Follow the _Instructions (Easier Than Easy)_
 - Now, you can go to your user directory, documents, Freedeck, then Freedeck again!
   - Let me break the command down for you.
   - `cd C:\Users\You\Documents\Freedeck\freedeck` (You need the last "freedeck"! That's the actual repo!)
@@ -54,8 +54,8 @@ For those who want the simplicity of the Installer, but need the complexity of t
 
 The moment you start Freedeck:
 
-- a setup wizard will launch.  
-  - Follow the on-screen instructions.  
+- a setup wizard will launch.
+  - Follow the on-screen instructions.
 - when the setup wizard closes, you'll see Companion.
   - It's like Step 2, you just pick your audio devices and then you're ready!
 

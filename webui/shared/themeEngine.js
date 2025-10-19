@@ -1,9 +1,9 @@
 const listing = [];
 const listingData = {};
-let currentTheme = ()=>{};
+let currentTheme = () => {};
 
 function getPathFor(id) {
-	if(id.endsWith("#")) {
+	if (id.endsWith("#")) {
 		return `/user-data/themes/${id.split("#")[0]}`;
 	}
 	return `/app/shared/theming/${id}`;
@@ -38,10 +38,10 @@ async function parseFor(id, string) {
 }
 
 async function initialize() {
-  for(const t of universal._information.themes) {
-    listing.push(t)
-    universal.CLU("Boot / Theme Engine", `Added theme ${t}`);
-  }
+	for (const t of universal._information.themes) {
+		listing.push(t);
+		universal.CLU("Boot / Theme Engine", `Added theme ${t}`);
+	}
 }
 
 function setTheme(name, global = true) {
@@ -50,7 +50,7 @@ function setTheme(name, global = true) {
 	fetch(getPathFor(fu))
 		.then((res) => res.text())
 		.then(async (css) => {
-			if(css.includes("Cannot GET")) {
+			if (css.includes("Cannot GET")) {
 				throw new Error(`Failed to get theme ${getPathFor(fu)}`);
 			}
 			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
@@ -62,24 +62,24 @@ function setTheme(name, global = true) {
 			const stylea = document.createElement("style");
 			stylea.id = "theme";
 			stylea.innerText += css;
-		
+
 			document.body.appendChild(stylea);
-			
+
 			currentTheme = () => res;
 			if (global) universal.send(universal.events.companion.set_theme, name);
 			universal.save("theme", name);
 		})
 		.catch((e) => {
-			console.error("Failed to load theme.",name,global,fu,e);
+			console.error("Failed to load theme.", name, global, fu, e);
 			universal.sendToast("Failed to load theme.", "Freedeck");
 		});
 }
 
 export default {
 	listing,
-  listingData,
-  initialize,
+	listingData,
+	initialize,
 	fetchAndParse,
 	setTheme,
-  currentTheme
+	currentTheme,
 };

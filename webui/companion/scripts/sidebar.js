@@ -1,11 +1,9 @@
-
 import { translatePage } from "../../shared/localization.js";
 import contextual from "./lib/ctxl.js";
 universal.ctx = contextual;
 
 document.body.appendChild(contextual.createViewContainer());
-document.body.querySelector(contextual.view_container).style.display = 'none';
-
+document.body.querySelector(contextual.view_container).style.display = "none";
 
 HTMLElement.prototype.setHTML = function (html) {
 	this.innerHTML = html;
@@ -19,8 +17,15 @@ universal.listenFor("init", () => {
 
 document.onkeydown = (ev) => universal.uiSounds.playSound("int_type");
 
-const pages = ["library", "plugins", "marketplace", "settings", "prompts", "setup"];
-for(const page of pages) contextual.addView(page);
+const pages = [
+	"library",
+	"plugins",
+	"marketplace",
+	"settings",
+	"prompts",
+	"setup",
+];
+for (const page of pages) contextual.addView(page);
 
 const sidebarEle = document.createElement("div");
 sidebarEle.id = "sidebar";
@@ -35,14 +40,11 @@ universal.reloadRight = () => {
 		{ Marketplace: "marketplace.html" },
 		{ Settings: "settings.html" },
 	];
-	if(universal.getServerStyleFlags()["app.freedeck.sidebar.connect_tab"]) {
-		sidebar.push({ Connect: "/new-connect.html?id=Companion&new_ip=true" })
+	if (universal.getServerStyleFlags()["app.freedeck.sidebar.connect_tab"]) {
+		sidebar.push({ Connect: "/new-connect.html?id=Companion&new_ip=true" });
 	}
-	if(universal.load("has_setup") === "false") {
-		sidebar = [
-			{ "Setup": "setup.html" },
-			{ "Pair Device": "prompts.html" },
-		]
+	if (universal.load("has_setup") === "false") {
+		sidebar = [{ Setup: "setup.html" }, { "Pair Device": "prompts.html" }];
 	}
 	sidebarUl.setHTML(
 		`<li style="font-size: .6em; background: none; margin: 0 auto;">
@@ -58,17 +60,21 @@ universal.reloadRight = () => {
 		const page = pages.find((p) => val.includes(p)) || val;
 		if (val.startsWith("+")) {
 			const ele = document.createElement("li");
-			ele.setHTML(`<a data-i18n-key="sidebars.right.${name}" onclick="${val.substring(1)}">${name}</a>`);
+			ele.setHTML(
+				`<a data-i18n-key="sidebars.right.${name}" onclick="${val.substring(1)}">${name}</a>`,
+			);
 			sidebarUl.appendChild(ele);
 			break;
 		}
 		const ele = document.createElement("li");
 		ele.setAttribute("hovereffect", "yes");
-		ele.setHTML(`<a data-i18n-key="sidebars.right.${name}" onclick="universal.vopen('${page}')">${name}</a>`);
+		ele.setHTML(
+			`<a data-i18n-key="sidebars.right.${name}" onclick="universal.vopen('${page}')">${name}</a>`,
+		);
 		sidebarUl.appendChild(ele);
 	}
 	translatePage(sidebarUl);
-}
+};
 
 universal.reloadRight();
 universal.vclose = () => {
@@ -77,19 +83,20 @@ universal.vclose = () => {
 	setTimeout(() => {
 		setDisplay(view_container, "none");
 	}, 500);
-}
+};
 
 universal.vopen = (v) => {
-	if(v === "demo-pages" && !pages.includes(v)) pages.push(v);
-	if(universal.load("has_setup") === "false") return;
+	if (v === "demo-pages" && !pages.includes(v)) pages.push(v);
+	if (universal.load("has_setup") === "false") return;
 	universal.uiSounds.playSound("sidebar");
 	const view_container = document.querySelector(universal.ctx.view_container);
 	const leftSidebar = document.querySelector(".sidebar");
 
-	if(view_container == null) return;
+	if (view_container == null) return;
 
 	if (!pages.includes(v)) {
-		if(leftSidebar.style.display === 'none') document.querySelector(".toggle-sidebar button").click();
+		if (leftSidebar.style.display === "none")
+			document.querySelector(".toggle-sidebar button").click();
 		setAnim(view_container, "view-out 0.5s");
 		setTimeout(() => {
 			setDisplay(view_container, "none");
@@ -99,17 +106,18 @@ universal.vopen = (v) => {
 	}
 
 	setDisplay(view_container, "block");
-	if(leftSidebar.style.display === 'flex') document.querySelector(".toggle-sidebar button").click();
+	if (leftSidebar.style.display === "flex")
+		document.querySelector(".toggle-sidebar button").click();
 	universal.ctx.destructiveView(v);
 	setAnim(view_container, "view-in 0.5s");
 };
 
 function setDisplay(ele, val) {
-	if(ele) ele.style.display = val;
+	if (ele) ele.style.display = val;
 }
 
 function setAnim(ele, val) {
-	if(ele) ele.style.animation = val;
+	if (ele) ele.style.animation = val;
 }
 
 document.body.appendChild(sidebarEle);

@@ -3,9 +3,14 @@ const eventNames = require("../eventNames");
 
 let timeAtLastTileCreation = 0;
 module.exports = ({ socket, io, data }) => {
-	const [userBlocked, newTime] = socket.abuse.isUserBlocked(timeAtLastTileCreation, "profiles_import", "ioAbuse", "Importing profiles inhumanly fast! File I/O abuse.");
+	const [userBlocked, newTime] = socket.abuse.isUserBlocked(
+		timeAtLastTileCreation,
+		"profiles_import",
+		"ioAbuse",
+		"Importing profiles inhumanly fast! File I/O abuse.",
+	);
 	timeAtLastTileCreation = newTime;
-	if(userBlocked) return;
+	if (userBlocked) return;
 
 	const settings = config.settings();
 	settings.profiles[data.name] = data.data;

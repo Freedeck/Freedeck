@@ -3,9 +3,14 @@ const eventNames = require("../eventNames");
 
 let timeAtLastTileCreation = 0;
 module.exports = ({ socket, io, data }) => {
-	const [userBlocked, newTime] = socket.abuse.isUserBlocked(timeAtLastTileCreation, "tiles", "ioAbuse", "Making tiles inhumanly fast! File I/O abuse.");
+	const [userBlocked, newTime] = socket.abuse.isUserBlocked(
+		timeAtLastTileCreation,
+		"tiles",
+		"ioAbuse",
+		"Making tiles inhumanly fast! File I/O abuse.",
+	);
 	timeAtLastTileCreation = newTime;
-	if(userBlocked) return;
+	if (userBlocked) return;
 
 	const { name, interaction } = data;
 	const settings = config.settings();
@@ -23,5 +28,8 @@ module.exports = ({ socket, io, data }) => {
 	}
 
 	config.save();
-	io.emit(eventNames.default.reload_sounds, settings.profiles[settings.profile]);
+	io.emit(
+		eventNames.default.reload_sounds,
+		settings.profiles[settings.profile],
+	);
 };

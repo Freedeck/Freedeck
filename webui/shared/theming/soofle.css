@@ -8,32 +8,33 @@
 :root {
 	--main-bg: url(https://i.imgur.com/Zs7EmHy.gif);
 	--main-bg-size: 100% 100%;
-	
+
 	--button-radius: 16px;
 	--text-color: white;
 
 	--modal-bg: hsla(354, 70%, 54%, 1);
-	--modal-color:white;
+	--modal-color: white;
 
-	--tile-border:rgba(255,255,255, 0.75);
+	--tile-border: rgba(255, 255, 255, 0.75);
 	--tile-bg: hsla(354, 70%, 54%, 0.5);
 
 	--input-bg: hsla(354, 70%, 54%, 0.25);
-	--input-color: rgba(255,255,255);
+	--input-color: rgba(255, 255, 255);
 
-	--modal-item-bg: rgba(255,255,255,0.125);
-	--modal-item-bg-size:400% 400%;
-	--modal-item-bg-anim:error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
-	--modal-item-text:white;
+	--modal-item-bg: rgba(255, 255, 255, 0.125);
+	--modal-item-bg-size: 400% 400%;
+	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)
+		infinite;
+	--modal-item-text: white;
 
-	--companion-left-sidebar-bg: rgba(0,0,0,0.4);
+	--companion-left-sidebar-bg: rgba(0, 0, 0, 0.4);
 	--companion-right-sidebar-bg: hsla(354, 70%, 54%, 0.25);
 
-	--companion-left-sidebar-color:white;
-	--companion-right-sidebar-color:white;
+	--companion-left-sidebar-color: white;
+	--companion-right-sidebar-color: white;
 
 	--companion-sidebar-item-bg: hsla(354, 70%, 54%, 0.25);
-	--companion-sidebar-item-color:white;
+	--companion-sidebar-item-color: white;
 }
 
 body {

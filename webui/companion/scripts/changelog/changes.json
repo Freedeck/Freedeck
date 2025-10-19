@@ -13,9 +13,7 @@
     "Refactored a lot of render and editor code to be faster, and more generic for future use.",
     "**Dash Pre-alpha!** Go to /dash to see it, it only has a preset layout for now, until it's fully implemented."
   ],
-  "other": [
-  ],
-  "known": [
-  ],
+  "other": [],
+  "known": [],
   "note": ""
 }

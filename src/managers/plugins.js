@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const debug = require("$/debug");
-const {recordTime} = require("$/timer")
+const { recordTime } = require("$/timer");
 const picocolors = require("$/picocolors");
 
 const providerPackage = require("@managers/providers/package.js");
@@ -20,25 +20,38 @@ const pl = {
 	_settings: new Map(),
 	sanitizeInfo: () => {
 		const sanitizedList = {};
-    for (const plugin of pl.plugins()) {
-      const { name, id, author, version, popout, dashModules, types, imports, hooks, views, disabled, stopped } = plugin[1].instance;
-      sanitizedList[id] = {
-        name,
-        id,
-        author,
-        version,
-        intents: plugin[1].instance._intent || [],
-        Settings: {},
-        popout,
+		for (const plugin of pl.plugins()) {
+			const {
+				name,
+				id,
+				author,
+				version,
+				popout,
 				dashModules,
-        types,
-        imports,
-        hooks,
-        views,
-        disabled,
-        stopped,
-      }
-    }
+				types,
+				imports,
+				hooks,
+				views,
+				disabled,
+				stopped,
+			} = plugin[1].instance;
+			sanitizedList[id] = {
+				name,
+				id,
+				author,
+				version,
+				intents: plugin[1].instance._intent || [],
+				Settings: {},
+				popout,
+				dashModules,
+				types,
+				imports,
+				hooks,
+				views,
+				disabled,
+				stopped,
+			};
+		}
 		return sanitizedList;
 	},
 	plugins: () => {
@@ -51,11 +64,11 @@ const pl = {
 	reload: async () => {
 		const plList = pl.plugins();
 		for (const plugin of plList) {
-			if(plugin.instance?.stop) plugin.instance.stop();
+			if (plugin.instance?.stop) plugin.instance.stop();
 			plList.delete(plugin.id);
 		}
 		for (const type of pl.types()) {
-			if(type.instance?.stop) type.instance.stop();
+			if (type.instance?.stop) type.instance.stop();
 			pl.types().delete(type.id);
 		}
 		for (const key in require.cache) {
@@ -68,29 +81,36 @@ const pl = {
 	unload: (id) => {
 		const plList = pl.plugins();
 		const plugin = plList.get(id);
-	
-		if(plugin) {
-			if(plugin.instance?.stop) plugin.instance.stop();
+
+		if (plugin) {
+			if (plugin.instance?.stop) plugin.instance.stop();
 			plList.delete(id);
 		}
 		for (const key in require.cache) {
-			if (key.startsWith(path.resolve(`./tmp/_e_._plugins_${id}.Freedeck`)) || 
-					key.startsWith(path.resolve(`./plugins/${id}`)) || 
-					key.startsWith(path.resolve(`./plugins/${id}.disabled`))) {
+			if (
+				key.startsWith(path.resolve(`./tmp/_e_._plugins_${id}.Freedeck`)) ||
+				key.startsWith(path.resolve(`./plugins/${id}`)) ||
+				key.startsWith(path.resolve(`./plugins/${id}.disabled`))
+			) {
 				delete require.cache[key];
 			}
 		}
-		debug.log(picocolors.green(`Successfully unloaded plugin with ID ${id}`), "Plugins");
+		debug.log(
+			picocolors.green(`Successfully unloaded plugin with ID ${id}`),
+			"Plugins",
+		);
 	},
 	reloadSinglePlugin: async (id) => {
 		const file = pl.plugins().get(id).instance.file.filePath;
 		pl.unload(id);
-		if (fs.existsSync(path.resolve('./plugins', file)))
-		await pl.load(file);
-		debug.log(picocolors.green(`Successfully reloaded plugin with ID ${id}`), "Plugins");
+		if (fs.existsSync(path.resolve("./plugins", file))) await pl.load(file);
+		debug.log(
+			picocolors.green(`Successfully reloaded plugin with ID ${id}`),
+			"Plugins",
+		);
 	},
 	update: async () => {
-		recordTime("plugins:update-plugin-manager-begin")
+		recordTime("plugins:update-plugin-manager-begin");
 		debug.log("Loading plugins.", "Plugins");
 		pl._disabled = [];
 		pl._pluginCache.clear();
@@ -111,18 +131,16 @@ const pl = {
 		} catch (er) {
 			console.log(er);
 		}
-		recordTime("plugins:update-plugin-manager-complete")
+		recordTime("plugins:update-plugin-manager-complete");
 	},
 	load: async (file) => {
 		recordTime(`plugins:load-plugin-begin,${file}`);
-		if(pl._disabled.includes(file)) {
+		if (pl._disabled.includes(file)) {
 			pl._disabled = pl._disabled.filter((value) => value !== file);
 		}
 		if (file.includes(".disabled")) {
 			pl._disabled.push(file);
-			console.log(
-				picocolors.gray(`Plugin ${file} is disabled. Skipping.`),
-			)
+			console.log(picocolors.gray(`Plugin ${file} is disabled. Skipping.`));
 			return;
 		}
 		try {
@@ -131,18 +149,18 @@ const pl = {
 					debug,
 					file,
 					pl,
-				})
+				});
 			} else if (file.endsWith(".src")) {
 				sourceFolder({
 					debug,
 					file,
 					pl,
-				})
+				});
 			} else if (file.endsWith(".fdpackage")) {
 				await providerPackage({
 					debug,
 					filePath: file,
-					pluginManager: pl
+					pluginManager: pl,
 				});
 			} else if (file.endsWith(".Freedeck")) {
 				asarBundle({
@@ -151,7 +169,12 @@ const pl = {
 					pl,
 				});
 			} else {
-				console.log(picocolors.red(`Error: Couldn't find a suitable provider for ${file}.`), "Plugins");
+				console.log(
+					picocolors.red(
+						`Error: Couldn't find a suitable provider for ${file}.`,
+					),
+					"Plugins",
+				);
 			}
 		} catch (err) {
 			console.log(

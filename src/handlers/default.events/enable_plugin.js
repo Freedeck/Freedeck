@@ -4,7 +4,7 @@ const eventNames = require("../eventNames");
 const fs = require("node:fs");
 
 module.exports = ({ io, data }) => {
-	if(!fs.existsSync(path.resolve(`./plugins/${data}`))) return;
+	if (!fs.existsSync(path.resolve(`./plugins/${data}`))) return;
 	fs.renameSync(
 		path.resolve(`./plugins/${data}`),
 		path.resolve(`./plugins/${data.split(".disabled")[0]}`),

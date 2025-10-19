@@ -31,7 +31,7 @@
 }
 
 @keyframes view-in {
-	from{
+	from {
 		left: 50%;
 		width: 0;
 		background-image: var(--url);
@@ -41,17 +41,17 @@
 	}
 
 	to {
-			width: 100%;
-			left: 0;
-			background-image: var(--url);
-			background-size: cover;
-			opacity: 1;
-			transform: scale(1) perspective(500px) rotate3d(1, 0, 0, 0deg);
+		width: 100%;
+		left: 0;
+		background-image: var(--url);
+		background-size: cover;
+		opacity: 1;
+		transform: scale(1) perspective(500px) rotate3d(1, 0, 0, 0deg);
 	}
 }
 
 @keyframes view-out {
-	from{
+	from {
 		left: 0;
 		background-image: var(--url);
 		background-size: cover;
@@ -60,13 +60,13 @@
 	}
 
 	to {
-			left: 50%;
-			width: 0;
-			background-image: var(--url);
-			background-size: cover;
-			opacity: 0;
-			transform: scale(2) perspective(500px) rotate3d(1, 0, 0, 90deg);
-		}
+		left: 50%;
+		width: 0;
+		background-image: var(--url);
+		background-size: cover;
+		opacity: 0;
+		transform: scale(2) perspective(500px) rotate3d(1, 0, 0, 90deg);
+	}
 }
 
 .sidebar {
@@ -75,34 +75,34 @@
 }
 
 @keyframes editor-pull-down {
-	from{
-			bottom: -100vh;
-			transform: scale(2);
-			filter: blur(50px);
-			opacity: 0;
+	from {
+		bottom: -100vh;
+		transform: scale(2);
+		filter: blur(50px);
+		opacity: 0;
 	}
 
 	to {
-			bottom: 0;
-			transform: scale(1);
-			filter: blur(0px);
-			opacity: 1;
-		}
+		bottom: 0;
+		transform: scale(1);
+		filter: blur(0px);
+		opacity: 1;
+	}
 }
 
 @keyframes editor-pull-up {
-	from{
-			bottom: 0;
-			transform: scale(1);
-			filter: blur(0px);
-			opacity: 1;
-		}
+	from {
+		bottom: 0;
+		transform: scale(1);
+		filter: blur(0px);
+		opacity: 1;
+	}
 
 	to {
-			bottom: -100vh;
-			transform: scale(2);
-			filter: blur(50px);
-			opacity: 0;
+		bottom: -100vh;
+		transform: scale(2);
+		filter: blur(50px);
+		opacity: 0;
 	}
 }
 
@@ -151,5 +151,5 @@
 button:hover,
 button:focus,
 button:active {
-	animation: general_crazy 0.25s ;
+	animation: general_crazy 0.25s;
 }

@@ -20,18 +20,23 @@
 	--ctp-mantle: #181825;
 	--ctp-crust: #11111b;
 
+	--main-bg: linear-gradient(
+		45deg,
+		var(--ctp-base) 0%,
+		33%,
+		var(--ctp-mantle) 66%,
+		var(--ctp-crust) 100%
+	);
 
-	--main-bg: linear-gradient(45deg, var(--ctp-base) 0%,  33%, var(--ctp-mantle) 66%, var(--ctp-crust) 100%);
-	
 	--tile-bg: rgba(180, 190, 254, 0.125);
-	
+
 	--slider-background: rgba(147, 153, 178, 0.5);
 
 	--text-color: var(--ctp-text);
-	--text-color-secondary:  var(--ctp-subtext-1);
+	--text-color-secondary: var(--ctp-subtext-1);
 
 	--tile-border: 1px solid rgba(147, 153, 178, 0.5);
-	
+
 	--modal-color: var(--ctp-text);
 	--modal-bg: var(--ctp-crust);
 
@@ -39,9 +44,16 @@
 	--input-slider-bg: var(--ctp-base);
 	--input-color: var(--ctp-overlay-1);
 
-	--modal-item-bg: linear-gradient(45deg, rgba(30, 30, 40, 1) 0%, rgba(49, 50, 68, 1) 33%, rgba(30, 30, 40, 1) 66%, rgba(49, 50, 68, 1) 100%);
+	--modal-item-bg: linear-gradient(
+		45deg,
+		rgba(30, 30, 40, 1) 0%,
+		rgba(49, 50, 68, 1) 33%,
+		rgba(30, 30, 40, 1) 66%,
+		rgba(49, 50, 68, 1) 100%
+	);
 	--modal-item-bg-size: 400% 400%;
-	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)
+		infinite;
 	--modal-item-text: #cdd6f4;
 
 	--companion-left-sidebar-bg: var(--ctp-mantle);

@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const picocolors = require("$/picocolors");
 const { paths } = require("./routers/static");
-const {recordTime} = require("$/timer")
+const { recordTime } = require("$/timer");
 const webpackConfigLocation = path.resolve("webpack.config.js");
 const webpackBuildLocation = paths.userData_bundles;
 const connectRouterLocation = path.resolve("src/routers/connect.js");
@@ -21,58 +21,58 @@ process.env.NODE_ENV = "production";
  * @return {true}
  */
 function runWebpack(webpackInstance) {
-  recordTime("webpack:compile-begin")
-  if (!fs.existsSync(webpackBuildLocation)) {
-    console.log(
-      "Welcome to Freedeck! This is your first time running Freedeck, so it will take a moment to set up."
-    );
-    fs.mkdirSync(webpackBuildLocation);
-  }
+	recordTime("webpack:compile-begin");
+	if (!fs.existsSync(webpackBuildLocation)) {
+		console.log(
+			"Welcome to Freedeck! This is your first time running Freedeck, so it will take a moment to set up.",
+		);
+		fs.mkdirSync(webpackBuildLocation);
+	}
 
-  compileTime = -1;
-  isCompilerFinished = false;
-  return new Promise((resolve, reject) => {
-    webpackInstance.run((err, stats) => {
-      isCompilerFinished = true;
-      if (err) {
-        console.log(err);
-        reject(err);
-      } else {
-        compileTime = stats.endTime - stats.startTime;
-        console.log(
-          stats.toString({
-            assets: false,
-            cached: false,
-            cachedAssets: false,
-            children: false,
-            chunks: false,
-            chunkModules: false,
-            chunkOrigins: false,
-            colors: false,
-            depth: false,
-            entrypoints: false,
-            errors: true,
-            errorDetails: true,
-            hash: false,
-            maxModules: 0,
-            modules: false,
-            performance: false,
-            providedExports: false,
-            publicPath: false,
-            reasons: false,
-            source: false,
-            timings: false,
-            usedExports: false,
-            version: false,
-            warnings: false
-          }),
-          picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`)
-        );
-        recordTime("webpack:compile-complete")
-        resolve();
-      }
-    });
-  });
+	compileTime = -1;
+	isCompilerFinished = false;
+	return new Promise((resolve, reject) => {
+		webpackInstance.run((err, stats) => {
+			isCompilerFinished = true;
+			if (err) {
+				console.log(err);
+				reject(err);
+			} else {
+				compileTime = stats.endTime - stats.startTime;
+				console.log(
+					stats.toString({
+						assets: false,
+						cached: false,
+						cachedAssets: false,
+						children: false,
+						chunks: false,
+						chunkModules: false,
+						chunkOrigins: false,
+						colors: false,
+						depth: false,
+						entrypoints: false,
+						errors: true,
+						errorDetails: true,
+						hash: false,
+						maxModules: 0,
+						modules: false,
+						performance: false,
+						providedExports: false,
+						publicPath: false,
+						reasons: false,
+						source: false,
+						timings: false,
+						usedExports: false,
+						version: false,
+						warnings: false,
+					}),
+					picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`),
+				);
+				recordTime("webpack:compile-complete");
+				resolve();
+			}
+		});
+	});
 }
 
 /**
@@ -80,19 +80,19 @@ function runWebpack(webpackInstance) {
  * @return {Promise<void>}
  */
 async function compileWebpack() {
-  setWsStateHttp("compiling");
-  const webpackInstance = webpack(webpackConfig);
-  await runWebpack(webpackInstance)
-    .then(() => {
-      setWsStateHttp("ready");
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+	setWsStateHttp("compiling");
+	const webpackInstance = webpack(webpackConfig);
+	await runWebpack(webpackInstance)
+		.then(() => {
+			setWsStateHttp("ready");
+		})
+		.catch((e) => {
+			console.error(e);
+		});
 }
 
 module.exports = {
-  compileWebpack,
-  compileTime,
-  isCompilerFinished,
+	compileWebpack,
+	compileTime,
+	isCompilerFinished,
 };

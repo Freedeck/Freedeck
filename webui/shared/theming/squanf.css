@@ -6,8 +6,8 @@
 }
 
 :root {
-    --main-bg-size: 20%;
-    --main-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
-    
-    --modal-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
+	--main-bg-size: 20%;
+	--main-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
+
+	--modal-bg: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV0t-oDO7NMFPUNZwFVcSBBBzXyLzmFXM4FQ&s");
 }

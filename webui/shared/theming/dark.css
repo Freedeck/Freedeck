@@ -7,29 +7,29 @@
 
 :root {
 	--main-bg: #060606;
-	
+
 	--text-color: white;
 
-	--modal-bg:rgba(15,15,15);
-	--modal-color:white;
+	--modal-bg: rgba(15, 15, 15);
+	--modal-color: white;
 
-	--tile-border: 1px solid rgba(255,255,255, 0.125);
-	--tile-bg: rgb(30,30,30);
+	--tile-border: 1px solid rgba(255, 255, 255, 0.125);
+	--tile-bg: rgb(30, 30, 30);
 
-	--input-bg:rgba(255,255,255, 0.25);
-	--input-color: rgba(255,255,255);
+	--input-bg: rgba(255, 255, 255, 0.25);
+	--input-color: rgba(255, 255, 255);
 
-	--modal-item-bg: rgba(255,255,255,0.125);
+	--modal-item-bg: rgba(255, 255, 255, 0.125);
 	--modal-item-bg-size: 100%;
 	--modal-item-bg-anim: none;
-	--modal-item-text:white;
+	--modal-item-text: white;
 
-	--companion-left-sidebar-bg:rgba(0,0,0,0.5);
-	--companion-right-sidebar-bg:rgba(0,0,0,0.5);
+	--companion-left-sidebar-bg: rgba(0, 0, 0, 0.5);
+	--companion-right-sidebar-bg: rgba(0, 0, 0, 0.5);
 
-	--companion-left-sidebar-color:white;
-	--companion-right-sidebar-color:white;
+	--companion-left-sidebar-color: white;
+	--companion-right-sidebar-color: white;
 
 	--companion-sidebar-item-bg: #121212;
-	--companion-sidebar-item-color:white;
+	--companion-sidebar-item-color: white;
 }

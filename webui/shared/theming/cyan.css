@@ -6,15 +6,21 @@
 }
 
 :root {
-	--blue-gradient: linear-gradient(45deg, rgba(0, 183, 255, 1) 0%, rgb(34, 178, 235) 33%, rgba(0, 183, 255, 1) 66%, rgb(34, 178, 235) 100%);
-	
+	--blue-gradient: linear-gradient(
+		45deg,
+		rgba(0, 183, 255, 1) 0%,
+		rgb(34, 178, 235) 33%,
+		rgba(0, 183, 255, 1) 66%,
+		rgb(34, 178, 235) 100%
+	);
+
 	--main-bg: var(--blue-gradient);
 
 	--tile-bg: rgba(0, 73, 102, 0.125);
 
 	--modal-bg: hsl(197, 100%, 50%);
 	--modal-color: black;
-	 
+
 	--modal-item-bg: var(--blue-gradient);
 	--modal-item-text: black;
 

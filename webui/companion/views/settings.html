@@ -1,613 +1,771 @@
-<link rel="stylesheet" href="/companion/views/styles/settings.css">
-<h1 class="settings-section-title"><span data-i18n-key="settings.title"></span> <span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy"></span>
+<link rel="stylesheet" href="/companion/views/styles/settings.css" />
+<h1 class="settings-section-title">
+	<span data-i18n-key="settings.title"></span>
+	<span
+		><img
+			src="/common/icons/settings.svg"
+			width="50"
+			height="50"
+			loading="lazy"
+	/></span>
 </h1>
 <div id="settings-menu-full">
-    <details>
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.style"></span><span><img src="/common/icons/themes.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <div class="themelist"></div>
-    </details>
-    <details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
-        <summary class="settings-section-title">
-            <span><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <br>
-        <p id="clang">Loading...</p>
-        <div id="language-list"></div>
-    </details>
-    <details>
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.plugins"></span> <span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <br>
-        <div class="experiments">
-            <ul id="actl" class="btnlist"></ul>
-        </div>
-        <button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
-            <div class="flex-wrap">
-                <h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
-                <div id="disbl-list" class="row"></div>
-            </div>
-        <details id="tile-prev">
-            <summary><strong data-i18n-key="settings.sections.plugins.tile_previews"></strong></summary>
-            <div class="btns"></div>
-        </details>
-    </details>
-    <details>
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.audio_devices"></span> <span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <div class="monitor-devices audio-device-picker"></div>
-        <span data-i18n-key="settings.sections.audio_devices.vb"></span>
-        <div class="vb-cables audio-device-picker"></div>
-    </details>
-    <settings section="generale"></settings>
-    <details class="experiment-exist soundpack">
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.uis"></span> <span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <div>
-            <h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
-            <ul class="soundpacks"></ul>
-            <h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
-            <div class="experiment-exist">
-                <h3 id="soundpack-title">Soundpack</h3>
-                <span>(<span id="soundpack-id">id.soundpack</span>)
-                    v<span id="soundpack-version">0.0.0</span> by
-                    <span id="soundpack-author">somebody</span></span>
-            </div>
-            <ul class="uisounds"></ul>
-        </div>
-    </details>
-    <details>
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.bug"></span> <span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
-        <p id="hostname">Your hostname here</p>
-        <button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
-    </details>
-    <details style="display:none;" id="dev-tools">
-        <summary class="settings-section-title">
-            <span data-i18n-key="settings.sections.developer_tools"></span> <span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"></span>
-        </summary>
-        <div class="flex-wrap-r">
-            <button onclick="restChnglog();window.location.reload()">
-                Reset Changelog Accepted (Reloads)
-            </button>
-            <button onclick="window._makeThanks(true)">
-                Show Current Changelog
-            </button>
-            <button onclick="universal.showBootLog()">
-                Show UI Boot Log
-            </button>
-            <button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
-                Test Notification
-            </button>
-            <button onclick="universal.send(universal.events.default.recompile)">
-                Recompile Webpack bundles
-            </button>
-            <button onclick="location='/new-connect.html?id=Companion&force-fail=1'">
-                Force Failure for Connect
-            </button>
-            <button onclick="universal.vopen('demo-pages')">
-                Open Contextual Test View
-            </button>
-            <button onclick="universal.error()">
-                Error
-            </button>
-            <button id="fsw">Force Setup Wizard</button>
-            <button id="erals">Erase LocalStorage</button>
-        </div>
-        <br>
-        <details>
-            <summary data-i18n-key="settings.sections.bug.report_reader">
-            </summary>
-            <textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
-            <button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read"></button>
-            <div class="report-details">
-    
-            </div>
-        </details>
-    </details>
-    <details>
-        <summary class="settings-section-title">
-            <h1 class="version"></h1>
-            <img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy">
-        </summary>
-        <center>
-            <span data-i18n-key="settings.footer.by"></span> <a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a>
-        </center>
-    </details>
+	<details>
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.style"></span
+			><span
+				><img
+					src="/common/icons/themes.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<div class="themelist"></div>
+	</details>
+	<details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+		<summary class="settings-section-title">
+			<span
+				><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span
+					class="tag-beta"
+					>ALPHA</span
+				></span
+			><span
+				><img
+					src="/common/icons/language.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<br />
+		<p id="clang">Loading...</p>
+		<div id="language-list"></div>
+	</details>
+	<details>
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.plugins"></span>
+			<span
+				><img
+					src="/common/icons/t_plugin.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<br />
+		<div class="experiments">
+			<ul id="actl" class="btnlist"></ul>
+		</div>
+		<button
+			id="upd"
+			data-i18n-key="settings.sections.plugins.reload_all"
+		></button>
+		<div class="flex-wrap">
+			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
+			<div id="disbl-list" class="row"></div>
+		</div>
+		<details id="tile-prev">
+			<summary>
+				<strong
+					data-i18n-key="settings.sections.plugins.tile_previews"
+				></strong>
+			</summary>
+			<div class="btns"></div>
+		</details>
+	</details>
+	<details>
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.audio_devices"></span>
+			<span
+				><img
+					src="/common/icons/audio.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<div class="monitor-devices audio-device-picker"></div>
+		<span data-i18n-key="settings.sections.audio_devices.vb"></span>
+		<div class="vb-cables audio-device-picker"></div>
+	</details>
+	<settings section="generale"></settings>
+	<details class="experiment-exist soundpack">
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.uis"></span>
+			<span
+				><img
+					src="/common/icons/uisounds.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<div>
+			<h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
+			<ul class="soundpacks"></ul>
+			<h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
+			<div class="experiment-exist">
+				<h3 id="soundpack-title">Soundpack</h3>
+				<span
+					>(<span id="soundpack-id">id.soundpack</span>) v<span
+						id="soundpack-version"
+						>0.0.0</span
+					>
+					by <span id="soundpack-author">somebody</span></span
+				>
+			</div>
+			<ul class="uisounds"></ul>
+		</div>
+	</details>
+	<details>
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.bug"></span>
+			<span
+				><img
+					src="/common/icons/bugs.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
+		</summary>
+		<textarea
+			name="bgrep"
+			id="bgrep"
+			data-i18n-key="settings.sections.bug.request_generate"
+		></textarea>
+		<p id="hostname">Your hostname here</p>
+		<button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
+	</details>
+	<details style="display: none" id="dev-tools">
+		<summary class="settings-section-title">
+			<span data-i18n-key="settings.sections.developer_tools"></span>
+			<span
+				><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"
+			/></span>
+		</summary>
+		<div class="flex-wrap-r">
+			<button onclick="restChnglog();window.location.reload()">
+				Reset Changelog Accepted (Reloads)
+			</button>
+			<button onclick="window._makeThanks(true)">Show Current Changelog</button>
+			<button onclick="universal.showBootLog()">Show UI Boot Log</button>
+			<button
+				onclick="universal.sendToast('This is a test', 'Test Notification from Settings')"
+			>
+				Test Notification
+			</button>
+			<button onclick="universal.send(universal.events.default.recompile)">
+				Recompile Webpack bundles
+			</button>
+			<button onclick="location='/new-connect.html?id=Companion&force-fail=1'">
+				Force Failure for Connect
+			</button>
+			<button onclick="universal.vopen('demo-pages')">
+				Open Contextual Test View
+			</button>
+			<button onclick="universal.error()">Error</button>
+			<button id="fsw">Force Setup Wizard</button>
+			<button id="erals">Erase LocalStorage</button>
+		</div>
+		<br />
+		<details>
+			<summary data-i18n-key="settings.sections.bug.report_reader"></summary>
+			<textarea
+				name="input-bgrep"
+				id="input-bgrep"
+				class="input-bgrep"
+			></textarea>
+			<button
+				id="read-bgrep"
+				data-i18n-key="settings.sections.bug.report_reader.read"
+			></button>
+			<div class="report-details"></div>
+		</details>
+	</details>
+	<details>
+		<summary class="settings-section-title">
+			<h1 class="version"></h1>
+			<img
+				src="/assets/logo_big.png"
+				alt="Freedeck Logo"
+				width="75"
+				height="75"
+				loading="lazy"
+			/>
+		</summary>
+		<center>
+			<span data-i18n-key="settings.footer.by"></span>
+			<a href="https://aidens.dev" target="_blank">ia74 / Aiden S.</a>
+		</center>
+	</details>
 </div>
 <!-- <h2>This is the bottom of the Settings menu.</h2> -->
 <script type="module">
-    import "/app/settingsThemes.js";
-    loadThemeListing();
+	import "/app/settingsThemes.js";
+	loadThemeListing();
 
-    if (universal.load("developer") !== "false") {
-        document.querySelector("#dev-tools").style.display = 'flex';
-    }
+	if (universal.load("developer") !== "false") {
+		document.querySelector("#dev-tools").style.display = "flex";
+	}
 
-    const konamiCodeSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiCodeIndex = 0;
+	const konamiCodeSequence = [
+		"ArrowUp",
+		"ArrowUp",
+		"ArrowDown",
+		"ArrowDown",
+		"ArrowLeft",
+		"ArrowRight",
+		"ArrowLeft",
+		"ArrowRight",
+		"b",
+		"a",
+	];
+	let konamiCodeIndex = 0;
 
-    document.addEventListener('keydown', function (e) {
-        const key = e.key.toLowerCase(); // Normalize key to lowercase for comparison
-        const expectedKey = konamiCodeSequence[konamiCodeIndex].toLowerCase();
+	document.addEventListener("keydown", function (e) {
+		const key = e.key.toLowerCase(); // Normalize key to lowercase for comparison
+		const expectedKey = konamiCodeSequence[konamiCodeIndex].toLowerCase();
 
-        if (key === expectedKey) {
-            konamiCodeIndex++;
-            if (konamiCodeIndex === konamiCodeSequence.length) {
-                let setTo = ['true', 'flex'];
-                if(universal.load("developer") !== "false") setTo = ['false', 'none'];
-                universal.save("developer", setTo[0]);
-                universal.uiSounds.playSound("devmode")
-                document.querySelector("#dev-tools").style.display = setTo[1]
-                konamiCodeIndex = 0;
-            }
-        } else {
-            konamiCodeIndex = 0;
-        }
-    });
+		if (key === expectedKey) {
+			konamiCodeIndex++;
+			if (konamiCodeIndex === konamiCodeSequence.length) {
+				let setTo = ["true", "flex"];
+				if (universal.load("developer") !== "false") setTo = ["false", "none"];
+				universal.save("developer", setTo[0]);
+				universal.uiSounds.playSound("devmode");
+				document.querySelector("#dev-tools").style.display = setTo[1];
+				konamiCodeIndex = 0;
+			}
+		} else {
+			konamiCodeIndex = 0;
+		}
+	});
 
-    function restChnglog() {
-        universal.send(universal.events.default.serverStyleFlagUpdated,setToLocalCfg('app.freedeck.last_changelog_viewed', null));
-    }
-    window.restChnglog = restChnglog;
+	function restChnglog() {
+		universal.send(
+			universal.events.default.serverStyleFlagUpdated,
+			setToLocalCfg("app.freedeck.last_changelog_viewed", null),
+		);
+	}
+	window.restChnglog = restChnglog;
 
-    import {locales, setLocale, translationKey} from "/app/shared/localization.js"
-    document.querySelector("#clang").innerText = "Current Language: " + locales[universal.load("locale")]
-    Object.keys(locales).forEach((locale) => {
-        const li = document.createElement("li");
-        li.innerText = locales[locale];
-        li.onclick = () => {
-            setLocale(locale);
-            window.location.reload();
-        };
-        document.querySelector("#language-list").appendChild(li);
-    });
+	import {
+		locales,
+		setLocale,
+		translationKey,
+	} from "/app/shared/localization.js";
+	document.querySelector("#clang").innerText =
+		"Current Language: " + locales[universal.load("locale")];
+	Object.keys(locales).forEach((locale) => {
+		const li = document.createElement("li");
+		li.innerText = locales[locale];
+		li.onclick = () => {
+			setLocale(locale);
+			window.location.reload();
+		};
+		document.querySelector("#language-list").appendChild(li);
+	});
 
-    document.querySelector("#hostname").innerText = "Hostname: " + universal._information.hostname;
+	document.querySelector("#hostname").innerText =
+		"Hostname: " + universal._information.hostname;
 
-    const seen = {};
+	const seen = {};
 
-    Object.keys(universal.plugins).forEach((plugin) => {
-        const req = universal.plugins[plugin];
-        const li = document.createElement('li');
-        li.setAttribute('hovereffect', 'yes');
-        li.style.cursor = 'default';
-        if (seen[req.name]) return;
-        seen[req.name] = true;
+	Object.keys(universal.plugins).forEach((plugin) => {
+		const req = universal.plugins[plugin];
+		const li = document.createElement("li");
+		li.setAttribute("hovereffect", "yes");
+		li.style.cursor = "default";
+		if (seen[req.name]) return;
+		seen[req.name] = true;
 
-        const nameEle = document.createElement('h3');
-        nameEle.innerText = req.name;
-        li.appendChild(nameEle);
-        const versionEle = document.createElement('p');
-        versionEle.innerText = req.version ? 'v' + req.version : '';
-        li.appendChild(versionEle);
-        const authorEle = document.createElement('p');
-        authorEle.innerText = 'by ' + req.author;
-        li.appendChild(authorEle);
+		const nameEle = document.createElement("h3");
+		nameEle.innerText = req.name;
+		li.appendChild(nameEle);
+		const versionEle = document.createElement("p");
+		versionEle.innerText = req.version ? "v" + req.version : "";
+		li.appendChild(versionEle);
+		const authorEle = document.createElement("p");
+		authorEle.innerText = "by " + req.author;
+		li.appendChild(authorEle);
 
-        if(req.popout) {
-            const popout = document.createElement('details');
-            popout.innerHTML = `<summary>Open</summary><div class='popout'>${req.popout}</div>`;
-            li.appendChild(popout);
-        }
+		if (req.popout) {
+			const popout = document.createElement("details");
+			popout.innerHTML = `<summary>Open</summary><div class='popout'>${req.popout}</div>`;
+			li.appendChild(popout);
+		}
 
-        const actionContainer = document.createElement('div');
-        actionContainer.classList.add('flex-wrap-r');
-        actionContainer.style.justifyContent = 'space-between';
+		const actionContainer = document.createElement("div");
+		actionContainer.classList.add("flex-wrap-r");
+		actionContainer.style.justifyContent = "space-between";
 
-        const a = document.createElement('button');
-        a.innerText = 'Disable';
-        a.onclick = () => {
-            universal.uiSounds.playSound('int_confirm');
-            window.UniversalUI.show.showPick('Are you sure you want to disable ' + req.name + '?', [{ name: 'Yes', value: true }, { name: 'No', value: false }], ({modal, value}) => {
-                if (value.value == true) {
-                    universal.send(universal.events.default.disable_plugin, req.id);
-                }
-            });
-            // universal.send(universal.events.default.disable_plugin, req.id);
-        };
-        const b = document.createElement('button');
-        b.innerText = 'Reload';
-        b.onclick = () => {
-            universal.uiSounds.playSound('int_yes');
-            universal.send(universal.events.default.reload_single_plugin, req.id);
-        };
-        actionContainer.appendChild(a);
-        actionContainer.appendChild(b);
-        li.appendChild(actionContainer);
-        if(req.intents && !req.intents.includes(0xf0)) {
-            document.querySelector('#actl').appendChild(li);
-        } else if(!req.intents) {
-            document.querySelector('#actl').appendChild(li);
-        }
+		const a = document.createElement("button");
+		a.innerText = "Disable";
+		a.onclick = () => {
+			universal.uiSounds.playSound("int_confirm");
+			window.UniversalUI.show.showPick(
+				"Are you sure you want to disable " + req.name + "?",
+				[
+					{ name: "Yes", value: true },
+					{ name: "No", value: false },
+				],
+				({ modal, value }) => {
+					if (value.value == true) {
+						universal.send(universal.events.default.disable_plugin, req.id);
+					}
+				},
+			);
+			// universal.send(universal.events.default.disable_plugin, req.id);
+		};
+		const b = document.createElement("button");
+		b.innerText = "Reload";
+		b.onclick = () => {
+			universal.uiSounds.playSound("int_yes");
+			universal.send(universal.events.default.reload_single_plugin, req.id);
+		};
+		actionContainer.appendChild(a);
+		actionContainer.appendChild(b);
+		li.appendChild(actionContainer);
+		if (req.intents && !req.intents.includes(0xf0)) {
+			document.querySelector("#actl").appendChild(li);
+		} else if (!req.intents) {
+			document.querySelector("#actl").appendChild(li);
+		}
 
-        const types = req.types;
-        types.forEach((dataObj) => {
-            const tmpBtn = document.createElement('button');
-            tmpBtn.innerText = dataObj.name + ': ' + dataObj.type;
-            tmpBtn.onclick = (ev) => {
-                universal.send(universal.events.keypress, { event: ev, btn: { uuid: 0, name: dataObj.name, type: dataObj.type } });
-            };
-            document.querySelector('.btns').appendChild(tmpBtn);
-        });
-    });
+		const types = req.types;
+		types.forEach((dataObj) => {
+			const tmpBtn = document.createElement("button");
+			tmpBtn.innerText = dataObj.name + ": " + dataObj.type;
+			tmpBtn.onclick = (ev) => {
+				universal.send(universal.events.keypress, {
+					event: ev,
+					btn: { uuid: 0, name: dataObj.name, type: dataObj.type },
+				});
+			};
+			document.querySelector(".btns").appendChild(tmpBtn);
+		});
+	});
 
-    universal._information.disabled.forEach((plugin) => {
-        if (seen[plugin]) return;
-        seen[plugin] = true;
-        const a = document.createElement('button');
-        a.innerText = 'Enable ' + plugin.split('.disabled')[0].split(".")[0];
-        a.onclick = () => {
-            console.log(plugin);
-            universal.uiSounds.playSound('int_confirm');
-            universal.send(universal.events.default.enable_plugin, plugin);
-            if (!dialog.open) dialog.showModal();
-            dialog.innerHTML = `<p>Enabling ${plugin.split('.disabled')[0]}!</p>`;
-        };
-        document.querySelector('#disbl-list').appendChild(a);
-    });
+	universal._information.disabled.forEach((plugin) => {
+		if (seen[plugin]) return;
+		seen[plugin] = true;
+		const a = document.createElement("button");
+		a.innerText = "Enable " + plugin.split(".disabled")[0].split(".")[0];
+		a.onclick = () => {
+			console.log(plugin);
+			universal.uiSounds.playSound("int_confirm");
+			universal.send(universal.events.default.enable_plugin, plugin);
+			if (!dialog.open) dialog.showModal();
+			dialog.innerHTML = `<p>Enabling ${plugin.split(".disabled")[0]}!</p>`;
+		};
+		document.querySelector("#disbl-list").appendChild(a);
+	});
 
-    document.querySelector('#upd').onclick = () => {
-        universal.uiSounds.playSound('int_yes');
-        universal.send(universal.events.default.update_plugins);
-        if (!dialog.open) dialog.showModal();
-        dialog.innerHTML = `<p>Reloading plugins!</p>`;
-    };
-    const dialog = document.querySelector('dialog') || document.createElement('dialog');
-    if (!document.querySelector('dialog')) document.body.appendChild(dialog);
+	document.querySelector("#upd").onclick = () => {
+		universal.uiSounds.playSound("int_yes");
+		universal.send(universal.events.default.update_plugins);
+		if (!dialog.open) dialog.showModal();
+		dialog.innerHTML = `<p>Reloading plugins!</p>`;
+	};
+	const dialog =
+		document.querySelector("dialog") || document.createElement("dialog");
+	if (!document.querySelector("dialog")) document.body.appendChild(dialog);
 
-    document.querySelector(".version").innerText = universal._information.version.human;
+	document.querySelector(".version").innerText =
+		universal._information.version.human;
 
-    async function getAudioOutputDevices(isCable = false) {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioOutputs = devices
-            .filter(
-                (device) =>
-                    device.kind === "audiooutput" &&
-                    (isCable
-                        ? device.label.includes("VB-Audio")
-                        : !device.label.includes("VB-Audio")),
-            )
-            .map((device) => ({
-                name: device.label || "Unknown Audio Output",
-                value: device.deviceId,
-            }));
-        return audioOutputs;
-    }
-    const outs = await getAudioOutputDevices();
-    const ins = await getAudioOutputDevices(true);
-    const monitor = document.querySelector(".monitor-devices");
-    const vbs = document.querySelector(".vb-cables");
-    outs.forEach((out) => {
-        const container = document.createElement("div");
-        container.classList.add("audio-device");
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.name = "monitor";
-        input.value = out.value;
-        input.id = out.value;
-        input.checked = universal.audioClient.sinkManager.hasSink(out.value);
-        input.onchange = (e) => {
-            let isChecked = e.target.checked;
-            if (isChecked && !universal.audioClient.sinkManager.hasSink(out.value)) {
-                universal.audioClient.sinkManager.addSink(universal.audioClient.sinkManager.types.monitor, out.value);
-                universal.uiSounds.playSound("select_option");
-            } else if (!isChecked && universal.audioClient.sinkManager.hasSink(out.value)) {
-                universal.audioClient.sinkManager.removeSink(out.value);
-                universal.uiSounds.playSound("select_option_false");
-            }
-        };
-        const label = document.createElement("label");
-        label.htmlFor = out.value;
-        label.innerText = out.name;
-        container.appendChild(label);
-        container.appendChild(input);
-        monitor.appendChild(container);
-    });
-    ins.forEach((out) => {
-        const container = document.createElement("div");
-        container.classList.add("audio-device");
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.name = "vb";
-        input.value = out.value;
-        input.id = out.value;
-        input.checked = universal.audioClient.sinkManager.hasSink(out.value);
-        input.onchange = (e) => {
-            let isChecked = e.target.checked;
-            if (isChecked && !universal.audioClient.sinkManager.hasSink(out.value)) {
-                universal.audioClient.sinkManager.addSink(universal.audioClient.sinkManager.types.vbcable, out.value);
-            } else if (!isChecked && universal.audioClient.sinkManager.hasSink(out.value)) {
-                universal.audioClient.sinkManager.removeSink(out.value);
-            }
-        };
-        const label = document.createElement("label");
-        label.htmlFor = out.value;
-        label.innerText = out.name;
-        container.appendChild(label);
-        container.appendChild(input);
-        vbs.appendChild(container);
-    });
+	async function getAudioOutputDevices(isCable = false) {
+		const devices = await navigator.mediaDevices.enumerateDevices();
+		const audioOutputs = devices
+			.filter(
+				(device) =>
+					device.kind === "audiooutput" &&
+					(isCable
+						? device.label.includes("VB-Audio")
+						: !device.label.includes("VB-Audio")),
+			)
+			.map((device) => ({
+				name: device.label || "Unknown Audio Output",
+				value: device.deviceId,
+			}));
+		return audioOutputs;
+	}
+	const outs = await getAudioOutputDevices();
+	const ins = await getAudioOutputDevices(true);
+	const monitor = document.querySelector(".monitor-devices");
+	const vbs = document.querySelector(".vb-cables");
+	outs.forEach((out) => {
+		const container = document.createElement("div");
+		container.classList.add("audio-device");
+		const input = document.createElement("input");
+		input.type = "checkbox";
+		input.name = "monitor";
+		input.value = out.value;
+		input.id = out.value;
+		input.checked = universal.audioClient.sinkManager.hasSink(out.value);
+		input.onchange = (e) => {
+			let isChecked = e.target.checked;
+			if (isChecked && !universal.audioClient.sinkManager.hasSink(out.value)) {
+				universal.audioClient.sinkManager.addSink(
+					universal.audioClient.sinkManager.types.monitor,
+					out.value,
+				);
+				universal.uiSounds.playSound("select_option");
+			} else if (
+				!isChecked &&
+				universal.audioClient.sinkManager.hasSink(out.value)
+			) {
+				universal.audioClient.sinkManager.removeSink(out.value);
+				universal.uiSounds.playSound("select_option_false");
+			}
+		};
+		const label = document.createElement("label");
+		label.htmlFor = out.value;
+		label.innerText = out.name;
+		container.appendChild(label);
+		container.appendChild(input);
+		monitor.appendChild(container);
+	});
+	ins.forEach((out) => {
+		const container = document.createElement("div");
+		container.classList.add("audio-device");
+		const input = document.createElement("input");
+		input.type = "checkbox";
+		input.name = "vb";
+		input.value = out.value;
+		input.id = out.value;
+		input.checked = universal.audioClient.sinkManager.hasSink(out.value);
+		input.onchange = (e) => {
+			let isChecked = e.target.checked;
+			if (isChecked && !universal.audioClient.sinkManager.hasSink(out.value)) {
+				universal.audioClient.sinkManager.addSink(
+					universal.audioClient.sinkManager.types.vbcable,
+					out.value,
+				);
+			} else if (
+				!isChecked &&
+				universal.audioClient.sinkManager.hasSink(out.value)
+			) {
+				universal.audioClient.sinkManager.removeSink(out.value);
+			}
+		};
+		const label = document.createElement("label");
+		label.htmlFor = out.value;
+		label.innerText = out.name;
+		container.appendChild(label);
+		container.appendChild(input);
+		vbs.appendChild(container);
+	});
 
-    getElement("#fsw").onclick = () => {
-        universal.save("has_setup", false);
-        window.location.reload();
-    }
+	getElement("#fsw").onclick = () => {
+		universal.save("has_setup", false);
+		window.location.reload();
+	};
 
-    getElement("#genr").onclick = () => {
-        const bgrep = getElement("#bgrep");
-        const report = bgrep.value;
-        bgrep.value = "Generating report...";
-        const rep = universal.ExportReportData();
-        bgrep.value = rep;
-    }
+	getElement("#genr").onclick = () => {
+		const bgrep = getElement("#bgrep");
+		const report = bgrep.value;
+		bgrep.value = "Generating report...";
+		const rep = universal.ExportReportData();
+		bgrep.value = rep;
+	};
 
-    getElement("#read-bgrep").onclick = () => {
-        const input = getElement("#input-bgrep");
-        const report = input.value;
-        const details = getElement(".report-details");
-        details.innerHTML = "";
-        const data = JSON.parse(report);
-        appendDetails(details, data);
-    }
+	getElement("#read-bgrep").onclick = () => {
+		const input = getElement("#input-bgrep");
+		const report = input.value;
+		const details = getElement(".report-details");
+		details.innerHTML = "";
+		const data = JSON.parse(report);
+		appendDetails(details, data);
+	};
 
-    getElement("#erals").onclick = () => {
-        //(NO UNDOING, WILL HAPPEN ON CLICK.)
-        window.UniversalUI.show.showYesNo("Are you sure you want to erase the LocalStorage?", "Upon clicking Continue, your LocalStorage will be completely cleared. Most local configuration will be lost, minus your Tiles. THIS IS THE LAST WARNING.", (yes) => {
-            localStorage.clear();
-            universal.sendToast("Erased all LocalStorage data! Cleaning up...", "Settings: Developer Tools");
-            window.location.reload();
-        }, () => { });
-    }
+	getElement("#erals").onclick = () => {
+		//(NO UNDOING, WILL HAPPEN ON CLICK.)
+		window.UniversalUI.show.showYesNo(
+			"Are you sure you want to erase the LocalStorage?",
+			"Upon clicking Continue, your LocalStorage will be completely cleared. Most local configuration will be lost, minus your Tiles. THIS IS THE LAST WARNING.",
+			(yes) => {
+				localStorage.clear();
+				universal.sendToast(
+					"Erased all LocalStorage data! Cleaning up...",
+					"Settings: Developer Tools",
+				);
+				window.location.reload();
+			},
+			() => {},
+		);
+	};
 
-    document.querySelector(".soundpack").style.display = universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
-        ? "block"
-        : "none";
-    document.querySelector("#soundpack-id").innerText =
-        universal.uiSounds.info.id;
-    document.querySelector("#soundpack-title").innerText =
-        universal.uiSounds.info.name;
-    document.querySelector("#soundpack-version").innerText =
-        universal.uiSounds.info.version;
-    document.querySelector("#soundpack-author").innerText =
-        universal.uiSounds.info.author;
+	document.querySelector(".soundpack").style.display =
+		universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
+			? "block"
+			: "none";
+	document.querySelector("#soundpack-id").innerText =
+		universal.uiSounds.info.id;
+	document.querySelector("#soundpack-title").innerText =
+		universal.uiSounds.info.name;
+	document.querySelector("#soundpack-version").innerText =
+		universal.uiSounds.info.version;
+	document.querySelector("#soundpack-author").innerText =
+		universal.uiSounds.info.author;
 
-    function loadSounds() {
-        const uis = document.querySelector(".uisounds");
-        uis.innerHTML = "";
-        console.log(universal.uiSounds.sounds);
-        const uisounds = universal.uiSounds.sounds;
-        Object.keys(uisounds).forEach((sound) => {
-            const li = document.createElement("li");
-            li.innerText = sound;
-            li.onclick = () => {
-                universal.uiSounds.playSound(sound);
-            };
-            uis.appendChild(li);
-        });
-    }
+	function loadSounds() {
+		const uis = document.querySelector(".uisounds");
+		uis.innerHTML = "";
+		console.log(universal.uiSounds.sounds);
+		const uisounds = universal.uiSounds.sounds;
+		Object.keys(uisounds).forEach((sound) => {
+			const li = document.createElement("li");
+			li.innerText = sound;
+			li.onclick = () => {
+				universal.uiSounds.playSound(sound);
+			};
+			uis.appendChild(li);
+		});
+	}
 
-    universal._information.soundpacks.forEach((soundpack) => {
-        const li = document.createElement("li");
-        li.innerText = soundpack.split(".soundpack")[0];
-        li.classList.add("soundpack");
-        li.onclick = async () => {
-            document.querySelector("#soundpack-id").innerText = "LOADING";
-            document.querySelector("#soundpack-title").innerText = "LOADING";
-            document.querySelector("#soundpack-version").innerText = "LOADING";
-            document.querySelector("#soundpack-author").innerText = "LOADING";
-            document.querySelectorAll(".soundpack").forEach((el) => {
-                el.disabled = true;
-            });
-            const res = await fetch(
-                "/common/sounds/" + soundpack + "/manifest.fdsp.json",
-            );
-            const data = await res.json();
-            const info = data.info;
-            universal.save("soundpack", info.id);
-            universal.uiSounds.reload();
-            universal.uiSounds.load(info.id).then(() => {
-                loadSounds();
-            });
-            document.querySelector("#soundpack-id").innerText = info.id;
-            document.querySelector("#soundpack-title").innerText = info.name;
-            document.querySelector("#soundpack-version").innerText =
-                info.version;
-            document.querySelector("#soundpack-author").innerText = info.author;
-            document.querySelectorAll(".soundpack").forEach((el) => {
-                el.disabled = false;
-            });
-        };
-        document.querySelector(".soundpacks").appendChild(li);
-    });
+	universal._information.soundpacks.forEach((soundpack) => {
+		const li = document.createElement("li");
+		li.innerText = soundpack.split(".soundpack")[0];
+		li.classList.add("soundpack");
+		li.onclick = async () => {
+			document.querySelector("#soundpack-id").innerText = "LOADING";
+			document.querySelector("#soundpack-title").innerText = "LOADING";
+			document.querySelector("#soundpack-version").innerText = "LOADING";
+			document.querySelector("#soundpack-author").innerText = "LOADING";
+			document.querySelectorAll(".soundpack").forEach((el) => {
+				el.disabled = true;
+			});
+			const res = await fetch(
+				"/common/sounds/" + soundpack + "/manifest.fdsp.json",
+			);
+			const data = await res.json();
+			const info = data.info;
+			universal.save("soundpack", info.id);
+			universal.uiSounds.reload();
+			universal.uiSounds.load(info.id).then(() => {
+				loadSounds();
+			});
+			document.querySelector("#soundpack-id").innerText = info.id;
+			document.querySelector("#soundpack-title").innerText = info.name;
+			document.querySelector("#soundpack-version").innerText = info.version;
+			document.querySelector("#soundpack-author").innerText = info.author;
+			document.querySelectorAll(".soundpack").forEach((el) => {
+				el.disabled = false;
+			});
+		};
+		document.querySelector(".soundpacks").appendChild(li);
+	});
 
-    function appendDetails(parent, data, isUniversal = false) {
-        Object.keys(data).forEach((key) => {
-            const detail = document.createElement("details");
-            const summary = document.createElement("summary");
-            summary.innerText = key;
-            if (isUniversal) {
-            }
-            detail.appendChild(summary);
+	function appendDetails(parent, data, isUniversal = false) {
+		Object.keys(data).forEach((key) => {
+			const detail = document.createElement("details");
+			const summary = document.createElement("summary");
+			summary.innerText = key;
+			if (isUniversal) {
+			}
+			detail.appendChild(summary);
 
-            if (typeof data[key] === "object" && data[key] !== null) {
-                appendDetails(detail, data[key]);
-            } else {
-                summary.innerText += " = " + data[key];
-            }
+			if (typeof data[key] === "object" && data[key] !== null) {
+				appendDetails(detail, data[key]);
+			} else {
+				summary.innerText += " = " + data[key];
+			}
 
-            parent.appendChild(detail);
-        });
-    }
+			parent.appendChild(detail);
+		});
+	}
 
-    function getElement(s) { return document.querySelector(s) }
+	function getElement(s) {
+		return document.querySelector(s);
+	}
 
-    function settingsViewOpen(view, name) {
-        const button = document.createElement("button");
-        button.innerText = name;
-        button.onclick = () => {
-            universal.vopen(view);
-        };
-        return button;
-    }
+	function settingsViewOpen(view, name) {
+		const button = document.createElement("button");
+		button.innerText = name;
+		button.onclick = () => {
+			universal.vopen(view);
+		};
+		return button;
+	}
 
-    function setToLocalCfg(key, value) {
-        const cfg = universal.getServerStyleFlags();
-        cfg[key] = value;
-        return cfg;
-    }
+	function setToLocalCfg(key, value) {
+		const cfg = universal.getServerStyleFlags();
+		cfg[key] = value;
+		return cfg;
+	}
 
-    const setupMenu = {
-        "generale": {
-            "key": "settings.sections.general.title",
-            "icon": "/common/icons/settings.svg",
-            "options": {
-                "compact": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.compact",
-                    "default": universal.getServerStyleFlags()["compact"] || false,
-                    "onchange": () => {
-                        universal.UI.reloadSounds();
-                    }
-                },
-                "scroll": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.scroll",
-                    "default": universal.getServerStyleFlags()["scroll"] || false,
-                    "onchange": () => {
-                        universal.UI.reloadSounds();
-                    }
-                },
-                "app.freedeck.ui.fill_tiles": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.fill",
-                    "default": universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"] || false,
-                    "onchange": () => {
-                        universal.UI.reloadSounds();
-                    }
-                },
-                "app.freedeck.ui_sounds": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.ui_sounds",
-                    "flag": "uis",
-                    "default": universal.getServerStyleFlags()["app.freedeck.ui_sounds"] || false,
-                    "onchange": () => {
-                        document.querySelector(".soundpack").style.display = universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
-                            ? "block"
-                            : "none";
-                    }
-                },
-                "app.freedeck.tiles.force_deletion": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.dont_ask",
-                    "default": universal.getServerStyleFlags()["app.freedeck.tiles.force_deletion"] || false,
-                },
-                "app.freedeck.sidebar.connect_tab": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.fdc_tab",
-                    "default": universal.getServerStyleFlags()["app.freedeck.sidebar.connect_tab"] || false,
-                    "onchange": () => {
-                        universal.reloadRight();
-                    }
-                },
-                "app.freedeck.notification_log": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.notification_log",
-                    "flag": "notl",
-                    "default": universal.getServerStyleFlags()["app.freedeck.notification_log"] || false,
-                },
-                "app.freedeck.skip_boot_animation": {
-                    "type": "checkbox",
-                    "key": "settings.sections.general.skip_boot_animation",
-                    "default": universal.getServerStyleFlags()["app.freedeck.skip_boot_animation"] || false,
-                },
-                "app.freedeck.no_preset_tiles": {
-                    "type": "checkbox",
-                    "key": "settings.sections.experiments.no_preset_tiles",
-                    "default": universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"] || false,
-                },
-                "app.freedeck.demo.disable_new_repo": {
-                    "handler": "flag",
-                    "type": "checkbox",
-                    "key": "settings.sections.experiments.disable_new_repo",
-                    "default": universal.flags.isEnabled("app.freedeck.demo.disable_new_repo") || false,
-                },
-                "app.freedeck.debug.write_log": {
-                    "type": "checkbox",
-                    "key": "settings.sections.debug.write_log",
-                    "default": universal.getServerStyleFlags()["app.freedeck.demo.write_debug_log"] || false,
-                }
-            }
-        },
-    }
-    
-    document.querySelectorAll("settings").forEach((el) => {
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        details.appendChild(summary);
+	const setupMenu = {
+		generale: {
+			key: "settings.sections.general.title",
+			icon: "/common/icons/settings.svg",
+			options: {
+				compact: {
+					type: "checkbox",
+					key: "settings.sections.general.compact",
+					default: universal.getServerStyleFlags()["compact"] || false,
+					onchange: () => {
+						universal.UI.reloadSounds();
+					},
+				},
+				scroll: {
+					type: "checkbox",
+					key: "settings.sections.general.scroll",
+					default: universal.getServerStyleFlags()["scroll"] || false,
+					onchange: () => {
+						universal.UI.reloadSounds();
+					},
+				},
+				"app.freedeck.ui.fill_tiles": {
+					type: "checkbox",
+					key: "settings.sections.general.fill",
+					default:
+						universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"] ||
+						false,
+					onchange: () => {
+						universal.UI.reloadSounds();
+					},
+				},
+				"app.freedeck.ui_sounds": {
+					type: "checkbox",
+					key: "settings.sections.general.ui_sounds",
+					flag: "uis",
+					default:
+						universal.getServerStyleFlags()["app.freedeck.ui_sounds"] || false,
+					onchange: () => {
+						document.querySelector(".soundpack").style.display =
+							universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
+								? "block"
+								: "none";
+					},
+				},
+				"app.freedeck.tiles.force_deletion": {
+					type: "checkbox",
+					key: "settings.sections.general.dont_ask",
+					default:
+						universal.getServerStyleFlags()[
+							"app.freedeck.tiles.force_deletion"
+						] || false,
+				},
+				"app.freedeck.sidebar.connect_tab": {
+					type: "checkbox",
+					key: "settings.sections.general.fdc_tab",
+					default:
+						universal.getServerStyleFlags()[
+							"app.freedeck.sidebar.connect_tab"
+						] || false,
+					onchange: () => {
+						universal.reloadRight();
+					},
+				},
+				"app.freedeck.notification_log": {
+					type: "checkbox",
+					key: "settings.sections.general.notification_log",
+					flag: "notl",
+					default:
+						universal.getServerStyleFlags()["app.freedeck.notification_log"] ||
+						false,
+				},
+				"app.freedeck.skip_boot_animation": {
+					type: "checkbox",
+					key: "settings.sections.general.skip_boot_animation",
+					default:
+						universal.getServerStyleFlags()[
+							"app.freedeck.skip_boot_animation"
+						] || false,
+				},
+				"app.freedeck.no_preset_tiles": {
+					type: "checkbox",
+					key: "settings.sections.experiments.no_preset_tiles",
+					default:
+						universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"] ||
+						false,
+				},
+				"app.freedeck.demo.disable_new_repo": {
+					handler: "flag",
+					type: "checkbox",
+					key: "settings.sections.experiments.disable_new_repo",
+					default:
+						universal.flags.isEnabled("app.freedeck.demo.disable_new_repo") ||
+						false,
+				},
+				"app.freedeck.debug.write_log": {
+					type: "checkbox",
+					key: "settings.sections.debug.write_log",
+					default:
+						universal.getServerStyleFlags()[
+							"app.freedeck.demo.write_debug_log"
+						] || false,
+				},
+			},
+		},
+	};
 
-        const _setupMenu = setupMenu[el.getAttribute("section")];
-        if (!_setupMenu) return;
-        el.parentNode.replaceChild(details, el);
+	document.querySelectorAll("settings").forEach((el) => {
+		const details = document.createElement("details");
+		const summary = document.createElement("summary");
+		details.appendChild(summary);
 
-        const title = document.createElement("p");
-        title.setAttribute("data-i18n-key", _setupMenu.key);
-        title.innerText = universal.translationKey(_setupMenu.key);
-        summary.classList.add("settings-section-title");
-        summary.prepend(title);
-        const icon = document.createElement("img");
-        icon.src = _setupMenu.icon;
-        icon.width = 50;
-        icon.height = 50;
-        icon.loading = "lazy";
-        summary.appendChild(icon);
+		const _setupMenu = setupMenu[el.getAttribute("section")];
+		if (!_setupMenu) return;
+		el.parentNode.replaceChild(details, el);
 
-        const settingsList = document.createElement("div");
-        settingsList.classList.add("experiments");
-        details.appendChild(settingsList);
+		const title = document.createElement("p");
+		title.setAttribute("data-i18n-key", _setupMenu.key);
+		title.innerText = universal.translationKey(_setupMenu.key);
+		summary.classList.add("settings-section-title");
+		summary.prepend(title);
+		const icon = document.createElement("img");
+		icon.src = _setupMenu.icon;
+		icon.width = 50;
+		icon.height = 50;
+		icon.loading = "lazy";
+		summary.appendChild(icon);
 
-        const options = _setupMenu.options;
-        const container = document.createElement("div");
-        container.classList.add("experiments");
-        
-        for (const optionId in options) {
-            const option = options[optionId];
-            const translationKey = option.key;
-            const optContainer = document.createElement("div");
-            optContainer.classList.add("experiment");
-            const label = document.createElement("label");
-            label.setAttribute("data-i18n-key", translationKey);
-            label.setAttribute("for", optionId);
-            label.innerText = universal.translationKey(option.key);
-            const input = document.createElement("input");
-            input.type = option.type;
-            input.id = optionId;
-            input.checked = option.default;
-            input.onchange = () => {
-                if(option.handler === "flag") {
-                    universal.flags.set(optionId, ""+input.checked);
-                } else {
-                    universal.send(universal.events.default.serverStyleFlagUpdated, setToLocalCfg(optionId, input.checked));
-                }
-                if(input.checked) {
-                    universal.uiSounds.playSound("select_option");
-                } else {
-                    universal.uiSounds.playSound("select_option_false");
-                }
-                if(option.onchange) option.onchange(input.checked);
-            };
-            optContainer.appendChild(label);
-            optContainer.appendChild(input);
-            container.appendChild(optContainer);
-        }
-        settingsList.appendChild(container);
-    });
+		const settingsList = document.createElement("div");
+		settingsList.classList.add("experiments");
+		details.appendChild(settingsList);
 
-    loadSounds();
+		const options = _setupMenu.options;
+		const container = document.createElement("div");
+		container.classList.add("experiments");
+
+		for (const optionId in options) {
+			const option = options[optionId];
+			const translationKey = option.key;
+			const optContainer = document.createElement("div");
+			optContainer.classList.add("experiment");
+			const label = document.createElement("label");
+			label.setAttribute("data-i18n-key", translationKey);
+			label.setAttribute("for", optionId);
+			label.innerText = universal.translationKey(option.key);
+			const input = document.createElement("input");
+			input.type = option.type;
+			input.id = optionId;
+			input.checked = option.default;
+			input.onchange = () => {
+				if (option.handler === "flag") {
+					universal.flags.set(optionId, "" + input.checked);
+				} else {
+					universal.send(
+						universal.events.default.serverStyleFlagUpdated,
+						setToLocalCfg(optionId, input.checked),
+					);
+				}
+				if (input.checked) {
+					universal.uiSounds.playSound("select_option");
+				} else {
+					universal.uiSounds.playSound("select_option_false");
+				}
+				if (option.onchange) option.onchange(input.checked);
+			};
+			optContainer.appendChild(label);
+			optContainer.appendChild(input);
+			container.appendChild(optContainer);
+		}
+		settingsList.appendChild(container);
+	});
+
+	loadSounds();
 </script>

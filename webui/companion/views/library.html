@@ -1,59 +1,75 @@
-<link rel="stylesheet" href="/companion/views/styles/library.css">
+<link rel="stylesheet" href="/companion/views/styles/library.css" />
 
-<h1 class="settings-section-title"><span data-i18n-key="library.title"></span><span><img src="/common/icons/library.svg" width="50" height="50" loading="lazy"></span></h1>
+<h1 class="settings-section-title">
+	<span data-i18n-key="library.title"></span
+	><span
+		><img src="/common/icons/library.svg" width="50" height="50" loading="lazy"
+	/></span>
+</h1>
 <center><p data-i18n-key="library.description"></p></center>
-<button class="save-changes" data-i18n-key="library.save" onclick="window.saveChanges()"></button>
+<button
+	class="save-changes"
+	data-i18n-key="library.save"
+	onclick="window.saveChanges()"
+></button>
 
 <h2 id="uploads-0-title">
-  <span data-i18n-key="library.sounds"></span>
-  <button onclick="universal._Uploads_New(1)" data-i18n-key="library.sounds.add"></button>
+	<span data-i18n-key="library.sounds"></span>
+	<button
+		onclick="universal._Uploads_New(1)"
+		data-i18n-key="library.sounds.add"
+	></button>
 </h2>
 <details id="library-view-sounds">
-  <summary><strong data-i18n-key="library.sounds.view"></strong></summary>
-  <div class="uploads uploads-0"></div>
+	<summary><strong data-i18n-key="library.sounds.view"></strong></summary>
+	<div class="uploads uploads-0"></div>
 </details>
 
 <h2 id="uploads-1-title">
-  <span data-i18n-key="library.icons"></span>
-  <button onclick="universal._Uploads_New(0)" data-i18n-key="library.icons.add"></button>
+	<span data-i18n-key="library.icons"></span>
+	<button
+		onclick="universal._Uploads_New(0)"
+		data-i18n-key="library.icons.add"
+	></button>
 </h2>
 <details id="library-view-icons">
-  <summary><strong data-i18n-key="library.icons.view"></strong></summary>
-  <div class="uploads uploads-1"></div>
+	<summary><strong data-i18n-key="library.icons.view"></strong></summary>
+	<div class="uploads uploads-1"></div>
 </details>
 
 <script>
-  fetch("/api/upload/report").then((res) => res.json()).then((data) => {
-    let cc = 0;
-    for (const i of data.report) {
-      for (const j of i) {
-        const upload = document.createElement('div');
-        upload.className = 'upload';
-        upload.id = `upload-${cc}`;
-        upload.dataset.name = j;
-        if (cc == 1) {
-          const img = new Image();
-            img.loading = 'lazy';
-            img.decoding = "async";
-            img.src = '/icons/' + encodeURIComponent(j);
-            upload.appendChild(img);
-            universal.createTooltipFor(upload, j);
+	fetch("/api/upload/report")
+		.then((res) => res.json())
+		.then((data) => {
+			let cc = 0;
+			for (const i of data.report) {
+				for (const j of i) {
+					const upload = document.createElement("div");
+					upload.className = "upload";
+					upload.id = `upload-${cc}`;
+					upload.dataset.name = j;
+					if (cc == 1) {
+						const img = new Image();
+						img.loading = "lazy";
+						img.decoding = "async";
+						img.src = "/icons/" + encodeURIComponent(j);
+						upload.appendChild(img);
+						universal.createTooltipFor(upload, j);
+					} else {
+						upload.innerHTML += `<p>${universal.cleanHTML(j)}</p>`;
+						upload.innerHTML += `<audio preload="none" controls><source src="/sounds/${encodeURIComponent(j)}" type="audio/mpeg"></audio>`;
+					}
+					document.querySelector(".uploads-" + cc).appendChild(upload);
+				}
+				cc++;
+			}
+			universal.sendEvent("library_paint");
+		});
+	universal.sendEvent("library_load");
 
-        } else {
-          upload.innerHTML += `<p>${universal.cleanHTML(j)}</p>`;
-          upload.innerHTML += `<audio preload="none" controls><source src="/sounds/${encodeURIComponent(j)}" type="audio/mpeg"></audio>`;
-        }
-        document.querySelector('.uploads-' + cc).appendChild(upload);
-      }
-      cc++;
-    }
-    universal.sendEvent("library_paint")
-  })
-  universal.sendEvent("library_load")
-
-  window.saveChanges = () => {
-    universal.sendEvent("library_save");
-    window.saveChanges = undefined;
-    universal.vopen('index.html')
-  }
+	window.saveChanges = () => {
+		universal.sendEvent("library_save");
+		window.saveChanges = undefined;
+		universal.vopen("index.html");
+	};
 </script>

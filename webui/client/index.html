@@ -1,101 +1,116 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta content="Freedeck" property="og:title" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="Freedeck" />
+		<meta name="theme-color" content="#0d8bc2" />
+		<link
+			rel="icon"
+			type="image/png"
+			href="/assets/favicon-96x96.png"
+			sizes="96x96"
+		/>
+		<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+		<link rel="shortcut icon" href="/assets/favicon.ico" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/assets/apple-touch-icon.png"
+		/>
+		<link rel="manifest" href="/assets/site.webmanifest" />
 
-<head>
-    <meta charset="UTF-8" />
-    <meta content="Freedeck" property="og:title" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Freedeck" />
-    <meta name="theme-color" content="#0d8bc2" />
-    <link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    <link rel="shortcut icon" href="/assets/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/site.webmanifest" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
+		/>
+		<link rel="stylesheet" href="style/style.css" />
+		<link rel="stylesheet" href="style/client-only.css" />
+		<title>Freedeck</title>
+	</head>
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
-    <link rel="stylesheet" href="style/style.css" />
-    <link rel="stylesheet" href="style/client-only.css" />
-    <title>Freedeck</title>
-</head>
+	<body>
+		<div class="everything">
+			<div id="sidebar">
+				<ul></ul>
+			</div>
 
-<body>
-    <div class="everything">
-        <div id="sidebar">
-            <ul></ul>
-        </div>
-    
-        <div class="settings-menu">
-            <div class="flex-wrap-r alc">
-                <h1 id="version">Freedeck</h1>
-                <img src="/assets/logo_big.png" width="50" height="50" />
-            </div>
-            
-            <div class="flex-wrap-r">
-                <input type="checkbox" name="lock" id="lock">
-                <label for="lock">Page Lock</label>
-            </div>
-            
-            <details>
-                <summary>Themes</summary>
-                <div class="themelist"></div>
-            </details>
-            
-            <details>
-                <summary>Advanced Options</summary>
-                <div class="flex-wrap-r">
-                    <button onclick="window.location.href = '/companion'">
-                        To Companion View
-                    </button>
-                    <button onclick="universal.send(universal.events.default.recompile)">
-                        Recompile Webpack bundles
-                    </button>
-                    <button onclick="universal.ui.showBootLog(true)">
-                        Show Boot Log
-                    </button>
-                    <button onclick="universal.error()">
-                        Error
-                    </button>
-                </div>
-            </details>
+			<div class="settings-menu">
+				<div class="flex-wrap-r alc">
+					<h1 id="version">Freedeck</h1>
+					<img src="/assets/logo_big.png" width="50" height="50" />
+				</div>
 
-            <div class="flex-wrap-r">
-                <button onclick="window.location.reload()">
-                    Reload
-                </button>
-                <button onclick="universal.send(universal.events.keypress, {builtIn: true,data: 'stop-all'});">
-                    Stop All
-                </button>
-                <button onclick="window.AppSMClose()">
-                    Close
-                </button>
-            </div>
+				<div class="flex-wrap-r">
+					<input type="checkbox" name="lock" id="lock" />
+					<label for="lock">Page Lock</label>
+				</div>
 
-        </div>
-        <div style="display: none; z-index: 10200" class="modal" id="login-dialog">
-            <div id="login-div" class="modalContent">
-                <h1 id="login-msg">Login to Freedeck</h1>
-                <p>Enter the password to gain access.</p>
-                <input type="password" id="password" />
-                <br/>
-                <div class="flex-wrap-r">
-                    <button onclick="universal.login(document.getElementById('password').value)">
-                        Login
-                    </button>
-                    <button onclick="window.location.reload();">Reload</button>
-                </div>
-            </div>
-        </div>
-        <div id="client-key-container">
-            <div id="keys"></div>
-        </div>
-    </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/common/error.js" type="module"></script>
-    <script src="/app/clientMain.js" type="module"></script>
-    <script src="/app/settingsThemes.js" type="module"></script>
-</body>
+				<details>
+					<summary>Themes</summary>
+					<div class="themelist"></div>
+				</details>
 
+				<details>
+					<summary>Advanced Options</summary>
+					<div class="flex-wrap-r">
+						<button onclick="window.location.href = '/companion'">
+							To Companion View
+						</button>
+						<button
+							onclick="universal.send(universal.events.default.recompile)"
+						>
+							Recompile Webpack bundles
+						</button>
+						<button onclick="universal.ui.showBootLog(true)">
+							Show Boot Log
+						</button>
+						<button onclick="universal.error()">Error</button>
+					</div>
+				</details>
+
+				<div class="flex-wrap-r">
+					<button onclick="window.location.reload()">Reload</button>
+					<button
+						onclick="universal.send(universal.events.keypress, {builtIn: true,data: 'stop-all'});"
+					>
+						Stop All
+					</button>
+					<button onclick="window.AppSMClose()">Close</button>
+				</div>
+			</div>
+			<div
+				style="display: none; z-index: 10200"
+				class="modal"
+				id="login-dialog"
+			>
+				<div id="login-div" class="modalContent">
+					<h1 id="login-msg">Login to Freedeck</h1>
+					<p>Enter the password to gain access.</p>
+					<input type="password" id="password" />
+					<br />
+					<div class="flex-wrap-r">
+						<button
+							onclick="universal.login(document.getElementById('password').value)"
+						>
+							Login
+						</button>
+						<button onclick="window.location.reload();">Reload</button>
+					</div>
+				</div>
+			</div>
+			<div id="client-key-container">
+				<div id="keys"></div>
+			</div>
+		</div>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/common/error.js" type="module"></script>
+		<script src="/app/clientMain.js" type="module"></script>
+		<script src="/app/settingsThemes.js" type="module"></script>
+	</body>
 </html>

@@ -8,15 +8,21 @@
 :root {
 	--blue-1: hsl(225, 100%, 50%);
 	--blue-2: hsl(221, 100%, 53%);
-	--blue-gradient: linear-gradient(45deg, var(--blue-1) 0%, var(--blue-2) 33%, var(--blue-1) 66%, var(--blue-2) 100%);
-	
+	--blue-gradient: linear-gradient(
+		45deg,
+		var(--blue-1) 0%,
+		var(--blue-2) 33%,
+		var(--blue-1) 66%,
+		var(--blue-2) 100%
+	);
+
 	--main-bg: var(--blue-gradient);
 
-	--tile-bg: hsla(225, 100%, 40% ,0.5);
+	--tile-bg: hsla(225, 100%, 40%, 0.5);
 
 	--modal-bg: var(--blue-1);
 	--modal-color: black;
-	 
+
 	--modal-item-bg: var(--blue-gradient);
 	--modal-item-text: black;
 

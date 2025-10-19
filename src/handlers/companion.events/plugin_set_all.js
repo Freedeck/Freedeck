@@ -4,7 +4,7 @@ const eventNames = require("../eventNames");
 const path = require("node:path");
 
 module.exports = ({ io, data }) => {
-	if(!plugins.plugins().has(data.plugin)) return;
+	if (!plugins.plugins().has(data.plugin)) return;
 	fs.writeFile(
 		path.resolve(`./plugins/${data.plugin}/settings.json`),
 		JSON.stringify(data.settings),

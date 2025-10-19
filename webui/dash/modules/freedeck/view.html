@@ -1,16 +1,23 @@
 <style>
-  #ver {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  }
+	#ver {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
 </style>
 <freedeck-dash-module id="ver">
-  <h1 class="version"></h1>
-  <img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy">
+	<h1 class="version"></h1>
+	<img
+		src="/assets/logo_big.png"
+		alt="Freedeck Logo"
+		width="75"
+		height="75"
+		loading="lazy"
+	/>
 </freedeck-dash-module>
 <script>
-  document.querySelector(".version").innerText = universal._information.version.human;
+	document.querySelector(".version").innerText =
+		universal._information.version.human;
 </script>
