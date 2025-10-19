@@ -40,19 +40,18 @@
     "asar-bundle-runner": "^1.6.0",
     "babel-loader": "^10.0.0",
     "compare-versions": "^6.1.1",
-    "electron": "^36.2.1",
+    "electron": "^38.3.0",
     "express": "^5.1.0",
     "formidable": "^3.5.4",
     "module-alias": "^2.2.3",
     "pako": "^2.1.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
-    "tar": "^7.4.3",
-    "webpack": "^5.99.8",
-    "ws": "^8.18.2"
+    "tar": "^7.5.1",
+    "webpack": "^5.102.1",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
     "prettier": "3.6.2",
     "webpack-cli": "^6.0.1"
   },
