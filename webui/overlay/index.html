@@ -84,6 +84,10 @@
 	#boot-log-div {
 		display: none !important;
 	}
+
+	.textbg-display {
+		display: none !important;
+	}
 </style>
 
 <body style="overflow: hidden">
@@ -127,45 +131,166 @@
 		const debugContainer = document.querySelector(".warnings");
 		const dragWarning = document.querySelector("#dragmode-warning");
 		const debugWarning = document.querySelector("#debugmode-warning");
+		const viewCollection = [];
+		for (const k in universal.plugins) {
+			const i = universal.plugins[k]
+			if (i.dashModules) {
+				for (const n in i.dashModules) {
+					viewCollection.push(n)
+				}
+			}
+		}
+		const selections = {};
+		for (const i of viewCollection) {
+			fetch("/user-data/dash-modules/" + i + "/module.json")
+				.then((res) => {
+					return res.json();
+				})
+				.then((ares) => {
+					selections[i] = { id: i, name: ares.name, views: ares.views, modules: [] };
+					for (const viw of ares.views) {
+						fetch(`/user-data/dash-modules/${i}/${viw}/module.json`)
+							.then((res) => {
+								return res.json();
+							})
+							.then((res) => {
+								res.owner = viw;
+								selections[i].modules.push(res);
+							})
+					}
+				})
+		}
+
+		window.addEventListener("click", (e) => {
+			if (e.srcElement.className !== "contextMenu") {
+				const contextMenu = document.querySelector(".contextMenu");
+				if (contextMenu) contextMenu.remove();
+			}
+			universal.uiSounds.playSound("click");
+		});
+
+		function hasParentWithTag(element, tagName) {
+			let currentElement = element;
+			while (currentElement.parentNode) {
+				currentElement = currentElement.parentNode;
+				if (currentElement.classList && currentElement.classList.contains("dash-module") && currentElement.nodeName.toLowerCase() === tagName.toLowerCase()) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function getModParent(element) {
+			let currentElement = element;
+			while (currentElement.parentNode) {
+				currentElement = currentElement.parentNode;
+				if (currentElement.classList && currentElement.classList.contains("dash-module") && currentElement.nodeName.toLowerCase() === "html".toLowerCase()) {
+					return currentElement;
+				}
+			}
+			return null;
+		}
+
+		window.addEventListener("contextmenu", async (e) => {
+			const ctxMenu = document.querySelector(".contextMenu");
+			if (ctxMenu) ctxMenu.remove();
+			const custMenu = document.createElement("div");
+			custMenu.className = "contextMenu";
+			custMenu.style.top = `${e.clientY - window.scrollY}px`;
+			custMenu.style.left = `${e.clientX - window.scrollX}px`;
+			custMenu.style.position = "absolute";
+			if (!hasParentWithTag(e.target, "html")) {
+				const menuItem = document.createElement("div");
+				menuItem.innerHTML = "<strong>Add module:</strong>";
+				custMenu.appendChild(menuItem);
+				for (const sKey in selections) {
+					const sData = selections[sKey];
+					const selectionName = sData.name;
+					const viewList = sData.modules;
+					for (const data of viewList) {
+						const menuItem = document.createElement("div");
+						menuItem.innerText = selectionName + " - " + data.name;
+						menuItem.className = "menuItem";
+						menuItem.onclick = () => {
+							layoutDefinition.modules.push({
+								[Math.random() * 100]: {
+									uuid: [Math.random() * 100],
+									type: sData.id + "/" + data.owner,
+									renderType: "dash-module",
+									data: {
+										position: {
+											x: e.clientY,
+											y: e.clientX,
+											width: "defined",
+											height: "defined",
+										},
+									},
+								},
+							})
+							reloadModules();
+						}
+						custMenu.appendChild(menuItem);
+					}
+				}
+			} else {
+				const p = getModParent(e.target);
+				const moduleContext = JSON.parse(p.getAttribute("modulecontext"));
+				const layoutData = JSON.parse(p.getAttribute("layout"));
+				const settings = JSON.parse(p.getAttribute("settings"));
+				const menuItem = document.createElement("div");
+				menuItem.innerHTML = "<strong>Selected:" + moduleContext.name + "</strong>";
+				custMenu.appendChild(menuItem);
+				const items = [
+					{
+						text: () => "Remove",
+						click: () => {
+							layoutDefinition.modules = layoutDefinition.modules.filter((e) => e != layoutData);
+							reloadModules();
+						}
+					},
+					{
+						text: () => "Settings:",
+						click: () => { }
+					}
+				]
+				for (const settingKey in moduleContext.settings) {
+					const settingData = moduleContext.settings[settingKey];
+					if (!settings[settingKey]) settings[settingKey] = settingData.default;
+					if (settingData.type === 'select') {
+						const opts = settingData.options
+						items.push({
+							text: () => {
+								return settingData.title + ": " + opts[settings[settingKey]];
+							},
+							click: () => {
+								const k = Object.keys(opts);
+								let idx = k.indexOf(settings[settingKey]);
+								if (++idx >= k.length) idx = 0;
+								settings[settingKey] = k[idx];
+								console.log(idx, settings, k)
+								p.setAttribute("settings", JSON.stringify(settings))
+								if (p.overlaySettingsChanged) {
+									p.overlaySettingsChanged(settings);
+								}
+							}
+						})
+					}
+				}
+				for (const t of items) {
+					const menuItem2 = document.createElement("div");
+					menuItem2.innerHTML = t.text();
+					menuItem2.onclick = t.click;
+					menuItem2.className = "menuItem";
+					custMenu.appendChild(menuItem2);
+				}
+			}
+			document.body.appendChild(custMenu);
+		})
 
 		window.addEventListener("keydown", async (e) => {
 			if (e.key === "d") dragMode = !dragMode;
 			if (e.key === "f") debugMode = !debugMode;
 			if (e.key === "r") reloadModules();
-			if (e.key === "n") {
-				const viewCollection = [];
-				for (const k in universal.plugins) {
-					const i = universal.plugins[k]
-					if (i.dashModules) {
-						for (const n in i.dashModules) {
-							viewCollection.push(n)
-						}
-					}
-				}
-				const selections = {};
-				for (const i of viewCollection) {
-					fetch("/user-data/dash-modules/" + i + "/module.json")
-						.then((res) => {
-							return res.json();
-						})
-						.then((ares) => {
-							selections[ares.name] = [];
-							for (const viw of ares.views) {
-								fetch(`/user-data/dash-modules/${i}/${viw}/module.json`)
-									.then((res) => {
-										return res.json();
-									})
-									.then((res) => {
-										selections[ares.name].push(res);
-									})
-							}
-						})
-				}
-				for (const selectionName in selections) {
-					const data = selections[selectionName];
-
-				}
-			}
 
 			dragWarning.style.display = dragMode ? "block" : "none";
 			debugWarning.style.display = debugMode ? "block" : "none";
@@ -303,6 +428,9 @@
 					const view = mctx.nonDestructiveView(
 						`${prefix}${trueData.type}/${res.overlay}`,
 					);
+					view.setAttribute("layout", JSON.stringify(trueData));
+					view.setAttribute("settings", JSON.stringify(trueData.settings || {}));
+					view.setAttribute("modulecontext", JSON.stringify(res));
 					view.style.position = "absolute";
 					view.style.top = trueData.data.position.x + "px";
 					view.style.left = trueData.data.position.y + "px";
@@ -323,6 +451,7 @@
 					let startY = 0;
 					view.addEventListener("mousedown", (event) => {
 						event.stopPropagation();
+						if (event.button == 2) return;
 						if (!dragMode) return;
 						isDragging = true;
 						view.classList.add("dragging");

@@ -17,21 +17,21 @@ export default {
 				},
 			},
 		},
-		{
-			"Currently Playing Song": {
-				uuid: "fd.some-uuid",
-				plugin: "Spotify",
-				type: "spotify/playback",
-				renderType: "dash-module",
-				data: {
-					position: {
-						x: "700",
-						y: "1441",
-						width: "defined",
-						height: "defined",
-					},
-				},
-			},
-		},
+		// {
+		// 	"Currently Playing Song": {
+		// 		uuid: "fd.some-uuid",
+		// 		plugin: "Spotify",
+		// 		type: "spotify/playback",
+		// 		renderType: "dash-module",
+		// 		data: {
+		// 			position: {
+		// 				x: "700",
+		// 				y: "1441",
+		// 				width: "defined",
+		// 				height: "defined",
+		// 			},
+		// 		},
+		// 	},
+		// },
 	],
 };

@@ -459,6 +459,7 @@ summary ::-webkit-details-marker {
 #snackbar {
 	display: flex;
 	flex-direction: column;
+	align-items: end;
 	min-width: 1rem;
 	margin-left: -125px;
 	right: 0;
@@ -485,6 +486,15 @@ summary ::-webkit-details-marker {
 	margin-bottom: 1rem;
 	margin-right: 1rem;
 	z-index: 1;
+}
+
+.toast img {
+	position: absolute;
+	top: var(--font-size);
+	right: var(--font-size);
+	width: unset;
+	height: 50%;
+	border-radius: calc(var(--main-radius) / 2);
 }
 
 .toast.show {
