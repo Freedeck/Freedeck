@@ -3,7 +3,6 @@ const fs = require("node:fs");
 const dbg = require("./debug");
 function recordTime(tag) {
 	if (!dbg.status) return;
-	console.log("Recording tag", tag);
 	timeCache.push({ time: Date.now(), tag });
 }
 

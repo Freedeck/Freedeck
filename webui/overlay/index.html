@@ -13,7 +13,7 @@
 	<meta name="apple-mobile-web-app-title" content="Freedeck" />
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
-	<title>Freedeck</title>
+	<title>FD Overlay</title>
 </head>
 <style>
 	#keys {
@@ -29,6 +29,10 @@
 		height: auto;
 		margin: auto;
 		padding-left: 0 !important;
+	}
+
+	body {
+		background: transparent;
 	}
 
 	.dash-module {
@@ -61,7 +65,7 @@
 
 	.alpha-warning,
 	.debug-only {
-		background-color: rgba(0, 0, 0, 0.5);
+		background: var(--modal-bg);
 		padding: 0.5rem;
 		border: var(--generic-border);
 		border-radius: var(--main-radius);
@@ -75,6 +79,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	#boot-log-div {
+		display: none !important;
 	}
 </style>
 
@@ -100,34 +108,79 @@
 		<span class="alpha-warning" id="debugmode-warning"><strong>Debug Mode is activated.</strong> Above text is the
 			on-screen
 			module data.</span>
-		<span class="alpha-warning" id="dragmode-warning">Drag mode activated. Click and drag a module to move it.</span>
-		<span class="alpha-warning">
-			Freedeck Dash v0.0.0 is a public <strong>ALPHA</strong> product. For
-			this test, preset layouts cannot be saved or updated.
+		<span class="alpha-warning" id="dragmode-warning">Edit mode activated. Click and drag a module to move it.</span>
+		<!-- <span class="alpha-warning">
+			Freedeck Overlay is in <strong>BETA</strong>.
 		</span>
 		<span class="alpha-warning">
 			Press 'd' to start drag mode, 'f' for debug mode, and 'r' to reload all
 			modules.
-		</span>
+		</span> -->
 	</span>
 	<script type="module">
 		import layoutDefinition from "./layout.js";
-		import mctx from "./ctxl2.js";
+		import mctx from "/dash/ctxl2.js";
 		window.mctx = mctx;
-		await universal.init("Dash", "Freedeck Dash");
+		await universal.init("Overlay", "Freedeck Overlay");
 		let dragMode = false;
 		let debugMode = false;
 		const debugContainer = document.querySelector(".warnings");
 		const dragWarning = document.querySelector("#dragmode-warning");
 		const debugWarning = document.querySelector("#debugmode-warning");
 
-		window.addEventListener("keydown", (e) => {
+		window.addEventListener("keydown", async (e) => {
 			if (e.key === "d") dragMode = !dragMode;
 			if (e.key === "f") debugMode = !debugMode;
 			if (e.key === "r") reloadModules();
+			if (e.key === "n") {
+				const viewCollection = [];
+				for (const k in universal.plugins) {
+					const i = universal.plugins[k]
+					if (i.dashModules) {
+						for (const n in i.dashModules) {
+							viewCollection.push(n)
+						}
+					}
+				}
+				const selections = {};
+				for (const i of viewCollection) {
+					fetch("/user-data/dash-modules/" + i + "/module.json")
+						.then((res) => {
+							return res.json();
+						})
+						.then((ares) => {
+							selections[ares.name] = [];
+							for (const viw of ares.views) {
+								fetch(`/user-data/dash-modules/${i}/${viw}/module.json`)
+									.then((res) => {
+										return res.json();
+									})
+									.then((res) => {
+										selections[ares.name].push(res);
+									})
+							}
+						})
+				}
+				for (const selectionName in selections) {
+					const data = selections[selectionName];
+
+				}
+			}
 
 			dragWarning.style.display = dragMode ? "block" : "none";
 			debugWarning.style.display = debugMode ? "block" : "none";
+
+			freedeckoverlay.setIgnoreEvents(!dragMode);
+
+			if (dragMode) {
+				document.querySelector("body").style.backgroundColor = 'rgba(12,12,12,0.25)';
+				document.querySelector("body").style.backgroundImage = 'url(/overlay/grid.svg)';
+				document.querySelector("body").style.animation = 'none';
+			} else {
+				document.querySelector("body").style.backgroundColor = 'rgba(0,0,0,0)';
+				document.querySelector("body").style.backgroundImage = '';
+			}
+
 			if (debugMode) {
 				document.querySelectorAll(".debug-only").forEach((enrty) => {
 					enrty.style.display = "block";
@@ -175,6 +228,12 @@
 					let isDragging = false;
 					let startX = 0;
 					let startY = 0;
+					view.addEventListener("mouseenter", (e) => {
+						freedeckoverlay.setIgnoreEvents(false)
+					})
+					view.addEventListener("mouseleave", (e) => {
+						if (!dragMode) freedeckoverlay.setIgnoreEvents(true)
+					})
 					view.addEventListener("click", (event) => {
 						if (!dragMode) {
 							universal.send(universal.events.keypress, {
@@ -240,9 +299,9 @@
 					return res.json();
 				})
 				.then((res) => {
-					mctx.addView(`${prefix}${trueData.type}/${res.view}`);
+					mctx.addView(`${prefix}${trueData.type}/${res.overlay}`);
 					const view = mctx.nonDestructiveView(
-						`${prefix}${trueData.type}/${res.view}`,
+						`${prefix}${trueData.type}/${res.overlay}`,
 					);
 					view.style.position = "absolute";
 					view.style.top = trueData.data.position.x + "px";
@@ -302,7 +361,7 @@
 				})
 				.catch((e) => {
 					if (prefix === "/user-data/dash-modules/") {
-						renderModule(trueData, name, "./modules/");
+						renderModule(trueData, name, "/dash/modules/");
 					} else {
 						universal.sendToast(`Failed to add ${name}`, "Dash");
 					}

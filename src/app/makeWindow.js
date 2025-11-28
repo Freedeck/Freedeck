@@ -1,5 +1,5 @@
 const path = require("node:path");
-const { BrowserWindow, ipcMain } = require("electron");
+const { BrowserWindow, ipcMain, screen } = require("electron");
 module.exports = (
 	_page = "webui/client/new-connect.html",
 	_showTitlebar = true,
@@ -30,6 +30,9 @@ module.exports = (
 	ipcMain.handle("resize-splash", () => _handle(...dimensions.splashScreen));
 	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
 	ipcMain.handle("resize", () => _handle(...dimensions.default));
+	ipcMain.handle("overlay", () => {
+		createOverlay();
+	});
 
 	function _handle(w, h) {
 		mainWindow.setSize(w, h);
@@ -43,3 +46,40 @@ module.exports = (
 
 	return mainWindow;
 };
+
+let lock = null;
+
+function createOverlay() {
+	if (lock != null) return;
+	const primaryDisplay = screen.getPrimaryDisplay();
+	const { width, height } = primaryDisplay.workAreaSize;
+	lock = new BrowserWindow({
+		width,
+		height,
+		frame: false,
+		autoHideMenuBar: true,
+		transparent: true,
+		webPreferences: {
+			nodeIntegration: false,
+			contextIsolation: true,
+			preload: path.resolve("src/app/overlay-preload.js"),
+		},
+	});
+
+	lock.on("close", (e) => {
+		lock = null;
+	});
+
+	lock.setIgnoreMouseEvents(true, { forward: true });
+	lock.setAlwaysOnTop(true, "screen-saver");
+	lock.setPosition(0, 0);
+
+	console.log("Loaded Overlay");
+
+	ipcMain.on("set-ignore-mouse-events", (event, ignore, options) => {
+		if (event.sender != lock.webContents) return;
+		lock.setIgnoreMouseEvents(ignore, options);
+	});
+
+	lock.loadURL("http://localhost:5754/overlay");
+}

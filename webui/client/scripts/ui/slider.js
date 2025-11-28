@@ -60,6 +60,17 @@ export default function (data, keyObject, raw) {
 				data.data.min;
 		}
 
+		updateValues(data, sliderContainer, sliderPercentage);
+
+		universal.send(universal.events.keypress, {
+			isSlider: true,
+			sliderValue: data.data.value,
+			event: event,
+			btn: data,
+		});
+	};
+
+	function updateValues(data, sliderContainer, sliderPercentage) {
 		value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
 
 		sliderContainer.dataset.value = value;
@@ -74,14 +85,7 @@ export default function (data, keyObject, raw) {
 
 		const rounded = Number.parseFloat(value).toFixed(1);
 		sliderPercentage.innerText = `${rounded}${data.data.format ? data.data.format : "%"}`;
-
-		universal.send(universal.events.keypress, {
-			isSlider: true,
-			sliderValue: data.data.value,
-			event: event,
-			btn: data,
-		});
-	};
+	}
 
 	const i = setInterval(() => {
 		// sync slider value with data
@@ -92,46 +96,35 @@ export default function (data, keyObject, raw) {
 			return;
 		}
 
-		data.data.value = sliderContainer.dataset.value;
-		const min = data.data.min;
-		const max = data.data.max;
-		const value = data.data.value;
-		const percentage = ((value - min) / (max - min)) * 100;
-
-		if (data.data.direction === "vertical") {
-			sliderContainer.style.background = `linear-gradient(to top, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
-		} else {
-			sliderContainer.style.background = `linear-gradient(to right, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
-		}
-
-		const rounded = Number.parseFloat(value).toFixed(1);
-		sliderPercentage.innerText = `${rounded}${data.data.format ? data.data.format : "%"}`;
+		updateValues(data, sliderContainer, sliderPercentage);
 	}, 500);
 
-	const touchDownEvent = (e) => {
-		sliderContainer.dataset.dragging = true;
-		isDragging = true;
-	};
-	const touchUpEvent = (e) => {
-		sliderContainer.dataset.dragging = false;
-		isDragging = false;
-	};
+	if (data.data.enabled != "false") {
+		const touchDownEvent = (e) => {
+			sliderContainer.dataset.dragging = true;
+			isDragging = true;
+		};
+		const touchUpEvent = (e) => {
+			sliderContainer.dataset.dragging = false;
+			isDragging = false;
+		};
 
-	sliderThumb.addEventListener("mousedown", touchDownEvent);
-	sliderThumb.addEventListener("touchstart", touchDownEvent);
-	sliderThumb.addEventListener("mouseup", touchUpEvent);
-	sliderThumb.addEventListener("touchend", touchUpEvent);
-	document.addEventListener("mousemove", (event) => {
-		if (isDragging) {
-			updateSlider(event);
-		}
-	});
+		sliderThumb.addEventListener("mousedown", touchDownEvent);
+		sliderThumb.addEventListener("touchstart", touchDownEvent);
+		sliderThumb.addEventListener("mouseup", touchUpEvent);
+		sliderThumb.addEventListener("touchend", touchUpEvent);
+		document.addEventListener("mousemove", (event) => {
+			if (isDragging) {
+				updateSlider(event);
+			}
+		});
 
-	document.addEventListener("touchmove", (event) => {
-		if (isDragging) {
-			updateSlider(event.touches[0]);
-		}
-	});
+		document.addEventListener("touchmove", (event) => {
+			if (isDragging) {
+				updateSlider(event.touches[0]);
+			}
+		});
+	}
 
 	const percent =
 		((data.data.value - data.data.min) / (data.data.max - data.data.min)) * 100;

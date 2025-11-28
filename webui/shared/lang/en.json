@@ -10,15 +10,12 @@
   "sidebars.right.Setup": "Setup",
   "sidebars.right.Pair Device": "Pair Device",
   "sidebars.right.Themer": "Themer",
-
   "sidebars.left.mobd": "Mobile Device",
   "sidebars.left.mobd.pair": "Pair Mobile Device",
-
   "sidebars.left.pages.page": "Page: ",
   "sidebars.left.pages.try": "Test Tiles",
   "sidebars.left.pages.previous": "Previous Page",
   "sidebars.left.pages.next": "Next Page",
-
   "sidebars.left.soundboard.title": "Soundboard",
   "sidebars.left.soundboard.stop_all": "Stop All",
   "sidebars.left.soundboard.sliders.pitch": "Pitch",
@@ -29,7 +26,6 @@
   "sidebars.left.soundboard.mode.title": "Playback Mode",
   "sidebars.left.soundboard.mode.play_over": "Play Over",
   "sidebars.left.soundboard.mode.stop_previous": "Stop Previous",
-
   "sidebars.left.style.title": "Tile Style",
   "sidebars.left.style.font_size": "Font Size",
   "sidebars.left.style.font_size.unit": "px",
@@ -41,7 +37,6 @@
   "sidebars.left.style.columns.unit": " columns",
   "sidebars.left.style.hold_time": "Hold Time",
   "sidebars.left.style.hold_time.unit": " seconds",
-
   "sidebars.left.style.folders.title": "Folders",
   "sidebars.left.style.folders.text": "Current Folder: ",
   "sidebars.left.style.folders.popups.require_name": "Please enter a name for the folder",
@@ -54,13 +49,11 @@
   "sidebars.left.style.folders.popups.import.ask_name": "Enter a name for the folder",
   "sidebars.left.style.folders.popups.import.error_json": "Invalid JSON folder data",
   "sidebars.left.style.folders.popups.import.error_json_format": "Folder data not in Freedeck-ready format.",
-
   "sidebars.left.footer.thanks": "Thank you for using Freedeck!",
   "sidebars.left.footer.github_pre": "Freedeck is open-source and can be found on",
   "sidebars.left.footer.github": "GitHub",
   "sidebars.left.footer.need_help": "Need help?",
   "sidebars.left.footer.need_help.wiki": "Check the Wiki!",
-
   "editor.sections.no_action": "No Action!",
   "editor.sections.no_action.description": "What should this tile do?",
   "editor.sections.no_action.soundboard": "Soundboard",
@@ -86,59 +79,48 @@
   "editor.sections.plugin.actions.disabled": " is uninstalled, disabled, or failed to load!",
   "editor.sections.plugin.actions.disabled.advice": "Please restart Freedeck or try reinstalling ",
   "editor.sections.plugin.actions.disabled.exit_info": "You may change this Tile by pressing Back below this message.",
-
   "editor.back_to_plugins": "Back To Plugins",
   "editor.change_tile_type": "Change Tile Type",
   "editor.save": "Save",
   "editor.close.warning": "This key will be added in the future.",
   "editor.close": "Close",
-
   "editor.title": "Title",
   "editor.set_icon": "Set Icon",
-
   "editor.appearance": "Appearance",
   "editor.appearance.background": "Background Color",
   "editor.appearance.no.background": "No Background",
   "editor.appearance.no.border": "No Border",
   "editor.appearance.no.rounding": "No Rounding",
   "editor.appearance.no.shadow": "No Shadow",
-
   "editor.controls": "Controls",
   "editor.controls.hold": "Hold Activates",
   "editor.controls.long_press": "Long Press",
   "editor.controls.on_release": "On release?",
-
   "editor.advanced": "Advanced",
   "editor.advanced.type": "Type",
   "editor.advanced.plugin": "Plugin",
   "editor.advanced.renderer": "Renderer",
-
   "library.title": "Library",
   "library.description": "Here you will find every sound or icon you've uploaded.",
   "library.save": "Save Changes",
   "library.sounds": "Sounds",
   "library.sounds.add": "Add a Sound",
   "library.sounds.view": "View Sounds",
-
   "library.icons": "Icons",
   "library.icons.add": "Add a Icon",
   "library.icons.view": "View Icons",
-
   "marketplace.title": "Marketplace",
   "marketplace.description": "Welcome to the Freedeck Marketplace. Here you can download plugins to add even more functionality to your Freedeck.",
   "marketplace.add": "Add Repository",
   "marketplace.repositories": "Repositories",
-
   "settings.title": "Settings",
-
   "settings.sections.style": "Themes",
   "settings.sections.general.compact": "Compact Mode",
   "settings.sections.general.scroll": "Scroll Long Text",
   "settings.sections.general.fill": "Fill Tiles",
   "settings.sections.debug.write_log": "Write log to file",
-
   "settings.sections.language": "Language",
-
+  "settings.sections.overlay": "Overlay",
   "settings.sections.plugins": "Plugins",
   "settings.sections.plugins.reload_all": "Reload All Plugins",
   "settings.sections.plugins.single.disable": "Disable",
@@ -146,11 +128,9 @@
   "settings.sections.plugins.disabled.title": "Disabled Plugins",
   "settings.sections.plugins.disabled.enable": "Enable",
   "settings.sections.plugins.tile_previews": "Tile Previews",
-
   "settings.sections.audio_devices": "Output Devices",
   "settings.sections.audio_devices.monitor": "Output Devices",
   "settings.sections.audio_devices.vb": "VB-Cable Devices",
-
   "settings.sections.general.title": "General",
   "settings.sections.general.dont_ask": "Don't ask to delete Tiles",
   "settings.sections.general.fdc_tab": "Show FDConnect as a tab",
@@ -159,33 +139,27 @@
   "settings.sections.general.skip_boot_animation": "Skip Boot Animation",
   "settings.sections.experiments.no_preset_tiles": "No Logo Tile",
   "settings.sections.experiments.disable_new_repo": "Disable new repo addition",
-
   "settings.sections.developer_tools": "Developer Tools",
-
   "settings.sections.uis": "UI Sounds",
   "settings.sections.uis.soundpacks": "Soundpacks",
   "settings.sections.uis.soundpacks.current": "Current Soundpack",
-
   "settings.sections.bug": "Bug Report",
   "settings.sections.bug.request_generate": "Click \"Generate Bug Report\"",
   "settings.sections.bug.generate": "Generate Bug Report",
   "settings.sections.bug.report_reader": "Report Reader",
   "settings.sections.bug.report_reader.read": "Read Report",
-
   "settings.footer.by": "is a project by",
-
   "tooltips.editor.closing": "Your unsaved changes will not be made.",
   "tooltips.tile.empty": "Empty Tile!",
   "tooltips.tile.empty.action": "Click this space to add a new Tile here.",
-
   "tile.long_press": "Long press",
   "tile.short_press": "Short press",
   "tile.hold": "Hold",
+  "tooltips.tile.slider.action": "Press and slide to change.",
   "tooltips.tile.full.action": "to activate.",
   "tooltips.tile.disabled": "Not pressable.",
   "tooltips.tile.plugin": "This tile uses ",
   "tooltips.tile.plugin.not_found": " could not be found.",
-
   "tooltips.tile.audio.soundboard": "Plays sound:",
   "tooltips.tile.audio.stopall": "Stops all playing sounds",
   "tooltips.tile.profile": "Opens folder:",
@@ -193,7 +167,6 @@
   "tooltips.tile.macro.multi": "Types out:",
   "tooltips.tile.none": "Does nothing.",
   "tooltips.tile.editable": "Right click to edit.",
-
   "context_menu.editing": "Editing ",
   "context_menu.edit_tile": "Edit Tile",
   "context_menu.remove_tile": "Remove Tile",
@@ -201,13 +174,11 @@
   "context_menu.copy_tile": "Copy Tile Here",
   "context_menu.new_page": "New Page",
   "context_menu.folder": "Folder: ",
-
   "warnings.language": "Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.",
-
   "marketplace": "Marketplace",
   "marketplace.info.repository": "From $1",
   "marketplace.info.title": "$1 • by $2",
-  "marketplace.info.repo_title": "$1 ➤ ",
+  "marketplace.info.repo_title": "$1 \n➤ ",
   "marketplace.action.remove": "Remove",
   "marketplace.action.download": "Download",
   "marketplace.action.installed": "Installed",
@@ -232,7 +203,8 @@
   "marketplace.add.input_url": "URL",
   "marketplace.add.input_type": "Type",
   "marketplace.add.input_submit": "Add",
-  "marketplace.message.fetching": "Fetching marketplace repository: ",
+  "marketplace.message.fetching": "Downloading repository: ",
+  "marketplace.message.err_fetching": "Error downloading ",
   "marketplace.message.error": "An error occurred while fetching the repository.",
   "marketplace.message.internet": "(Could not fetch $1, is the internet down?)"
 }

@@ -36,10 +36,10 @@ let retryDelay = 1000;
 
 function retryConnection(url = "ws://localhost:5756/") {
 	try {
-		if (!fdws.isLauncherOpen())
-			throw new Error(
-				"Freedeck App is not running. FDWS is highly unlikely to also be open.",
-			);
+		if (!fdws.isLauncherOpen()) {
+			console.log("Freedeck App was not detected.");
+			return;
+		}
 		fdws._socket = new ws(url);
 		fdws._socket.onopen = (event) => {
 			fdws.connected = true;

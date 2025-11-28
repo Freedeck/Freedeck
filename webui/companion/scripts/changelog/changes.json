@@ -4,6 +4,7 @@
     "Plugins now show up as plugins that can be disabled.",
     "You can now activate the 'Hold Activates' Control option on a tile to spam it while you hold it.",
     "User-generated plugin/temporary files are now cleaned on startup, instead of blocking shutdown time",
+    "Updated the styling of the Settings page",
     "Optimized network address gathering",
     "Optimized startup time",
     "Fixed disabling plugins",

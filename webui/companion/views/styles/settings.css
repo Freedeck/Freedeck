@@ -11,6 +11,13 @@
 	flex-wrap: wrap;
 }
 
+#language-list {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	align-items: center;
+}
+
 center ul {
 	list-style-type: none;
 	padding: 0;
@@ -74,12 +81,12 @@ center ul {
 	border: var(--generic-border);
 }
 
-details > summary::marker {
+details>summary::marker {
 	display: none;
 	content: "";
 }
 
-details > summary:hover {
+details>summary:hover {
 	cursor: pointer;
 }
 
@@ -128,7 +135,7 @@ details > summary:hover {
 	gap: 1rem;
 }
 
-#settings-menu-full > details {
+#settings-menu-full>details {
 	display: flex;
 	flex-direction: column;
 	/* gap: 0.5rem; */

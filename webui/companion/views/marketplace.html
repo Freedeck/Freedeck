@@ -1,33 +1,27 @@
 <link rel="stylesheet" href="/companion/views/styles/marketplace.css" />
 
-<h1 class="settings-section-title">
-	<span data-i18n-key="marketplace.title">Marketplace</span>
-	<span
-		><img
-			src="/common/icons/marketplace.svg"
-			width="50"
-			loading="lazy"
-			height="50"
-	/></span>
-</h1>
-<center>
-	<p data-i18n-key="marketplace.description">
-		Welcome to the Freedeck Marketplace. Here you can download plugins to add
-		even more functionality to your Freedeck.
-	</p>
-</center>
-<button
-	id="repo"
-	onclick="universal.mkp_addRepo();"
-	data-i18n-key="marketplace.add"
->
-	Add Repository
-</button>
-<h2 class="message">Loading Marketplace...</h2>
-<p data-i18n-key="marketplace.repositories">Repositories</p>
-<ul class="repositories"></ul>
-<div class="marketplace">
-	<p>Loading Marketplace...</p>
+<div class="loading-screen">
+	<i>Marketplace is loading...</i>
+	<div class="loader"></div>
+	<h2 class="message">Setting up...</h2>
+</div>
+<div class="load-upon-finish">
+	<!-- <h1 class="settings-section-title">
+		<span data-i18n-key="marketplace.title">Marketplace</span>
+		<span><img src="/common/icons/marketplace.svg" width="50" loading="lazy" height="50" /></span>
+	</h1>
+	<center>
+		<p data-i18n-key="marketplace.description">
+			Welcome to the Freedeck Marketplace. Here you can download plugins to add
+			even more functionality to your Freedeck.
+		</p>
+	</center>
+	<p data-i18n-key="marketplace.repositories">Repositories</p> -->
+	<div class="main-content">
+		<ul class="repositories"></ul>
+		<div class="marketplace">
+		</div>
+	</div>
 </div>
 
 <script type="module">
@@ -98,7 +92,6 @@
 					"repos.community",
 					JSON.stringify(universal.repositoryManager.unofficial),
 				);
-				document.querySelector(".repositories").removeChild(li);
 				loadRepos();
 			};
 		}
@@ -114,6 +107,7 @@
 			universal.repositoryManager.getV3Repository(repo).then((data) => {
 				if (data.err) {
 					li.innerText += " " + data.msg;
+					document.querySelector(".message").innerHTML = universal.translationKey("marketplace.message.err_fetching") + repo.title + ": " + data.msg;
 					if (isUnofficial) li.appendChild(btn);
 					return;
 				}
@@ -178,12 +172,12 @@
 							}
 							window.UniversalUI.show.showYesNo(
 								universal.translationKey("marketplace.message_warning_prefix") +
-									str +
-									" " +
-									req.title +
-									universal.translationKey(
-										"marketplace.message_warning_suffix",
-									),
+								str +
+								" " +
+								req.title +
+								universal.translationKey(
+									"marketplace.message_warning_suffix",
+								),
 								req.message,
 								(yes) => {
 									window.location.href = file.dataset.HandoffUrl;
@@ -239,14 +233,14 @@
 								);
 								file.style.backgroundColor =
 									"var(--marketplace-plugin-no-updates)";
-								file.onclick = () => {};
+								file.onclick = () => { };
 							} else if (compareVersionOutput == 1) {
 								file.innerText = universal.translationKey(
 									"marketplace.action.user_has_newer",
 								);
 								file.style.backgroundColor =
 									"var(--marketplace-plugin-installed)";
-								file.onclick = () => {};
+								file.onclick = () => { };
 							}
 						}
 					}
@@ -256,14 +250,19 @@
 							li.appendChild(officialTag);
 						}
 					}
+					setTimeout(() => {
+						document.querySelector(".load-upon-finish").style.display = 'block'
+						document.querySelector(".loading-screen").style.display = 'none'
+					}, 125);
 					document.querySelector(".marketplace").appendChild(li);
 				});
-			});
+			}).catch(err => {
+				li.innerText += " Error fetching!";
+			})
 		}
-
 		document.querySelector(".repositories").appendChild(li);
 
-		document.querySelector(".message").innerHTML = "";
+		// document.querySelector(".message").innerHTML = "";
 	};
 
 	function legacyFillRepo(url, repo, isUnofficial = false) {
@@ -341,9 +340,9 @@
 							);
 							file.style.backgroundColor =
 								"var(--marketplace-plugin-no-updates)";
-							file.onclick = () => {};
+							file.onclick = () => { };
 						} else {
-							file.onclick = () => {};
+							file.onclick = () => { };
 						}
 					}
 					li.appendChild(file);
@@ -371,8 +370,41 @@
 	}
 
 	const loadRepos = () => {
-		document.querySelector(".repositories").innerHTML = "";
+		document.querySelector(".repositories").innerHTML = `<h1 class="settings-section-title">
+			<span data-i18n-key="marketplace.title">Marketplace</span>
+			<span><img src="/common/icons/marketplace.svg" width="50" loading="lazy" height="50" /></span>
+		</h1>`;
 		document.querySelector(".marketplace").innerHTML = "";
+
+
+		const sbe = document.createElement("p");
+		sbe.innerText = "No plugins found!\nTry searching the name or keywords in the description!"
+		sbe.style.display = 'none';
+		const sb = document.createElement("input");
+		sb.classList.add("sb")
+		sb.placeholder = "Search for a plugin..."
+		sb.oninput = (e) => {
+			const is = document.querySelectorAll(".item");
+			let c = 0
+			for (const e of is) {
+				if (!e.innerText.toLowerCase().includes(sb.value)) {
+					e.style.opacity = '0.1'
+					e.style.display = 'none'
+					c++;
+				} else {
+					e.style.display = 'flex'
+					e.style.opacity = '1'
+				}
+
+				if (c == is.length) {
+					sbe.style.display = 'block';
+				} else {
+					sbe.style.display = 'none';
+				}
+			}
+		}
+		document.querySelector(".marketplace").appendChild(sb)
+		document.querySelector(".marketplace").appendChild(sbe)
 		universal.repositoryManager.official.forEach((repo) => {
 			loadRepo(repo);
 		});
@@ -380,6 +412,12 @@
 		universal.repositoryManager.unofficial.forEach((repo) => {
 			loadRepo(repo, true);
 		});
+		const bt = document.createElement("button");
+		bt.id = "repo";
+		bt.onclick = () => { universal.mkp_addRepo() };
+		bt.setAttribute("data-i18n-key", "marketplace.add")
+		bt.innerText = "Add Repository";
+		document.querySelector(".repositories").appendChild(bt)
 	};
 	loadRepos();
 	function addRepo() {

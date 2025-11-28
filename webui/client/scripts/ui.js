@@ -416,7 +416,7 @@ function reloadSounds() {
 			let tooltipContent = `<h4>${universal.cleanHTML(k, false)}</h4>`;
 
 			tooltipContent +=
-				snd.renderType !== "text"
+				snd.renderType == "button"
 					? `<p>${
 							snd.data.longPress === "true"
 								? translationKey("tile.long_press")
@@ -424,7 +424,9 @@ function reloadSounds() {
 									? translationKey("tile.hold")
 									: translationKey("tile.short_press")
 						} ${translationKey("tooltips.tile.full.action")}</p>`
-					: "<p data-i18n-key='tooltips.tile.disabled'>Not pressable.</p>";
+					: snd.renderType == "slider"
+						? translationKey("tooltips.tile.slider.action")
+						: "<p data-i18n-key='tooltips.tile.disabled'>Not pressable.</p>";
 
 			if (snd.plugin) {
 				tooltipContent += universal.plugins[snd.plugin]

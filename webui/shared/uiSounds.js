@@ -37,7 +37,7 @@ async function load(soundpack) {
 
 async function playSound(name) {
 	if (!uiSoundEngine.enabled()) return;
-	universal.audioClient.play({
+	return universal.audioClient.play({
 		file: `/common/sounds/${uiSoundEngine.info.id}/${uiSoundEngine.sounds[name]}`,
 		name,
 		channel: universal.audioClient.channels.ui,

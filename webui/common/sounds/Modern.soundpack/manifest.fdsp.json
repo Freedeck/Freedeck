@@ -1,13 +1,13 @@
 {
   "info": {
-    "name": "Futuristic",
+    "name": "Modern",
     "version": "1.0.0",
     "author": "Freedeck",
-    "description": "A futuristic soundpack for Freedeck",
-    "id": "Futuristic.soundpack"
+    "description": "A modern soundpack for Freedeck",
+    "id": "Modern.soundpack"
   },
   "sounds": {
-    "click": "click.mp3",
+    "click": "click.wav",
     "select_option": "select_option.mp3",
     "select_option_false": "select_option_false.mp3",
     "page_enter": "page_enter.mp3",

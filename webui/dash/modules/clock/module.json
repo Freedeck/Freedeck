@@ -1,4 +1,5 @@
 {
   "name": "Clock",
-  "view": "view"
+  "view": "view",
+  "overlay": "view"
 }

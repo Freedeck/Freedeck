@@ -1,75 +1,56 @@
 <link rel="stylesheet" href="/companion/views/styles/settings.css" />
 <h1 class="settings-section-title">
 	<span data-i18n-key="settings.title"></span>
-	<span
-		><img
-			src="/common/icons/settings.svg"
-			width="50"
-			height="50"
-			loading="lazy"
-	/></span>
+	<span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 <div id="settings-menu-full">
 	<details>
 		<summary class="settings-section-title">
-			<span data-i18n-key="settings.sections.style"></span
-			><span
-				><img
-					src="/common/icons/themes.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span data-i18n-key="settings.sections.style"></span><span><img src="/common/icons/themes.svg" width="50"
+					height="50" loading="lazy" /></span>
 		</summary>
 		<div class="themelist"></div>
 	</details>
-	<details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+	<details>
 		<summary class="settings-section-title">
-			<span
-				><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span
-					class="tag-beta"
-					>ALPHA</span
-				></span
-			><span
-				><img
-					src="/common/icons/language.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span
+					class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50"
+					loading="lazy" /></span>
 		</summary>
 		<br />
 		<p id="clang">Loading...</p>
 		<div id="language-list"></div>
 	</details>
+	<details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+		<summary class="settings-section-title">
+			<span><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
+					class="tag-beta">BETA</span></span><span><img src="/common/icons/overlay.svg" width="50" height="50"
+					loading="lazy" /></span>
+		</summary>
+		<br />
+		<center
+			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
+			<button style="width: calc(95%/2);" onclick="freedeckexperimental.overlay()">Open Overlay</button>
+			<button style="width: calc(95%/2);">Layout Editor</button>
+		</center>
+	</details>
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.plugins"></span>
-			<span
-				><img
-					src="/common/icons/t_plugin.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<br />
 		<div class="experiments">
 			<ul id="actl" class="btnlist"></ul>
 		</div>
-		<button
-			id="upd"
-			data-i18n-key="settings.sections.plugins.reload_all"
-		></button>
+		<button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
 		<div class="flex-wrap">
 			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
 			<div id="disbl-list" class="row"></div>
 		</div>
 		<details id="tile-prev">
 			<summary>
-				<strong
-					data-i18n-key="settings.sections.plugins.tile_previews"
-				></strong>
+				<strong data-i18n-key="settings.sections.plugins.tile_previews"></strong>
 			</summary>
 			<div class="btns"></div>
 		</details>
@@ -77,13 +58,7 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.audio_devices"></span>
-			<span
-				><img
-					src="/common/icons/audio.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div class="monitor-devices audio-device-picker"></div>
 		<span data-i18n-key="settings.sections.audio_devices.vb"></span>
@@ -93,13 +68,7 @@
 	<details class="experiment-exist soundpack">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.uis"></span>
-			<span
-				><img
-					src="/common/icons/uisounds.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div>
 			<h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
@@ -107,13 +76,8 @@
 			<h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
 			<div class="experiment-exist">
 				<h3 id="soundpack-title">Soundpack</h3>
-				<span
-					>(<span id="soundpack-id">id.soundpack</span>) v<span
-						id="soundpack-version"
-						>0.0.0</span
-					>
-					by <span id="soundpack-author">somebody</span></span
-				>
+				<span>(<span id="soundpack-id">id.soundpack</span>) v<span id="soundpack-version">0.0.0</span>
+					by <span id="soundpack-author">somebody</span></span>
 			</div>
 			<ul class="uisounds"></ul>
 		</div>
@@ -121,28 +85,16 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.bug"></span>
-			<span
-				><img
-					src="/common/icons/bugs.svg"
-					width="50"
-					height="50"
-					loading="lazy"
-			/></span>
+			<span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
-		<textarea
-			name="bgrep"
-			id="bgrep"
-			data-i18n-key="settings.sections.bug.request_generate"
-		></textarea>
+		<textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
 		<p id="hostname">Your hostname here</p>
 		<button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
 	</details>
 	<details style="display: none" id="dev-tools">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.developer_tools"></span>
-			<span
-				><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy"
-			/></span>
+			<span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div class="flex-wrap-r">
 			<button onclick="restChnglog();window.location.reload()">
@@ -150,9 +102,7 @@
 			</button>
 			<button onclick="window._makeThanks(true)">Show Current Changelog</button>
 			<button onclick="universal.showBootLog()">Show UI Boot Log</button>
-			<button
-				onclick="universal.sendToast('This is a test', 'Test Notification from Settings')"
-			>
+			<button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
 				Test Notification
 			</button>
 			<button onclick="universal.send(universal.events.default.recompile)">
@@ -171,28 +121,15 @@
 		<br />
 		<details>
 			<summary data-i18n-key="settings.sections.bug.report_reader"></summary>
-			<textarea
-				name="input-bgrep"
-				id="input-bgrep"
-				class="input-bgrep"
-			></textarea>
-			<button
-				id="read-bgrep"
-				data-i18n-key="settings.sections.bug.report_reader.read"
-			></button>
+			<textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
+			<button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read"></button>
 			<div class="report-details"></div>
 		</details>
 	</details>
 	<details>
 		<summary class="settings-section-title">
 			<h1 class="version"></h1>
-			<img
-				src="/assets/logo_big.png"
-				alt="Freedeck Logo"
-				width="75"
-				height="75"
-				loading="lazy"
-			/>
+			<img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy" />
 		</summary>
 		<center>
 			<span data-i18n-key="settings.footer.by"></span>
@@ -258,7 +195,7 @@
 	document.querySelector("#clang").innerText =
 		"Current Language: " + locales[universal.load("locale")];
 	Object.keys(locales).forEach((locale) => {
-		const li = document.createElement("li");
+		const li = document.createElement("button");
 		li.innerText = locales[locale];
 		li.onclick = () => {
 			setLocale(locale);
@@ -493,7 +430,7 @@
 				);
 				window.location.reload();
 			},
-			() => {},
+			() => { },
 		);
 	};
 
@@ -645,7 +582,7 @@
 					key: "settings.sections.general.dont_ask",
 					default:
 						universal.getServerStyleFlags()[
-							"app.freedeck.tiles.force_deletion"
+						"app.freedeck.tiles.force_deletion"
 						] || false,
 				},
 				"app.freedeck.sidebar.connect_tab": {
@@ -653,7 +590,7 @@
 					key: "settings.sections.general.fdc_tab",
 					default:
 						universal.getServerStyleFlags()[
-							"app.freedeck.sidebar.connect_tab"
+						"app.freedeck.sidebar.connect_tab"
 						] || false,
 					onchange: () => {
 						universal.reloadRight();
@@ -672,7 +609,7 @@
 					key: "settings.sections.general.skip_boot_animation",
 					default:
 						universal.getServerStyleFlags()[
-							"app.freedeck.skip_boot_animation"
+						"app.freedeck.skip_boot_animation"
 						] || false,
 				},
 				"app.freedeck.no_preset_tiles": {
@@ -695,7 +632,7 @@
 					key: "settings.sections.debug.write_log",
 					default:
 						universal.getServerStyleFlags()[
-							"app.freedeck.demo.write_debug_log"
+						"app.freedeck.demo.write_debug_log"
 						] || false,
 				},
 			},

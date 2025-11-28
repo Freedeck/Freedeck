@@ -6,13 +6,11 @@
 	--tile-columns: repeat(5, 2fr);
 	--font: "Rethink Sans", sans-serif;
 	--main-bg-size: 400% 400%;
-	--main-bg: linear-gradient(
-		105deg,
-		rgba(255, 0, 89, 1) 0%,
-		rgb(0, 179, 255) 33%,
-		rgba(255, 0, 89, 1) 66%,
-		rgba(0, 179, 255, 1) 100%
-	);
+	--main-bg: linear-gradient(105deg,
+			rgba(255, 0, 89, 1) 0%,
+			rgb(0, 179, 255) 33%,
+			rgba(255, 0, 89, 1) 66%,
+			rgba(0, 179, 255, 1) 100%);
 
 	--border-color: rgba(255, 255, 255, 0.1);
 	--generic-border: 1px solid rgba(255, 255, 255, 0.1);
@@ -65,15 +63,12 @@
 	--companion-sidebar-item-bg: rgba(0, 0, 0, 0.25);
 	--companion-sidebar-item-color: white;
 
-	--modal-item-bg: linear-gradient(
-		105deg,
-		rgba(0, 179, 255, 1) 0%,
-		rgba(0, 135, 255, 1) 50%,
-		rgba(0, 179, 255, 1) 100%
-	);
+	--modal-item-bg: linear-gradient(105deg,
+			rgba(0, 179, 255, 1) 0%,
+			rgba(0, 135, 255, 1) 50%,
+			rgba(0, 179, 255, 1) 100%);
 	--modal-item-bg-size: 400% 400%;
-	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)
-		infinite;
+	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
 	--modal-item-text: white;
 
 	--glow-unlift: rgba(0, 179, 255, 1);
@@ -88,6 +83,7 @@
 	0% {
 		background-position: 0% 0%;
 	}
+
 	100% {
 		background-position: 100% 0%;
 	}
@@ -108,9 +104,12 @@ body {
 	overflow-x: hidden;
 	touch-action: none;
 	user-select: none;
-	-webkit-user-select: none; /* disable selection/Copy of UIWebView */
-	-webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+	-webkit-user-select: none;
+	/* disable selection/Copy of UIWebView */
+	-webkit-touch-callout: none;
+	/* disable the IOS popup when long-press on a link */
 }
+
 h1 {
 	font-family: var(--font);
 	font-size: 2rem;
@@ -188,7 +187,7 @@ p {
 	transform: translate(-50%, -49.8%);
 }
 
-#boot-log-div > h1 {
+#boot-log-div>h1 {
 	position: absolute;
 	top: 6%;
 	left: 50%;
@@ -196,7 +195,7 @@ p {
 	/* width:max-content; */
 }
 
-#boot-log > .oclb {
+#boot-log>.oclb {
 	transition-duration: 0.5s;
 	position: absolute;
 	right: 1rem;
@@ -473,6 +472,7 @@ summary ::-webkit-details-marker {
 	background: var(--modal-bg);
 	border: 2px solid rgba(255, 255, 255, 0.125);
 	color: var(--text-color-secondary);
+	width: max-content;
 	text-align: center;
 	border-radius: var(--main-radius);
 	display: flex;
@@ -625,7 +625,8 @@ button {
 	border-radius: var(--tile-radius);
 	background: var(--tile-bg);
 	text-align: center;
-	border: var(--tile-border); /* Add a border */
+	border: var(--tile-border);
+	/* Add a border */
 	color: var(--text-color-secondary);
 	display: flex;
 	justify-content: center;
@@ -640,6 +641,7 @@ button {
 			transform: scale(1.05) translate(-48%, -49%);
 			cursor: pointer;
 		}
+
 		&:hover:not(:has(.smaller)) {
 			filter: brightness(0.84);
 			color: var(--text-color-secondary);
@@ -736,6 +738,7 @@ button:active {
 	animation: modal_content_showing 0.25s;
 	transition-duration: 0.25s;
 }
+
 .modalContent input {
 	background: rgba(0, 0, 0, 0.5);
 	color: var(--text-color-secondary);
@@ -748,6 +751,7 @@ button:active {
 	from {
 		transform: scale(0.9);
 	}
+
 	to {
 		transform: scale(1);
 	}
@@ -757,6 +761,7 @@ button:active {
 	from {
 		transform: scale(1);
 	}
+
 	to {
 		transform: scale(0.9);
 	}
@@ -766,6 +771,7 @@ button:active {
 	from {
 		opacity: 0;
 	}
+
 	to {
 		opacity: 1;
 	}
@@ -775,12 +781,13 @@ button:active {
 	from {
 		opacity: 1;
 	}
+
 	to {
 		opacity: 0;
 	}
 }
 
-dialog > div:not(#editor-div):not(#login-div) {
+dialog>div:not(#editor-div):not(#login-div) {
 	background: var(--modal-bg);
 	color: var(--modal-color);
 	min-width: 400px;
@@ -856,8 +863,10 @@ a:hover {
 }
 
 .spinner {
-	border: 16px solid #f3f3f3; /* Light grey */
-	border-top: 16px solid #3498db; /* Blue */
+	border: 16px solid #f3f3f3;
+	/* Light grey */
+	border-top: 16px solid #3498db;
+	/* Blue */
 	border-radius: 50%;
 	width: 120px;
 	height: 120px;
@@ -907,6 +916,7 @@ a:hover {
 	0% {
 		transform: translateX(100%);
 	}
+
 	100% {
 		transform: translateX(-100%);
 	}
@@ -998,6 +1008,7 @@ a:hover {
 		box-shadow: 0 0 20px var(--glow-unlift);
 		transform: scale(1);
 	}
+
 	100% {
 		box-shadow: 0 0 20px var(--glow-lifted);
 		transform: scale(1.25);

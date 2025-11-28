@@ -5,3 +5,7 @@ contextBridge.exposeInMainWorld("splashScreen", {
 	unsplash: () => ipcRenderer.invoke("resize"),
 	mobileEmu: () => ipcRenderer.invoke("resize-emu"),
 });
+
+contextBridge.exposeInMainWorld("freedeckexperimental", {
+	overlay: () => ipcRenderer.invoke("overlay"),
+});
