@@ -217,24 +217,39 @@
 		if (seen[req.name]) return;
 		seen[req.name] = true;
 
+		const imgEle = document.createElement("img");
+		(async () => {
+			let ex = false;
+			await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
+				if(r.status == 200) ex = true;
+			})
+			if(ex) {
+				imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+			}
+		})();
+		const infoEle = document.createElement("div");
+		infoEle.appendChild(imgEle);
+		infoEle.classList.add("plugin-information");
+
 		const nameEle = document.createElement("h3");
 		nameEle.innerText = req.name;
-		li.appendChild(nameEle);
+		infoEle.appendChild(nameEle);
 		const versionEle = document.createElement("p");
 		versionEle.innerText = req.version ? "v" + req.version : "";
-		li.appendChild(versionEle);
+		infoEle.appendChild(versionEle);
 		const authorEle = document.createElement("p");
 		authorEle.innerText = "by " + req.author;
-		li.appendChild(authorEle);
+		infoEle.appendChild(authorEle);
+		li.appendChild(infoEle);
 
 		if (req.popout) {
 			const popout = document.createElement("details");
-			popout.innerHTML = `<summary>Open</summary><div class='popout'>${req.popout}</div>`;
-			li.appendChild(popout);
+			popout.innerHTML = `<summary>Settings</summary><br><div class='popout'>${req.popout}</div>`;
+			infoEle.appendChild(popout);
 		}
 
 		const actionContainer = document.createElement("div");
-		actionContainer.classList.add("flex-wrap-r");
+		actionContainer.classList.add("flex-wrap");
 		actionContainer.style.justifyContent = "space-between";
 
 		const a = document.createElement("button");

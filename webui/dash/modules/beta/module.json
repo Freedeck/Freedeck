@@ -1,5 +1,5 @@
 {
-  "name": "Beta Warnings",
+  "name": "fd:beta-overlay",
   "overlay": "overlay",
   "view": "dash"
 }

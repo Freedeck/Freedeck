@@ -138,7 +138,8 @@ export default async function eventsHandler(universal, user) {
 		universal.sendToast("Disconnected from server.", "Freedeck");
 		universal.lastRetry = new Date();
 		const retryLoop = setInterval(() => {
-			universal.sendToast("Attempting to reconnect...", "Freedeck");
+			if (universal.name != "Overlay")
+				universal.sendToast("Attempting to reconnect...", "Freedeck");
 			universal.reconnect();
 			setTimeout(() => {
 				if (universal.connected === true) {

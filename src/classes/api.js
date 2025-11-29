@@ -130,11 +130,21 @@ class Plugin {
 		}
 		this._customLog("Initialized plugin.");
 
+		
 		this.id = this.id.toLowerCase();
 		this.setup();
-
+		
 		this._customLog("Called setup.");
-
+		
+		let foundPath = `tmp/_${this.id}.fdpackage`;
+		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
+		if(fs.existsSync(path.resolve(foundPath, "icon.png"))) {
+			fs.cpSync(
+				path.resolve(foundPath, "icon.png"),
+				path.resolve(this._hookLocation, this.id+"-icon.png"),
+				{force:true},
+			);
+		}
 		this.emit(events.ready);
 
 		this._customLog("Emitted ready.");

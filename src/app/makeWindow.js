@@ -1,5 +1,5 @@
 const path = require("node:path");
-const { BrowserWindow, ipcMain, screen } = require("electron");
+const { BrowserWindow, ipcMain, screen, globalShortcut } = require("electron");
 module.exports = (
 	_page = "webui/client/new-connect.html",
 	_showTitlebar = true,
@@ -64,6 +64,11 @@ function createOverlay() {
 			contextIsolation: true,
 			preload: path.resolve("src/app/overlay-preload.js"),
 		},
+	});
+
+	globalShortcut.register("Alt+Shift+Backspace", () => {
+		lock.focus();
+		lock.webContents.send("shortcutpressed");
 	});
 
 	lock.on("close", (e) => {

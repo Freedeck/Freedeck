@@ -122,7 +122,33 @@
 		</span> -->
 	</span>
 	<script type="module">
-		import layoutDefinition from "./layout.js";
+		let layoutDefinition = {
+			id: "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
+			name: "Overlay Layout",
+			modules: [
+				{
+					beta: {
+						uuid: "01",
+						type: "beta",
+						renderType: "dash-module",
+						data: {
+							position: {
+								x: "0",
+								y: "0",
+								width: "defined",
+								height: "defined",
+							},
+						},
+					},
+				}
+			]
+		}
+
+		if (!localStorage.getItem("freedeck:overlay")) {
+			localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition))
+		} else {
+			layoutDefinition = JSON.parse(localStorage.getItem("freedeck:overlay"));
+		}
 		import mctx from "/dash/ctxl2.js";
 		window.mctx = mctx;
 		await universal.init("Overlay", "Freedeck Overlay");
@@ -191,6 +217,31 @@
 			return null;
 		}
 
+
+		universal.audioClient.initialize()
+		universal.uiSounds.initialize()
+		freedeckoverlay.onShortcut((e) => {
+			dragMode = !dragMode;
+			if (dragMode == false) {
+				localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition))
+				universal.uiSounds.playSound("overlay_close")
+			} else {
+				universal.uiSounds.playSound("overlay_open")
+			}
+			freedeckoverlay.setIgnoreEvents(!dragMode);
+			if (dragMode) {
+				document.querySelector("body").style.transitionDuration = '.25s';
+				document.querySelector("body").style.animation = 'none';
+				document.querySelector("body").style.backgroundColor = 'rgba(12,12,12,0.5)';
+				document.querySelector("body").style.backgroundImage = 'url(/overlay/grid.svg)';
+			} else {
+				document.querySelector("body").style.backgroundColor = 'rgba(0,0,0,0)';
+				document.querySelector("body").style.backgroundImage = '';
+			}
+			dragWarning.style.display = dragMode ? "block" : "none";
+
+		})
+
 		window.addEventListener("contextmenu", async (e) => {
 			const ctxMenu = document.querySelector(".contextMenu");
 			if (ctxMenu) ctxMenu.remove();
@@ -219,8 +270,8 @@
 									renderType: "dash-module",
 									data: {
 										position: {
-											x: e.clientY,
-											y: e.clientX,
+											x: e.clientX,
+											y: e.clientY,
 											width: "defined",
 											height: "defined",
 										},
@@ -238,7 +289,7 @@
 				const layoutData = JSON.parse(p.getAttribute("layout"));
 				const settings = JSON.parse(p.getAttribute("settings"));
 				const menuItem = document.createElement("div");
-				menuItem.innerHTML = "<strong>Selected:" + moduleContext.name + "</strong>";
+				menuItem.innerHTML = "<strong>Selected: " + moduleContext.name + "</strong>";
 				custMenu.appendChild(menuItem);
 				const items = [
 					{
@@ -247,10 +298,6 @@
 							layoutDefinition.modules = layoutDefinition.modules.filter((e) => e != layoutData);
 							reloadModules();
 						}
-					},
-					{
-						text: () => "Settings:",
-						click: () => { }
 					}
 				]
 				for (const settingKey in moduleContext.settings) {
@@ -288,23 +335,11 @@
 		})
 
 		window.addEventListener("keydown", async (e) => {
-			if (e.key === "d") dragMode = !dragMode;
 			if (e.key === "f") debugMode = !debugMode;
 			if (e.key === "r") reloadModules();
 
-			dragWarning.style.display = dragMode ? "block" : "none";
 			debugWarning.style.display = debugMode ? "block" : "none";
 
-			freedeckoverlay.setIgnoreEvents(!dragMode);
-
-			if (dragMode) {
-				document.querySelector("body").style.backgroundColor = 'rgba(12,12,12,0.25)';
-				document.querySelector("body").style.backgroundImage = 'url(/overlay/grid.svg)';
-				document.querySelector("body").style.animation = 'none';
-			} else {
-				document.querySelector("body").style.backgroundColor = 'rgba(0,0,0,0)';
-				document.querySelector("body").style.backgroundImage = '';
-			}
 
 			if (debugMode) {
 				document.querySelectorAll(".debug-only").forEach((enrty) => {
@@ -336,8 +371,8 @@
 					view.innerText = name;
 					view.classList.add("dash-button");
 					view.style.position = "absolute";
-					view.style.top = trueData.data.position.x + "px";
-					view.style.left = trueData.data.position.y + "px";
+					view.style.top = trueData.data.position.y + "px";
+					view.style.left = trueData.data.position.x + "px";
 					view.classList.add("dash-module");
 					view.style.overflow = "hidden";
 					if (trueData.data.position.width !== "defined") {
@@ -353,12 +388,6 @@
 					let isDragging = false;
 					let startX = 0;
 					let startY = 0;
-					view.addEventListener("mouseenter", (e) => {
-						freedeckoverlay.setIgnoreEvents(false)
-					})
-					view.addEventListener("mouseleave", (e) => {
-						if (!dragMode) freedeckoverlay.setIgnoreEvents(true)
-					})
 					view.addEventListener("click", (event) => {
 						if (!dragMode) {
 							universal.send(universal.events.keypress, {
@@ -432,8 +461,8 @@
 					view.setAttribute("settings", JSON.stringify(trueData.settings || {}));
 					view.setAttribute("modulecontext", JSON.stringify(res));
 					view.style.position = "absolute";
-					view.style.top = trueData.data.position.x + "px";
-					view.style.left = trueData.data.position.y + "px";
+					view.style.top = trueData.data.position.y + "px";
+					view.style.left = trueData.data.position.x + "px";
 					view.classList.add("dash-module");
 					view.style.overflow = "hidden";
 					if (trueData.data.position.width !== "defined") {
@@ -480,6 +509,8 @@
 
 							view.style.left = Math.max(0, Math.min(newX, maxX)) + "px";
 							view.style.top = Math.max(0, Math.min(newY, maxY)) + "px";
+							trueData.data.position.y = Math.max(0, Math.min(newY, maxY));
+							trueData.data.position.x = Math.max(0, Math.min(newX, maxX));
 						}
 					};
 					debugContainer.prepend(dataTxt);

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    background-color: rgba(12, 12, 12, 0.25);
+    background-color: var(--modal-bg);
     border: var(--generic-border);
     border-radius: var(--main-radius);
     width: max-content;
@@ -14,14 +14,17 @@
 <freedeck-dash-module id="beta-view">
   <div class="content">
     <p>Freedeck Overlay is <strong>BETA</strong> software!</p>
-    <p>Press D while focused to activate the layout editor.</p>
+    <p>Press ALT+SHIFT+BACKSPACE to activate the layout editor.</small></p>
     <details>
-      <summary>How it Works</summary>
-
+      <summary>The Layout Editor</summary>
+      <p>From there, you'll see a grid appear on your screen.<br>It's used to help you differentiate desktop from
+        Overlay.<br>Right click an empty spot to add a module there, drag the modules, <br>and right click to edit
+        them.<br>Modules are loosely implemented, meaning that one's <br>capabilities and settings won't be the exact
+        same
+        for a different one.<br>For example, the Spotify plugin's overlay lets you change the <br>background
+        transparency,
+        while this one doesn't.</p>
     </details>
-    <details>
-      <summary>Using Overlay</summary>
-      Overlay is already on, so all you need to do is make the window active, press "d" to enter the editor!
-    </details>
+    <small>Overlay is based on Freedeck Dash.</small>
   </div>
 </freedeck-dash-module>

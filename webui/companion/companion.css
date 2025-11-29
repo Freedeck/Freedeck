@@ -608,6 +608,10 @@ textarea {
 	background-color: rgba(0, 0, 0, 0.75);
 }
 
+#actl li img {
+	width: 25%;
+}
+
 #plugin-actions {
 	width: 100%;
 	align-items: center;

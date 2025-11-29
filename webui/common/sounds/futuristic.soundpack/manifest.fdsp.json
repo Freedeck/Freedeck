@@ -34,6 +34,8 @@
     "welcome": "welcome.mp3",
     "mobile_connect": "mobile_conn.mp3",
     "mobile_disconnect": "mobile_disconn.mp3",
-    "devmode": "devmode.mp3"
+    "devmode": "devmode.mp3",
+    "overlay_open": "overlay_open.mp3",
+    "overlay_close": "overlay_close.mp3"
   }
 }
