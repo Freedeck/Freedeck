@@ -2,8 +2,9 @@
   "major": [
     "**Gave the tooltips/context menu, and editor more translations!**",
     "**Redesigned the Marketplace!**",
-    "**Overlay Alpha!** Go to settings, then press Overlay, and launch it to try it out! Currently, only Spotify has a module for it.",
+    "**Overlay Alpha!** Go to settings, then press Overlay, and launch it to try it out! Currently, only the Spotify plugin has a module for it.",
     "**Plugins now support server-set icons!**",
+    "Hid the developer tools, to get them back: on the settings page, press the konami code.",
     "Plugins can now have icons.",
     "Plugins now show up as plugins that can be disabled.",
     "You can now activate the 'Hold Activates' Control option on a tile to spam it while you hold it.",
@@ -19,9 +20,15 @@
     "**Dash Pre-alpha!** Go to /dash to see it, it only has a preset layout for now, until it's fully implemented. Overlay is based on most of this code."
   ],
   "other": [
+    "Notifications images are now fixed to align better",
+    "Notifications are now left-aligned",
+    "FDWS doesnt throw so many errors",
     "Removed some minor themes to declutter the theme list",
-    "Render types now have better interaction translation keys"
+    "Render types now have better interaction translation keys",
+    "Glow is fixed"
   ],
-  "known": [],
+  "known": [
+    "Overlay can get stuck when webpack recompiles. Use the system tray to reload it."
+  ],
   "note": ""
 }
