@@ -543,7 +543,7 @@ const universal = {
 				}, 500);
 			}, 3000);
 			universal._timeouts[id] = to;
-			universal.uiSounds.playSound("notification");
+			if(universal.name != 'Overlay') universal.uiSounds.playSound("notification");
 			return;
 		}
 		const s = document.createElement("div");
@@ -558,7 +558,7 @@ const universal = {
 			s.className = s.className.replace("show", "");
 			s.remove();
 		};
-		universal.uiSounds.playSound("notification");
+		if(universal.name != 'Overlay') universal.uiSounds.playSound("notification");
 		document.querySelector("#snackbar").appendChild(s);
 
 		const to = setTimeout(() => {

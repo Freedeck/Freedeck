@@ -1,5 +1,6 @@
 const path = require("node:path");
-const { BrowserWindow, ipcMain, screen, globalShortcut } = require("electron");
+const { BrowserWindow, ipcMain } = require("electron");
+const { spawn } = require("node:child_process");
 module.exports = (
 	_page = "webui/client/new-connect.html",
 	_showTitlebar = true,
@@ -31,7 +32,7 @@ module.exports = (
 	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
 	ipcMain.handle("resize", () => _handle(...dimensions.default));
 	ipcMain.handle("overlay", () => {
-		createOverlay();
+		spawn(process.argv[0], [path.resolve("./src/app/overlay-makeWindow.js")])
 	});
 
 	function _handle(w, h) {
@@ -46,45 +47,3 @@ module.exports = (
 
 	return mainWindow;
 };
-
-let lock = null;
-
-function createOverlay() {
-	if (lock != null) return;
-	const primaryDisplay = screen.getPrimaryDisplay();
-	const { width, height } = primaryDisplay.workAreaSize;
-	lock = new BrowserWindow({
-		width,
-		height,
-		frame: false,
-		autoHideMenuBar: true,
-		transparent: true,
-		webPreferences: {
-			nodeIntegration: false,
-			contextIsolation: true,
-			preload: path.resolve("src/app/overlay-preload.js"),
-		},
-	});
-
-	globalShortcut.register("Alt+Shift+Backspace", () => {
-		lock.focus();
-		lock.webContents.send("shortcutpressed");
-	});
-
-	lock.on("close", (e) => {
-		lock = null;
-	});
-
-	lock.setIgnoreMouseEvents(true, { forward: true });
-	lock.setAlwaysOnTop(true, "screen-saver");
-	lock.setPosition(0, 0);
-
-	console.log("Loaded Overlay");
-
-	ipcMain.on("set-ignore-mouse-events", (event, ignore, options) => {
-		if (event.sender != lock.webContents) return;
-		lock.setIgnoreMouseEvents(ignore, options);
-	});
-
-	lock.loadURL("http://localhost:5754/overlay");
-}

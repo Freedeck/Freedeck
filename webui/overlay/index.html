@@ -232,10 +232,11 @@
 			if (dragMode) {
 				document.querySelector("body").style.transitionDuration = '.25s';
 				document.querySelector("body").style.animation = 'none';
-				document.querySelector("body").style.backgroundColor = 'rgba(12,12,12,0.5)';
-				document.querySelector("body").style.backgroundImage = 'url(/overlay/grid.svg)';
+				
+				document.querySelector("body").style.backgroundColor = 'rgba(12,12,12,0.5)'
+				document.querySelector("body").style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`;
 			} else {
-				document.querySelector("body").style.backgroundColor = 'rgba(0,0,0,0)';
+				document.querySelector("body").style.backgroundColor = 'transparent'
 				document.querySelector("body").style.backgroundImage = '';
 			}
 			dragWarning.style.display = dragMode ? "block" : "none";
@@ -295,7 +296,10 @@
 					{
 						text: () => "Remove",
 						click: () => {
-							layoutDefinition.modules = layoutDefinition.modules.filter((e) => e != layoutData);
+							layoutDefinition.modules = layoutDefinition.modules.filter((e) => {
+								console.log(layoutData != e[Object.keys(e)[0]])
+								return e[Object.keys(e)[0]] != layoutData
+							});
 							reloadModules();
 						}
 					}
@@ -337,6 +341,30 @@
 		window.addEventListener("keydown", async (e) => {
 			if (e.key === "f") debugMode = !debugMode;
 			if (e.key === "r") reloadModules();
+			if(e.key === "k") {
+				localStorage.setItem("freedeck:overlay", JSON.stringify({
+			id: "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
+			name: "Overlay Layout",
+			modules: [
+				{
+					beta: {
+						uuid: "01",
+						type: "beta",
+						renderType: "dash-module",
+						data: {
+							position: {
+								x: "0",
+								y: "0",
+								width: "defined",
+								height: "defined",
+							},
+						},
+					},
+				}
+			]
+		}));
+		window.reload();
+			}
 
 			debugWarning.style.display = debugMode ? "block" : "none";
 
