@@ -192,7 +192,7 @@ module.exports = {
 				delete serverInfo.iconRegistry;
 				serverInfo.needToAuthenticate = true;
 			}
-			if (socket.auth) {
+			if (socket.auth || !realCfg.useAuthentication) {
 				serverInfo.config = realCfg;
 				serverInfo.plugins = plugins.sanitizeInfo();
 			}
