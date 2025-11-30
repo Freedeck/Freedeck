@@ -415,18 +415,18 @@ function reloadSounds() {
 			// Build tooltip content efficiently with template literals
 			let tooltipContent = `<h4>${universal.cleanHTML(k, false)}</h4>`;
 
-			tooltipContent +=
-				snd.renderType == "button"
-					? `<p>${
-							snd.data.longPress === "true"
+			if(!snd.renderType || snd.renderType == "button") {
+					tooltipContent += `<p>${snd.data.longPress === "true"
 								? translationKey("tile.long_press")
 								: snd.data.hold === "true"
-									? translationKey("tile.hold")
-									: translationKey("tile.short_press")
+								? translationKey("tile.hold")
+								: translationKey("tile.short_press")
 						} ${translationKey("tooltips.tile.full.action")}</p>`
-					: snd.renderType == "slider"
-						? translationKey("tooltips.tile.slider.action")
-						: "<p data-i18n-key='tooltips.tile.disabled'>Not pressable.</p>";
+			} else if(snd.renderType == "slider") {
+				tooltipContent += translationKey("tooltips.tile.slider.action")
+			} else {
+				tooltipContent += translationKey('tooltips.tile.disabled')
+			}
 
 			if (snd.plugin) {
 				tooltipContent += universal.plugins[snd.plugin]

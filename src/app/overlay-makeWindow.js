@@ -51,4 +51,11 @@ function createOverlay() {
 	lock.loadURL("http://localhost:5754/overlay");
 }
 
-	app.on("ready", () => {createOverlay()})
+const gotLock = app.requestSingleInstanceLock();
+
+if(!gotLock) {
+   app.quit();
+   process.exit(0)
+}
+
+app.on("ready", () => {createOverlay()})
