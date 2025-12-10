@@ -951,6 +951,19 @@ a:hover {
 	pointer-events: none;
 }
 
+.button.text-offset > .button-text > p {
+	margin: 0;
+}
+
+.button.text-offset > .button-text {
+	position: absolute;
+}
+
+.button.text-top-offset > .button-text {top:0;}
+.button.text-left-offset > .button-text {left:0;}
+.button.text-right-offset > .button-text {right:0;}
+.button.text-bottom-offset > .button-text {bottom:0;}
+
 #keys .button {
 	position: relative;
 	min-height: var(--tile-height);

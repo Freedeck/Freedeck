@@ -21,6 +21,13 @@ export default function (sndType, keyObject, snd, rawDat) {
 		keyObject.classList.add("no-rounding");
 	}
 
+	if(snd.data.textOffset) {
+		if(snd.data.textOffset in ["left", "right", "top", "bottom"]) {
+			keyObject.classList.add("text-offset");
+			keyObject.classList.add("text-" + snd.data.textOffset + "-offset");
+		}
+	}
+
 	if (sndType === "fd.sound") defaultHandler(snd, keyObject, rawDat);
 	else if (sndType === "fd.none") noneHandler(snd, keyObject, rawDat, true);
 	else {
