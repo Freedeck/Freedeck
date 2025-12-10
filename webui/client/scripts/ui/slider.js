@@ -70,8 +70,9 @@ export default function (data, keyObject, raw) {
 		});
 	};
 
+	let value = 0;
 	function updateValues(data, sliderContainer, sliderPercentage) {
-		let value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
+		value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
 
 		sliderContainer.dataset.value = value;
 		data.data.value = value;
