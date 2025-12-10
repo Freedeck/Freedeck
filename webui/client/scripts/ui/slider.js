@@ -71,7 +71,7 @@ export default function (data, keyObject, raw) {
 	};
 
 	function updateValues(data, sliderContainer, sliderPercentage) {
-		value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
+		let value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
 
 		sliderContainer.dataset.value = value;
 		data.data.value = value;
