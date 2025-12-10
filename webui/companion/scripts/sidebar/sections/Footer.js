@@ -25,7 +25,7 @@ style.children.push({
 style.children.push({
 	build: () => {
 		const elem = document.createElement("small");
-		elem.innerHTML = `${translationKey("sidebars.left.footer.github_pre")}<a href="https://github.com/Freedeck/Freedeck" target="_blank">${translationKey("sidebars.left.footer.github")}.</a><br><br>${translationKey("sidebars.left.footer.need_help")}<a href="https://wiki.freedeck.app" target="_blank">${translationKey("sidebars.left.footer.need_help.wiki")}</a>`;
+		elem.innerHTML = `${translationKey("sidebars.left.footer.github_pre")}<a href="https://github.com/Freedeck/Freedeck" target="_blank">${translationKey("sidebars.left.footer.github")}.</a><br><br>${translationKey("sidebars.left.footer.need_help")}<a href="https://docs.freedeck.app" target="_blank">${translationKey("sidebars.left.footer.need_help.wiki")}</a>`;
 		elem.style.textAlign = "center";
 		return elem;
 	},
