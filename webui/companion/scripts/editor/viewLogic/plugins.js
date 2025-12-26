@@ -61,7 +61,7 @@ class Plugins extends EditorViewLogic {
 				for (const el of allSelectablePluginListers) {
 					el.style.display = "none";
 				}
-
+				selectablePluginItemBack.style.display = "flex";
 				setDisabledMessageFor(interactionData.plugin, interactionData.type);
 			} else {
 				for (const el of document.querySelectorAll(
@@ -114,6 +114,7 @@ class Plugins extends EditorViewLogic {
 			)) {
 				el.style.display = "none";
 			}
+			selectablePluginItemBack.style.display = "none";
 			for (const el of allSelectablePluginListers) {
 				el.style.display = "block";
 			}

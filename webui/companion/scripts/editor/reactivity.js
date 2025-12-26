@@ -1,5 +1,6 @@
 import { translatePage, translationKey } from "../../../shared/localization";
-import { getAllTileData } from "./data";
+import { getAllTileData, loadData } from "./data";
+import { openViewTop, closeAllViews } from "./viewEngine.js";
 const editorButton = document.querySelector("#editor-btn");
 const color = document.querySelector("#color");
 const name = document.querySelector("#name");
@@ -76,7 +77,65 @@ universal.listenFor("editTile", (d, tileName) => {
 			"block";
 	}
 	leftSidebar.classList.add("disabled");
+
+	const interactionData = d;
+		document.querySelector("#plugin").style.display =
+		interactionData.plugin !== "Freedeck" ? "flex" : "none";
+	document.querySelector('label[for="plugin"]').style.display =
+		interactionData.plugin !== "Freedeck" ? "flex" : "none";
+
+	document.querySelector("#sbg").style.display =
+		interactionData.renderType === "button"
+			? "block"
+			: interactionData.renderType === "slider"
+				? "none"
+				: "block";
+	document.querySelector('label[for="sbg"]').style.display =
+		interactionData.renderType === "button"
+			? "block"
+			: interactionData.renderType === "slider"
+				? "none"
+				: "block";
+
+	document.querySelector("#lp").style.display =
+		interactionData.renderType === "slider" ? "none" : "block";
+	document.querySelector('label[for="lp"]').style.display =
+		interactionData.renderType === "slider" ? "none" : "block";
+
+		
+	setCheck("#orl", "onRelease", interactionData);
+	setCheck("#lp", "longPress", interactionData);
+	setCheck("#sbg", "showBg", interactionData);
+	setCheck("#nbo", "noBorder", interactionData);
+	setCheck("#nbr", "noRounding", interactionData);
+	setCheck("#ha", "hold", interactionData);
+
+	// openViewTop("appearance")
+
 });
+
+function setCheck(id, key, interaction) {
+	document.querySelector(id).checked = interaction.data[key] === "true";
+}
+
+
+function createEditorCheckbox(selector, dataKey) {
+	document.querySelector(selector).addEventListener("click", (e) => {
+		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
+		if (!int.data[dataKey]) int.data[dataKey] = true;
+		else int.data[dataKey] = !int.data[dataKey];
+		editorButton.setAttribute("data-interaction", JSON.stringify(int));
+		loadData(int.data);
+		document.querySelector(selector).checked = int.data[dataKey];
+	});
+}
+
+// createEditorCheckbox("#sbg", "showBg");
+// createEditorCheckbox("#nbo", "noBorder");
+// createEditorCheckbox("#nbr", "noRounding");
+// createEditorCheckbox("#orl", "onRelease");
+// createEditorCheckbox("#lp", "longPress");
+// createEditorCheckbox("#ha", "hold");
 
 const editorSave = document.querySelector("#editor-save");
 const editorClose = document.querySelector("#editor-close");

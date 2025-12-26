@@ -164,6 +164,7 @@ function editTile(e) {
 	if (interactionData.type === "fd.none" && !interactionData.data._view) {
 		openViewTop("none");
 		document.querySelector("#editor-back").style.display = "none";
+		document.querySelector("#select-plugin-back").style.display = "none";
 	} else {
 		for (const v of editorBuiltInViews) {
 			v.logic.forwardRunningEvent(
@@ -175,36 +176,6 @@ function editTile(e) {
 			);
 		}
 	}
-
-	document.querySelector("#plugin").style.display =
-		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-	document.querySelector('label[for="plugin"]').style.display =
-		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-
-	document.querySelector("#sbg").style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-	document.querySelector('label[for="sbg"]').style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-
-	document.querySelector("#lp").style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-	document.querySelector('label[for="lp"]').style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-
-	setCheck("#orl", "onRelease", interactionData);
-	setCheck("#lp", "longPress", interactionData);
-	setCheck("#sbg", "showBg", interactionData);
-	setCheck("#nbo", "noBorder", interactionData);
-	setCheck("#nbr", "noRounding", interactionData);
-	setCheck("#ha", "hold", interactionData);
 
 	editorDiv.style.animationName = "editor-pull-down";
 	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
@@ -220,28 +191,6 @@ editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
 	openViewTop("none");
 };
-
-function setCheck(id, key, interaction) {
-	document.querySelector(id).checked = interaction.data[key] === "true";
-}
-
-function createEditorCheckbox(selector, dataKey) {
-	document.querySelector(selector).addEventListener("click", (e) => {
-		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-		if (!int.data[dataKey]) int.data[dataKey] = true;
-		else int.data[dataKey] = !int.data[dataKey];
-		editorButton.setAttribute("data-interaction", JSON.stringify(int));
-		loadData(int.data);
-		document.querySelector(selector).checked = int.data[dataKey];
-	});
-}
-
-createEditorCheckbox("#sbg", "showBg");
-createEditorCheckbox("#nbo", "noBorder");
-createEditorCheckbox("#nbr", "noRounding");
-createEditorCheckbox("#orl", "onRelease");
-createEditorCheckbox("#lp", "longPress");
-createEditorCheckbox("#ha", "hold");
 
 window.UniversalUI = {
 	show: {
