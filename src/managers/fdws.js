@@ -15,7 +15,6 @@ const fdws = {
 	},
 	send: (data, ...args) => {
 		if (fdws._socket.readyState === ws.OPEN) {
-			console.log('sending', data, args)
 			fdws._socket.send(JSON.stringify({ Event: data, Data: [...args] }));
 		}
 	},
