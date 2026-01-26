@@ -15,6 +15,7 @@ import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
 import EditorView from "./classes/EditorView.js";
+import { setupReactivity } from "./editor/reactivity.js";
 const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
@@ -69,7 +70,7 @@ const editorBuiltInViews = [
 		"macro",
 		new Macro(),
 		"editor.sections.no_action.macro",
-		"/common/icons/t_plugin.svg",
+		"/common/icons/t_macro.svg",
 	),
 	new EditorView(
 		"system",
@@ -96,6 +97,7 @@ for (const view of editorBuiltInViews) {
 	keyIcon.src = view.icon;
 	keyIcon.loading = "lazy";
 	viewButton.onclick = (e) => {
+		editorBackButton.style.display = "flex";
 		openViewTop(view.logic.view);
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(
@@ -143,7 +145,7 @@ function editTile(e) {
 		e.srcElement.getAttribute("data-interaction"),
 	);
 
-	document.querySelector("#editor-back").style.display = "flex";
+	editorBackButton.style.display = "flex";
 
 	closeAllViews();
 	if (interactionData.data) {
@@ -163,9 +165,10 @@ function editTile(e) {
 
 	if (interactionData.type === "fd.none" && !interactionData.data._view) {
 		openViewTop("none");
-		document.querySelector("#editor-back").style.display = "none";
+		editorBackButton.style.display = "none";
 		document.querySelector("#select-plugin-back").style.display = "none";
 	} else {
+		editorBackButton.style.display = "flex";
 		for (const v of editorBuiltInViews) {
 			v.logic.forwardRunningEvent(
 				interactionData.type,
@@ -181,6 +184,8 @@ function editTile(e) {
 	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
 	toggleSidebarButton.style.display = "none";
 
+	setupReactivity(interactionData, e.srcElement.dataset.name)
+
 	universal.sendEvent("editTile", interactionData, e.srcElement.dataset.name);
 }
 
@@ -190,6 +195,12 @@ const editorBackButton = document.querySelector("#editor-back");
 editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
 	openViewTop("none");
+	const pvs = document.querySelectorAll(".plugin-view");
+	if(pvs.length > 0) {
+		for (const v of pvs) {
+			v.style.display = "none";
+		}
+	}
 };
 
 window.UniversalUI = {

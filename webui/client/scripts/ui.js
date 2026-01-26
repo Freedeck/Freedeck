@@ -235,6 +235,7 @@ function reloadPluginViews() {
 			const selectorBtn = document.createElement("button");
 			selectorBtn.innerText = view;
 			selectorBtn.onclick = () => {
+				document.querySelector("#editor-back").style.display = "flex";
 				document.querySelector("#none-only").style.display = "none";
 				for (const v of document.querySelectorAll(".plugin-view")) {
 					v.style.display = "none";

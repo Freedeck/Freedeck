@@ -47,7 +47,7 @@ for (const w of wants) {
 	};
 }
 
-universal.listenFor("editTile", (d, tileName) => {
+const setupReactivity = (d, tileName) => {
 	const data = d.data;
 
 	editorButton.innerText = tileName;
@@ -112,7 +112,7 @@ universal.listenFor("editTile", (d, tileName) => {
 
 	// openViewTop("appearance")
 
-});
+};
 
 function setCheck(id, key, interaction) {
 	document.querySelector(id).checked = interaction.data[key] === "true";
@@ -191,3 +191,7 @@ editorSave.onclick = () => {
 	});
 	editorClose.click();
 };
+
+export {
+	setupReactivity
+}
