@@ -96,6 +96,7 @@ for (const view of editorBuiltInViews) {
 	keyInfo.innerText = translationKey(view.noActionTranslationKey);
 	keyIcon.src = view.icon;
 	keyIcon.loading = "lazy";
+	viewButton.dataset.view_id = view.id
 	viewButton.onclick = (e) => {
 		editorBackButton.style.display = "flex";
 		openViewTop(view.logic.view);
@@ -162,7 +163,17 @@ function editTile(e) {
 			{ interactionData },
 		);
 	}
-
+	universal.once(universal.events.fdws.state, (state) => {
+		const ele = document.querySelectorAll(".plugin-view-listing>button[data-view_id='macro'], .plugin-view-listing>button[data-view_id='system']")
+		for(const e of ele) {
+			e.dataset.fdws_state = state;
+			if(!document.querySelector(".ett-" + e.dataset.view_id)) {
+				const ett = universal.createTooltipFor(e, "<h4>Type Unavailable</h4><p>FreedeckWS is not running!</p><p>You could be on a debug/dev build.</p><p>To fix this, open the Freedeck Launcher and leave it running!</p>")
+				ett.classList.add(".ett-" + e.dataset.view_id);
+			}
+		}
+	})
+	universal.send(universal.events.fdws.state)
 	if (interactionData.type === "fd.none" && !interactionData.data._view) {
 		openViewTop("none");
 		editorBackButton.style.display = "none";

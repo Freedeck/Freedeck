@@ -58,6 +58,9 @@ module.exports = {
 			} else {
 			}
 		});
+		socket.on(eventNames.fdws.state, () => {
+			socket.emit(eventNames.fdws.state, fdws.connected);
+		});
 
 		for (const event of Object.keys(eventNames.default)) {
 			socket.on(eventNames.default[event], (data) => {
