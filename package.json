@@ -12,7 +12,6 @@
     "posttest": "npm run format",
     "docs:debug": "swagger-cli validate -d docs/index.yaml",
     "docs:generate": "swagger-cli bundle docs/index.yaml --outfile openapi.json",
-    "prepare": "husky install",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
   },
   "keywords": [
