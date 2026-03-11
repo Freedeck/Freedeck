@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const cfgLoc = path.resolve("./src/configs/main.json");
+const styLoc = path.resolve('./src/configs/style.json');
 const secLoc = path.resolve('./src/configs/secrets.fd.js');
 
 function exists(filePath) {
@@ -11,6 +12,10 @@ function exists(filePath) {
   } catch (error) {
     return false;
   }
+}
+
+if(!exists(styLoc)) {
+	fs.writeFileSync(styLoc, JSON.stringify({"scroll":false,"fill":false,"center":false}))
 }
 
 if(!exists(secLoc)) {
