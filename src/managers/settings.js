@@ -16,8 +16,12 @@ const sc = {
 		return sc._cache;
 	},
 	update: async () => {
-		delete require.cache[require.resolve(configLocation)];
-		sc._cache = require(configLocation);
+		const raw = fs.readFileSync(configLocation, "utf8");
+		try {JSON.parse(raw)} catch(err) {
+			console.error(err);
+			throw new Error("Invalid JSON configuration.")
+		}
+		sc._cache = JSON.parse(raw);
 		debug.log("Settings recached.", "Settings Cache");
 	},
 	save: () => {

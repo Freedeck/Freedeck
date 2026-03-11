@@ -15,6 +15,7 @@ import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
 import EditorView from "./classes/EditorView.js";
+import { setupReactivity } from "./editor/reactivity.js";
 const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
@@ -69,7 +70,7 @@ const editorBuiltInViews = [
 		"macro",
 		new Macro(),
 		"editor.sections.no_action.macro",
-		"/common/icons/t_plugin.svg",
+		"/common/icons/t_macro.svg",
 	),
 	new EditorView(
 		"system",
@@ -95,7 +96,9 @@ for (const view of editorBuiltInViews) {
 	keyInfo.innerText = translationKey(view.noActionTranslationKey);
 	keyIcon.src = view.icon;
 	keyIcon.loading = "lazy";
+	viewButton.dataset.view_id = view.id
 	viewButton.onclick = (e) => {
+		editorBackButton.style.display = "flex";
 		openViewTop(view.logic.view);
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(
@@ -143,7 +146,7 @@ function editTile(e) {
 		e.srcElement.getAttribute("data-interaction"),
 	);
 
-	document.querySelector("#editor-back").style.display = "flex";
+	editorBackButton.style.display = "flex";
 
 	closeAllViews();
 	if (interactionData.data) {
@@ -160,11 +163,23 @@ function editTile(e) {
 			{ interactionData },
 		);
 	}
-
+	universal.once(universal.events.fdws.state, (state) => {
+		const ele = document.querySelectorAll(".plugin-view-listing>button[data-view_id='macro'], .plugin-view-listing>button[data-view_id='system']")
+		for(const e of ele) {
+			e.dataset.fdws_state = state;
+			if(!document.querySelector(".ett-" + e.dataset.view_id)) {
+				const ett = universal.createTooltipFor(e, "<h4>Type Unavailable</h4><p>FreedeckWS is not running!</p><p>You could be on a debug/dev build.</p><p>To fix this, open the Freedeck Launcher and leave it running!</p>")
+				ett.classList.add(".ett-" + e.dataset.view_id);
+			}
+		}
+	})
+	universal.send(universal.events.fdws.state)
 	if (interactionData.type === "fd.none" && !interactionData.data._view) {
 		openViewTop("none");
-		document.querySelector("#editor-back").style.display = "none";
+		editorBackButton.style.display = "none";
+		document.querySelector("#select-plugin-back").style.display = "none";
 	} else {
+		editorBackButton.style.display = "flex";
 		for (const v of editorBuiltInViews) {
 			v.logic.forwardRunningEvent(
 				interactionData.type,
@@ -176,39 +191,11 @@ function editTile(e) {
 		}
 	}
 
-	document.querySelector("#plugin").style.display =
-		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-	document.querySelector('label[for="plugin"]').style.display =
-		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-
-	document.querySelector("#sbg").style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-	document.querySelector('label[for="sbg"]').style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-
-	document.querySelector("#lp").style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-	document.querySelector('label[for="lp"]').style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-
-	setCheck("#orl", "onRelease", interactionData);
-	setCheck("#lp", "longPress", interactionData);
-	setCheck("#sbg", "showBg", interactionData);
-	setCheck("#nbo", "noBorder", interactionData);
-	setCheck("#nbr", "noRounding", interactionData);
-	setCheck("#ha", "hold", interactionData);
-
 	editorDiv.style.animationName = "editor-pull-down";
 	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
 	toggleSidebarButton.style.display = "none";
+
+	setupReactivity(interactionData, e.srcElement.dataset.name)
 
 	universal.sendEvent("editTile", interactionData, e.srcElement.dataset.name);
 }
@@ -219,29 +206,13 @@ const editorBackButton = document.querySelector("#editor-back");
 editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
 	openViewTop("none");
+	const pvs = document.querySelectorAll(".plugin-view");
+	if(pvs.length > 0) {
+		for (const v of pvs) {
+			v.style.display = "none";
+		}
+	}
 };
-
-function setCheck(id, key, interaction) {
-	document.querySelector(id).checked = interaction.data[key] === "true";
-}
-
-function createEditorCheckbox(selector, dataKey) {
-	document.querySelector(selector).addEventListener("click", (e) => {
-		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
-		if (!int.data[dataKey]) int.data[dataKey] = true;
-		else int.data[dataKey] = !int.data[dataKey];
-		editorButton.setAttribute("data-interaction", JSON.stringify(int));
-		loadData(int.data);
-		document.querySelector(selector).checked = int.data[dataKey];
-	});
-}
-
-createEditorCheckbox("#sbg", "showBg");
-createEditorCheckbox("#nbo", "noBorder");
-createEditorCheckbox("#nbr", "noRounding");
-createEditorCheckbox("#orl", "onRelease");
-createEditorCheckbox("#lp", "longPress");
-createEditorCheckbox("#ha", "hold");
 
 window.UniversalUI = {
 	show: {

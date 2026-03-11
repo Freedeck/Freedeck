@@ -82,7 +82,7 @@ let bootLogContainer;
 function makeBootLog(title = "Freedeck") {
 	const thisbootLog = document.createElement("div");
 	thisbootLog.id = "boot-log-div";
-	thisbootLog.innerHTML = `<img src='/assets/logo_big.png' class='n-icon'><h1 style='font-weight:500;'>${title}</h1><div style='display:none;' id='boot-log'><center class='oclb flex-wrap-r'><button id='oclb'>Close Boot Log</button></center></div>`;
+	thisbootLog.innerHTML = `<img src='/assets/logo_big.png' loading='lazy' class='n-icon'><h1 style='font-weight:500;'>${title}</h1><div style='display:none;' id='boot-log'><center class='oclb flex-wrap-r'><button id='oclb'>Close Boot Log</button></center></div>`;
 	document.body.appendChild(thisbootLog);
 	bootLog = thisbootLog;
 	bootLogCenter = document.querySelector("#boot-log-div > center");
@@ -235,6 +235,7 @@ function reloadPluginViews() {
 			const selectorBtn = document.createElement("button");
 			selectorBtn.innerText = view;
 			selectorBtn.onclick = () => {
+				document.querySelector("#editor-back").style.display = "flex";
 				document.querySelector("#none-only").style.display = "none";
 				for (const v of document.querySelectorAll(".plugin-view")) {
 					v.style.display = "none";

@@ -413,7 +413,7 @@ const universal = {
 	repositoryManager,
 	uiSounds,
 	/*  */
-	_cb: [],
+	_cb: new Map(),
 
 	setPage(page) {
 		const lastPage = universal.page;
@@ -476,19 +476,20 @@ const universal = {
 		}
 	},
 	listenFor: (ev, cb) => {
-		universal._cb.push([ev, cb]);
+		universal._cb.set(ev, cb);
 	},
 	listenForOnce: (ev, cb) => {
 		const fn = (...args) => {
 			cb(...args);
-			universal._cb = universal._cb.filter((c) => c[0] !== ev);
+			universal._cb.delete(ev)
+			// .filter((c) => c[0] !== ev);
 		};
-		universal._cb.push([ev, fn]);
+		universal._cb.set(ev, cb)
 	},
 	sendEvent: (ev, ...data) => {
-		for (const cb of universal._cb) {
-			if (cb[0] === ev) cb[1](...data);
-		}
+		universal._cb.forEach((callback, event) => {
+			if(event == ev) callback(...data);
+		})
 	},
 	/**
 	 * Decompresses a Gzip blob

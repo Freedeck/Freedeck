@@ -799,6 +799,17 @@ audio::-webkit-media-controls-play-button {
 	font-size: var(--font-size);
 }
 
+button[data-fdws_state=false] {
+	opacity: 0.6;
+}
+button[data-fdws_state=false]:active {
+	pointer-events: none;
+}
+button[data-fdws_state=false]:hover {
+	animation: none;
+	cursor: not-allowed !important;
+}
+
 .plugin-actions-disabled {
 	background-color: rgba(0, 0, 0, 0.25);
 	border-radius: var(--main-radius);

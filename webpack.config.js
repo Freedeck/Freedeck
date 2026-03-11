@@ -8,6 +8,12 @@ const cfg = {
 		settingsThemes: path.resolve("webui/companion/scripts/settingsThemes.js"),
 		clientMain: path.resolve("webui/client/scripts/main.js"),
 	},
+	cache: {
+		type: "filesystem",
+		buildDependencies: {
+			config: [__filename]
+		}
+	},
 	output: {
 		path: path.resolve("user-data/bundles"),
 		filename: "[name].js",

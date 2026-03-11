@@ -1,0 +1,12 @@
+{
+  "name": "Failed to add a view",
+  "view": "view",
+  "overlay": "overlay",
+  "settings": {
+    "background": {
+      "title": "Background Color",
+      "description": "Choose the widget's background color",
+      "type": "text"
+    }
+  }
+}
