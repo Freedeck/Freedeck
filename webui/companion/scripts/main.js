@@ -164,6 +164,7 @@ function editTile(e) {
 		);
 	}
 	universal.once(universal.events.fdws.state, (state) => {
+		return; // TODO: fix
 		const ele = document.querySelectorAll(".plugin-view-listing>button[data-view_id='macro'], .plugin-view-listing>button[data-view_id='system']")
 		for(const e of ele) {
 			e.dataset.fdws_state = state;
