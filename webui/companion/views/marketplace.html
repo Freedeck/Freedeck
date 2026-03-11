@@ -28,9 +28,9 @@
 	if (document.querySelector("#add-repo")) {
 		document.querySelector("#add-repo").remove();
 	}
-	if (universal.flags.isEnabled("app.freedeck.demo.disable_new_repo")) {
-		document.querySelector("#repo").remove();
-	}
+	// await (async()=>{
+		// fetch("https://freedeck.github.io/")
+	// })();
 	const dialog = universal.UI.makeGenericModal(
 		universal.translationKey("marketplace.add.title"),
 		universal.translationKey("marketplace.add.description"),
@@ -40,11 +40,11 @@
         <small class="add-msg"></small>
         <details>
             <summary data-i18n-key="marketplace.add.presets"></summary>
-            <div class="flex-wrap-r">
+            <div class="flex-wrap-r preset-repositories">
                 <button class="repo-preset" data-repo='{"t":"Freedeck Main","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
                 <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json","y":"new"}'>FreedeckEx Repository</button>
             </div>
-            <small><span data-i18n-key="marketplace.add.ask"></span><a href="https://wiki.freedeck.app/marketplace/custom_repo" target="_blank" data-i18n-key="marketplace.add.ask.inner"></a></small>
+            <small><span data-i18n-key="marketplace.add.ask"></span><a href="https://docs.freedeck.app/development-resources/hosting-a-repository#add-it-as-a-preset" target="_blank" data-i18n-key="marketplace.add.ask.inner"></a></small>
         </details>
         <label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="Freedeck Main">
         <label for="url" data-i18n-key="marketplace.add.input_url"></label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
@@ -412,12 +412,14 @@
 		universal.repositoryManager.unofficial.forEach((repo) => {
 			loadRepo(repo, true);
 		});
-		const bt = document.createElement("button");
-		bt.id = "repo";
-		bt.onclick = () => { universal.mkp_addRepo() };
-		bt.setAttribute("data-i18n-key", "marketplace.add")
-		bt.innerText = "Add Repository";
-		document.querySelector(".repositories").appendChild(bt)
+		if (!universal.flags.isEnabled("app.freedeck.demo.disable_new_repo")) {
+			const bt = document.createElement("button");
+			bt.id = "repo";
+			bt.onclick = () => { universal.mkp_addRepo() };
+			bt.setAttribute("data-i18n-key", "marketplace.add")
+			bt.innerText = "Add Repository";
+			document.querySelector(".repositories").appendChild(bt)
+		}
 	};
 	loadRepos();
 	function addRepo() {

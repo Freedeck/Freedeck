@@ -332,6 +332,7 @@
 				}
 			} else {
 				const p = getModParent(e.target);
+				console.log(p)
 				const moduleContext = JSON.parse(p.getAttribute("modulecontext"));
 				const layoutData = JSON.parse(p.getAttribute("layout"));
 				const settings = JSON.parse(p.getAttribute("settings"));
@@ -512,6 +513,9 @@
 					if (prefix === "/user-data/dash-modules/") {
 						renderModule(trueData, name, "/dash/modules/");
 					} else {
+						trueData.settings['_fd_error'] = trueData.type;
+						trueData.type = "errors/couldnt-add";
+						renderModule(trueData, "errors/couldnt-add", "/dash/modules/");
 						universal.sendToast(`Failed to add ${name}`, "Dash");
 					}
 				});

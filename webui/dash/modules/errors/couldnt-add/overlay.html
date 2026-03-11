@@ -1,0 +1,6 @@
+<p></p>
+<script>
+  const settingsEle = document.querySelector("html[ctxl-id='/user-data/dash-modules/errors/couldnt-add']")
+  const settings = JSON.parse(settingsEle.getAttribute("settings"));
+  settingsEle.querySelector("p").innerText = settings['_fd_error']
+</script>
