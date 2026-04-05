@@ -1,4 +1,10 @@
 {
-  "name": "Logo",
-  "view": "view"
+  "name": "Freedeck",
+  "views": [
+    "clock",
+    "logo",
+    "demo",
+    "beta",
+    "universal"
+  ]
 }

@@ -1,6 +1,27 @@
-<p></p>
+<style>
+  .error-view .content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background-color: var(--modal-bg);
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+    width: max-content;
+    height: max-content;
+    padding: .25rem;
+  }
+</style>
+<freedeck-dash-module class="error-view">
+<p>An error occurred while adding a module with the ID <strong><special-errored-pkg></special-errored-pkg></strong></p>
+<p>Common reasons include:</p>
+<ul>
+  <li>Only being able to have one instance</li>
+  <li>The plugin being disabled / uninstalled</li>
+  <li>The identifier being changed (re-add the module)</li>
+</ul>
+</freedeck-dash-module>
 <script>
-  const settingsEle = document.querySelector("html[ctxl-id='/user-data/dash-modules/errors/couldnt-add']")
+  const settingsEle = document.querySelector("html[ctxl-id='/dash/modules/errors/couldnt-add/overlay']")
   const settings = JSON.parse(settingsEle.getAttribute("settings"));
-  settingsEle.querySelector("p").innerText = settings['_fd_error']
+  settingsEle.querySelector("special-errored-pkg").innerText = settings['_fd_error']
 </script>

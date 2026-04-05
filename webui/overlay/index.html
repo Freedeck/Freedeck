@@ -31,7 +31,7 @@
 		padding-left: 0 !important;
 	}
 
-	body {
+	body:not(.dash) {
 		background: transparent;
 	}
 
@@ -129,7 +129,7 @@
 				{
 					beta: {
 						uuid: "01",
-						type: "beta",
+						type: "freedeck/beta",
 						renderType: "dash-module",
 						data: {
 							position: {
@@ -142,6 +142,21 @@
 					},
 				}
 			]
+		}
+
+		if(!window['freedeckoverlay']) {
+			let cb = null;
+			window.freedeckoverlay = {
+				dash: true,
+				onShortcut:(d)=>{cb = d},
+				setIgnoreEvents:(e)=>{}
+			}
+			window.addEventListener('keydown',(e) => {
+				if(e.code == 'Backspace' && e.altKey && e.shiftKey) {
+					cb(e);
+				}
+			})
+			document.body.classList.add('dash')
 		}
 
 		if (!localStorage.getItem("freedeck:overlay")) {
@@ -157,17 +172,18 @@
 		const debugContainer = document.querySelector(".warnings");
 		const dragWarning = document.querySelector("#dragmode-warning");
 		const debugWarning = document.querySelector("#debugmode-warning");
-		const viewCollection = [];
+		const userViewCollection = [];
+		const systemViewCollection = ['freedeck', 'errors'];
 		for (const k in universal.plugins) {
 			const i = universal.plugins[k]
 			if (i.dashModules) {
 				for (const n in i.dashModules) {
-					viewCollection.push(n)
+					userViewCollection.push(n)
 				}
 			}
 		}
 		const selections = {};
-		for (const i of viewCollection) {
+		for (const i of userViewCollection) {
 			fetch("/user-data/dash-modules/" + i + "/module.json")
 				.then((res) => {
 					return res.json();
@@ -176,6 +192,26 @@
 					selections[i] = { id: i, name: ares.name, views: ares.views, modules: [] };
 					for (const viw of ares.views) {
 						fetch(`/user-data/dash-modules/${i}/${viw}/module.json`)
+							.then((res) => {
+								return res.json();
+							})
+							.then((res) => {
+								res.owner = viw;
+								selections[i].modules.push(res);
+							})
+					}
+				})
+		}
+
+		for (const i of systemViewCollection) {
+			fetch("/dash/modules/" + i + "/module.json")
+				.then((res) => {
+					return res.json();
+				})
+				.then((ares) => {
+					selections[i] = { id: i, name: ares.name, views: ares.views, modules: [] };
+					for (const viw of ares.views) {
+						fetch(`/dash/modules/${i}/${viw}/module.json`)
 							.then((res) => {
 								return res.json();
 							})
@@ -221,7 +257,6 @@
 			return null;
 		}
 
-
 		universal.audioClient.initialize()
 		universal.uiSounds.initialize()
 		freedeckoverlay.onShortcut((e) => {
@@ -248,6 +283,7 @@
 		})
 
 		window.addEventListener("contextmenu", async (e) => {
+			e.preventDefault();
 			const ctxMenu = document.querySelector(".contextMenu");
 			if (ctxMenu) ctxMenu.remove();
 			const custMenu = document.createElement("div");
@@ -502,6 +538,7 @@
 					return res.json();
 				})
 				.then((res) => {
+					if(!res.overlay && res.view) res.overlay = res.view;
 					mctx.addView(`${prefix}${trueData.type}/${res.overlay}`);
 					const view = mctx.nonDestructiveView(
 						`${prefix}${trueData.type}/${res.overlay}`,
