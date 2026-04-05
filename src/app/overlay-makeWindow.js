@@ -48,7 +48,7 @@ function createOverlay() {
 		lock.setIgnoreMouseEvents(ignore, options);
 	});
 
-	lock.loadURL("http://localhost:5754/overlay");
+	lock.loadURL("http://localhost:5754/dash");
 }
 
 const gotLock = app.requestSingleInstanceLock();
