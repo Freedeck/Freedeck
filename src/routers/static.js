@@ -19,11 +19,10 @@ const paths = {
 
 	webui_client: path.resolve("webui/client"),
 	webui_companion: path.resolve("webui/companion"),
-	webui_common: path.resolve("webui/common"),
 	webui_dash: path.resolve("webui/dash"),
 	webui_overlay: path.resolve("webui/overlay"),
 
-	webui_common_soundpacks: path.resolve("webui/common/sounds"),
+	webui_common_soundpacks: path.resolve("webui/shared/sounds"),
 	webui_common_themes: path.resolve("webui/shared/theming"),
 
 	webui_shared: path.resolve("webui/shared"),
@@ -44,7 +43,6 @@ const expressRouters = {
 	"/dash": express.static(paths.webui_dash),
 	"/overlay": express.static(paths.webui_overlay),
 	"/companion": express.static(paths.webui_companion),
-	"/common": express.static(paths.webui_common),
 	"/app/shared": express.static(paths.webui_shared),
 };
 

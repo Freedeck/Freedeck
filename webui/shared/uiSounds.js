@@ -18,7 +18,7 @@ function reload() {
 async function load(soundpack) {
 	universal.CLU("Boot / UI Sounds", `Loading soundpack ${soundpack}`);
 	const res = await fetch(
-		`/common/sounds/${soundpack}/manifest.fdsp.json`,
+		`/app/shared/sounds/${soundpack}/manifest.fdsp.json`,
 	).catch((err) => {
 		console.error(err);
 		universal.sendToast(
@@ -38,7 +38,7 @@ async function load(soundpack) {
 async function playSound(name) {
 	if (!uiSoundEngine.enabled()) return;
 	return universal.audioClient.play({
-		file: `/common/sounds/${uiSoundEngine.info.id}/${uiSoundEngine.sounds[name]}`,
+		file: `/app/shared/sounds/${uiSoundEngine.info.id}/${uiSoundEngine.sounds[name]}`,
 		name,
 		channel: universal.audioClient.channels.ui,
 		stopPrevious: false,

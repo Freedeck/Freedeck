@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="/companion/views/styles/settings.css" />
 <h1 class="settings-section-title">
 	<span data-i18n-key="settings.title"></span>
-	<span><img src="/common/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
+	<span><img src="/app/shared/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 <div id="settings-menu-full">
 	<details>
 		<summary class="settings-section-title">
-			<span data-i18n-key="settings.sections.style"></span><span><img src="/common/icons/themes.svg" width="50"
+			<span data-i18n-key="settings.sections.style"></span><span><img src="/app/shared/icons/themes.svg" width="50"
 					height="50" loading="lazy" /></span>
 		</summary>
 		<div class="themelist"></div>
@@ -14,7 +14,7 @@
 	<details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
 		<summary class="settings-section-title">
 			<span><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span
-					class="tag-beta">ALPHA</span></span><span><img src="/common/icons/language.svg" width="50" height="50"
+					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/language.svg" width="50" height="50"
 					loading="lazy" /></span>
 		</summary>
 		<br />
@@ -24,7 +24,7 @@
 	<details>
 		<summary class="settings-section-title">
 			<span><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
-					class="tag-beta">ALPHA</span></span><span><img src="/common/icons/overlay.svg" width="50" height="50"
+					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/overlay.svg" width="50" height="50"
 					loading="lazy" /></span>
 		</summary>
 		<br />
@@ -37,7 +37,7 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.plugins"></span>
-			<span><img src="/common/icons/t_plugin.svg" width="50" height="50" loading="lazy" /></span>
+			<span><img src="/app/shared/icons/t_plugin.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<br />
 		<div class="experiments">
@@ -58,7 +58,7 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.audio_devices"></span>
-			<span><img src="/common/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
+			<span><img src="/app/shared/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div class="monitor-devices audio-device-picker"></div>
 		<span data-i18n-key="settings.sections.audio_devices.vb"></span>
@@ -68,7 +68,7 @@
 	<details class="experiment-exist soundpack">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.uis"></span>
-			<span><img src="/common/icons/uisounds.svg" width="50" height="50" loading="lazy" /></span>
+			<span><img src="/app/shared/icons/uisounds.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div>
 			<h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
@@ -85,7 +85,7 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.bug"></span>
-			<span><img src="/common/icons/bugs.svg" width="50" height="50" loading="lazy" /></span>
+			<span><img src="/app/shared/icons/bugs.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
 		<p id="hostname">Your hostname here</p>
@@ -94,7 +94,7 @@
 	<details style="display: none" id="dev-tools">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.developer_tools"></span>
-			<span><img src="/common/icons/dev.svg" width="50" height="50" loading="lazy" /></span>
+			<span><img src="/app/shared/icons/dev.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div class="flex-wrap-r">
 			<button onclick="restChnglog();window.location.reload()">
@@ -490,7 +490,7 @@
 				el.disabled = true;
 			});
 			const res = await fetch(
-				"/common/sounds/" + soundpack + "/manifest.fdsp.json",
+				"/app/shared/sounds/" + soundpack + "/manifest.fdsp.json",
 			);
 			const data = await res.json();
 			const info = data.info;
@@ -551,7 +551,7 @@
 	const setupMenu = {
 		generale: {
 			key: "settings.sections.general.title",
-			icon: "/common/icons/settings.svg",
+			icon: "/app/shared/icons/settings.svg",
 			options: {
 				compact: {
 					type: "checkbox",

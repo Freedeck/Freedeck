@@ -58,31 +58,31 @@ const editorBuiltInViews = [
 		"audio",
 		new Sound(),
 		"editor.sections.no_action.soundboard",
-		"/common/icons/t_audio.svg",
+		"/app/shared/icons/t_audio.svg",
 	),
 	new EditorView(
 		"plugins",
 		new Plugins(),
 		"editor.sections.no_action.plugin",
-		"/common/icons/t_plugin.svg",
+		"/app/shared/icons/t_plugin.svg",
 	),
 	new EditorView(
 		"macro",
 		new Macro(),
 		"editor.sections.no_action.macro",
-		"/common/icons/t_macro.svg",
+		"/app/shared/icons/t_macro.svg",
 	),
 	new EditorView(
 		"system",
 		new System(),
 		"editor.sections.no_action.app_volume",
-		"/common/icons/t_app_volume.svg",
+		"/app/shared/icons/t_app_volume.svg",
 	),
 	new EditorView(
 		"profiles",
 		new Profile(),
 		"editor.sections.no_action.folder_changer",
-		"/common/icons/t_folder.svg",
+		"/app/shared/icons/t_folder.svg",
 	),
 ];
 

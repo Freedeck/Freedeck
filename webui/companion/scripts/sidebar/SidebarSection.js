@@ -126,7 +126,7 @@ export class SidebarSvgButton {
 		button.onclick = this.onClick;
 
 		const obj = document.createElement("object");
-		obj.data = `/common/icons/${this.icon}`;
+		obj.data = `/app/shared/icons/${this.icon}`;
 		obj.classList.add("ico");
 		button.appendChild(obj);
 
@@ -229,7 +229,7 @@ export class SidebarSlider {
 
 		const resetButton = document.createElement("button");
 		resetButton.classList.add("reset-button");
-		resetButton.innerHTML = `<img src="/common/icons/reset.svg" alt="Reset" width="25" height="25" loading="lazy">`;
+		resetButton.innerHTML = `<img src="/app/shared/icons/reset.svg" alt="Reset" width="25" height="25" loading="lazy">`;
 		resetButton.id = `${this.id}-reset`;
 		resetButton.onclick = (e) => {
 			this.onReset(e);
