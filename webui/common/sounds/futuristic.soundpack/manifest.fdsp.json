@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "author": "Freedeck",
     "description": "A futuristic soundpack for Freedeck",
-    "id": "Futuristic.soundpack"
+    "id": "futuristic.soundpack"
   },
   "sounds": {
     "click": "click.mp3",

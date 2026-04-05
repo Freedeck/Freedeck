@@ -251,8 +251,10 @@
 						}
 					}
 					setTimeout(() => {
-						document.querySelector(".load-upon-finish").style.display = 'block'
-						document.querySelector(".loading-screen").style.display = 'none'
+						const luf =document.querySelector(".load-upon-finish")
+						const lus =  document.querySelector(".loading-screen")
+						if(luf)luf.style.display = 'block'
+						if(lus)lus.style.display = 'none'
 					}, 125);
 					document.querySelector(".marketplace").appendChild(li);
 				});

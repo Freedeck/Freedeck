@@ -12,7 +12,7 @@ async function openPackage({
 	const resolved = path.resolve(`./plugins/${filePath}`);
 	let pathToEx = path.resolve(`./tmp/_${filePath.replaceAll("/", "_")}`);
 	if (!overrideExtractionPath) {
-		if (await fs.promises.exists(pathToEx))
+		if (fs.existsSync(pathToEx))
 			await fs.promises.rm(pathToEx, { recursive: true, force: true });
 			await fs.promises.mkdir(pathToEx, { recursive: true });
 			await tar.x({
