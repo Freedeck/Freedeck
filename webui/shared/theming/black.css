@@ -6,31 +6,37 @@
 }
 
 :root {
-    --main-bg: black;
-    
-    --tile-bg: #0a0a0a;
-    --tile-border: 1px solid #2e2e2e;
-     
-    --text-color: #fafafa;
-    --text-color-secondary: #fefefe;
-    
-    --modal-bg: #080808;
-    --modal-color: var(--text-color-secondary);
-    
-    --input-bg: #1a1a1a;
-    --input-slider-bg: #1a1a1a;
-    --input-color: var(--text-color);
+	--main-bg: black;
 
-    --modal-item-bg: linear-gradient(105deg,rgba(0, 0, 0, 1) 0%, rgba(, 25, 25, 1) 50%, rgba(0, 0, 0, 1) 100%);
-    --modal-item-bg-size: 400% 400%;
-    --modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
-    --modal-item-text: white;
-    --companion-left-sidebar-bg:rgba(0,0,0,0.5);
-	--companion-right-sidebar-bg:rgba(0,0,0,0.5);
+	--tile-bg: #0a0a0a;
+	--tile-border: 1px solid #2e2e2e;
 
-	--companion-left-sidebar-color:var(--text-color);
-	--companion-right-sidebar-color:var(--text-color);
+	--text-color: #fafafa;
+	--text-color-secondary: #fefefe;
 
-	--companion-sidebar-item-bg:rgba(0,0,0,0.5);
-	--companion-sidebar-item-color:var(--text-color);
+	--modal-bg: #080808;
+	--modal-color: var(--text-color-secondary);
+
+	--input-bg: #1a1a1a;
+	--input-slider-bg: #1a1a1a;
+	--input-color: var(--text-color);
+
+	--modal-item-bg: linear-gradient(
+		105deg,
+		rgba(0, 0, 0, 1) 0%,
+		rgba(, 25, 25, 1) 50%,
+		rgba(0, 0, 0, 1) 100%
+	);
+	--modal-item-bg-size: 400% 400%;
+	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)
+		infinite;
+	--modal-item-text: white;
+	--companion-left-sidebar-bg: rgba(0, 0, 0, 0.5);
+	--companion-right-sidebar-bg: rgba(0, 0, 0, 0.5);
+
+	--companion-left-sidebar-color: var(--text-color);
+	--companion-right-sidebar-color: var(--text-color);
+
+	--companion-sidebar-item-bg: rgba(0, 0, 0, 0.5);
+	--companion-sidebar-item-color: var(--text-color);
 }

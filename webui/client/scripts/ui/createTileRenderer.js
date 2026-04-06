@@ -21,8 +21,8 @@ export default function (sndType, keyObject, snd, rawDat) {
 		keyObject.classList.add("no-rounding");
 	}
 
-	if(snd.data.textOffset) {
-		if(snd.data.textOffset in ["left", "right", "top", "bottom"]) {
+	if (snd.data.textOffset) {
+		if (snd.data.textOffset in ["left", "right", "top", "bottom"]) {
 			keyObject.classList.add("text-offset");
 			keyObject.classList.add("text-" + snd.data.textOffset + "-offset");
 		}

@@ -481,15 +481,15 @@ const universal = {
 	listenForOnce: (ev, cb) => {
 		const fn = (...args) => {
 			cb(...args);
-			universal._cb.delete(ev)
+			universal._cb.delete(ev);
 			// .filter((c) => c[0] !== ev);
 		};
-		universal._cb.set(ev, cb)
+		universal._cb.set(ev, cb);
 	},
 	sendEvent: (ev, ...data) => {
 		universal._cb.forEach((callback, event) => {
-			if(event == ev) callback(...data);
-		})
+			if (event == ev) callback(...data);
+		});
 	},
 	/**
 	 * Decompresses a Gzip blob
@@ -544,7 +544,8 @@ const universal = {
 				}, 500);
 			}, 3000);
 			universal._timeouts[id] = to;
-			if(universal.name != 'Overlay') universal.uiSounds.playSound("notification");
+			if (universal.name != "Overlay")
+				universal.uiSounds.playSound("notification");
 			return;
 		}
 		const s = document.createElement("div");
@@ -559,7 +560,8 @@ const universal = {
 			s.className = s.className.replace("show", "");
 			s.remove();
 		};
-		if(universal.name != 'Overlay') universal.uiSounds.playSound("notification");
+		if (universal.name != "Overlay")
+			universal.uiSounds.playSound("notification");
 		document.querySelector("#snackbar").appendChild(s);
 
 		const to = setTimeout(() => {

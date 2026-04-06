@@ -1,5 +1,5 @@
 import EditorViewLogic from "./EditorViewLogic.js";
-import {setTileData} from '../data.js'
+import { setTileData } from "../data.js";
 
 const type = document.querySelector("#type");
 const editorButton = document.querySelector("#editor-btn");

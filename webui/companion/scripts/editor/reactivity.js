@@ -79,7 +79,7 @@ const setupReactivity = (d, tileName) => {
 	leftSidebar.classList.add("disabled");
 
 	const interactionData = d;
-		document.querySelector("#plugin").style.display =
+	document.querySelector("#plugin").style.display =
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
 	document.querySelector('label[for="plugin"]').style.display =
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
@@ -102,7 +102,6 @@ const setupReactivity = (d, tileName) => {
 	document.querySelector('label[for="lp"]').style.display =
 		interactionData.renderType === "slider" ? "none" : "block";
 
-		
 	setCheck("#orl", "onRelease", interactionData);
 	setCheck("#lp", "longPress", interactionData);
 	setCheck("#sbg", "showBg", interactionData);
@@ -111,13 +110,11 @@ const setupReactivity = (d, tileName) => {
 	setCheck("#ha", "hold", interactionData);
 
 	// openViewTop("appearance")
-
 };
 
 function setCheck(id, key, interaction) {
 	document.querySelector(id).checked = interaction.data[key] === "true";
 }
-
 
 function createEditorCheckbox(selector, dataKey) {
 	document.querySelector(selector).addEventListener("click", (e) => {
@@ -192,6 +189,4 @@ editorSave.onclick = () => {
 	editorClose.click();
 };
 
-export {
-	setupReactivity
-}
+export { setupReactivity };

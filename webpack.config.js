@@ -11,8 +11,8 @@ const cfg = {
 	cache: {
 		type: "filesystem",
 		buildDependencies: {
-			config: [__filename]
-		}
+			config: [__filename],
+		},
 	},
 	output: {
 		path: path.resolve("user-data/bundles"),

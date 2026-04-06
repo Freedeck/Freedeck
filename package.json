@@ -10,8 +10,6 @@
     "debug-server": "node src/index.js --server-only --debug",
     "test": "echo \"Error: no test specified\" && exit 1",
     "posttest": "npm run format",
-    "docs:debug": "swagger-cli validate -d docs/index.yaml",
-    "docs:generate": "swagger-cli bundle docs/index.yaml --outfile openapi.json",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
   },
   "keywords": [
@@ -37,22 +35,21 @@
   "license": "ISC",
   "dependencies": {
     "asar-bundle-runner": "^1.6.0",
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^10.1.1",
     "compare-versions": "^6.1.1",
     "electron": "^38.3.0",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "formidable": "^3.5.4",
-    "module-alias": "^2.2.3",
+    "module-alias": "^2.3.4",
     "pako": "^2.1.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "tar": "^7.5.1",
-    "webpack": "^5.102.1",
-    "ws": "^8.18.3"
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "tar": "^7.5.13",
+    "webpack": "^5.105.4",
+    "ws": "^8.20.0"
   },
   "devDependencies": {
-    "prettier": "3.6.2",
-    "webpack-cli": "^6.0.1"
+    "prettier": "^3.8.1"
   },
   "lint-staged": {
     "*.{js,css,md,html}": "prettier --write"

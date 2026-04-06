@@ -63,7 +63,7 @@ class Plugins extends EditorViewLogic {
 					el.style.display = "none";
 				}
 				selectablePluginItemBack.style.display = "flex";
-				editorBackButton.style.display = 'none';
+				editorBackButton.style.display = "none";
 				setDisabledMessageFor(interactionData.plugin, interactionData.type);
 			} else {
 				for (const el of document.querySelectorAll(
@@ -78,7 +78,7 @@ class Plugins extends EditorViewLogic {
 				}
 				disabledActions.style.display = "none";
 				selectablePluginItemBack.style.display = "none";
-				editorBackButton.style.display = 'flex';
+				editorBackButton.style.display = "flex";
 				if (
 					interactionData.type !== undefined ||
 					interactionData.type !== null
@@ -93,7 +93,7 @@ class Plugins extends EditorViewLogic {
 					) {
 						selectPluginNotFound.style.display = "flex";
 						selectablePluginItemBack.style.display = "flex";
-						editorBackButton.style.display = 'none';
+						editorBackButton.style.display = "none";
 						for (const el of selectableItemsOfType) {
 							el.style.display = "block";
 						}
@@ -108,7 +108,7 @@ class Plugins extends EditorViewLogic {
 		});
 
 		this.setOnFirstSetup(() => {
-			editorBackButton.style.display = 'flex';
+			editorBackButton.style.display = "flex";
 			selectPluginDisabled.style.display = "none";
 			selectPluginNotFound.style.display = "none";
 			const allSelectablePluginListers = document.querySelectorAll(
@@ -149,7 +149,7 @@ function setupListers() {
 					}
 
 					selectablePluginItemBack.style.display = "flex";
-					editorBackButton.style.display = 'none';
+					editorBackButton.style.display = "none";
 
 					for (const el of document.querySelectorAll(
 						".selectable-plugin-lister",
@@ -214,7 +214,7 @@ function setupListers() {
 				el.style.display = "block";
 			}
 			selectablePluginItemBack.style.display = "none";
-			editorBackButton.style.display = 'flex';
+			editorBackButton.style.display = "flex";
 		};
 	}
 }

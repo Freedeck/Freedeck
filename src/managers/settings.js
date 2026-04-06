@@ -17,9 +17,11 @@ const sc = {
 	},
 	update: async () => {
 		const raw = fs.readFileSync(configLocation, "utf8");
-		try {JSON.parse(raw)} catch(err) {
+		try {
+			JSON.parse(raw);
+		} catch (err) {
 			console.error(err);
-			throw new Error("Invalid JSON configuration.")
+			throw new Error("Invalid JSON configuration.");
 		}
 		sc._cache = JSON.parse(raw);
 		debug.log("Settings recached.", "Settings Cache");

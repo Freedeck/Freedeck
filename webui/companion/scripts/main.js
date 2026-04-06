@@ -96,7 +96,7 @@ for (const view of editorBuiltInViews) {
 	keyInfo.innerText = translationKey(view.noActionTranslationKey);
 	keyIcon.src = view.icon;
 	keyIcon.loading = "lazy";
-	viewButton.dataset.view_id = view.id
+	viewButton.dataset.view_id = view.id;
 	viewButton.onclick = (e) => {
 		editorBackButton.style.display = "flex";
 		openViewTop(view.logic.view);
@@ -165,16 +165,21 @@ function editTile(e) {
 	}
 	universal.once(universal.events.fdws.state, (state) => {
 		return; // TODO: fix
-		const ele = document.querySelectorAll(".plugin-view-listing>button[data-view_id='macro'], .plugin-view-listing>button[data-view_id='system']")
-		for(const e of ele) {
+		const ele = document.querySelectorAll(
+			".plugin-view-listing>button[data-view_id='macro'], .plugin-view-listing>button[data-view_id='system']",
+		);
+		for (const e of ele) {
 			e.dataset.fdws_state = state;
-			if(!document.querySelector(".ett-" + e.dataset.view_id)) {
-				const ett = universal.createTooltipFor(e, "<h4>Type Unavailable</h4><p>FreedeckWS is not running!</p><p>You could be on a debug/dev build.</p><p>To fix this, open the Freedeck Launcher and leave it running!</p>")
+			if (!document.querySelector(".ett-" + e.dataset.view_id)) {
+				const ett = universal.createTooltipFor(
+					e,
+					"<h4>Type Unavailable</h4><p>FreedeckWS is not running!</p><p>You could be on a debug/dev build.</p><p>To fix this, open the Freedeck Launcher and leave it running!</p>",
+				);
 				ett.classList.add(".ett-" + e.dataset.view_id);
 			}
 		}
-	})
-	universal.send(universal.events.fdws.state)
+	});
+	universal.send(universal.events.fdws.state);
 	if (interactionData.type === "fd.none" && !interactionData.data._view) {
 		openViewTop("none");
 		editorBackButton.style.display = "none";
@@ -196,7 +201,7 @@ function editTile(e) {
 	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
 	toggleSidebarButton.style.display = "none";
 
-	setupReactivity(interactionData, e.srcElement.dataset.name)
+	setupReactivity(interactionData, e.srcElement.dataset.name);
 
 	universal.sendEvent("editTile", interactionData, e.srcElement.dataset.name);
 }
@@ -208,7 +213,7 @@ editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
 	openViewTop("none");
 	const pvs = document.querySelectorAll(".plugin-view");
-	if(pvs.length > 0) {
+	if (pvs.length > 0) {
 		for (const v of pvs) {
 			v.style.display = "none";
 		}

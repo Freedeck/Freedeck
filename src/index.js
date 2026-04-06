@@ -33,7 +33,7 @@ const shouldExitNoSettings =
 if (shouldExitNoSettings || runCfg.runs.setup) {
 	console.log(picocolors.bgRed("Settings do not exist yet."));
 }
-require('./createStartingConfiguration')
+require("./createStartingConfiguration");
 recordTime("context-switch:handoff-begin");
 
 if (runCfg.runs.companion === false) {

@@ -55,7 +55,7 @@ const eventNames = {
 	fdws: {
 		sendRequest: "n-r",
 		reply: "n-R",
-		state: 'n-Qs'
+		state: "n-Qs",
 	},
 
 	relay: {

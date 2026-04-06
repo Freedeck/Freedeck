@@ -799,13 +799,13 @@ audio::-webkit-media-controls-play-button {
 	font-size: var(--font-size);
 }
 
-button[data-fdws_state=false] {
+button[data-fdws_state="false"] {
 	opacity: 0.6;
 }
-button[data-fdws_state=false]:active {
+button[data-fdws_state="false"]:active {
 	pointer-events: none;
 }
-button[data-fdws_state=false]:hover {
+button[data-fdws_state="false"]:hover {
 	animation: none;
 	cursor: not-allowed !important;
 }

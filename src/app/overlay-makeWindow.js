@@ -1,6 +1,14 @@
 let lock = null;
-const { app, BrowserWindow, ipcMain, screen, globalShortcut, Tray, Menu } = require("electron");
-const path = require('node:path')
+const {
+	app,
+	BrowserWindow,
+	ipcMain,
+	screen,
+	globalShortcut,
+	Tray,
+	Menu,
+} = require("electron");
+const path = require("node:path");
 let tray = null;
 function createOverlay() {
 	if (lock != null) return;
@@ -17,17 +25,34 @@ function createOverlay() {
 			contextIsolation: true,
 			preload: path.resolve("src/app/overlay-preload.js"),
 		},
-		focusable: false
+		focusable: false,
 	});
 
-  tray = new Tray(path.resolve("webui/client/assets/overlay.png"));
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Freedeck Overlay' },
-    { label: 'Layout Editor', click: () => { lock.focus();lock.webContents.send("shortcutpressed"); } },
-    { label: 'Reload', click: () => { lock.webContents.reload(); } },
-    { label: 'Quit', click: () => { app.isQuiting = true; app.quit(); } }
-  ]);
-  tray.setContextMenu(contextMenu);
+	tray = new Tray(path.resolve("webui/client/assets/overlay.png"));
+	const contextMenu = Menu.buildFromTemplate([
+		{ label: "Freedeck Overlay" },
+		{
+			label: "Layout Editor",
+			click: () => {
+				lock.focus();
+				lock.webContents.send("shortcutpressed");
+			},
+		},
+		{
+			label: "Reload",
+			click: () => {
+				lock.webContents.reload();
+			},
+		},
+		{
+			label: "Quit",
+			click: () => {
+				app.isQuiting = true;
+				app.quit();
+			},
+		},
+	]);
+	tray.setContextMenu(contextMenu);
 	globalShortcut.register("Alt+Shift+Backspace", () => {
 		lock.focus();
 		lock.webContents.send("shortcutpressed");
@@ -53,9 +78,11 @@ function createOverlay() {
 
 const gotLock = app.requestSingleInstanceLock();
 
-if(!gotLock) {
-   app.quit();
-   process.exit(0)
+if (!gotLock) {
+	app.quit();
+	process.exit(0);
 }
 
-app.on("ready", () => {createOverlay()})
+app.on("ready", () => {
+	createOverlay();
+});

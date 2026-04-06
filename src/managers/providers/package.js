@@ -14,11 +14,11 @@ async function openPackage({
 	if (!overrideExtractionPath) {
 		if (fs.existsSync(pathToEx))
 			await fs.promises.rm(pathToEx, { recursive: true, force: true });
-			await fs.promises.mkdir(pathToEx, { recursive: true });
-			await tar.x({
-				file: resolved,
-				cwd: pathToEx,
-			});
+		await fs.promises.mkdir(pathToEx, { recursive: true });
+		await tar.x({
+			file: resolved,
+			cwd: pathToEx,
+		});
 	} else {
 		pathToEx = overrideExtractionPath;
 	}

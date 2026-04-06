@@ -8,12 +8,14 @@ const fdws = {
 	connected: false,
 	isLauncherOpen: () => {
 		try {
-		const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
-		const realOut = out.toString().trim().trim();
+			const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
+			const realOut = out.toString().trim().trim();
 			return !realOut.includes(
-			"INFO: No tasks are running which match the specified criteria.",
-		);	
-	} catch(err){return false;}
+				"INFO: No tasks are running which match the specified criteria.",
+			);
+		} catch (err) {
+			return false;
+		}
 	},
 	send: (data, ...args) => {
 		if (fdws._socket.readyState === ws.OPEN) {

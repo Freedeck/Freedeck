@@ -32,7 +32,7 @@ module.exports = (
 	ipcMain.handle("resize-emu", () => _handle(...dimensions.emu));
 	ipcMain.handle("resize", () => _handle(...dimensions.default));
 	ipcMain.handle("overlay", () => {
-		spawn(process.argv[0], [path.resolve("./src/app/overlay-makeWindow.js")])
+		spawn(process.argv[0], [path.resolve("./src/app/overlay-makeWindow.js")]);
 	});
 
 	function _handle(w, h) {
