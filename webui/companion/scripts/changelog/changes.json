@@ -1,34 +1,12 @@
 {
   "major": [
-    "**Gave the tooltips/context menu, and editor more translations!**",
-    "**Redesigned the Marketplace!**",
-    "**Overlay Alpha!** Go to settings, then press Overlay, and launch it to try it out! Currently, only the Spotify plugin has a module for it.",
-    "**Plugins now support server-set icons!**",
-    "Hid the developer tools, to get them back: on the settings page, press the konami code.",
-    "Plugins can now have icons.",
-    "Plugins now show up as plugins that can be disabled.",
-    "You can now activate the 'Hold Activates' Control option on a tile to spam it while you hold it.",
-    "User-generated plugin/temporary files are now cleaned on startup, instead of blocking shutdown time",
-    "Updated the styling of the Settings page",
-    "Optimized network address gathering",
-    "Optimized startup time",
-    "Fixed disabling plugins",
-    "Stopped event queue blockage upon disconnection",
-    "Optimized server socket event handlers",
-    "Optimize various functions for slightly faster startup times.",
-    "Refactored a lot of render and editor code to be faster, and more generic for future use.",
-    "**Dash Pre-alpha!** Go to /dash to see it, it only has a preset layout for now, until it's fully implemented. Overlay is based on most of this code."
+    "**Merged Dash and Overlay into one unified codebase, just switching display names!**"
   ],
   "other": [
-    "Notifications images are now fixed to align better",
-    "Notifications are now left-aligned",
-    "FDWS doesnt throw so many errors",
-    "Removed some minor themes to declutter the theme list",
-    "Render types now have better interaction translation keys",
-    "Glow is fixed"
+    "Some configs are now made on startup if not existing"
   ],
   "known": [
-    "Overlay can get stuck when webpack recompiles. Use the system tray to reload it."
+    "Overlay can [still!] get stuck when webpack recompiles. Use the system tray to reload it."
   ],
   "note": ""
 }

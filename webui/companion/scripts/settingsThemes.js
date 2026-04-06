@@ -29,8 +29,15 @@ window.loadThemeListing = async () => {
 		const apply = document.createElement("i");
 		apply.innerText = "Click to apply.";
 		element.onclick = () => {
-			universal.theming.setTheme(id, true);
+			if(theme.warn) {
+				UniversalUI.show.showYesNo(universal.translationKey("settings.sections.style.themes.warning"), theme.warn, () => {
+				universal.theming.setTheme(id, true);
+				loadThemeListing();
+				})
+			} else {
+							universal.theming.setTheme(id, true);
 			loadThemeListing();
+			}
 		};
 		if (universal.load("theme") === id) {
 			title.innerText += " (Active)";
