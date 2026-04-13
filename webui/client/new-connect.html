@@ -202,11 +202,11 @@
 		};
 
 		setInterval(() => {
-			if (isTryingToConnect || isErrored) return;
+			if (isTryingToConnect) return;
 			attemptConnection();
 		}, 500);
 
-		if (!isErrored) attemptConnection();
+		attemptConnection();
 
 		async function attemptConnection() {
 			if (isTryingToConnect) return;
@@ -232,7 +232,11 @@
 
 			if (await webpackStillBuilding()) {
 				const timer = setInterval(async () => {
-					if (!(await webpackStillBuilding())) clearInterval(timer);
+					let res = true;
+					try {
+						res = await webpackStillBuilding();
+					} catch(err) {res = true}
+					if (!res) clearInterval(timer);
 				}, 500);
 				return;
 			}

@@ -125,10 +125,16 @@
 					officialTag.loading = "lazy";
 					officialTag.style.width = "8rem";
 					const name = document.createElement("div");
+					if(!isUnofficial)  {
+												name.innerText = universal
+						.translationKey("marketplace.info.official_title")
+						.replace("$1", plugin.title);
+					} else {
 					name.innerText = universal
 						.translationKey("marketplace.info.title")
 						.replace("$1", plugin.title)
 						.replace("$2", req.author);
+					}
 					name.style.fontWeight = "bold";
 					li.appendChild(name);
 					const version = document.createElement("div");
@@ -246,7 +252,7 @@
 					li.appendChild(file);
 					if (universal.repositoryManager.official.find((r) => r === repo)) {
 						if (!plugin.unofficial || plugin.unofficial !== "true") {
-							li.appendChild(officialTag);
+							// li.appendChild(officialTag);
 						}
 					}
 					setTimeout(() => {

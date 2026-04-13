@@ -180,6 +180,7 @@
   "warnings.language": "Language support is in alpha and is still being worked on. Please report any issues to the Freedeck team.",
   "marketplace": "Marketplace",
   "marketplace.info.repository": "From $1",
+  "marketplace.info.official_title": "$1",
   "marketplace.info.title": "$1 • by $2",
   "marketplace.info.repo_title": "$1 \n➤ ",
   "marketplace.action.remove": "Remove",

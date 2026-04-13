@@ -345,11 +345,13 @@ const universal = {
 						universal.listenForOnce("data_ready", async () => {
 							universal.CLU("InitFN", "Starting eventsHandler");
 							await eventsHandler(universal, user);
-							universal.CLU(
-								"InitFN / WakeLock",
-								"Attempting to grab wake lock.",
-							);
-							universal.wakeLock.request();
+							if(universal.name == "Main") {
+								universal.CLU(
+									"InitFN / WakeLock",
+									"Attempting to grab wake lock.",
+								);
+								universal.wakeLock.request();
+							}
 							universal.CLU("InitFN", "Boot completed.");
 							universal.CLU(
 								"Boot",
