@@ -15,8 +15,6 @@ const fdws = {
 				return !realOut.includes(
 					"INFO: No tasks are running which match the specified criteria.",
 				);
-			} else {
-				console.log(">> Freedeck App support is coming soon for other platforms!")
 			}
 			return false;
 		} catch (err) {
