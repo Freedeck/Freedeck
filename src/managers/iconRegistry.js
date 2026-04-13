@@ -12,11 +12,6 @@ const iconRegistry = {
 	 */
 	add: (icon, packageExtractionPath) => {
 		iconRegistry.map[icon.identifier] = icon;
-		console.log(
-			"TEST ADD ICON",
-			icon.img,
-			path.resolve(packageExtractionPath, icon.img),
-		);
 		fs.copyFileSync(
 			path.resolve(packageExtractionPath, icon.img),
 			`${paths.userData_iconRegistry}/${icon.identifier}.${icon.img.split(".").at(-1)}`,

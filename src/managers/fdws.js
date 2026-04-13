@@ -1,4 +1,5 @@
 const ws = require("ws");
+const os = require("os");
 const { execSync } = require("node:child_process");
 
 const fdws = {
@@ -8,11 +9,16 @@ const fdws = {
 	connected: false,
 	isLauncherOpen: () => {
 		try {
-			const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
-			const realOut = out.toString().trim().trim();
-			return !realOut.includes(
-				"INFO: No tasks are running which match the specified criteria.",
-			);
+			if(os.platform == "win32") {
+				const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
+				const realOut = out.toString().trim().trim();
+				return !realOut.includes(
+					"INFO: No tasks are running which match the specified criteria.",
+				);
+			} else {
+				console.log(">> Freedeck App support is coming soon for other platforms!")
+			}
+			return false;
 		} catch (err) {
 			return false;
 		}

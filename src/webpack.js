@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const picocolors = require("$/picocolors");
 const { paths } = require("./routers/static");
+const dbg = require("$/debug")
 const { recordTime } = require("$/timer");
 const webpackConfigLocation = path.resolve("webpack.config.js");
 const webpackBuildLocation = paths.userData_bundles;
@@ -39,8 +40,7 @@ function runWebpack(webpackInstance) {
 				reject(err);
 			} else {
 				compileTime = stats.endTime - stats.startTime;
-				console.log(
-					stats.toString({
+				dbg.log(stats.toString({
 						assets: false,
 						cached: false,
 						cachedAssets: false,
@@ -65,8 +65,9 @@ function runWebpack(webpackInstance) {
 						usedExports: false,
 						version: false,
 						warnings: true,
-					}),
-					picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`),
+					}), "Webpack Compilation")
+				console.log(
+					picocolors.green(`Compiled webpack bundles in ${compileTime}ms`),
 				);
 				recordTime("webpack:compile-complete");
 				resolve();
