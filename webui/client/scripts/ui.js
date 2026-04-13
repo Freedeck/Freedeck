@@ -414,7 +414,11 @@ function reloadSounds() {
 			if (!isCompanionMode) continue;
 
 			// Build tooltip content efficiently with template literals
-			let tooltipContent = `<h4>${universal.cleanHTML(k, false)}</h4>`;
+
+			let initialTitle = `<h4>${universal.cleanHTML(k, false)}</h4>`;
+			if(k.length == 0) initialTitle = '';
+
+			let tooltipContent = initialTitle;
 
 			if(snd.type != 'fd.none') {
 				if (!snd.renderType || snd.renderType == "button") {
