@@ -484,9 +484,8 @@ const universal = {
 		const fn = (...args) => {
 			cb(...args);
 			universal._cb.delete(ev);
-			// .filter((c) => c[0] !== ev);
 		};
-		universal._cb.set(ev, cb);
+		universal._cb.set(ev, fn);
 	},
 	sendEvent: (ev, ...data) => {
 		universal._cb.forEach((callback, event) => {

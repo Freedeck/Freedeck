@@ -575,17 +575,18 @@ function clickHandleNewTile(v) {
 		name: tileName,
 		interaction,
 	});
-
-	universal.editTile({
-			srcElement: {
-				getAttribute: () => JSON.stringify(interaction),
-				dataset: {
-					name: tileName,
-					interaction: JSON.stringify(interaction),
+	universal.listenForOnce("page_change", () => {
+		universal.editTile({
+				srcElement: {
+					getAttribute: () => JSON.stringify(interaction),
+					dataset: {
+						name: tileName,
+						interaction: JSON.stringify(interaction),
+					},
+					className: v.target.className
 				},
-				className: v.target.className
-			},
-		});
+			});
+	});
 }
 
 async function _visualChange(tileId, text, matcher) {
