@@ -416,18 +416,20 @@ function reloadSounds() {
 			// Build tooltip content efficiently with template literals
 			let tooltipContent = `<h4>${universal.cleanHTML(k, false)}</h4>`;
 
-			if (!snd.renderType || snd.renderType == "button") {
-				tooltipContent += `<p>${
-					snd.data.longPress === "true"
-						? translationKey("tile.long_press")
-						: snd.data.hold === "true"
-							? translationKey("tile.hold")
-							: translationKey("tile.short_press")
-				} ${translationKey("tooltips.tile.full.action")}</p>`;
-			} else if (snd.renderType == "slider") {
-				tooltipContent += translationKey("tooltips.tile.slider.action");
-			} else {
-				tooltipContent += translationKey("tooltips.tile.disabled");
+			if(snd.type != 'fd.none') {
+				if (!snd.renderType || snd.renderType == "button") {
+					tooltipContent += `<p>${
+						snd.data.longPress === "true"
+							? translationKey("tile.long_press")
+							: snd.data.hold === "true"
+								? translationKey("tile.hold")
+								: translationKey("tile.short_press")
+					} ${translationKey("tooltips.tile.full.action")}</p>`;
+				} else if (snd.renderType == "slider") {
+					tooltipContent += translationKey("tooltips.tile.slider.action");
+				} else {
+					tooltipContent += translationKey("tooltips.tile.disabled");
+				}
 			}
 
 			if (snd.plugin) {
@@ -487,7 +489,7 @@ function reloadSounds() {
 			}
 
 			tooltipContent += "<p data-i18n-key='tooltips.tile.editable'></p>";
-			if (universal.load("developer") !== "false") {
+			if (universal.getServerStyleFlags()["app.freedeck.developer_mode"]) {
 				tooltipContent += `<i>${snd.type}</i>`;
 			}
 

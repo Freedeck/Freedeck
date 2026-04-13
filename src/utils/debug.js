@@ -16,7 +16,7 @@ const dbg = {
 			strToBuild += `[${new Date().toLocaleTimeString()}] ${picocolors.blue(k)} >> `;
 		strToBuild += `${v}`;
 		if (dbg.status) console._log(strToBuild);
-		if (require("@src/configs/style.json")["app.freedeck.debug.write_log"]) {
+		if (process.argv.map((e)=>e.includes("debug")).find((e)=>e==true) != undefined) {
 			fs.appendFile(
 				dbg.logPath,
 				`debug.log {${Date.now()}} | ${strToBuild}\n`,
@@ -31,7 +31,7 @@ const dbg = {
 console._log = console.log;
 console.log = (...e) => {
 	console._log(...e);
-	if (require("@src/configs/style.json")["app.freedeck.debug.write_log"]) {
+	if (process.argv.map((e)=>e.includes("debug")).find((e)=>e==true) != undefined) {
 		const rebuilt = [];
 		try {
 			for (const item of e) {

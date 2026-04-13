@@ -122,6 +122,7 @@
   "settings.sections.general.scroll": "Scroll Long Text",
   "settings.sections.general.fill": "Fill Tiles",
   "settings.sections.debug.write_log": "Write log to file",
+  "settings.sections.debug.developer_mode": "Developer Mode",
   "settings.sections.language": "Language",
   "settings.sections.overlay": "Overlay",
   "settings.sections.plugins": "Plugins",

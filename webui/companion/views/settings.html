@@ -141,43 +141,7 @@
 <script type="module">
 	import "/app/settingsThemes.js";
 	loadThemeListing();
-
-	if (universal.load("developer") !== "false") {
-		document.querySelector("#dev-tools").style.display = "flex";
-	}
-
-	const konamiCodeSequence = [
-		"ArrowUp",
-		"ArrowUp",
-		"ArrowDown",
-		"ArrowDown",
-		"ArrowLeft",
-		"ArrowRight",
-		"ArrowLeft",
-		"ArrowRight",
-		"b",
-		"a",
-	];
-	let konamiCodeIndex = 0;
-
-	document.addEventListener("keydown", function (e) {
-		const key = e.key.toLowerCase(); // Normalize key to lowercase for comparison
-		const expectedKey = konamiCodeSequence[konamiCodeIndex].toLowerCase();
-
-		if (key === expectedKey) {
-			konamiCodeIndex++;
-			if (konamiCodeIndex === konamiCodeSequence.length) {
-				let setTo = ["true", "flex"];
-				if (universal.load("developer") !== "false") setTo = ["false", "none"];
-				universal.save("developer", setTo[0]);
-				universal.uiSounds.playSound("devmode");
-				document.querySelector("#dev-tools").style.display = setTo[1];
-				konamiCodeIndex = 0;
-			}
-		} else {
-			konamiCodeIndex = 0;
-		}
-	});
+//				universal.uiSounds.playSound("devmode");
 
 	function restChnglog() {
 		universal.send(
@@ -449,6 +413,10 @@
 		);
 	};
 
+	document.querySelector("#dev-tools").style.display =
+		universal.getServerStyleFlags()["app.freedeck.developer_mode"]
+			? "block"
+			: "none";
 	document.querySelector(".soundpack").style.display =
 		universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
 			? "block"
@@ -642,13 +610,19 @@
 						universal.flags.isEnabled("app.freedeck.demo.disable_new_repo") ||
 						false,
 				},
-				"app.freedeck.debug.write_log": {
+				"app.freedeck.developer_mode": {
 					type: "checkbox",
-					key: "settings.sections.debug.write_log",
+					key: "settings.sections.debug.developer_mode",
 					default:
 						universal.getServerStyleFlags()[
-						"app.freedeck.demo.write_debug_log"
+						"app.freedeck.developer_mode"
 						] || false,
+					onchange: () => {
+						document.querySelector("#dev-tools").style.display =
+							universal.getServerStyleFlags()["app.freedeck.developer_mode"]
+								? "block"
+								: "none";
+					},
 				},
 			},
 		},
