@@ -127,12 +127,12 @@ function createEditorCheckbox(selector, dataKey) {
 	});
 }
 
-// createEditorCheckbox("#sbg", "showBg");
-// createEditorCheckbox("#nbo", "noBorder");
-// createEditorCheckbox("#nbr", "noRounding");
-// createEditorCheckbox("#orl", "onRelease");
-// createEditorCheckbox("#lp", "longPress");
-// createEditorCheckbox("#ha", "hold");
+createEditorCheckbox("#sbg", "showBg");
+createEditorCheckbox("#nbo", "noBorder");
+createEditorCheckbox("#nbr", "noRounding");
+createEditorCheckbox("#orl", "onRelease");
+createEditorCheckbox("#lp", "longPress");
+createEditorCheckbox("#ha", "hold");
 
 const editorSave = document.querySelector("#editor-save");
 const editorClose = document.querySelector("#editor-close");
