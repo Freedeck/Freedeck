@@ -64,7 +64,7 @@ function runWebpack(webpackInstance) {
 						timings: false,
 						usedExports: false,
 						version: false,
-						warnings: false,
+						warnings: true,
 					}),
 					picocolors.green(`\nCompiled webpack bundles in ${compileTime}ms`),
 				);

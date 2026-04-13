@@ -570,18 +570,16 @@ function clickHandleNewTile(v) {
 		interaction,
 	});
 
-	universal.listenForOnce("page_change", () => {
-		universal.editTile({
+	universal.editTile({
 			srcElement: {
 				getAttribute: () => JSON.stringify(interaction),
 				dataset: {
 					name: tileName,
 					interaction: JSON.stringify(interaction),
 				},
-				className: "button k-0 k",
+				className: v.target.className
 			},
 		});
-	});
 }
 
 async function _visualChange(tileId, text, matcher) {

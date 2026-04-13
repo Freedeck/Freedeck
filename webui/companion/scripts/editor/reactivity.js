@@ -149,7 +149,7 @@ const tt = universal.createTooltipFor(
 tt.setAttribute("data-i18n-key", "tooltips.editor.closing");
 translatePage(tt);
 
-editorClose.onclick = () => {
+function closeEditor() {
 	universal.uiSounds.playSound("int_no");
 	for (const el of document.querySelectorAll(".k")) {
 		el.classList.remove("smaller");
@@ -172,9 +172,11 @@ editorClose.onclick = () => {
 		editorButton.style.backgroundColor = "";
 	}, 249);
 	leftSidebar.classList.remove("disabled");
-};
+}
 
-editorSave.onclick = () => {
+editorClose.addEventListener('click', closeEditor)
+
+editorSave.addEventListener('click', () => {
 	const tileName = name.value;
 	const interaction = JSON.parse(editorButton.getAttribute("data-interaction"));
 	const tileData = getAllTileData();
@@ -186,7 +188,7 @@ editorSave.onclick = () => {
 		oldName: editorButton.getAttribute("data-pre-edit"),
 		interaction: interaction,
 	});
-	editorClose.click();
-};
+	closeEditor();
+});
 
 export { setupReactivity };
