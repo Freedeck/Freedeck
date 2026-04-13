@@ -116,6 +116,7 @@
   "marketplace.downloading_presets": "Downloading presets...",
   "settings.title": "Settings",
   "settings.sections.style": "Themes",
+  "settings.sections.style.themes.active": " (Active)",
   "settings.sections.style.themes.warning": "Before you apply this theme,",
   "settings.sections.general.compact": "Compact Mode",
   "settings.sections.general.scroll": "Scroll Long Text",

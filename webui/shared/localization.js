@@ -35,7 +35,6 @@ async function fetchTranslationsFor(newLocale) {
 }
 
 function translatePage(specific = document) {
-	console.log("translating page", specific);
 	specific.querySelectorAll("[data-i18n-key]").forEach(translateElement);
 }
 

@@ -53,7 +53,8 @@ function createOverlay() {
 		},
 	]);
 	tray.setContextMenu(contextMenu);
-	globalShortcut.register("Alt+Shift+Backspace", () => {
+
+	const registered = globalShortcut.register("Alt+Shift+Backspace", () => {
 		lock.focus();
 		lock.webContents.send("shortcutpressed");
 	});
@@ -63,7 +64,7 @@ function createOverlay() {
 	});
 
 	lock.setIgnoreMouseEvents(true, { forward: true });
-	lock.setAlwaysOnTop(true, "status");
+	lock.setAlwaysOnTop(true, "screen-saver");
 	lock.setPosition(0, 0);
 
 	console.log("Loaded Overlay");

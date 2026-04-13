@@ -8,8 +8,7 @@
     "companion": "electron . --companion-only",
     "server": "node src/index.js --server-only",
     "debug-server": "node src/index.js --server-only --debug",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "posttest": "npm run format",
+    "test": "node src/self-test.js",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
   },
   "keywords": [
@@ -37,7 +36,7 @@
     "asar-bundle-runner": "^1.6.0",
     "babel-loader": "^10.1.1",
     "compare-versions": "^6.1.1",
-    "electron": "^38.3.0",
+    "electron": "^41.1.1",
     "express": "^5.2.1",
     "formidable": "^3.5.4",
     "module-alias": "^2.3.4",

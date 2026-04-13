@@ -1,0 +1,16 @@
+{
+  "name": "fst",
+  "version": "0.0.1",
+  "description": "Freedeck Self Test",
+  "main": "runner.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "FreedeckInternals",
+  "freedeck": {
+    "title": "Freedeck Self-Test Runtime Helper",
+    "package": "plugin"
+  },
+  "license": "ISC"
+}

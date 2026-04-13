@@ -7,4 +7,10 @@
 
 :root {
 	--main-bg: var(--modal-bg);
+	--companion-left-sidebar-bg: rgba(255,255,255,0.125);
+	--companion-right-sidebar-bg: rgba(255,255,255,0.125);
+}
+
+#keys, .keys {
+	background-color: rgba(255,255,255,0.125);
 }
