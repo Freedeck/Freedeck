@@ -2,9 +2,11 @@ const { existsSync, writeFileSync, rmSync } = require("node:fs");
 const { paths } = require("../routers/static");
 const path = require("node:path");
 const { configLocation } = require("../managers/settings");
-
+const debug = require("$/debug");
+const picocolors = require("$/picocolors");
 const oldCfgLoc = path.resolve("./src/configs/config.fd.js");
 
+debug.log("Checking for legacy v1 configuration", picocolors.blue("Migration / Config Upgrade"))
 if (existsSync(oldCfgLoc)) {
 	console.log("Migrating your v1 configuration to v2 schema");
 	const thatConfig = require(oldCfgLoc);

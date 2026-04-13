@@ -41,17 +41,16 @@
         <details>
             <summary data-i18n-key="marketplace.add.presets"></summary>
             <div class="flex-wrap-r preset-repositories">
-                <button class="repo-preset" data-repo='{"t":"Freedeck Main","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
+                <button class="repo-preset" data-repo='{"t":"freedeck.app","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
                 <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json","y":"new"}'>FreedeckEx Repository</button>
             </div>
             <small><span data-i18n-key="marketplace.add.ask"></span><a href="https://docs.freedeck.app/development-resources/hosting-a-repository#add-it-as-a-preset" target="_blank" data-i18n-key="marketplace.add.ask.inner"></a></small>
         </details>
-        <label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="Freedeck Main">
+        <label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="freedeck.app">
         <label for="url" data-i18n-key="marketplace.add.input_url"></label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
         <label for="mktr_type" data-i18n-key="marketplace.add.input_type"></label>
         <select id="mktr_type">
-            <option value="new" selected disabled hidden>Select a repository type</option>    
-            <option value="new" data-i18n-key="marketplace.add.types.new"></option>    
+            <option value="new" selected data-i18n-key="marketplace.add.types.new"></option>    
             <option value="legacy" data-i18n-key="marketplace.add.types.legacy"></option>    
         </select>
         <br>
