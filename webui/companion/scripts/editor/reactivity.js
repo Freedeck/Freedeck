@@ -78,6 +78,12 @@ const setupReactivity = (d, tileName) => {
 	}
 	leftSidebar.classList.add("disabled");
 
+	const pl = document.querySelector('button[data-view_id="plugins"]');
+	if(!pl.classList.contains("has-tt")) {
+		universal.createTooltipFor(pl, "<h4>" + translationKey("editor.sections.plugin.available") + "</h4>\n"+Object.values(universal.plugins).filter(e=>e.types.length>0).map(e=>e.name).join(",\n"))
+		pl.classList.add("has-tt")
+	}
+
 	const interactionData = d;
 	document.querySelector("#plugin").style.display =
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";

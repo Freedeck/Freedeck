@@ -64,7 +64,7 @@ function createOverlay() {
 	});
 
 	lock.setIgnoreMouseEvents(true, { forward: true });
-	lock.setAlwaysOnTop(true, "screen-saver");
+	lock.setAlwaysOnTop(true, "floating");
 	lock.setPosition(0, 0);
 
 	console.log("Loaded Overlay");
