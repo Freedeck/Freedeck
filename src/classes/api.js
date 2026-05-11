@@ -50,6 +50,12 @@ class Plugin {
 			picocolors.blue(`Plugins / ${this.id || "Class"}`),
 		);
 	}
+	log(...msg) {
+		debug.log(
+			msg.join(" "),
+			picocolors.blue(`Plugins > ${this.id || "Class"}`),
+		);
+	}
 	_id = Math.random().toString(36).substring(7);
 	_callbacks = {};
 	_intent = [];

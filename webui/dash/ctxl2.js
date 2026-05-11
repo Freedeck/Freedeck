@@ -103,16 +103,19 @@ const ctxl = {
 		ctxl.forceViewContainer();
 		if (ctxl.onclose[view]) ctxl.onclose[view]();
 		if (ctxl.onclose[view]) delete ctxl.onclose[view];
-		const scripts = document.querySelectorAll(`script[ctxl-id="${view}"]`);
-		for (let i = 0; i < scripts.length; i++) {
-			scripts[i].remove();
-		}
+		ctxl.closeAllScriptsFor(view);
 		ctxl
 			.viewContainer()
 			.replaceChild(
 				ctxl.generateView(view),
 				document.querySelector(`${ctxl.as}[ctxl-id="${view}"]`),
 			);
+	},
+	closeAllScriptsFor: (view) => {
+		const scripts = document.querySelectorAll(`script[ctxl-id="${view}"]`);
+		for (let i = 0; i < scripts.length; i++) {
+			scripts[i].remove();
+		}
 	},
 	waitForClose: async (view) =>
 		new Promise((resolve, reject) => {

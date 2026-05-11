@@ -1,6 +1,7 @@
 {
   "name": "Freedeck",
   "views": [
+    "couldnt-add",
     "clock",
     "logo",
     "demo",

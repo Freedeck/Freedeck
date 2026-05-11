@@ -1,0 +1,95 @@
+/**
+Dash isn't the typical Freedeck client, it's a renderer for modules
+that carry out their own styling based on what purpose they serve,
+but with access to the standard Freedeck API for data, themes, settings,
+and simplification of that process.
+
+It uses the Companion styling as it the styles it expects should be similar
+to that of the Desktop app.
+The Client styling is also way smaller and doesn't have the extent pre-included of "desktop"-like styles.
+**/
+
+#keys {
+  display: none;
+}
+
+#ctxl-view-cont {
+  background-color: transparent;
+}
+
+#ctxl-view-cont html body {
+  width: auto;
+  height: auto;
+  margin: auto;
+  padding-left: 0 !important;
+}
+
+body:not(.dash) {
+  background: transparent;
+}
+
+.dash-module {
+  transition-duration: 0.125s;
+}
+
+.dash-button {
+  z-index: 1001 !important;
+}
+
+.dash-module:hover {
+  cursor: grab;
+}
+
+.dash-module.dragging {
+  transform: rotate(2deg);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  filter: opacity(0.9);
+  cursor: grabbing;
+}
+
+#dragmode-warning,
+#debugmode-warning {
+  display: none;
+}
+
+.debug-only {
+  display: none;
+}
+
+.alpha-warning,
+.debug-only {
+  background: var(--modal-bg);
+  padding: 0.5rem;
+  border: var(--generic-border);
+  border-radius: var(--main-radius);
+}
+
+.warnings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: var(--main-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#boot-log-div {
+  display: none !important;
+}
+
+.textbg-display {
+  display: none !important;
+}
+
+@keyframes close-ctxmenu {
+  0% {
+    transform: scale(100%);
+    filter: opacity(1);
+  }
+
+  100% {
+    transform: scale(0);
+    filter: opacity(0);
+  }
+}
