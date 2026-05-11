@@ -1,6 +1,6 @@
 let layoutDefinition = {
 	id: "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
-	name: "Overlay Layout",
+	name: "Overlay Layout 1",
 	modules: [
 		{
 			beta: {
@@ -11,6 +11,21 @@ let layoutDefinition = {
 					position: {
 						x: "0",
 						y: "0",
+						width: "defined",
+						height: "defined",
+					},
+				},
+			},
+		},
+		{
+			logo: {
+				uuid: "02",
+				type: "freedeck/logo",
+				renderType: "dash-module",
+				data: {
+					position: {
+						x: "0",
+						y: "250",
 						width: "defined",
 						height: "defined",
 					},
@@ -109,6 +124,7 @@ for (const i of systemViewCollection) {
 						return res.json();
 					})
 					.then((res) => {
+            if(res.hidden) return; 
 						res.owner = viw;
 						selections[i].modules.push(res);
 					});
@@ -203,6 +219,9 @@ const contextMenu = async (e) => {
 				menuItem.innerText = selectionName + " - " + data.name;
 				menuItem.className = "menuItem";
 				const settingsFix = {};
+				for (const settingKey in data.settings) {
+					if (!settingsFix[settingKey]) settingsFix[settingKey] = data.settings[settingKey].default;
+				}
 				menuItem.onclick = () => {
 					const uuid = Math.random() * 100;
 					layoutDefinition.modules.push({
@@ -226,26 +245,32 @@ const contextMenu = async (e) => {
 				};
 				custMenu.appendChild(menuItem);
 			}
-
+		}
+		let shown = [];
 			for (const sKey of universal.config.profiles[universal.config.profile]) {
 				const title = Object.keys(sKey)[0];
 				const tileData = sKey[title];
+				if(shown.includes(tileData.uuid)) {return} else {shown.push(tileData.uuid)}
 				const menuItem = document.createElement("div");
 				let display = "";
 				if (tileData.plugin) {
-					display = " - " + tileData.plugin;
+					display = tileData.plugin;
 					for (const i of universal._matchTypeToPlugin
 						.keys()
 						.filter((e) => e.type == tileData.type)) {
 						display += ": " + i.name;
 					}
 				}
-				menuItem.innerText = title + (tileData.plugin ? display : "");
+				const italicized = document.createElement("strong");
+				italicized.textContent = title + (title.length > 0 ? " - " : "");
+				const pluginTitle = document.createElement("span");
+				pluginTitle.textContent = (tileData.plugin ? display : "");;
+				menuItem.append(italicized, pluginTitle)
 				menuItem.className = "menuItem";
 				const setupMod = (e) => {
 					layoutDefinition.modules.push({
 						[title]: {
-							uuid: [Math.random() * 100],
+							uuid: Math.random() * 100,
 							type: tileData.type,
 							renderType: "dash-button",
 							plugin: tileData.plugin,
@@ -261,12 +286,12 @@ const contextMenu = async (e) => {
 						},
 					});
 					reloadModules();
+					custMenu.close();
 				};
 				menuItem.addEventListener("touchend", setupMod);
 				menuItem.addEventListener("click", setupMod);
-				// custMenu.appendChild(menuItem);
+				custMenu.appendChild(menuItem);
 			}
-		}
 	} else {
 		const p = getModParent(e.target);
 		const moduleContext = JSON.parse(p.getAttribute("modulecontext"));
@@ -274,7 +299,7 @@ const contextMenu = async (e) => {
 		const settings = JSON.parse(p.getAttribute("settings"));
 		const menuItem = document.createElement("div");
 		menuItem.innerHTML =
-			"<strong>Selected: " + moduleContext.name + "</strong>";
+			"<strong>Editing " + moduleContext.name + "</strong>";
 		custMenu.appendChild(menuItem);
 		const items = [
 			{
@@ -336,7 +361,6 @@ const contextMenu = async (e) => {
 			custMenu.appendChild(menuItem2);
 		}
 	}
-  console.log(layoutDefinition)
 	custMenu.addEventListener(
 		"click",
 		(e) => {
@@ -425,33 +449,6 @@ if (!MOBILE) {
 window.addEventListener("keydown", async (e) => {
 	if (e.key === "f") debugMode = !debugMode;
 	if (e.key === "r") reloadModules();
-	if (e.key === "k") {
-		localStorage.setItem(
-			"freedeck:overlay",
-			JSON.stringify({
-				id: "8499f778-de42-4d8c-b07b-9e5ed06d3d90",
-				name: "Overlay Layout",
-				modules: [
-					{
-						beta: {
-							uuid: "01",
-							type: "beta",
-							renderType: "dash-module",
-							data: {
-								position: {
-									x: "0",
-									y: "0",
-									width: "defined",
-									height: "defined",
-								},
-							},
-						},
-					},
-				],
-			}),
-		);
-		window.reload();
-	}
 
 	debugWarning.style.display = debugMode ? "block" : "none";
 

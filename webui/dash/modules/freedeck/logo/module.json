@@ -1,4 +1,5 @@
 {
-  "name": "Logo",
+  "name": "Freedeck Title",
+  "hidden": true,
   "view": "view"
 }

@@ -1,5 +1,13 @@
 {
   "name": "Clock",
   "view": "view",
-  "overlay": "view"
+  "overlay": "view",
+  "settings": {
+    "seconds": {
+      "title": "Show Seconds",
+      "description": "Renders the seconds in the time",
+      "type": "boolean",
+      "default": "true"
+    }
+  }
 }

@@ -1,5 +1,23 @@
 {
-  "name": "fd:beta-overlay",
+  "name": "Welcome Message",
+  "hidden": true,
   "overlay": "overlay",
-  "view": "dash"
+  "view": "dash",
+  "settings": {
+    "exb": {
+      "title": "Example Toggle",
+      "type": "boolean",
+      "default": "true"
+    },
+    "exs": {
+      "title": "Example Selector",
+      "type": "select",
+      "default": "one",
+      "options": {
+        "one": "One",
+        "two": "Two",
+        "three": "Three"
+      }
+    }
+  }
 }

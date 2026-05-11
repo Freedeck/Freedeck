@@ -1,6 +1,7 @@
 <style>
 	#clock {
 		text-align: center;
+		width: max-content;
 	}
 </style>
 <freedeck-dash-module>
@@ -8,11 +9,25 @@
 </freedeck-dash-module>
 <script>
 	const cl = document.querySelector("#clock");
+	
+	const settingsEle = document.querySelector("html[ctxl-id='/dash/modules/freedeck/clock/view']")
+  let settings = JSON.parse(settingsEle.getAttribute("settings"));
+  settingsEle.overlaySettingsChanged = (_settings) => {
+    settings = _settings;
+  }
+	
 	function timestring() {
 		return new Date().toLocaleTimeString();
 	}
 	cl.innerText = timestring();
 	setInterval(() => {
-		cl.innerText = timestring();
-	}, 700);
+		let ts = timestring();
+		if(settings.seconds != "true") {
+			// THIS IS REALLY BAD. DO NOT DO THIS
+			const slices = ts.split(" ");
+			const sec = slices[0].split(":");
+			ts = sec[0] +":" + sec[1] + " " + slices[1]
+		}
+		cl.innerText = ts;
+	}, 1000);
 </script>

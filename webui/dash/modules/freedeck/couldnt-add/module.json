@@ -1,5 +1,6 @@
 {
-  "name": "Failed to add a view",
+  "name": "Failed to add a module!",
+  "hidden": true,
   "view": "overlay",
   "overlay": "overlay"
 }
