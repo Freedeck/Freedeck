@@ -1,0 +1,76 @@
+<h1 class="settings-section-title">
+	<span data-i18n-key="setup.welcome.title"></span>
+	<span
+		><img src="/assets/logo_big.png" width="50" height="50" loading="lazy"
+	/></span>
+</h1>
+
+<div class="items">
+	<div class="item">
+		<h1 data-i18n-key="setup.welcome.welcome"></h1>
+		<p data-i18n-key="setup.welcome.version"></p>
+	</div>
+
+	<div class="item">
+		<h1 data-i18n-key="setup.welcome.started"></h1>
+
+		<p data-i18n-key="setup.welcome.presetup"></p>
+	</div>
+
+	<div class="item">
+		<h2 data-i18n-key="setup.welcome.custom"></h2>
+		
+		<p data-i18n-key="setup.welcome.changable"></p>
+	</div>
+
+	<button id="ok" data-i18n-key="setup.next"></button>
+</div>
+
+<script>
+	const welVer = document.querySelector('p[data-i18n-key="setup.welcome.version"]');
+	welVer.innerText = welVer.innerText.replace("$1", universal._information.version.raw);
+	universal.reloadRight();
+	document.querySelector("#ok").onclick = (e) => {
+		universal.ctx.destructiveView("setup_02_personalization");
+	}
+
+	</script>
+
+	<style>
+
+		#ctxl-view-cont {
+			background: rgba(0, 0, 0, 0.825);
+		}
+
+		#keys {
+			display: none;
+		}
+
+		.items {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		#setup_01_welcome {
+			width: 100% !important;
+			margin: 0 !important;
+			display: inline-flex;
+			flex-direction: row;
+			justify-content: center;
+		}
+		#setup_01_welcome body {
+			width: 80% !important;
+			padding-left: 0 !important;
+		}
+		.item {
+			background-color: rgba(0, 0, 0, 0.25);
+			padding: 5px;
+			border-radius: var(--main-radius);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: start;
+			height: max-content;
+		}
+	</style>

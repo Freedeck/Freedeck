@@ -1,48 +1,56 @@
-<div class="flex-wrap-r alc">
-	<img src="/assets/logo_big.png" alt="Freedeck" width="75" height="75" />
-	<h1>Audio Setup</h1>
-</div>
-<p>
-	You're almost there! We just need to configure your outputs and connect your
-	phone.
-</p>
+<h1 class="settings-section-title">
+	<span data-i18n-key="setup.soundboard.title"></span>
+	<span><img src="/app/shared/icons/t_audio.svg" width="50" height="50" loading="lazy" /></span>
+</h1>
+<div class="items">
+
 <div class="item">
-	<h3>Monitor Device</h3>
-	<p>
-		This will be where you hear the sounds. Freedeck now supports playing
-		through multiple devices at once, so pick as many as you like.
-	</p>
+	<h1 data-i18n-key="settings.sections.audio_devices.monitor"></h1>
+	<p data-i18n-key="setup.soundboard.monitor.description"></p>
 	<div class="monitor-devices audio-device-picker"></div>
 </div>
-<br />
-<div class="item">
-	<h3>VB-Cable device</h3>
+<div class="item vbc">
+	<h1 data-i18n-key="settings.sections.audio_devices.vb"></h1>
 	<p>
-		This is where Freedeck will also send audio. If you do not have VB-Cable,
-		install it from
-		<a target="_blank" href="https://vb-audio.com/Cable/"
-			>https://vb-audio.com/Cable/</a
-		>
+		<span data-i18n-key="setup.soundboard.vb.description"></span>
+		<a target="_blank" href="https://vb-audio.com/Cable/">https://vb-audio.com/Cable (<span data-i18n-key="action.inline.click_here"></span>)</a>
 	</p>
 	<div class="vb-cables audio-device-picker"></div>
 </div>
-<br />
+<div class="item">
+	<p><span data-i18n-key="sidebars.left.footer.need_help"></span> <a target="_blank" href="https://docs.freedeck.app/setting-up-soundboard" data-i18n-key="setup.soundboard.vb.click_check"></a></p>
+</div>
 <button id="nexta">Next</button>
-<br />
-<details id="fas">
-	<summary>
-		<strong>Developer Mode</strong>
-	</summary>
-	<button id="bypass">Partial Setup Bypass</button>
-	<button id="bypasssi">Full Setup Bypass</button>
-	<p>
-		If you bypass with sidebar, you will not be able to come back without
-		resetting "has_setup" from the Settings tab.
-	</p>
-	<button id="recom">Toggle Recompile on Right</button>
-</details>
 
+</div>
 <style>
+	#ctxl-view-cont {
+		background: rgba(0, 0, 0, 0.825);
+	}
+
+	#keys {
+		display: none;
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	#setup_03_soundboard {
+		width: 100% !important;
+		margin: 0 !important;
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#setup_03_soundboard body {
+		width: 80% !important;
+		padding-left: 0 !important;
+	}
+
 	.audio-device-picker {
 		display: flex;
 		flex-direction: column;
@@ -56,6 +64,7 @@
 	.audio-device label {
 		width: 100%;
 	}
+
 	.audio-device {
 		display: flex;
 		align-items: center;
@@ -64,17 +73,6 @@
 		gap: 0.5rem;
 		border-radius: var(--main-radius);
 		background-color: rgba(0, 0, 0, 0.25);
-	}
-
-	#fas {
-		background-color: rgba(0, 0, 0, 0.25);
-		padding: 5px;
-		border-radius: var(--main-radius);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: start;
-		display: none;
 	}
 
 	.item {
@@ -92,33 +90,9 @@
 <script>
 	universal.reloadRight();
 	document.querySelector("#nexta").onclick = (e) => {
-		universal.ctx.destructiveView("prompts");
+		universal.ctx.destructiveView("setup_04_device");
 	}
 
-	document.querySelector("#bypass").onclick = (e) => {
-		universal.vopen("index.html");
-	}
-
-	document.querySelector("#bypasssi").onclick = (e) => {
-		universal.save("has_setup", "true");
-		universal.vopen("index.html");
-		universal.reloadRight();
-	}
-
-	document.querySelector("#recom").onclick = (e) => {
-		universal.flags.toggle("recompile-tab");
-		universal.reloadRight();
-	}
-
-	let last = '';
-
-	function a(ev) {
-		if (last == 'f' && ev.key == 'd') {
-			document.querySelector("#fas").style.display = document.querySelector("#fas").style.display == "none" ? "block" : "none";
-		}
-		last = ev.key;
-	}
-	window.onkeydown = a;
 	async function getAudioOutputDevices(isCable = false) {
 		const devices = await navigator.mediaDevices.enumerateDevices();
 		const audioOutputs = devices

@@ -21,7 +21,7 @@ const leftSidebar = document.querySelector(".sidebar");
 await universal.init("Companion");
 
 if (universal.load("has_setup") === "false") {
-	universal.ctx.destructiveView("setup");
+	universal.ctx.destructiveView("setup_00_language");
 	const view_container = document.querySelector(universal.ctx.view_container);
 	view_container.style.display = "block";
 	leftSidebar.style.display = "none";

@@ -7,6 +7,7 @@ const name = document.querySelector("#name");
 const type = document.querySelector("#type");
 const renderType = document.querySelector("#rendertype");
 const leftSidebar = document.querySelector(".sidebar");
+const rightSidebar = document.querySelector("#sidebar");
 
 color.onchange = (e) => {
 	editorButton.style.backgroundColor = e.srcElement.value;
@@ -77,6 +78,7 @@ const setupReactivity = (d, tileName) => {
 			"block";
 	}
 	leftSidebar.classList.add("disabled");
+	rightSidebar.classList.add("disabled")
 
 	const pl = document.querySelector('button[data-view_id="plugins"]');
 	if(!pl.classList.contains("has-tt")) {
@@ -178,6 +180,7 @@ function closeEditor() {
 		editorButton.style.backgroundColor = "";
 	}, 249);
 	leftSidebar.classList.remove("disabled");
+	rightSidebar.classList.remove("disabled")
 }
 
 editorClose.addEventListener('click', closeEditor)

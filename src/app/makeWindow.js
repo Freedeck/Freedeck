@@ -35,7 +35,7 @@ module.exports = (
 		spawn(process.argv[0], [path.resolve("./src/app/overlay-makeWindow.js")]);
 	});
 
-	function _handle(w, h) {
+	async function _handle(w, h) {
 		mainWindow.setSize(w, h);
 		mainWindow.center();
 	}

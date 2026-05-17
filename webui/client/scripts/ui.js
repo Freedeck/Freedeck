@@ -3,6 +3,7 @@ const Pages = {};
 import { translationKey, translatePage } from "../../shared/localization.js";
 import createTileRenderer from "./ui/createTileRenderer.js";
 import gridItemDrag from "../../companion/scripts/lib/gridItemDrag.js";
+import { actionButtonDown } from "./ui/quickActions.js";
 
 function makeGenericModal(
 	title,
@@ -68,11 +69,14 @@ function makeGenericModal(
 	};
 }
 
+
 /**
- * @name quickActions
- * @param {*} e The event that was triggered
+ * @name handleActionButton Quick actions handler for the Logo button
+ * @param {HTMLButtonElement} b The action button.
  */
-function quickActions(e) {}
+function handleActionButton(b) {
+	b.addEventListener("mousedown", actionButtonDown);
+}
 
 let openCloseBootLog;
 let bootLog;
@@ -133,6 +137,7 @@ function closeBootLog() {
 				if (window.splashScreen) window.splashScreen.unsplash();
 				setTimeout(() => {
 					bootLog.style.animation = "pull-up 0.5s";
+					if (window.splashScreen) window.splashScreen.unsplash();
 					bootLog.querySelector("h1").style.animation = "real-fade-out 0.5s";
 					bootLog.querySelector("img").style.animation = "real-fade-out 0.5s";
 					setTimeout(() => {
@@ -615,7 +620,7 @@ async function visualTypeTileChangeText(tileId, text) {
 export const UI = {
 	reloadSounds,
 	reloadProfile,
-	quickActions,
+	handleActionButton,
 	Pages,
 	initialize,
 	makeBootLog,

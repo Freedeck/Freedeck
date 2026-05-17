@@ -1,83 +1,62 @@
 <h1 class="settings-section-title">
 	Device Pairing
-	<span
-		><img src="/app/shared/icons/pairing.svg" width="50" height="50" loading="lazy"
-	/></span>
+	<span><img src="/app/shared/icons/pairing.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
-<center class="dev-status">Status: Your device is not connected yet!</center>
-<br />
-<center>What device are you using?</center>
-<br />
-<div class="flc">
-	<button class="long" id="connect-button">
-		<img src="/app/shared/icons/apple.svg" width="25" height="25" loading="lazy" />
-		<p>iOS (iPhone, iPad, etc..)</p>
-	</button>
-	<button class="long" id="connect-button-android">
-		<img
-			src="/app/shared/icons/android.svg"
-			width="25"
-			height="25"
-			loading="lazy"
-		/>
-		Android (Samsung, Pixel, etc..)
-	</button>
-	<button id="later-button">Connect Later</button>
-</div>
+<div class="items">
 
-<div id="conn-content" style="display: none">
-	<h1>Connect to Freedeck on <span class="osp-selected">iOS</span></h1>
-	<p>
-		To connect to your Freedeck, all you have to do is scan the QR code. You'll
-		instantly connect to your computer from there.
-	</p>
-	<div id="qr-container"></div>
-	<details id="or-mfa">
-		<summary>Or, connect using my.freedeck.app</summary>
-		<ul>
-			<li>
-				Open <strong class="osp-browser">Safari</strong> and go to
-				<i><strong class="osp-host"></strong></i>
-			</li>
-			<li>
-				Type in code
-				<i
-					><span class="mfa-code">Please accept to use this service...</span></i
-				>
-				and press Connect.
-			</li>
-			<li>
-				When you see your Freedeck,
-				<span class="osp-add-to-home-screen">press Share at the bottom</span>.
-			</li>
-			<li>Press <i>Add To Home Screen</i></li>
-		</ul>
-	</details>
-	<details>
-		<summary>Or, manually connect using your local IP</summary>
-		<ul>
-			<li>
-				Follow every instruction, but instead of going to
-				<span class="local-ip"></span>, go to http://<span
-					class="local-net"
-				></span
-				>:5754 on your device.
-			</li>
-			<li>
-				You won't need to press Connect, as this is directly taking you to your
-				Freedeck.
-			</li>
-		</ul>
-	</details>
-	<p>This will automatically close when your device is connected.</p>
-	<div class="flex-wrap-r">
-		<button id="back">Back</button>
-		<button onclick="document.querySelector('#later-button').click()">
-			Connect Later
-		</button>
+	<div class="item">
+		<div id="qr-container"></div>
+	</div>
+
+	<div class="item">
+		<center class="dev-status">Status: Checking...</center>
+		<p>Scan the QR code, or browse to <code>http://<span class="local-net"></span>:5754</code> in <strong
+				class="osp-browser">Safari</strong>.</p>
+		<p>
+			When you see Freedeck, <span class="osp-add-to-home-screen">press Share at the bottom</span>, then Add To Home
+			Screen.
+		</p>
+		<p>This will automatically close when your device is connected.</p>
+		<div class="flex-wrap-r">
+			<button id="later-button">Connect Later</button>
+		</div>
+
+		<center>Not on <span class="osp-selected">iOS</span>?</center>
+		<div class="flex-wrap-r">
+			<button class="long" id="connect-button" style="display:none;">
+				<img src="/app/shared/icons/apple.svg" width="25" height="25" loading="lazy" />
+				<p>View for iOS</p>
+			</button>
+			<button class="long" id="connect-button-android">
+				<img src="/app/shared/icons/android.svg" width="25" height="25" loading="lazy" />
+				<p>View for Android</p>
+			</button>
+		</div>
+	</div>
+
+
+	<div class="item">
+		<details id="or-mfa">
+			<summary>Or, connect using my.freedeck.app</summary>
+			<ul>
+				<li>
+					Open <strong class="osp-browser">Safari</strong> and go to
+					<i><strong class="osp-host"></strong></i>
+				</li>
+				<li>
+					Type in code
+					<i><span class="mfa-code">Please accept to use this service...</span></i>
+					and press Connect.
+				</li>
+			</ul>
+		</details>
+
 	</div>
 </div>
+
 <script>
+	document.querySelector("#sidebar").style.right = "-100%";
+	document.querySelector("#sidebar").style.display = 'flex';
 	(async () => {
 		let qrCode;
 		// Dynamically load the QRCode library
@@ -108,15 +87,9 @@
 			qrCode.makeCode(txt); // make another code.
 		};
 	})();
-	const selection = document.querySelector(".flc");
 	const laterButton = document.querySelector("#later-button");
 	const localNet = document.querySelectorAll(".local-net");
-	const back = document.querySelector("#back");
 
-	back.onclick = () => {
-		document.querySelector("#conn-content").style.display = "none";
-		selection.style.display = "flex";
-	};
 
 	const placeholderOs = document.querySelector(".osp-selected");
 	const placeholderBrowser = document.querySelector(".osp-browser");
@@ -130,10 +103,10 @@
 		m = window.UniversalUI.show.showYesNo(
 			"By pressing Accept, you are willing to share:",
 			"- your local IP (" +
-				ip +
-				")<br>- your PC's hostname (" +
-				universal._information.hostname +
-				")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>",
+			ip +
+			")<br>- your PC's hostname (" +
+			universal._information.hostname +
+			")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>",
 			(yes) => {
 				fetch("/api/discover/code-request")
 					.then((res) => res.json())
@@ -163,10 +136,8 @@
 				return;
 			}
 			m.modal.querySelector(".modal-close").onclick = () => {
-				laterButton.click();
 				m.modal.remove();
-				universal.vopen("index.html");
-				universal.vclose();
+				laterButton.click();
 			};
 			m.modal.querySelector(".modal-close").style.display = "block";
 		}, 5000);
@@ -176,35 +147,39 @@
 	const connectButtonAndroid = document.querySelector(
 		"#connect-button-android",
 	);
-	const connContent = document.querySelector("#conn-content");
+	let selectedOS = "iOS";
 	connectButtonAndroid.onclick = () => {
-		placeholderOs.innerText = "Android";
+		selectedOS = "Android"
+		placeholderOs.innerText = selectedOS;
 		placeholderBrowser.innerText = "your web browser (Example: Chrome)";
 		placeholderAddToHomeScreen.innerText =
 			"click the three dots in the top right";
-		document.querySelector("#conn-content").style.display = "block";
-		selection.style.display = "none";
+			connectButton.style.display='flex';
+			connectButtonAndroid.style.display='none';
 	};
 	connectButton.onclick = () => {
-		placeholderOs.innerText = "iOS";
+		selectedOS = "iOS"
+		placeholderOs.innerText = selectedOS;
 		placeholderBrowser.innerText = "Safari";
 		placeholderAddToHomeScreen.innerText =
 			"press the share button at the bottom (or top right)";
-		document.querySelector("#conn-content").style.display = "block";
-		selection.style.display = "none";
+connectButton.style.display='none';
+			connectButtonAndroid.style.display='flex';
 	};
 	universal.uiSounds.playSound("step_1");
 
 	laterButton.onclick = () => {
 		universal.uiSounds.playSound("step_1");
 		universal.sendEvent("finish_conn");
-		document.querySelector("#sidebar").style.right = "-20%";
+		document.querySelector("#sidebar").style.right = "-100%";
+		document.documentElement.style.setProperty("--v-display", "grid")
+		document.querySelector("#sidebar").style.display = 'flex';
 		universal.save("has_setup", true);
 		universal.reloadRight();
 		universal.vclose();
 		universal.vopen("index");
-		document.querySelector("#sidebar").style.right = "0";
-	};
+		setTimeout(() => { document.querySelector("#sidebar").style.right = "0"; }, 250)
+	}
 	let code = "Loading...";
 	let ip;
 	let m;
@@ -235,8 +210,8 @@
 			.then((res) => res.json())
 			.then((data) => {
 				const status = data.deviceStatus
-					? "Your device is connected to Freedeck!"
-					: "Your device is not connected to Freedeck!";
+					? "Your " + selectedOS + " device is connected!"
+					: "Your " + selectedOS + " device is not connected yet!";
 				const devStatus = document.querySelectorAll(".dev-status");
 				devStatus.forEach((e) => (e.innerText = `Status: ${status}`));
 				if (data.deviceStatus) {
@@ -264,6 +239,23 @@
 </script>
 
 <style>
+	.item {
+		background-color: rgba(0, 0, 0, 0.25);
+		padding: 5px;
+		border-radius: var(--main-radius);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: start;
+		height: max-content;
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
 	.mfa-code {
 		font-weight: bold;
 		font-size: 1.5rem;
@@ -285,7 +277,7 @@
 	}
 
 	.flc button.long {
-		width: 75%;
+		width: 50%;
 	}
 
 	.form {
@@ -311,5 +303,32 @@
 		border-radius: 0.5rem;
 		padding: 1rem;
 		background: white;
+	}
+
+	#setup_04_device {
+		width: 100% !important;
+		margin: 0 !important;
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#setup_04_device body {
+		width: 80% !important; 
+		padding-left: 0 !important;
+	}
+
+	:root {
+		--v-display: none;
+	}
+
+	#keys {
+		display: var(--v-display);
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 </style>

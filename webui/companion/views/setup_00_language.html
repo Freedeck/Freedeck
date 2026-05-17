@@ -1,0 +1,120 @@
+<h1 class="settings-section-title">
+	<span data-i18n-key="settings.sections.language"></span>
+	<span><img src="/app/shared/icons/language.svg" width="50" height="50" loading="lazy" /></span>
+</h1>
+
+<div class="items">
+	<div class="item">
+		<span class="flex-wrap-r alc">
+			<h1 data-i18n-key="locale.display"></h1> &nbsp;-&nbsp; <p data-i18n-key="locale.preview"></p>
+		</span>
+
+		<p data-i18n-key="setup.language.message"></p>
+
+		<div id="language-list"></div>
+	</div>
+
+	<div class="item" id="dev-menu">
+		<button id="bypass" data-i18n-key="setup.language.bypass"></button>
+		<p data-i18n-key="setup.language.bypass.message"></p>
+
+	</div>
+
+	<button id="next" data-i18n-key="setup.next"></button>
+</div>
+
+<script>
+	universal.reloadRight();
+	document.querySelector("#next").onclick = (e) => {
+		window.splashScreen.unsplash();
+		universal.ctx.destructiveView("setup_01_welcome");
+	}
+
+	document.querySelector("#bypass").onclick = (e) => {
+		universal.save("has_setup", "true");
+		universal.vopen("index.html");
+		universal.reloadRight();
+		document.querySelector("#keys").style.display = 'grid';
+	}
+
+	let last = '';
+
+	function a(ev) {
+		if (last == 'f' && ev.key == 'd') {
+			document.querySelector("#dev-menu").style.display = document.querySelector("#dev-menu").style.display == "none" ? "flex" : "none";
+		}
+		last = ev.key;
+	}
+
+	window.addEventListener('keydown', a);
+
+	import {
+		locales,
+		setLocale,
+		translationKey,
+	} from "/app/shared/localization.js";
+	Object.keys(locales).forEach((locale) => {
+		const li = document.createElement("button");
+		li.classList.add("lang-btn")
+		li.innerText = locales[locale];
+		li.onclick = async () => {
+			await setLocale(locale);
+			if (universal.load("locale") !== "en") {
+				universal.sendToast(
+					translationKey("warnings.language"),
+					"Freedeck",
+				);
+				universal.CLU("Boot", "User is using a non-default language.");
+			}
+			// window.location.reload();
+		};
+		document.querySelector("#language-list").appendChild(li);
+	});
+
+</script>
+
+<style>
+	.lang-btn {
+		min-height: calc(var(--button-height) / 2) !important;
+		height: calc(var(--button-height) / 2) !important;
+	}
+
+	#ctxl-view-cont {
+		background: rgba(0, 0, 0, 0.825);
+	}
+	#dev-menu {display:none;}
+
+	#keys {
+		display: none;
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	#setup_00_language {
+		width: 100% !important;
+		margin: 0 !important;
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#setup_00_language body {
+		width: 80% !important;
+		padding-left: 0 !important;
+	}
+
+	.item {
+		background-color: rgba(0, 0, 0, 0.25);
+		padding: 5px;
+		border-radius: var(--main-radius);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: start;
+		height: max-content;
+	}
+</style>

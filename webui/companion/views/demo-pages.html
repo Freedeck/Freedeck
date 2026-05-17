@@ -1,0 +1,65 @@
+<h1 class="settings-section-title">
+	Contextual
+	<span><img src="/app/shared/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
+</h1>
+
+<h3>Active: CTXL v<span class="ctxl-version"></span></h3>
+<small>Contextual (CTXL) is a library by <a href="//github.com/ia74">aidens.dev</a>. CTXL handles inline view lifecycle management, akin to a router for vanilla JS.</small>
+<small>CTXL allows Freedeck to be a single page application on [server]/companion .</small>
+
+<h3>Debug Information</h3>
+
+<p>Loaded views</p>
+<ul id="views"></ul>
+
+<p>Opened views</p>
+<ul id="opened-views"></ul>
+
+<p>View Container</p>
+<kbd id="view_container"></kbd>
+
+<details>
+  <summary>Loading per-view HTML</summary>
+  <div class="preview"></div>
+</details>
+
+<details>
+  <summary>View HTML (for setup 00)</summary>
+  <textarea id="gveo"></textarea>
+  <small>Post-translation</small>
+  <textarea id="gven"></textarea>
+</details>
+
+<script type="module">
+  const ctxl = universal.ctx;
+
+  for(const i of ctxl.views) {
+    const v = document.createElement("li");
+    v.innerText = i;
+    document.querySelector("#views").appendChild(v);
+  }
+
+  for(const i of ctxl.opened) {
+    const v = document.createElement("li");
+    v.innerText = i;
+    document.querySelector("#opened-views").appendChild(v);
+  }
+
+    const view_html = document.createElement(ctxl.as);
+		view_html.innerHTML = ctxl.loadingHTML;
+		fetch(`./views/setup_00_language.${ctxl.as}`)
+			.then((response) => response.text())
+			.then((data) => {
+				view_html.innerHTML = data;
+				universal.translatePage(view_html);
+        document.querySelector("#gveo").textContent = data;
+        document.querySelector("#gven").textContent = view_html.innerHTML;
+			})
+
+
+  document.querySelector("#view_container").textContent = ctxl.view_container;
+
+  document.querySelector(".preview").innerHTML = ctxl.loadingHTML;
+
+  document.querySelector(".ctxl-version").innerText = ctxl.version;
+</script>

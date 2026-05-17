@@ -208,7 +208,7 @@ const contextMenu = async (e) => {
   }
 	if (!hasParentWithTag(e.target)) {
 		const menuItem = document.createElement("div");
-		menuItem.innerHTML = "<strong>Add module:</strong>";
+		menuItem.innerHTML = '<div style="font-weight: bold; margin-bottom: 5px;">Add Module:</div>';
 		custMenu.appendChild(menuItem);
 		for (const sKey in selections) {
 			const sData = selections[sKey];
@@ -240,12 +240,17 @@ const contextMenu = async (e) => {
 							},
 						},
 					});
+					localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition))
 					reloadModules();
           custMenu.close();
 				};
 				custMenu.appendChild(menuItem);
 			}
 		}
+		const sep = document.createElement("div");
+		sep.style = 'font-weight: bold; margin-bottom: 5px;'
+		sep.textContent = "Add Tile:"
+		custMenu.appendChild(sep);
 		let shown = [];
 			for (const sKey of universal.config.profiles[universal.config.profile]) {
 				const title = Object.keys(sKey)[0];
@@ -285,6 +290,7 @@ const contextMenu = async (e) => {
 							},
 						},
 					});
+					localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition))
 					reloadModules();
 					custMenu.close();
 				};
@@ -308,6 +314,7 @@ const contextMenu = async (e) => {
 					layoutDefinition.modules = layoutDefinition.modules.filter((e) => {
 						return e[Object.keys(e)[0]].uuid != layoutData.uuid;
 					});
+					localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition))
 					reloadModules();
           custMenu.close();
 				},

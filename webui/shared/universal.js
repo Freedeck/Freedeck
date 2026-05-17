@@ -14,37 +14,6 @@ import {
 	translationKey,
 } from "./localization";
 
-/**
- * Open the settings menu (on clients only)
- */
-function settingsMenu() {
-	if (universal.name === "Main") {
-		document.querySelector(".settings-menu").style.display = "flex";
-		document.querySelector("#keys").style.display = "none";
-	}
-}
-function settingsMenuClose() {
-	if (universal.name === "Main") {
-		// document.querySelector("#keys").style.display = "grid";
-		// document.querySelector(".settings-menu").style.display = "none";
-		document.querySelector(".settings-menu").style.animationName = "pull-up";
-		document.querySelector(".settings-menu").style.animationDuration = "0.45s";
-		document.querySelector(".settings-menu").style.animationFillMode =
-			"forwards";
-		document.querySelector("#keys").style.animationName = "pull-down";
-		document.querySelector("#keys").style.animationDuration = "0.5s";
-
-		setTimeout(() => {
-			document.querySelector(".settings-menu").style.display = "none";
-			document.querySelector(".settings-menu").style.animationName =
-				"pull-down";
-			document.querySelector("#keys").style.display = "grid";
-		}, 250);
-	}
-}
-window.AppSM = settingsMenu;
-window.AppSMClose = settingsMenuClose;
-
 window._OldFetch = window.fetch;
 window.fetch = async (url, options) => {
 	url = `${universal.relay}${url}`;
@@ -446,24 +415,20 @@ const universal = {
 		if (universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"]) return;
 
 		const logoButton = document.createElement("div");
-		logoButton.onclick = () => {
-			window.AppSM();
-		};
 		logoButton.id = "fd-settings-button";
 		logoButton.style.backgroundImage = "url(/assets/logo_big.png)";
+		
 		logoButton.style.border = "none";
 		logoButton.style.backgroundColor = "transparent";
 		logoButton.style.boxShadow = "none";
-		logoButton.onmousedown = () => {
-			UI.quickActions();
-		};
+		UI.handleActionButton(logoButton);
 		logoButton.className = `button builtin k ${isCentered ? "tiles-center" : ""}`;
 		universal.keys.appendChild(logoButton);
 	},
 	connHelpWizard() {
 		return new Promise((resolve, reject) => {
 			universal.listenFor("finish_conn", resolve);
-			universal.vopen("prompts");
+			universal.vopen("setup_04_device");
 		});
 	},
 	Pages: {},

@@ -22,8 +22,12 @@ const pages = [
 	"plugins",
 	"marketplace",
 	"settings",
-	"prompts",
-	"setup",
+	"demo-pages",
+	"setup_00_language",
+	"setup_01_welcome",
+	"setup_02_personalization",
+	"setup_03_soundboard",
+	"setup_04_device"
 ];
 for (const page of pages) contextual.addView(page);
 
@@ -44,8 +48,10 @@ universal.reloadRight = () => {
 		sidebar.push({ Connect: "/new-connect.html?id=Companion&new_ip=true" });
 	}
 	if (universal.load("has_setup") === "false") {
-		sidebar = [{ Setup: "setup.html" }, { "Pair Device": "prompts.html" }];
+		sidebarEle.style.display = 'none';
+		return;
 	}
+	sidebarEle.style.display = 'flex';
 	sidebarUl.setHTML(
 		`<li style="font-size: .6em; background: none; margin: 0 auto;">
 		<span style="display:flex;align-items:center;">

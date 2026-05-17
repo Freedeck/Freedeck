@@ -1,4 +1,9 @@
 import { universal } from "../../shared/universal.js";
+import { makeSettingsMenu } from "./settingsMenu.js";
+
+universal.listenForOnce("init", () => {
+	makeSettingsMenu();
+})
 
 await universal.init("Main");
 
@@ -68,19 +73,6 @@ document.addEventListener("touchend", (e) => {
 	touchendX = e.changedTouches[0].screenX;
 	checkDirection(touchendX - touchstartX);
 });
-
-const versionDisplay = document.querySelector("#version");
-
-if (versionDisplay) {
-	versionDisplay.innerText = `${universal._information.version.human}`;
-}
-
-const downEvent = (ev) => {};
-
-const fdSettingsButton = document.querySelector("#fd-settings-button");
-
-fdSettingsButton.onmousedown = downEvent;
-fdSettingsButton.ontouchstart = downEvent;
 
 if (
 	universal.getServerStyleFlags()["app.freedeck.last_changelog_viewed"] !==

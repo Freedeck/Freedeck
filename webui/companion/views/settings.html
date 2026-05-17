@@ -28,7 +28,7 @@
 					loading="lazy" /></span>
 		</summary>
 		<br />
-		<p>Freedeck Overlay is a new experiment that allows you to control and see information at a glance. Combined with plugins like Spotify and HAFreedeck, you don't even need to fully look down at your Freedeck device. Do keep in mind that Overlay is experimental, and is subject to bugs.</p>
+		<p data-i18n-key="settings.sections.overlay.message"></p>
 		<center
 			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
 			<button style="width: 95%;" onclick="freedeckexperimental.overlay()">Open Overlay</button>
@@ -61,7 +61,6 @@
 			<span><img src="/app/shared/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<div class="monitor-devices audio-device-picker"></div>
-		<span data-i18n-key="settings.sections.audio_devices.vb"></span>
 		<div class="vb-cables audio-device-picker"></div>
 	</details>
 	<settings section="generale"></settings>
@@ -89,6 +88,7 @@
 		</summary>
 		<textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
 		<p id="hostname">Your hostname here</p>
+		<button id="genru" data-i18n-key="settings.sections.bug.generate_upload"></button>
 		<button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
 	</details>
 	<details style="display: none" id="dev-tools">
@@ -150,6 +150,11 @@
 		);
 	}
 	window.restChnglog = restChnglog;
+
+/**
+ * universal.flags.toggle("recompile-tab");
+		universal.reloadRight();
+		*/
 
 	import {
 		locales,
@@ -385,6 +390,25 @@
 		bgrep.value = "Generating report...";
 		const rep = universal.ExportReportData();
 		bgrep.value = rep;
+		universal.uiSounds.playSound("int_yes")
+	};
+
+	getElement("#genru").onclick = () => {
+		const bgrep = getElement("#bgrep");
+		const report = bgrep.value;
+		bgrep.value = "Generating report...";
+		const rep = universal.ExportReportData();
+		bgrep.value = rep;
+		const formData = new URLSearchParams({ bug_report_data: rep, key: "Freedeck_Hello_Pls_dont_abuse_TY" });
+		fetch("https://content-dl.freedeck.app/upload_bug_report.php", {
+			method: "POST",
+			body: formData
+		}).then((res) => res.text()).then((res) => {
+			const url = new URL("https://github.com/freedeck/freedeck/issues/new");
+			url.searchParams.append("body", "\n-> Auto-created by " + universal._information.version.human+"\n\nBug Report Data (identifier): test4-" + res)
+			window.open(url, "_blank")
+		})
+		universal.uiSounds.playSound("uploaded")
 	};
 
 	getElement("#read-bgrep").onclick = () => {
