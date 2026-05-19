@@ -31,7 +31,6 @@ module.exports = {
 	name: "Main",
 	id: "fd.handlers.main",
 	exec: ({ socket, io, clients }) => {
-		socket.tempLoginID = `${Math.random() * 1024}.tlid.fd`;
 		socket._clientInfo = {};
 
 		debug.log(
@@ -113,11 +112,6 @@ module.exports = {
 
 		debug.log(
 			"Created socket hooks.",
-			`Socket Server / ${socket.user ? socket.user : socket.id}`,
-		);
-
-		debug.log(
-			"Initialized event listeners.",
 			`Socket Server / ${socket.user ? socket.user : socket.id}`,
 		);
 

@@ -3,12 +3,14 @@ const sec = require("../managers/secrets");
 const debug = require("$/debug");
 
 module.exports = {
-	name: "Login",
+	name: "Authentication",
 	id: "fd.handlers.login",
 	exec: ({ socket }) => {
 		if (debug.status) {
 			socket.auth = true;
 		}
+
+		socket.tempLoginID = `${Math.random() * 1024}.tlid.fd`;
 		socket.on(eventNames.login.login_data, (data) => {
 			if (data === socket.tempLoginID) {
 				// yes
