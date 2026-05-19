@@ -65,7 +65,7 @@ window.oncontextmenu = (e) => {
 				case "%context_menu.new_page%":
 					UI.Pages[Object.keys(UI.Pages).length] = [];
 					universal.page = Object.keys(UI.Pages).length - 1;
-					UI.reloadSounds();
+					UI.reloadTiles();
 					universal.sendEvent("page_change");
 					break;
 				case `%context_menu.folder%${universal.config.profile}`:

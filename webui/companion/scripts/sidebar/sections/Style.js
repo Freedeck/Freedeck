@@ -9,11 +9,11 @@ const style = new SidebarSection(
 
 const handleCheckFor = (e, property) => {
 	universal.send(
-		universal.events.default.serverStyleFlagUpdated,
+		universal.events.default.server_flag_updated,
 		setToLocalCfg(property, e.target.checked),
 	);
 	universal.getServerStyleFlags()[property] = e.target.checked;
-	UI.reloadSounds();
+	UI.reloadTiles();
 };
 let fontSize = "25";
 if (universal.load("ebigt") === "true") fontSize = "50";
@@ -33,7 +33,7 @@ style.children.push(
 				`${e.target.value}px`,
 			);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("font-size", e.target.value),
 			);
 		},
@@ -42,7 +42,7 @@ style.children.push(
 			document.documentElement.style.setProperty("--font-size", "15px");
 			setValue("#es-fs", 15);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("font-size", 15),
 			);
 		},
@@ -60,7 +60,7 @@ style.children.push(
 		(e) => {
 			universal.uiSounds.playSound("fdc_slider");
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("buttonSize", e.target.value),
 			);
 		},
@@ -68,7 +68,7 @@ style.children.push(
 			universal.uiSounds.playSound("fdc_slider");
 			setValue("#es-bs", 6);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("buttonSize", 6),
 			);
 		},
@@ -98,10 +98,10 @@ style.children.push(
 			if (diff > 0) {
 				universal.getServerStyleFlags().iconCountPerPage = e.target.value;
 				universal.config.iconCountPerPage = e.target.value;
-				UI.reloadSounds();
+				UI.reloadTiles();
 
 				universal.send(
-					universal.events.default.serverStyleFlagUpdated,
+					universal.events.default.server_flag_updated,
 					setToLocalCfg(
 						"iconCountPerPage",
 						universal.getServerStyleFlags().iconCountPerPage,
@@ -117,7 +117,7 @@ style.children.push(
 		() => {
 			setValue("#es-tc", 14);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("iconCountPerPage", 14),
 			);
 		},
@@ -135,7 +135,7 @@ style.children.push(
 		(e) => {
 			universal.uiSounds.playSound("fdc_slider");
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("tileCols", e.target.value),
 			);
 			let tc = "repeat(5, 2fr)";
@@ -147,7 +147,7 @@ style.children.push(
 			universal.uiSounds.playSound("fdc_slider");
 			setValue("#es-tr", 5);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("tileCols", 5),
 			);
 			document.documentElement.style.setProperty(
@@ -169,7 +169,7 @@ style.children.push(
 		(e) => {
 			universal.uiSounds.playSound("fdc_slider");
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("longPressTime", e.target.value),
 			);
 		},
@@ -177,7 +177,7 @@ style.children.push(
 			universal.uiSounds.playSound("fdc_slider");
 			setValue("#es-lp", 3);
 			universal.send(
-				universal.events.default.serverStyleFlagUpdated,
+				universal.events.default.server_flag_updated,
 				setToLocalCfg("longPressTime", 3),
 			);
 		},

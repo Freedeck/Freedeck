@@ -391,7 +391,7 @@ const universal = {
 		const direction = lastPage > page ? "right" : "left";
 		universal.page = page;
 		universal.save("page", universal.page);
-		UI.reloadSounds();
+		UI.reloadTiles();
 		universal.sendEvent("page_change");
 		universal.sendEvent("animate_page", "automated", direction);
 	},

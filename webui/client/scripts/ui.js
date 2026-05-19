@@ -166,7 +166,7 @@ function initialize() {
 		);
 	}
 	universal.CLU("Boot / UI", "Set font size");
-	reloadSounds();
+	reloadTiles();
 	universal.CLU("Boot / UI", "Reloaded sounds");
 	universal.CLU("Boot / UI", "UI initialized");
 	universal.showBootLog = showBootLog;
@@ -264,7 +264,7 @@ function reloadPluginViews() {
 }
 window.RplTest = reloadPluginViews;
 
-function reloadSounds() {
+function reloadTiles() {
 	// Cache DOM elements and values to avoid repeated lookups
 	const keysContainer = universal.keys;
 	const currentPage = (universal.page = universal.load("page")
@@ -618,7 +618,7 @@ async function visualTypeTileChangeText(tileId, text) {
 }
 
 export const UI = {
-	reloadSounds,
+	reloadTiles,
 	reloadProfile,
 	handleActionButton,
 	Pages,

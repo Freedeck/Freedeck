@@ -21,7 +21,7 @@ export default async function eventsHandler(universal, user) {
 	universal.on(universal.events.companion.set_profile, (data) => {
 		universal.config.profile = data;
 		UI.reloadProfile();
-		UI.reloadSounds();
+		UI.reloadTiles();
 		universal.sendEvent("profile", data);
 	});
 
@@ -154,7 +154,7 @@ export default async function eventsHandler(universal, user) {
 	});
 	universal.on(universal.events.default.reload, () => window.location.reload());
 
-	universal.on(universal.events.default.serverStyleFlagUpdated, (e) => {
+	universal.on(universal.events.default.server_flag_updated, (e) => {
 		document.documentElement.style.setProperty(
 			"--font-size",
 			`${e["font-size"]}px`,
@@ -178,12 +178,12 @@ export default async function eventsHandler(universal, user) {
 			e.iconCountPerPage,
 		);
 		universal.sendEvent("local-config", e);
-		UI.reloadSounds();
+		UI.reloadTiles();
 	});
 
 	universal.on(universal.events.default.reload_sounds, (profileData) => {
 		universal.config.profiles[universal.config.profile] = profileData;
-		UI.reloadSounds();
+		UI.reloadTiles();
 	});
 
 	universal.on(universal.events.default.login, (auth) => {

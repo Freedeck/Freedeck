@@ -144,7 +144,7 @@
 
 	function restChnglog() {
 		universal.send(
-			universal.events.default.serverStyleFlagUpdated,
+			universal.events.default.server_flag_updated,
 			setToLocalCfg("app.freedeck.last_changelog_viewed", null),
 		);
 	}
@@ -563,7 +563,7 @@
 					key: "settings.sections.general.compact",
 					default: universal.getServerStyleFlags()["compact"] || false,
 					onchange: () => {
-						universal.UI.reloadSounds();
+						universal.UI.reloadTiles();
 					},
 				},
 				scroll: {
@@ -571,7 +571,7 @@
 					key: "settings.sections.general.scroll",
 					default: universal.getServerStyleFlags()["scroll"] || false,
 					onchange: () => {
-						universal.UI.reloadSounds();
+						universal.UI.reloadTiles();
 					},
 				},
 				"app.freedeck.ui.fill_tiles": {
@@ -581,7 +581,7 @@
 						universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"] ||
 						false,
 					onchange: () => {
-						universal.UI.reloadSounds();
+						universal.UI.reloadTiles();
 					},
 				},
 				"app.freedeck.ui_sounds": {
@@ -712,7 +712,7 @@
 					universal.flags.set(optionId, "" + input.checked);
 				} else {
 					universal.send(
-						universal.events.default.serverStyleFlagUpdated,
+						universal.events.default.server_flag_updated,
 						setToLocalCfg(optionId, input.checked),
 					);
 				}

@@ -29,7 +29,7 @@ const previousPage = new SidebarButton(
 			universal.page--;
 			universal.save("page", universal.page);
 			universal.uiSounds.playSound("page_down");
-			UI.reloadSounds();
+			UI.reloadTiles();
 			universal.sendEvent("page_change");
 			universal.sendEvent("animate_page");
 		}
@@ -43,7 +43,7 @@ const nextPage = new SidebarButton(
 			universal.page++;
 			universal.save("page", universal.page);
 			universal.uiSounds.playSound("page_up");
-			UI.reloadSounds();
+			UI.reloadTiles();
 			universal.sendEvent("page_change");
 			universal.sendEvent("animate_page");
 		}

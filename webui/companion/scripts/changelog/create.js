@@ -23,7 +23,7 @@ const makeThanks = (force = false) => {
 	const close = document.createElement("button");
 	close.onclick = () => {
 		universal.send(
-			universal.events.default.serverStyleFlagUpdated,
+			universal.events.default.server_flag_updated,
 			setToLocalCfg(
 				"app.freedeck.last_changelog_viewed",
 				universal._information.version.raw,

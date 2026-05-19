@@ -233,7 +233,7 @@ export class SidebarSlider {
 		resetButton.id = `${this.id}-reset`;
 		resetButton.onclick = (e) => {
 			this.onReset(e);
-			UI.reloadSounds();
+			UI.reloadTiles();
 		};
 		container.appendChild(resetButton);
 

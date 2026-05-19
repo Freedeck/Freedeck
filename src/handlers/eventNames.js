@@ -25,7 +25,7 @@ const eventNames = {
 		reload_single_plugin: "dRSP",
 		enable_plugin: "dEP",
 		update_plugins: "dUP",
-		serverStyleFlagUpdated: "dCC",
+		server_flag_updated: "dCC",
 		update_tile: "sU",
 	},
 

@@ -6,5 +6,5 @@ module.exports = ({ io, data }) => {
 		styleManager._cache[key] = data[key];
 	}
 	styleManager.save();
-	io.emit(eventNames.default.serverStyleFlagUpdated, data);
+	io.emit(eventNames.default.server_flag_updated, data);
 };
