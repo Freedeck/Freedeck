@@ -146,33 +146,32 @@ async function handleSock(socket) {
 	socket.sendNotif = sendNotification;
 
 	NotificationManager.once("newNotification", sendNotification);
+	socket.onAny((event, ...args) => {
+		if (event !== eventNames.fdws.sendRequest)
+			debug.log(
+				`Received event ${event}`,
+				`Socket Server / S<-${socket.user ? socket.user : socket.id}`,
+			);
+	});
+	socket.onAnyOutgoing((event, args) => {
+		if (
+			event !== eventNames.fdws.sendRequest &&
+			event !== eventNames.fdws.reply &&
+			!new String(event).startsWith("fdws_") &&
+			event !== "I"
+		) {
+			debug.log(
+				`Emitted event ${event}`,
+				`Socket Server / S->${socket.user ? socket.user : socket.id}`,
+			);
+		}
 
-	// socket.onAny((event, ...args) => {
-	// 	if (event !== eventNames.fdws.sendRequest)
-	// 		debug.log(
-	// 			`Received event ${event}`,
-	// 			`Socket Server / S<-${socket.user ? socket.user : socket.id}`,
-	// 		);
-	// });
-	// socket.onAnyOutgoing((event, args) => {
-	// 	if (
-	// 		event !== eventNames.fdws.sendRequest &&
-	// 		event !== eventNames.fdws.reply &&
-	// 		!new String(event).startsWith("fdws_") &&
-	// 		event !== "I"
-	// 	) {
-	// 		debug.log(
-	// 			`Emitted event ${event}`,
-	// 			`Socket Server / S->${socket.user ? socket.user : socket.id}`,
-	// 		);
-	// 	}
-
-	// 	if (event === "I")
-	// 		debug.log(
-	// 			"Emitted event I with server data",
-	// 			`Socket Server / S->${socket.user ? socket.user : socket.id}`,
-	// 		);
-	// });
+		if (event === "I")
+			debug.log(
+				"Emitted event I with server data",
+				`Socket Server / S->${socket.user ? socket.user : socket.id}`,
+			);
+	});
 
 	clients.push(socket);
 
@@ -193,7 +192,7 @@ async function handleSock(socket) {
 				debug.log(picocolors.red(e));
 			}
 			debug.log(
-				`${picocolors.cyan(`Added new handler ${handler.name} (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
+				`${picocolors.cyan(`Added handler ${handler.name} (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
 				"Socket Server",
 			);
 			recordTime(`server:load-handler,${handler.name}`);

@@ -31,7 +31,6 @@ module.exports = {
 	name: "Main",
 	id: "fd.handlers.main",
 	exec: ({ socket, io, clients }) => {
-		fdws._io = io;
 		socket.tempLoginID = `${Math.random() * 1024}.tlid.fd`;
 		socket._clientInfo = {};
 
@@ -50,16 +49,6 @@ module.exports = {
 				pc.red("Disconnected"),
 				`Socket Server / ${socket.user ? socket.user : socket.id}`,
 			);
-		});
-
-		socket.on(eventNames.fdws.sendRequest, (data) => {
-			if (fdws.connected) {
-				fdws.send(data[0], ...data[1]);
-			} else {
-			}
-		});
-		socket.on(eventNames.fdws.state, () => {
-			socket.emit(eventNames.fdws.state, fdws.connected);
 		});
 
 		for (const event of Object.keys(eventNames.default)) {

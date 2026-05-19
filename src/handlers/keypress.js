@@ -4,7 +4,7 @@ const settings = require("../managers/settings");
 const cfg = settings.settings();
 
 module.exports = {
-	name: "Keypress Handler",
+	name: "Keypress",
 	id: "fd.handlers.keypress",
 	flags: ["AUTH"],
 	exec: ({ socket, types, plugins, io }) => {
