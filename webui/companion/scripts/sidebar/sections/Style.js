@@ -190,7 +190,6 @@ universal.listenFor("launch", update);
 update();
 
 function update() {
-	console.log(universal.getServerStyleFlags());
 	setValue("#es-fs", universal.getServerStyleFlags()["font-size"]);
 	setValue("#es-bs", universal.getServerStyleFlags().buttonSize);
 	setValue("#es-tc", universal.getServerStyleFlags().iconCountPerPage);

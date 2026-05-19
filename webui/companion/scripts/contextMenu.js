@@ -169,13 +169,13 @@ window.oncontextmenu = (e) => {
 /**
  * @name showReplaceGUI
  * @param {HTMLElement} srcElement The element that you want to copy/replace.
- * @description Show the GUI for replacing a button with another from the universal.app_sounds context.
+ * @description Show the GUI for replacing a Tile with another from the universal.app_tiles context.
  */
 function showReplaceGUI(srcElement) {
 	UI.reloadProfile();
 	window.UniversalUI.show.showPick(
 		"Copy from:",
-		universal.app_sounds.map((sound) => {
+		universal.app_tiles.map((sound) => {
 			const k = Object.keys(sound)[0];
 			return {
 				name: k,
@@ -184,7 +184,7 @@ function showReplaceGUI(srcElement) {
 		}),
 		({ value }) => {
 			UI.reloadProfile();
-			const valueToo = universal.app_sounds.filter((sound) => {
+			const valueToo = universal.app_tiles.filter((sound) => {
 				const k = Object.keys(sound)[0];
 				return k === value.name;
 			})[0][value.name];

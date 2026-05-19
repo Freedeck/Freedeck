@@ -35,8 +35,8 @@ export default async function eventsHandler(universal, user) {
 
 		if (interaction.type !== "fd.sound") return;
 		universal.reloadProfile();
-		// get name from universal.app_sounds with uuid
-		const a = universal.app_sounds.filter((snd) => {
+		// get name from universal.app_tiles with uuid
+		const a = universal.app_tiles.filter((snd) => {
 			const k = Object.keys(snd)[0];
 			return snd[k].uuid === interaction.uuid;
 		})[0];

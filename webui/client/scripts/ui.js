@@ -167,7 +167,7 @@ function initialize() {
 	}
 	universal.CLU("Boot / UI", "Set font size");
 	reloadTiles();
-	universal.CLU("Boot / UI", "Reloaded sounds");
+	universal.CLU("Boot / UI", "Reloaded Tiles");
 	universal.CLU("Boot / UI", "UI initialized");
 	universal.showBootLog = showBootLog;
 	universal.closeBootLog = closeBootLog;
@@ -178,23 +178,23 @@ function initialize() {
  * @description Reload the current profile
  */
 function reloadProfile() {
-	universal.app_sounds = [];
+	universal.app_tiles = [];
 	try {
-		universal.app_sounds = universal.config.profiles[universal.config.profile];
+		universal.app_tiles = universal.config.profiles[universal.config.profile];
 	} catch (e) {
 		console.log(e);
 	}
 	let max = 0;
 	for (
 		let i = 0;
-		i < universal.app_sounds.length / universal.config.iconCountPerPage;
+		i < universal.app_tiles.length / universal.config.iconCountPerPage;
 		i++
 	) {
 		Pages[i] = true;
 		max++;
 	}
 
-	for (const sound of universal.app_sounds) {
+	for (const sound of universal.app_tiles) {
 		const k = Object.keys(sound)[0];
 		const snd = sound[k];
 		if (snd.pos >= max * universal.config.iconCountPerPage) {
@@ -328,7 +328,7 @@ function reloadTiles() {
 	const tooltipFragment = document.createDocumentFragment();
 
 	// Pre-filter sounds for current page
-	const currentPageSounds = universal.app_sounds.filter((sound) => {
+	const currentPageTiles = universal.app_tiles.filter((sound) => {
 		const soundKey = Object.keys(sound)[0];
 		const pos = sound[soundKey].pos;
 		return pos >= startIndex && pos < endIndex;
@@ -336,14 +336,14 @@ function reloadTiles() {
 
 	// Find duplicates once rather than in each iteration
 	const positionCounts = {};
-	currentPageSounds.forEach((sound) => {
+	currentPageTiles.forEach((sound) => {
 		const soundKey = Object.keys(sound)[0];
 		const pos = sound[soundKey].pos;
 		positionCounts[pos] = (positionCounts[pos] || 0) + 1;
 	});
 
 	// Process only sounds for the current page - without changing element order
-	for (const sound of currentPageSounds) {
+	for (const sound of currentPageTiles) {
 		try {
 			const k = Object.keys(sound)[0];
 			const snd = sound[k];

@@ -31,7 +31,7 @@ export default async function dataHandler(universal, user) {
 		universal.CLU("Incoming Data Handler:Setup", "Set Config");
 		universal._serverRequiresAuth = parsed.config.useAuthentication;
 		universal.CLU("Incoming Data Handler:Setup", "Set serverRequiresAuth");
-		universal.app_sounds = parsed.config.profiles[parsed.config.profile];
+		universal.app_tiles = parsed.config.profiles[parsed.config.profile];
 		universal.CLU("Incoming Data Handler:Setup", "Set Config Sounds");
 		universal.plugins = parsed.plugins;
 		universal.CLU("Incoming Data Handler:Setup", "Set plugins");

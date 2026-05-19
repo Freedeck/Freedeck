@@ -433,10 +433,10 @@ const universal = {
 	},
 	Pages: {},
 	reloadProfile: () => {
-		universal.app_sounds = universal.config.profiles[universal.config.profile];
+		universal.app_tiles = universal.config.profiles[universal.config.profile];
 		for (
 			let i = 0;
-			i < universal.app_sounds.length / universal.config.iconCountPerPage;
+			i < universal.app_tiles.length / universal.config.iconCountPerPage;
 			i++
 		) {
 			universal.Pages[i] = true;

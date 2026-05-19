@@ -467,10 +467,9 @@
 	document.querySelector("#soundpack-author").innerText =
 		universal.uiSounds.info.author;
 
-	function loadSounds() {
+	function loadUISoundListing() {
 		const uis = document.querySelector(".uisounds");
 		uis.innerHTML = "";
-		console.log(universal.uiSounds.sounds);
 		const uisounds = universal.uiSounds.sounds;
 		Object.keys(uisounds).forEach((sound) => {
 			const li = document.createElement("li");
@@ -502,7 +501,7 @@
 			universal.save("soundpack", info.id);
 			universal.uiSounds.reload();
 			universal.uiSounds.load(info.id).then(() => {
-				loadSounds();
+				loadUISoundListing();
 			});
 			document.querySelector("#soundpack-id").innerText = info.id;
 			document.querySelector("#soundpack-title").innerText = info.name;
@@ -730,5 +729,5 @@
 		settingsList.appendChild(container);
 	});
 
-	loadSounds();
+	loadUISoundListing();
 </script>
