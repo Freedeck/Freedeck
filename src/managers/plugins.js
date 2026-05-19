@@ -41,6 +41,7 @@ const pl = {
 				author,
 				version,
 				intents: plugin[1].instance._intent || [],
+				packageType: plugin[1].instance.packageType || "plugin",
 				Settings: {},
 				popout,
 				dashModules,

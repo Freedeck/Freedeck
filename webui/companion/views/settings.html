@@ -207,6 +207,9 @@
 			}
 		})();
 		const infoEle = document.createElement("div");
+		if(req.packageType == "theme") {
+			imgEle.src = "/app/shared/icons/theme-icon.png";
+		}
 		infoEle.appendChild(imgEle);
 		infoEle.classList.add("plugin-information");
 

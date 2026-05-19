@@ -17,6 +17,12 @@
 	flex-wrap: wrap;
 }
 
+.plugin-information {
+	height: 100%;
+	display:flex;
+	flex-direction: column;
+}
+
 #language-list {
 	display: flex;
 	flex-direction: row;
@@ -55,8 +61,7 @@ center ul {
 	border-radius: var(--main-radius);
 	margin: 0.5rem 0;
 	gap: 0.25rem;
-	min-width: 150px;
-	height: max-content;
+	min-width: 2rem;
 	text-overflow: ellipsis;
 
 	background: var(--modal-item-bg);

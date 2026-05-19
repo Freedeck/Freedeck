@@ -99,6 +99,7 @@ async function openPackage({
 		const noop = (...e) => {};
 		const instantiated = {};
 		instantiated.id = name;
+		instantiated.packageType = "theme"
 		instantiated.name = `${freedeck.title} (Theme)`;
 		instantiated.author = author;
 		instantiated.v2 = true;

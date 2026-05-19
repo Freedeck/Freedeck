@@ -149,6 +149,12 @@ class Plugin {
 				path.resolve(this._hookLocation, this.id + "-icon.png"),
 				{ force: true },
 			);
+		} else {
+			fs.cpSync(
+				path.resolve("webui/shared/icons/empty-icon.png"),
+				path.resolve(this._hookLocation, this.id + "-icon.png"),
+				{ force: true },
+			);
 		}
 		this.emit(events.ready);
 
