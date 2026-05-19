@@ -1,5 +1,5 @@
 <h1 class="settings-section-title">
-	Device Pairing
+	<span data-i18n-key="setup.device.title"></span>
 	<span><img src="/app/shared/icons/pairing.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 <div class="items">
@@ -9,27 +9,24 @@
 	</div>
 
 	<div class="item">
-		<center class="dev-status">Status: Checking...</center>
-		<p>Scan the QR code, or browse to <code>http://<span class="local-net"></span>:5754</code> in <strong
-				class="osp-browser">Safari</strong>.</p>
-		<p>
-			When you see Freedeck, <span class="osp-add-to-home-screen">press Share at the bottom</span>, then Add To Home
-			Screen.
-		</p>
-		<p>This will automatically close when your device is connected.</p>
+		<center class="dev-status"></center>
+
+		<p id="scan-or-go"></p>
+		<p id="add-to-hs"></p>
+		<p data-i18n-key="setup.device.autoclose"></p>
 		<div class="flex-wrap-r">
-			<button id="later-button">Connect Later</button>
+			<button id="later-button" data-i18n-key="setup.device.connect_later"></button>
 		</div>
 
-		<center>Not on <span class="osp-selected">iOS</span>?</center>
+		<center id="swapper"></center>
 		<div class="flex-wrap-r">
 			<button class="long" id="connect-button" style="display:none;">
 				<img src="/app/shared/icons/apple.svg" width="25" height="25" loading="lazy" />
-				<p>View for iOS</p>
+				<p data-i18n-key="setup.device.view_for_ios"></p>
 			</button>
 			<button class="long" id="connect-button-android">
 				<img src="/app/shared/icons/android.svg" width="25" height="25" loading="lazy" />
-				<p>View for Android</p>
+				<p data-i18n-key="setup.device.view_for_android"></p>
 			</button>
 		</div>
 	</div>
@@ -37,17 +34,11 @@
 
 	<div class="item">
 		<details id="or-mfa">
-			<summary>Or, connect using my.freedeck.app</summary>
+			<summary data-i18n-key="setup.device.mfa.entice"></summary>
+			<a target='_blank' href='https://freedeck.app/data' data-i18n-key="setup.device.mfa.data"></a>
 			<ul>
-				<li>
-					Open <strong class="osp-browser">Safari</strong> and go to
-					<i><strong class="osp-host"></strong></i>
-				</li>
-				<li>
-					Type in code
-					<i><span class="mfa-code">Please accept to use this service...</span></i>
-					and press Connect.
-				</li>
+				<li id="mfa-go-to"></li>
+				<li id="mfa-code"></li>
 			</ul>
 		</details>
 
@@ -82,65 +73,30 @@
 				correctLevel: QRCode.CorrectLevel.H,
 			});
 		}
+		let lastTxt = "";
 		window.editQrCode = (txt) => {
+			if(lastTxt != txt) {
+				universal.sendEvent("setup.device.swap", "ios", true)
+				lastTxt = txt;
+			}
 			qrCode.clear(); // clear the code.
 			qrCode.makeCode(txt); // make another code.
 		};
 	})();
 	const laterButton = document.querySelector("#later-button");
-	const localNet = document.querySelectorAll(".local-net");
 
-
-	const placeholderOs = document.querySelector(".osp-selected");
-	const placeholderBrowser = document.querySelector(".osp-browser");
 	const orMfa = document.querySelector("#or-mfa");
-	const placeholderAddToHomeScreen = document.querySelector(
-		".osp-add-to-home-screen",
-	);
 
+	let seenWarning = false;
 	orMfa.onclick = () => {
-		if (m) return;
-		m = window.UniversalUI.show.showYesNo(
-			"By pressing Accept, you are willing to share:",
-			"- your local IP (" +
-			ip +
-			")<br>- your PC's hostname (" +
-			universal._information.hostname +
-			")<br><br>with Freedeck.app servers.<br><br><a target='_blank' href='https://freedeck.app/data'>Read the Freedeck data policy to learn more.</a><br><br><span class='mayclose'>You may close this popup in <span class='realtimetc'>5</span> seconds</span>",
-			(yes) => {
-				fetch("/api/discover/code-request")
-					.then((res) => res.json())
-					.then((res) => {
-						document
-							.querySelectorAll(".mfa-code")
-							.forEach((e) => (e.innerText = res.code));
-					});
-			},
-			false,
-		);
-		let count = 5;
-
-		const tclock = setInterval(() => {
-			count--;
-			if (m) {
-				clearInterval(tclock);
-				return;
-			}
-			m.modal.querySelector(".realtimetc").innerText = count;
-			if (count == 0) m.modal.querySelector(".mayclose").style.display = "none";
-		}, 1000);
-
-		const ci = setTimeout(() => {
-			if (m) {
-				clearInterval(ci);
-				return;
-			}
-			m.modal.querySelector(".modal-close").onclick = () => {
-				m.modal.remove();
-				laterButton.click();
-			};
-			m.modal.querySelector(".modal-close").style.display = "block";
-		}, 5000);
+		if (seenWarning) return;
+		fetch("/api/discover/code-request")
+			.then((res) => res.json())
+			.then((res) => {
+				mfaCode.innerText = universal.translationKey("setup.device.mfa.type_code").replace("$1", res.code)
+			});
+		universal.sendToast(universal.cleanHTML(universal.translationKey("setup.device.mfa.collected")).replace("$1", ip).replace("$2", universal._information.hostname), universal.cleanHTML(universal.translationKey("setup.device.mfa.title")))
+		seenWarning = true;
 	};
 
 	const connectButton = document.querySelector("#connect-button");
@@ -149,27 +105,43 @@
 	);
 	let selectedOS = "iOS";
 	connectButtonAndroid.onclick = () => {
-		selectedOS = "Android"
-		placeholderOs.innerText = selectedOS;
-		placeholderBrowser.innerText = "your web browser (Example: Chrome)";
-		placeholderAddToHomeScreen.innerText =
-			"click the three dots in the top right";
-			connectButton.style.display='flex';
-			connectButtonAndroid.style.display='none';
+		universal.sendEvent("setup.device.swap", "android")
 	};
 	connectButton.onclick = () => {
-		selectedOS = "iOS"
-		placeholderOs.innerText = selectedOS;
-		placeholderBrowser.innerText = "Safari";
-		placeholderAddToHomeScreen.innerText =
-			"press the share button at the bottom (or top right)";
-connectButton.style.display='none';
-			connectButtonAndroid.style.display='flex';
+		universal.sendEvent("setup.device.swap", "ios")
 	};
-	universal.uiSounds.playSound("step_1");
+
+	const scanOrGo = document.querySelector("#scan-or-go");
+	const atHS = document.querySelector("#add-to-hs");
+	const swapper = document.querySelector("#swapper");
+	const mfaGoTo = document.querySelector("#mfa-go-to")
+	const mfaCode = document.querySelector("#mfa-code")
+	let browser;
+	let ip;
+	let connectedDevice = false;
+	let mfaHost;
+
+	universal.listenFor("setup.device.swap", (e, silent) => {
+		browser = universal.translationKey("setup.device." + e + ".browser");
+		selectedOS = universal.translationKey("setup.device." + e)
+		if (!silent) universal.uiSounds.playSound("select_option");
+
+		if (e == 'ios') {
+			connectButton.style.display = 'none';
+			connectButtonAndroid.style.display = 'flex';
+		} else {
+			connectButton.style.display = 'flex';
+			connectButtonAndroid.style.display = 'none';
+		}
+
+		scanOrGo.innerText = universal.translationKey("setup.device.scan_or_browse").replace("$1", ip).replace("$2", browser)
+		atHS.innerText = universal.translationKey("setup.device." + e + ".add_to_home_screen")
+		swapper.innerText = universal.translationKey("setup.device.swap").replace("$1", selectedOS)
+	})
 
 	laterButton.onclick = () => {
-		universal.uiSounds.playSound("step_1");
+		if (connectedDevice) universal.uiSounds.playSound("mobile_connect");
+		else universal.uiSounds.playSound("select_option_false")
 		universal.sendEvent("finish_conn");
 		document.querySelector("#sidebar").style.right = "-100%";
 		document.documentElement.style.setProperty("--v-display", "grid")
@@ -180,59 +152,37 @@ connectButton.style.display='none';
 		universal.vopen("index");
 		setTimeout(() => { document.querySelector("#sidebar").style.right = "0"; }, 250)
 	}
-	let code = "Loading...";
-	let ip;
-	let m;
-
-	fetch("/api/discover")
-		.then((res) => res.json())
-		.then((data) => {
-			document
-				.querySelectorAll(".osp-host")
-				.forEach((e) => (e.innerText = data.myApp.host));
-			localNet.forEach(
-				(e) => (e.innerText = data.ip[Object.keys(data.ip)[0]][0]),
-			);
-			if (Object.keys(data.ip).length == 0) {
-				document
-					.querySelectorAll(".mfa-code")
-					.forEach(
-						(e) => (e.innerText = "You are offline, please try again later."),
-					);
-				return;
-			}
-			ip = data.ip[Object.keys(data.ip)[0]][0];
-			editQrCode("http://" + ip + ":5754/");
-		});
 
 	const poll = setInterval(() => {
 		fetch("/api/discover")
 			.then((res) => res.json())
 			.then((data) => {
+				mfaHost = data.myApp.host;
+				ip = data.ip[Object.keys(data.ip)[0]][0];
+				editQrCode("http://" + ip + ":5754/");
 				const status = data.deviceStatus
-					? "Your " + selectedOS + " device is connected!"
-					: "Your " + selectedOS + " device is not connected yet!";
+					? universal.translationKey("setup.device.connection.true").replace("$1", selectedOS)
+					: universal.translationKey("setup.device.connection.false").replace("$1", selectedOS)
 				const devStatus = document.querySelectorAll(".dev-status");
-				devStatus.forEach((e) => (e.innerText = `Status: ${status}`));
+				const prefix = universal.translationKey("setup.device.connection.prefix");
+				devStatus.forEach((e) => (e.innerText = `${prefix}${status}`));
+				if (Object.keys(data.ip).length == 0) {
+					mfaCode.innerText = universal.translationKey("setup.device.offline");
+					return;
+				}
 				if (data.deviceStatus) {
 					devStatus.forEach((e) => (e.style.color = "green"));
-					document.querySelector("#later-button").innerText = "Close";
 					clearInterval(poll);
-					universal.uiSounds.playSound("step_3");
+					connectedDevice = true;
 					document.querySelector("#later-button").click();
 				} else {
 					devStatus.forEach((e) => (e.style.color = "red"));
 				}
 				if (data.myApp?.code) {
-					document
-						.querySelectorAll(".mfa-code")
-						.forEach((e) => (e.innerText = data.myApp.code));
-					if (data.myApp.code !== "Loading...") m = true;
+					mfaCode.innerText = universal.translationKey("setup.device.mfa.type_code").replace("$1", data.myApp.code)
 				}
 				if (data.myApp?.host) {
-					document
-						.querySelectorAll(".osp-host")
-						.forEach((e) => (e.innerText = data.myApp.host));
+					mfaGoTo.innerText = universal.translationKey("setup.device.mfa.go_to").replace("$1", browser).replace("$2", mfaHost)
 				}
 			});
 	}, 500);
@@ -314,7 +264,7 @@ connectButton.style.display='none';
 	}
 
 	#setup_04_device body {
-		width: 80% !important; 
+		width: 80% !important;
 		padding-left: 0 !important;
 	}
 
