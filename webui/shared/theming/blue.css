@@ -2,12 +2,11 @@
 	--name: "Blue";
 	--description: "This is a blue theme. Dark mode users beware!";
 	--author: "Freedeck";
-	--version: "1.0.0";
 }
 
 :root {
-	--blue-1: hsl(225, 100%, 50%);
-	--blue-2: hsl(221, 100%, 53%);
+	--blue-1: hsl(225, 72%, 41%);
+	--blue-2: hsl(225, 72%, 53%);
 	--blue-gradient: linear-gradient(
 		45deg,
 		var(--blue-1) 0%,
@@ -18,13 +17,17 @@
 
 	--main-bg: var(--blue-gradient);
 
-	--tile-bg: hsla(225, 100%, 40%, 0.5);
+	--tile-bg: hsla(225, 72%, 41%, 0.5);
+	--tile-border: 1px solid hsla(225, 72%, 90%, 50%);
 
 	--modal-bg: var(--blue-1);
 	--modal-color: black;
 
+	--text-color: white;
+	--text-color-secondary: white;
+
 	--modal-item-bg: var(--blue-gradient);
-	--modal-item-text: black;
+	--modal-item-text: white;
 
 	--input-bg: hsl(225, 100%, 35%);
 

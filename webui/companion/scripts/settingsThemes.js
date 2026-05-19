@@ -22,7 +22,12 @@ window.loadThemeListing = async () => {
 		const element = document.createElement("div");
 		element.className = "theme";
 		const title = document.createElement("h2");
-		title.innerText = theme.name;
+		title.innerText = theme.name+" ";
+		if(theme.version) {
+			const version = document.createElement("small");
+			version.textContent = theme.version;
+			title.appendChild(version);
+		}
 		element.appendChild(title);
 		const desc = document.createElement("p");
 		desc.innerText = theme.description;

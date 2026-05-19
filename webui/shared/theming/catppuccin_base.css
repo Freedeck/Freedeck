@@ -1,16 +1,18 @@
 :theme-meta {
-	--name: "Catppuccin Mocha";
+	--name: "Catppuccin";
 	--description: "The soothing pastel theme for Freedeck.";
 	--author: "Freedeck";
-	--version: "1.0.0";
+	--version: "Mocha";
 }
 
 :root {
-	--ctp-mocha-lavender: #b4befe;
+	--ctp-accent: #b4befe;
+	--ctp-accent-transp: #b4befe20;
 	--ctp-text: #cdd6f4;
 	--ctp-subtext-1: #bac2de;
 	--ctp-subtext-0: #a6adc8;
 	--ctp-overlay-2: #9399b2;
+	--ctp-overlay-2-transp: #9399b280;
 	--ctp-overlay-1: #7f849c;
 	--ctp-overlay-0: #6c7086;
 	--ctp-surface-2: #585b70;
@@ -28,14 +30,14 @@
 		var(--ctp-crust) 100%
 	);
 
-	--tile-bg: rgba(180, 190, 254, 0.125);
+	--tile-bg: var(--ctp-accent-transp);
 
-	--slider-background: rgba(147, 153, 178, 0.5);
+	--slider-background: var(--ctp-overlay-2-transp);
 
 	--text-color: var(--ctp-text);
 	--text-color-secondary: var(--ctp-subtext-1);
 
-	--tile-border: 1px solid rgba(147, 153, 178, 0.5);
+	--tile-border: 1px solid var(--ctp-overlay-2-transp);
 
 	--modal-color: var(--ctp-text);
 	--modal-bg: var(--ctp-crust);
@@ -46,10 +48,10 @@
 
 	--modal-item-bg: linear-gradient(
 		45deg,
-		rgba(30, 30, 40, 1) 0%,
-		rgba(49, 50, 68, 1) 33%,
-		rgba(30, 30, 40, 1) 66%,
-		rgba(49, 50, 68, 1) 100%
+		var(--ctp-base) 0%,
+		var(--ctp-surface-0) 33%,
+		var(--ctp-base) 66%,
+		var(--ctp-surface-0) 100%
 	);
 	--modal-item-bg-size: 400% 400%;
 	--modal-item-bg-anim: error-bg 5s cubic-bezier(0.445, 0.05, 0.55, 0.95)

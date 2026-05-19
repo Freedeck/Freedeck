@@ -2,10 +2,9 @@
 
 :theme-meta {
 	--name: "Fun";
-	--description: "This theme makes Freedeck unusable. Use at your own risk. Very fun though.";
+	--description: "This theme makes Freedeck very fun, use at your own risk.";
 	--author: "Freedeck";
 	--warn: "This theme makes text unreadable and the UI will start spinning. This theme is a joke, but it may be exceedingly hard to disable if you proceed.";
-	--version: "1.0.0";
 }
 
 :root {
