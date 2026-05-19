@@ -18,7 +18,7 @@ const eventNames = {
 		notif: "dN",
 
 		reload: "dR",
-		reload_sounds: "dRS",
+		reload_tiles: "dRS",
 		recompile: "dC",
 
 		disable_plugin: "dBP",

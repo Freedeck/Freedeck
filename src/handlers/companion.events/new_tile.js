@@ -19,7 +19,7 @@ module.exports = ({ socket, io, data }) => {
 	});
 	config.save();
 	io.emit(
-		eventNames.default.reload_sounds,
+		eventNames.default.reload_tiles,
 		settings.profiles[settings.profile],
 	);
 };

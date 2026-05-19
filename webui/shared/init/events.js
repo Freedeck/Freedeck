@@ -181,7 +181,7 @@ export default async function eventsHandler(universal, user) {
 		UI.reloadTiles();
 	});
 
-	universal.on(universal.events.default.reload_sounds, (profileData) => {
+	universal.on(universal.events.default.reload_tiles, (profileData) => {
 		universal.config.profiles[universal.config.profile] = profileData;
 		UI.reloadTiles();
 	});
