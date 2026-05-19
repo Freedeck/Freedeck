@@ -11,8 +11,6 @@ module.exports = {
 		socket.on(eventNames.fdws.sendRequest, (data) => {
 			if (fdws.connected) {
 				fdws.send(data[0], ...data[1]);
-			} else {
-				debug.log("Tried sending request to disconnected FDWS", "App WebSocket")
 			}
 		});
 
