@@ -128,7 +128,7 @@ function closeBootLog() {
 		resolve(true);
 		bootLogContainer.style.scale = "0";
 		openCloseBootLog.style.display = "none";
-		if (universal.getServerStyleFlags()["app.freedeck.skip_boot_animation"]) {
+		if (universal.getServerFlags()["app.freedeck.skip_boot_animation"]) {
 			bootLog.style.display = "none";
 			if (window.splashScreen) window.splashScreen.unsplash();
 		} else {
@@ -152,17 +152,17 @@ function closeBootLog() {
 function initialize() {
 	universal.CLU("Boot / UI", "Initializing UI");
 	universal.config.iconCountPerPage =
-		Number.parseInt(universal.getServerStyleFlags().iconCountPerPage) || 14;
+		Number.parseInt(universal.getServerFlags().iconCountPerPage) || 14;
 	universal.CLU("Boot / UI", "Set icon count");
 	universal.theming.setTheme(
 		universal.config.theme ? universal.config.theme : "default.css",
 		false,
 	);
 	universal.CLU("Boot / UI", "Set local theme");
-	if (universal.getServerStyleFlags()["font-size"] !== 15) {
+	if (universal.getServerFlags()["font-size"] !== 15) {
 		document.documentElement.style.setProperty(
 			"--font-size",
-			`${universal.getServerStyleFlags()["font-size"]}px`,
+			`${universal.getServerFlags()["font-size"]}px`,
 		);
 	}
 	universal.CLU("Boot / UI", "Set font size");
@@ -271,13 +271,13 @@ function reloadTiles() {
 		? Number.parseInt(universal.load("page"))
 		: 0);
 	const iconsPerPage = (universal.config.iconCountPerPage =
-		universal.getServerStyleFlags().iconCountPerPage);
+		universal.getServerFlags().iconCountPerPage);
 	const startIndex = iconsPerPage * currentPage;
 	const endIndex = iconsPerPage * (currentPage + 1);
 	const isCompanionMode = universal.name === "Companion";
 
 	// Handle fill style - batch style operations
-	if (universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"]) {
+	if (universal.getServerFlags()["app.freedeck.ui.fill_tiles"]) {
 		let fillStyle = document.getElementById("fill");
 		if (!fillStyle) {
 			fillStyle = document.createElement("style");
@@ -296,14 +296,14 @@ function reloadTiles() {
 	}
 
 	// Handle compact mode in one operation
-	keysContainer.style.width = universal.getServerStyleFlags().compact
+	keysContainer.style.width = universal.getServerFlags().compact
 		? "unset"
 		: "100%";
-	keysContainer.style.height = universal.getServerStyleFlags().compact
+	keysContainer.style.height = universal.getServerFlags().compact
 		? "unset"
 		: "100%";
 	if (universal.name !== "Companion") {
-		keysContainer.style.padding = universal.getServerStyleFlags().compact
+		keysContainer.style.padding = universal.getServerFlags().compact
 			? ".25rem"
 			: "1rem";
 	}
@@ -498,7 +498,7 @@ function reloadTiles() {
 			}
 
 			tooltipContent += "<p data-i18n-key='tooltips.tile.editable'></p>";
-			if (universal.getServerStyleFlags()["app.freedeck.developer_mode"]) {
+			if (universal.getServerFlags()["app.freedeck.developer_mode"]) {
 				tooltipContent += `<i>${snd.type}</i>`;
 			}
 

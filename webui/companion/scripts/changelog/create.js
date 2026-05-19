@@ -3,7 +3,7 @@ import changes from "./changes.json";
 const makeThanks = (force = false) => {
 	if (!force) {
 		if (
-			universal.getServerStyleFlags()["app.freedeck.last_changelog_viewed"] ===
+			universal.getServerFlags()["app.freedeck.last_changelog_viewed"] ===
 			universal._information.version.raw
 		)
 			return;
@@ -134,7 +134,7 @@ const makeNested = (data, parent) => {
 };
 
 const setToLocalCfg = (key, value) => {
-	const cfg = universal.getServerStyleFlags();
+	const cfg = universal.getServerFlags();
 	cfg[key] = value;
 	return cfg;
 };

@@ -49,7 +49,7 @@ const universal = {
 			}
 		},
 	},
-	getServerStyleFlags: () => universal._information.style || { compact: false },
+	getServerFlags: () => universal._information.style || { compact: false },
 	_information: {},
 	_init: false,
 	_authStatus: false,
@@ -235,12 +235,12 @@ const universal = {
 			currentPage: window.location.pathname,
 			universalState,
 			localStorage,
-			notificationLog: universal.getServerStyleFlags()[
+			notificationLog: universal.getServerFlags()[
 				"app.freedeck.notification_log"
 			]
 				? universal.loadObject("logs/notif", [])
 				: "Notification log disabled.",
-			localConfiguration: universal.getServerStyleFlags(),
+			localConfiguration: universal.getServerFlags(),
 			bootLog: universal._verify(universal.CLUL),
 			errorLog: universal._verify(universal.ErrorLog),
 			exportTimeStart,
@@ -412,7 +412,7 @@ const universal = {
 			universal.keys.appendChild(tempDiv);
 		}
 
-		if (universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"]) return;
+		if (universal.getServerFlags()["app.freedeck.no_preset_tiles"]) return;
 
 		const logoButton = document.createElement("div");
 		logoButton.id = "fd-settings-button";
@@ -545,7 +545,7 @@ const universal = {
 		};
 		const logNotif = universal.loadObject("logs/notif");
 		const logEnabled =
-			universal.getServerStyleFlags()["app.freedeck.notification_log"];
+			universal.getServerFlags()["app.freedeck.notification_log"];
 		if (logNotif.length > 0 && !logEnabled)
 			universal.saveObject("logs/notif", []);
 		else {
@@ -699,7 +699,7 @@ if (!universal.UI) universal.UI = UI;
 universal.listenFor(
 	"animate_page",
 	(type = "automated", direction = "left") => {
-		// if (!universal.getServerStyleFlags()['app.freedeck.animate_page_changes']) return;
+		// if (!universal.getServerFlags()['app.freedeck.animate_page_changes']) return;
 		// const keys = document.getElementById("keys");
 		// if (type === "automated") {
 		//   keys.style.animation = `pull-${direction} 0.5s`;

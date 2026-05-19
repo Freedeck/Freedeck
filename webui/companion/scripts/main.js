@@ -373,7 +373,7 @@ if (universal._information.mobileConnected) {
 	});
 }
 
-const lcfg = universal.getServerStyleFlags();
+const lcfg = universal.getServerFlags();
 document.documentElement.style.setProperty(
 	"--tile-columns",
 	`repeat(${lcfg.tileCols ? lcfg.tileCols : "5"}, 2fr)`,

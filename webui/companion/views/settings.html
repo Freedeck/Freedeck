@@ -451,11 +451,11 @@
 	};
 
 	document.querySelector("#dev-tools").style.display =
-		universal.getServerStyleFlags()["app.freedeck.developer_mode"]
+		universal.getServerFlags()["app.freedeck.developer_mode"]
 			? "block"
 			: "none";
 	document.querySelector(".soundpack").style.display =
-		universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
+		universal.getServerFlags()["app.freedeck.ui_sounds"]
 			? "block"
 			: "none";
 	document.querySelector("#soundpack-id").innerText =
@@ -547,7 +547,7 @@
 	}
 
 	function setToLocalCfg(key, value) {
-		const cfg = universal.getServerStyleFlags();
+		const cfg = universal.getServerFlags();
 		cfg[key] = value;
 		return cfg;
 	}
@@ -560,7 +560,7 @@
 				compact: {
 					type: "checkbox",
 					key: "settings.sections.general.compact",
-					default: universal.getServerStyleFlags()["compact"] || false,
+					default: universal.getServerFlags()["compact"] || false,
 					onchange: () => {
 						universal.UI.reloadTiles();
 					},
@@ -568,7 +568,7 @@
 				scroll: {
 					type: "checkbox",
 					key: "settings.sections.general.scroll",
-					default: universal.getServerStyleFlags()["scroll"] || false,
+					default: universal.getServerFlags()["scroll"] || false,
 					onchange: () => {
 						universal.UI.reloadTiles();
 					},
@@ -577,7 +577,7 @@
 					type: "checkbox",
 					key: "settings.sections.general.fill",
 					default:
-						universal.getServerStyleFlags()["app.freedeck.ui.fill_tiles"] ||
+						universal.getServerFlags()["app.freedeck.ui.fill_tiles"] ||
 						false,
 					onchange: () => {
 						universal.UI.reloadTiles();
@@ -588,10 +588,10 @@
 					key: "settings.sections.general.ui_sounds",
 					flag: "uis",
 					default:
-						universal.getServerStyleFlags()["app.freedeck.ui_sounds"] || false,
+						universal.getServerFlags()["app.freedeck.ui_sounds"] || false,
 					onchange: () => {
 						document.querySelector(".soundpack").style.display =
-							universal.getServerStyleFlags()["app.freedeck.ui_sounds"]
+							universal.getServerFlags()["app.freedeck.ui_sounds"]
 								? "block"
 								: "none";
 					},
@@ -600,7 +600,7 @@
 					type: "checkbox",
 					key: "settings.sections.general.dont_ask",
 					default:
-						universal.getServerStyleFlags()[
+						universal.getServerFlags()[
 						"app.freedeck.tiles.force_deletion"
 						] || false,
 				},
@@ -608,7 +608,7 @@
 					type: "checkbox",
 					key: "settings.sections.general.fdc_tab",
 					default:
-						universal.getServerStyleFlags()[
+						universal.getServerFlags()[
 						"app.freedeck.sidebar.connect_tab"
 						] || false,
 					onchange: () => {
@@ -620,14 +620,14 @@
 					key: "settings.sections.general.notification_log",
 					flag: "notl",
 					default:
-						universal.getServerStyleFlags()["app.freedeck.notification_log"] ||
+						universal.getServerFlags()["app.freedeck.notification_log"] ||
 						false,
 				},
 				"app.freedeck.skip_boot_animation": {
 					type: "checkbox",
 					key: "settings.sections.general.skip_boot_animation",
 					default:
-						universal.getServerStyleFlags()[
+						universal.getServerFlags()[
 						"app.freedeck.skip_boot_animation"
 						] || false,
 				},
@@ -635,7 +635,7 @@
 					type: "checkbox",
 					key: "settings.sections.experiments.no_preset_tiles",
 					default:
-						universal.getServerStyleFlags()["app.freedeck.no_preset_tiles"] ||
+						universal.getServerFlags()["app.freedeck.no_preset_tiles"] ||
 						false,
 				},
 				"app.freedeck.demo.disable_new_repo": {
@@ -650,12 +650,12 @@
 					type: "checkbox",
 					key: "settings.sections.debug.developer_mode",
 					default:
-						universal.getServerStyleFlags()[
+						universal.getServerFlags()[
 						"app.freedeck.developer_mode"
 						] || false,
 					onchange: () => {
 						document.querySelector("#dev-tools").style.display =
-							universal.getServerStyleFlags()["app.freedeck.developer_mode"]
+							universal.getServerFlags()["app.freedeck.developer_mode"]
 								? "block"
 								: "none";
 					},

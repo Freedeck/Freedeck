@@ -12,7 +12,7 @@ const handleCheckFor = (e, property) => {
 		universal.events.default.server_flag_updated,
 		setToLocalCfg(property, e.target.checked),
 	);
-	universal.getServerStyleFlags()[property] = e.target.checked;
+	universal.getServerFlags()[property] = e.target.checked;
 	UI.reloadTiles();
 };
 let fontSize = "25";
@@ -96,7 +96,7 @@ style.children.push(
 			const count = document.querySelectorAll(".fdc-placeholder").length;
 			const diff = e.target.value - count;
 			if (diff > 0) {
-				universal.getServerStyleFlags().iconCountPerPage = e.target.value;
+				universal.getServerFlags().iconCountPerPage = e.target.value;
 				universal.config.iconCountPerPage = e.target.value;
 				UI.reloadTiles();
 
@@ -104,7 +104,7 @@ style.children.push(
 					universal.events.default.server_flag_updated,
 					setToLocalCfg(
 						"iconCountPerPage",
-						universal.getServerStyleFlags().iconCountPerPage,
+						universal.getServerFlags().iconCountPerPage,
 					),
 				);
 			} else {
@@ -139,7 +139,7 @@ style.children.push(
 				setToLocalCfg("tileCols", e.target.value),
 			);
 			let tc = "repeat(5, 2fr)";
-			if (universal.getServerStyleFlags().tileCols)
+			if (universal.getServerFlags().tileCols)
 				tc = tc.replace("5", e.target.value);
 			document.documentElement.style.setProperty("--tile-columns", tc);
 		},
@@ -190,15 +190,15 @@ universal.listenFor("launch", update);
 update();
 
 function update() {
-	setValue("#es-fs", universal.getServerStyleFlags()["font-size"]);
-	setValue("#es-bs", universal.getServerStyleFlags().buttonSize);
-	setValue("#es-tc", universal.getServerStyleFlags().iconCountPerPage);
-	setValue("#es-tr", universal.getServerStyleFlags().tileCols);
-	setValue("#es-lp", universal.getServerStyleFlags().longPressTime);
+	setValue("#es-fs", universal.getServerFlags()["font-size"]);
+	setValue("#es-bs", universal.getServerFlags().buttonSize);
+	setValue("#es-tc", universal.getServerFlags().iconCountPerPage);
+	setValue("#es-tr", universal.getServerFlags().tileCols);
+	setValue("#es-lp", universal.getServerFlags().longPressTime);
 }
 
 const setToLocalCfg = (key, value) => {
-	const cfg = universal.getServerStyleFlags();
+	const cfg = universal.getServerFlags();
 	cfg[key] = value;
 	return cfg;
 };

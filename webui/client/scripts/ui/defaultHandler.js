@@ -48,8 +48,8 @@ export default function (snd, keyObject, raw) {
 	}
 	if (snd.data.longPress === "true" && universal.name !== "Companion") {
 		const countdownTime = Number.parseInt(
-			universal.getServerStyleFlags().longPressTime
-				? universal.getServerStyleFlags().longPressTime
+			universal.getServerFlags().longPressTime
+				? universal.getServerFlags().longPressTime
 				: 3,
 		);
 		const startHolding = (e) => {
@@ -144,7 +144,7 @@ export default function (snd, keyObject, raw) {
 		}
 	}
 	// check if text is bigger than 2 lines (by font size)
-	if (universal.getServerStyleFlags().scroll) {
+	if (universal.getServerFlags().scroll) {
 		const txth = keyObject.querySelector("p");
 		const size = txth.clientHeight;
 		if (size > 40) {

@@ -35,7 +35,7 @@ if (universal.config.profile !== universal.load("profile")) {
 	universal.setPage(0);
 }
 
-const lcfg = universal.getServerStyleFlags();
+const lcfg = universal.getServerFlags();
 document.documentElement.style.setProperty(
 	"--font-size",
 	`${lcfg["font-size"]}px`,
@@ -75,7 +75,7 @@ document.addEventListener("touchend", (e) => {
 });
 
 if (
-	universal.getServerStyleFlags()["app.freedeck.last_changelog_viewed"] !==
+	universal.getServerFlags()["app.freedeck.last_changelog_viewed"] !==
 	universal._information.version.raw
 ) {
 	universal.sendToast("Check your computer for the changelog!", "Freedeck");
