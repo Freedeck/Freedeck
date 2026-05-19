@@ -13,6 +13,12 @@ const locales = {
 	debug: "Debug",
 };
 
+const localeDescriptions = {
+	en: "This is Freedeck in English.",
+	es: "Que es Freedeck?",
+	debug: "This is the debug, english-ish."
+}
+
 let locale;
 let translations = {};
 
@@ -59,6 +65,7 @@ function translationKey(key, defaultValue = "{{key}}") {
 
 export {
 	locales,
+	localeDescriptions,
 	doLocalization,
 	setLocale,
 	fetchTranslationsFor,

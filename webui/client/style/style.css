@@ -251,7 +251,7 @@ summary ::-webkit-details-marker {
 	border-radius: var(--main-radius);
 }
 
-.themelist .theme {
+.themelist .theme, .language-pick {
 	padding: 5px;
 	background-color: rgba(0, 0, 0, 0.5);
 	border: var(--generic-border);

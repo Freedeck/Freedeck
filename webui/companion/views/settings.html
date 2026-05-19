@@ -11,15 +11,14 @@
 		</summary>
 		<div class="themelist"></div>
 	</details>
-	<details data-note="THIS IS SUPER SUPER SUPER BUGGY.">
+	<details>
 		<summary class="settings-section-title">
-			<span><span data-i18n-key="settings.sections.language"> </span>&nbsp;<span
-					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/language.svg" width="50" height="50"
+			<span><span data-i18n-key="settings.sections.language"></span></span><span><img src="/app/shared/icons/language.svg" width="50" height="50"
 					loading="lazy" /></span>
 		</summary>
 		<br />
-		<p id="clang">Loading...</p>
-		<div id="language-list"></div>
+		<p data-i18n-key="settings.sections.language.reload"></p>
+		<div id="language-list" class="themelist"></div>
 	</details>
 	<details>
 		<summary class="settings-section-title">
@@ -31,7 +30,7 @@
 		<p data-i18n-key="settings.sections.overlay.message"></p>
 		<center
 			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
-			<button style="width: 95%;" onclick="freedeckexperimental.overlay()">Open Overlay</button>
+			<button style="width: 95%;" onclick="freedeckexperimental.overlay()" data-i18n-key="settings.sections.overlay.action"></button>
 		</center>
 	</details>
 	<details>
@@ -74,9 +73,9 @@
 			<ul class="soundpacks"></ul>
 			<h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
 			<div class="experiment-exist">
-				<h3 id="soundpack-title">Soundpack</h3>
-				<span>(<span id="soundpack-id">id.soundpack</span>) v<span id="soundpack-version">0.0.0</span>
-					by <span id="soundpack-author">somebody</span></span>
+				<h3 id="soundpack-title"></h3>
+				<span>(<span id="soundpack-id"></span>) v<span id="soundpack-version"></span>
+					by <span id="soundpack-author"></span></span>
 			</div>
 			<ul class="uisounds"></ul>
 		</div>
@@ -158,19 +157,30 @@
 
 	import {
 		locales,
+		localeDescriptions,
 		setLocale,
 		translationKey,
 	} from "/app/shared/localization.js";
-	document.querySelector("#clang").innerText =
-		"Current Language: " + locales[universal.load("locale")];
 	Object.keys(locales).forEach((locale) => {
-		const li = document.createElement("button");
-		li.innerText = locales[locale];
-		li.onclick = () => {
+		const container = document.createElement("div");
+		container.classList.add("theme");
+		if(universal.load("locale") == locale) {
+			container.style.background = "var(--selected-item-bg)";
+			container.style.backgroundSize = "var(--selected-item-bg-size)";
+			container.style.animation = "var(--selected-item-bg-anim)";
+		}
+		const title = document.createElement("h2");
+		title.innerText = locales[locale];
+		const desc = document.createElement("p");
+		desc.innerText = localeDescriptions[locale];
+		const applicator = document.createElement("button");
+		container.appendChild(title);
+		container.appendChild(desc);
+		container.onclick = () => {
 			setLocale(locale);
 			window.location.reload();
 		};
-		document.querySelector("#language-list").appendChild(li);
+		document.querySelector("#language-list").appendChild(container);
 	});
 
 	document.querySelector("#hostname").innerText =
