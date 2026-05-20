@@ -59,14 +59,7 @@
 		li.innerText = locales[locale];
 		li.onclick = async () => {
 			await setLocale(locale);
-			if (universal.load("locale") !== "en") {
-				universal.sendToast(
-					translationKey("warnings.language"),
-					"Freedeck",
-				);
-				universal.CLU("Boot", "User is using a non-default language.");
-			}
-			// window.location.reload();
+			window.location.reload();
 		};
 		document.querySelector("#language-list").appendChild(li);
 	});

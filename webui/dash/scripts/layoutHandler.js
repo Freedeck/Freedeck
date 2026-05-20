@@ -38,17 +38,17 @@ const defaultDefinition = {
 let layoutDefinition;
 
 function loadFromLS() {
-  if (!localStorage.getItem("freedeck:overlay")) {
+  if (!universal.exists("overlay")) {
     layoutDefinition = defaultDefinition;
-    localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition));
+    universal.saveObject("overlay", layoutDefinition);
   } else {
-    layoutDefinition = JSON.parse(localStorage.getItem("freedeck:overlay"));
+    layoutDefinition = universal.loadObject("overlay");
   }
 }
 layoutDefinition = loadFromLS();
 
 function saveToLS() {
-	localStorage.setItem("freedeck:overlay", JSON.stringify(layoutDefinition));
+	universal.saveObject("overlay", layoutDefinition);
 }
 
 function get() {
