@@ -17,31 +17,28 @@
 	if (document.querySelector("#add-repo")) {
 		document.querySelector("#add-repo").remove();
 	}
-	// await (async()=>{
-		// fetch("https://freedeck.github.io/")
-	// })();
+
 	const dialog = universal.UI.makeGenericModal(
 		universal.translationKey("marketplace.add.title"),
 		universal.translationKey("marketplace.add.description"),
 		[],
 		true,
 		`
-        <small class="add-msg"></small>
-        <details>
-            <summary data-i18n-key="marketplace.add.presets"></summary>
+        <div class="flex-wrap-r">
+				<div class="mp-left">
+					<small class="add-msg"></small>
+<summary data-i18n-key="marketplace.add.presets"></summary>
             <div class="flex-wrap-r preset-repositories">
-                <button class="repo-preset" data-repo='{"t":"freedeck.app","y":"new","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
-                <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json","y":"new"}'>FreedeckEx Repository</button>
+                <button class="repo-preset" data-repo='{"t":"freedeck.app","u":"https://releases.freedeck.app/index.json"}'>Official Repository</button>
+                <button class="repo-preset" data-repo='{"t":"FreedeckEx","u":"https://freedeckex.moonprod.me/manifest.json"}'>FreedeckEx Repository</button>
             </div>
             <small><span data-i18n-key="marketplace.add.ask"></span><a href="https://docs.freedeck.app/development-resources/hosting-a-repository#add-it-as-a-preset" target="_blank" data-i18n-key="marketplace.add.ask.inner"></a></small>
-        </details>
-        <label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="freedeck.app">
+				</div>
+        <div class="mp-right">
+					<label for="title" data-i18n-key="marketplace.add.input_title"></label><input type="text" id="title" placeholder="freedeck.app">
         <label for="url" data-i18n-key="marketplace.add.input_url"></label><input type="text" id="url" placeholder="https://releases.freedeck.app/index.json">
-        <label for="mktr_type" data-i18n-key="marketplace.add.input_type"></label>
-        <select id="mktr_type">
-            <option value="new" selected data-i18n-key="marketplace.add.types.new"></option>    
-            <option value="legacy" data-i18n-key="marketplace.add.types.legacy"></option>    
-        </select>
+				</div>
+					</div>
         <br>
         <button id="submit" data-i18n-key="marketplace.add.input_submit"></button>
     `,
@@ -83,250 +80,124 @@
 				loadRepos();
 			};
 		}
-
-		if (repo.type == "legacy" || !repo.type) {
-			li.innerText += universal.cleanHTML(repo.who);
-			if (isUnofficial) li.appendChild(btn);
-
-			legacyFillRepo(repo.link, repo, isUnofficial);
-		}
-
-		if (repo.type == "v3") {
-			universal.repositoryManager.getV3Repository(repo).then((data) => {
-				if (data.err) {
-					li.innerText += " " + data.msg;
-					document.querySelector(".message").innerHTML = universal.translationKey("marketplace.message.err_fetching") + repo.title + ": " + data.msg;
-					if (isUnofficial) li.appendChild(btn);
-					return;
-				}
-				li.innerText += " " + universal.cleanHTML(data.title);
+		universal.repositoryManager.getRepository(repo).then((data) => {
+			if (data.err) {
+				li.innerText += " " + data.msg;
+				document.querySelector(".message").innerHTML = universal.translationKey("marketplace.message.err_fetching") + repo.title + ": " + data.msg;
 				if (isUnofficial) li.appendChild(btn);
-				data.plugins.forEach((plugin) => {
-					if (plugin.visible && plugin.visible == "false") return;
-					const req = plugin;
-					req.id = req.id.toLowerCase();
-					const li = document.createElement("div");
-					li.setAttribute("hovereffect", "yes");
-					li.style.cursor = "default";
-					li.className = "item";
-					const officialTag = document.createElement("img");
-					officialTag.src = "/app/shared/icons/official.svg";
-					officialTag.loading = "lazy";
-					officialTag.style.width = "8rem";
-					const name = document.createElement("div");
-					if(!isUnofficial)  {
-												name.innerText = universal
+				return;
+			}
+			li.innerText += " " + universal.cleanHTML(data.title);
+			if (isUnofficial) li.appendChild(btn);
+			data.plugins.forEach((plugin) => {
+				if (plugin.visible && plugin.visible == "false") return;
+				const req = plugin;
+				req.id = req.id.toLowerCase();
+				const li = document.createElement("div");
+				li.setAttribute("hovereffect", "yes");
+				li.style.cursor = "default";
+				li.className = "item";
+				const officialTag = document.createElement("img");
+				officialTag.src = "/app/shared/icons/official.svg";
+				officialTag.loading = "lazy";
+				officialTag.style.width = "8rem";
+				const name = document.createElement("div");
+				if (!isUnofficial) {
+					name.innerText = universal
 						.translationKey("marketplace.info.official_title")
 						.replace("$1", plugin.title);
-					} else {
+				} else {
 					name.innerText = universal
 						.translationKey("marketplace.info.title")
 						.replace("$1", plugin.title)
 						.replace("$2", req.author);
-					}
-					name.style.fontWeight = "bold";
-					li.appendChild(name);
-					const version = document.createElement("div");
-					version.innerText = "v" + req.version;
-					li.appendChild(version);
-					const desc = document.createElement("div");
-					desc.innerText = req.description;
-					desc.classList.add("plugin-ifo");
-					li.appendChild(desc);
-					const rl = document.createElement("div");
-					rl.innerText = universal
-						.translationKey("marketplace.info.repository")
-						.replace("$1", repo.title);
-					li.appendChild(rl);
-					const file = document.createElement("button");
-					file.dataset.HandoffUrl =
-						"freedeck://download/" +
-						req.id +
-						"/" +
-						encodeURIComponent(req.download) +
-						"/" +
-						encodeURIComponent(req.description) +
-						"/" +
-						encodeURIComponent(repo.title);
-					file.onclick = () => {
-						if (req.message) {
-							// create a yes/no modal
-							let str = universal.translationKey("marketplace.install");
-							if (universal.plugins[req.id]) {
-								let compareVersionOutput = universal.compareVersions(
-									universal.plugins[req.id].version,
-									req.version,
-								);
-								if (compareVersionOutput == -1)
-									str = universal.translationKey("marketplace.update");
-								if (compareVersionOutput == 1)
-									str = universal.translationKey(
-										"marketplace.downgrade_fallback",
-									);
-							}
-							window.UniversalUI.show.showYesNo(
-								universal.translationKey("marketplace.message_warning_prefix") +
-								str +
-								" " +
-								req.title +
-								universal.translationKey(
-									"marketplace.message_warning_suffix",
-								),
-								req.message,
-								(yes) => {
-									window.location.href = file.dataset.HandoffUrl;
-									universal.uiSounds.playSound("step_2");
-								},
-								true,
-							);
-						} else {
-							const pb = window.UniversalUI.show.progressBar(
-								universal.translationKey("marketplace.download.action").replace("$1",req.title),
-								universal.translationKey("marketplace.download.stage_init").replace("$1",repo.title).replace("$2",repo.channel),
-								0,
-								false,
-							);
-							universal.on(universal.events.companion.download_plugin, (state) => {
-								pb.setPercent(state.percent)
-								pb.setStage(universal.translationKey(state.stage));
-							})
-							universal.send(universal.events.companion.download_plugin, {plugin:req, repo})
-							// window.location.href = file.dataset.HandoffUrl;
-							universal.uiSounds.playSound("step_2");
-						}
-					};
-					file.innerText = universal.translationKey(
-						"marketplace.action.download",
-					);
-					if (universal.plugins[req.id]) {
-						file.innerText = universal.translationKey(
-							"marketplace.action.installed",
-						);
-						file.style.backgroundColor = "var(--marketplace-plugin-installed)";
-						if (!universal.plugins[req.id].version)
-							universal.plugins[req.id].version = "1.0.0";
-						else {
+				}
+				name.style.fontWeight = "bold";
+				li.appendChild(name);
+				const version = document.createElement("div");
+				version.innerText = "v" + req.version;
+				li.appendChild(version);
+				const desc = document.createElement("div");
+				desc.innerText = req.description;
+				desc.classList.add("plugin-ifo");
+				li.appendChild(desc);
+				const rl = document.createElement("div");
+				rl.innerText = universal
+					.translationKey("marketplace.info.repository")
+					.replace("$1", repo.title);
+				li.appendChild(rl);
+				const file = document.createElement("button");
+				file.dataset.HandoffUrl =
+					"freedeck://download/" +
+					req.id +
+					"/" +
+					encodeURIComponent(req.download) +
+					"/" +
+					encodeURIComponent(req.description) +
+					"/" +
+					encodeURIComponent(repo.title);
+				file.onclick = () => {
+					if (req.message) {
+						// create a yes/no modal
+						let str = universal.translationKey("marketplace.install");
+						if (universal.plugins[req.id]) {
 							let compareVersionOutput = universal.compareVersions(
 								universal.plugins[req.id].version,
 								req.version,
 							);
-							if (compareVersionOutput == -1) {
-								file.innerText = universal.translationKey(
-									"marketplace.action.update",
+							if (compareVersionOutput == -1)
+								str = universal.translationKey("marketplace.update");
+							if (compareVersionOutput == 1)
+								str = universal.translationKey(
+									"marketplace.downgrade_fallback",
 								);
-								file.dataset.HandoffUrl =
-									file.dataset.HandoffUrl.replace(
-										"freedeck://download",
-										"freedeck://update",
-									) +
-									"/" +
-									encodeURIComponent(universal.plugins[req.id].version) +
-									"/" +
-									encodeURIComponent(req.version);
-								file.style.backgroundColor =
-									"var(--marketplace-plugin-updatable)";
-								universal.sendToast(
-									universal
-										.translationKey("marketplace.update_notification")
-										.replace("$1", universal.plugins[req.id].name)
-										.replace("$2", req.version),
-									universal.translationKey("marketplace"),
-								);
-							} else if (compareVersionOutput == 0) {
-								file.innerText = universal.translationKey(
-									"marketplace.action.up_to_date",
-								);
-								file.style.backgroundColor =
-									"var(--marketplace-plugin-no-updates)";
-								file.onclick = () => { };
-							} else if (compareVersionOutput == 1) {
-								file.innerText = universal.translationKey(
-									"marketplace.action.user_has_newer",
-								);
-								file.style.backgroundColor =
-									"var(--marketplace-plugin-installed)";
-								file.onclick = () => { };
-							}
 						}
-					}
-					li.appendChild(file);
-					if (universal.repositoryManager.official.find((r) => r === repo)) {
-						if (!plugin.unofficial || plugin.unofficial !== "true") {
-							// li.appendChild(officialTag);
-						}
-					}
-					setTimeout(() => {
-						const luf =document.querySelector(".load-upon-finish")
-						const lus =  document.querySelector(".loading-screen")
-						if(luf)luf.style.display = 'block'
-						if(lus)lus.style.display = 'none'
-					}, 125);
-					document.querySelector(".marketplace").appendChild(li);
-				});
-			}).catch(err => {
-				li.innerText += " Error fetching!";
-			})
-		}
-		document.querySelector(".repositories").appendChild(li);
-
-		// document.querySelector(".message").innerHTML = "";
-	};
-
-	function legacyFillRepo(url, repo, isUnofficial = false) {
-		universal.repositoryManager
-			.getLegacyRepository(url)
-			.then((plugins) => {
-				plugins.forEach((plugin) => {
-					const req = plugin;
-					req.id = req.id.toLowerCase();
-					const li = document.createElement("div");
-					li.setAttribute("hovereffect", "yes");
-					li.style.cursor = "default";
-					li.className = "item";
-					const name = document.createElement("div");
-					name.innerText = universal
-						.translationKey("marketplace.info.title")
-						.replace("$1", plugin.title)
-						.replace("$2", req.author);
-					name.style.fontWeight = "bold";
-					li.appendChild(name);
-					const version = document.createElement("div");
-					version.innerText = "v" + req.version;
-					li.appendChild(version);
-					const desc = document.createElement("div");
-					desc.innerText = req.description;
-					desc.classList.add("plugin-ifo");
-					li.appendChild(desc);
-					const rl = document.createElement("div");
-					rl.innerText = universal
-						.translationKey("marketplace.info.repository")
-						.replace("$1", repo.title);
-					li.appendChild(rl);
-					const file = document.createElement("button");
-					file.dataset.HandoffUrl =
-						"freedeck://download/" +
-						req.id +
-						"/" +
-						encodeURIComponent(req.file) +
-						"/" +
-						encodeURIComponent(req.description) +
-						"/" +
-						encodeURIComponent(repo.title);
-					file.onclick = () => {
-						window.location.href = file.dataset.HandoffUrl;
-						universal.uiSounds.playSound("int_confirm");
-					};
-					file.innerText = universal.translationKey(
-						"marketplace.action.download",
-					);
-					if (universal.plugins[req.id]) {
-						file.innerText = universal.translationKey(
-							"marketplace.action.installed",
+						window.UniversalUI.show.showYesNo(
+							universal.translationKey("marketplace.message_warning_prefix") +
+							str +
+							" " +
+							req.title +
+							universal.translationKey(
+								"marketplace.message_warning_suffix",
+							),
+							req.message,
+							(yes) => {
+								window.location.href = file.dataset.HandoffUrl;
+								universal.uiSounds.playSound("step_2");
+							},
+							true,
 						);
-						file.style.backgroundColor = "var(--marketplace-plugin-installed)";
-						if (!universal.plugins[req.id].version)
-							universal.plugins[req.id].version = "1.0.0";
-						if (universal.plugins[req.id].version != req.version) {
+					} else {
+						const pb = window.UniversalUI.show.progressBar(
+							universal.translationKey("marketplace.download.action").replace("$1", req.title),
+							universal.translationKey("marketplace.download.stage_init").replace("$1", repo.title).replace("$2", repo.channel),
+							0,
+							false,
+						);
+						universal.on(universal.events.companion.download_plugin, (state) => {
+							pb.setPercent(state.percent)
+							pb.setStage(universal.translationKey(state.stage));
+						})
+						universal.send(universal.events.companion.download_plugin, { plugin: req, repo })
+						universal.uiSounds.playSound("step_2");
+					}
+				};
+				file.innerText = universal.translationKey(
+					"marketplace.action.download",
+				);
+				if (universal.plugins[req.id]) {
+					file.innerText = universal.translationKey(
+						"marketplace.action.installed",
+					);
+					file.style.backgroundColor = "var(--marketplace-plugin-installed)";
+					if (!universal.plugins[req.id].version)
+						universal.plugins[req.id].version = "1.0.0";
+					else {
+						let compareVersionOutput = universal.compareVersions(
+							universal.plugins[req.id].version,
+							req.version,
+						);
+						if (compareVersionOutput == -1) {
 							file.innerText = universal.translationKey(
 								"marketplace.action.update",
 							);
@@ -341,40 +212,51 @@
 								encodeURIComponent(req.version);
 							file.style.backgroundColor =
 								"var(--marketplace-plugin-updatable)";
-						} else if (universal.plugins[req.id].version == req.version) {
+							universal.sendToast(
+								universal
+									.translationKey("marketplace.update_notification")
+									.replace("$1", universal.plugins[req.id].name)
+									.replace("$2", req.version),
+								universal.translationKey("marketplace"),
+							);
+						} else if (compareVersionOutput == 0) {
 							file.innerText = universal.translationKey(
 								"marketplace.action.up_to_date",
 							);
 							file.style.backgroundColor =
 								"var(--marketplace-plugin-no-updates)";
 							file.onclick = () => { };
-						} else {
+						} else if (compareVersionOutput == 1) {
+							file.innerText = universal.translationKey(
+								"marketplace.action.user_has_newer",
+							);
+							file.style.backgroundColor =
+								"var(--marketplace-plugin-installed)";
 							file.onclick = () => { };
 						}
 					}
-					li.appendChild(file);
-					document.querySelector(".marketplace").appendChild(li);
-				});
-			})
-			.catch((err) => {
-				const cnt = document.createElement("div");
-				cnt.classList.add("item");
-				const txt = document.createElement("h1");
-				txt.innerHTML = `${repo.title}`;
-				const er = document.createElement("p");
-				er.classList.add("plugin-ifo");
-				er.innerHTML =
-					err.msg ||
-					err.toString() ||
-					err ||
-					universal.translationKey("marketplace.message.error");
-				if (err.toString().includes("Failed to fetch"))
-					er.innerHTML += `<br>${universal.cleanHTML(universal.translationKey("marketplace.message.internet").replace("$1", repo.title))}`;
-				cnt.appendChild(txt);
-				cnt.appendChild(er);
-				document.querySelector(".marketplace").appendChild(cnt);
+				}
+				li.appendChild(file);
+				if (universal.repositoryManager.official.find((r) => r === repo)) {
+					if (!plugin.unofficial || plugin.unofficial !== "true") {
+						// li.appendChild(officialTag);
+					}
+				}
+				setTimeout(() => {
+					const luf = document.querySelector(".load-upon-finish")
+					const lus = document.querySelector(".loading-screen")
+					if (luf) luf.style.display = 'block'
+					if (lus) lus.style.display = 'none'
+				}, 125);
+				document.querySelector(".marketplace").appendChild(li);
 			});
-	}
+		}).catch(err => {
+			li.innerText += " Error fetching!";
+		})
+		document.querySelector(".repositories").appendChild(li);
+
+		// document.querySelector(".message").innerHTML = "";
+	};
 
 	const loadRepos = () => {
 		document.querySelector(".repositories").innerHTML = `<h1 class="settings-section-title">
@@ -433,7 +315,6 @@
 		universal.uiSounds.playSound("int_prompt");
 		dialog.content.querySelector("#title").value = "";
 		dialog.content.querySelector("#url").value = "";
-		dialog.content.querySelector("#mktr_type").value = "";
 		dialog.content.querySelector("#submit").disabled = false;
 		dialog.content.querySelector("#submit").innerText = "Add";
 		dialog.content.querySelector(".add-msg").innerText = "";
@@ -444,11 +325,9 @@
 				const data = JSON.parse(ele.dataset.repo);
 				document.querySelector("#title").value = data.t;
 				document.querySelector("#url").value = data.u;
-				document.querySelector("#mktr_type").value = data.y;
 			};
 		});
 		const submit = document.querySelector("#submit");
-		const selected = document.querySelector("#mktr_type");
 		dialog.content.querySelector("#submit").onclick = () => {
 			submit.disabled = true;
 
@@ -456,14 +335,6 @@
 
 			const title = dialog.content.querySelector("#title").value;
 			const url = dialog.content.querySelector("#url").value;
-
-			if (url == "https://freedeck.app/_fd/repository.php") {
-				document.querySelector(".add-msg").innerText =
-					"The old repository is being phased out! No need to add it.";
-				submit.disabled = false;
-				submit.innerText = "Add";
-				return;
-			}
 
 			document.querySelector(".add-msg").innerText =
 				"Fetching repository from " + url + "...";
@@ -479,76 +350,60 @@
 						submit.innerText = "Add";
 						return;
 					}
-					if (selected.selectedIndex == 1) {
-						return res.text();
-					} else {
-						return res.json();
-					}
+					return res.json()
 				})
 				.then((data) => {
-					if (selected.selectedIndex == 1) {
-						const desc = data.split("\n")[0];
-						let curr = [];
-						if (universal.load("repos.community") != "ée")
-							curr = JSON.parse(universal.load("repos.community"));
-						curr.push({ title, who: desc, link: url });
-						universal.save("repos.community", JSON.stringify(curr));
-						dialog.close();
-						universal.repositoryManager.unofficial = curr;
-						loadRepos();
-					} else {
-						const options = [];
-						for (const channelKey in data.channels) {
-							const channel = data.channels[channelKey];
-							if (
-								channel.type != "repository" &&
-								channel.type != "repository_external"
-							)
-								continue;
-							options.push({
-								added: Date.now(),
-								type: "legacy",
-								id: channelKey,
-								display: `${channel.title} (${channelKey})`,
-							});
-						}
-						const mod = selectModal(
-							{
-								title: "Repository Channel",
-								message:
-									"Please select the channel of the repository you are adding.",
-								options,
-							},
-							({ value }) => {
-								submit.disabled = false;
-								if (
-									value.id == "main" &&
-									url == "https://releases.freedeck.app/index.json"
-								) {
-									document.querySelector(".add-msg").innerText =
-										"You can't re-add the main repository!";
-									submit.disabled = false;
-									submit.innerText = "Add";
-									return;
-								}
-								const curr = JSON.parse(universal.load("repos.community"));
-								const chn = value.id;
-								curr.push({
-									added: Date.now(),
-									type: "v3",
-									title,
-									url: url,
-									channel: chn,
-								});
-								universal.save("repos.community", JSON.stringify(curr));
-								universal.repositoryManager.unofficial = curr;
-								loadRepos();
-								mod.close();
-								dialog.hide();
-							},
-							submit,
-						);
+					const options = [];
+					for (const channelKey in data.channels) {
+						const channel = data.channels[channelKey];
+						if (
+							channel.type != "repository" &&
+							channel.type != "repository_external"
+						)
+							continue;
+						options.push({
+							added: Date.now(),
+							type: "v3",
+							id: channelKey,
+							display: `${channel.title} (${channelKey})`,
+						});
 					}
+					const mod = selectModal(
+						{
+							title: "Repository Channel",
+							message:
+								"Please select the channel of the repository you are adding.",
+							options,
+						},
+						({ value }) => {
+							submit.disabled = false;
+							if (
+								value.id == "main" &&
+								url == "https://releases.freedeck.app/index.json"
+							) {
+								document.querySelector(".add-msg").innerText =
+									"You can't re-add the main repository!";
+								submit.disabled = false;
+								submit.innerText = "Add";
+								return;
+							}
+							const curr = JSON.parse(universal.load("repos.community"));
+							const chn = value.id;
+							curr.push({
+								added: Date.now(),
+								type: "v3",
+								title,
+								url: url,
+								channel: chn,
+							});
+							universal.save("repos.community", JSON.stringify(curr));
+							universal.repositoryManager.unofficial = curr;
+							loadRepos();
+							mod.close();
+							dialog.hide();
+						},
+						submit,
+					);
 				})
 				.catch((err) => {
 					document.querySelector(".add-msg").innerHTML =

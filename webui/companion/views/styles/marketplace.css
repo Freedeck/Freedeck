@@ -6,6 +6,10 @@
 	display: none;
 }
 
+.mp-left, .mp-right {
+	width: 45%;
+}
+
 .loading-screen {
 	display: flex;
 	flex-direction: column;
