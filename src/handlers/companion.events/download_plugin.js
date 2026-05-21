@@ -1,12 +1,9 @@
-const config = require("@managers/settings");
 const eventNames = require("@handlers/eventNames");
-const { createWriteStream, writeFileSync } = require("node:fs");
+const { writeFileSync } = require("node:fs");
 const { resolve } = require("node:path");
-const http= require('node:http');
 const pl = require("@managers/plugins");
 const pluginsLocation = resolve("./plugins");
 
-let timeAtLastTileCreation = 0;
 module.exports = {
 	flags: ["AUTH"],
 	exec: async ({ socket, data }) => {
