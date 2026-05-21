@@ -136,9 +136,22 @@
 					encodeURIComponent(req.description) +
 					"/" +
 					encodeURIComponent(repo.title);
+				const downloadPlugin = () => {
+					const pb = window.UniversalUI.show.progressBar(
+						universal.translationKey("marketplace.download.action").replace("$1", req.title),
+						universal.translationKey("marketplace.download.stage_init").replace("$1", repo.title).replace("$2", repo.channel),
+						0,
+						false,
+					);
+					universal.on(universal.events.companion.download_plugin, (state) => {
+						pb.setPercent(state.percent)
+						pb.setStage(universal.translationKey(state.stage));
+					})
+					universal.send(universal.events.companion.download_plugin, { plugin: req, repo })
+					universal.uiSounds.playSound("step_2");
+				}
 				file.onclick = () => {
 					if (req.message) {
-						// create a yes/no modal
 						let str = universal.translationKey("marketplace.install");
 						if (universal.plugins[req.id]) {
 							let compareVersionOutput = universal.compareVersions(
@@ -162,24 +175,12 @@
 							),
 							req.message,
 							(yes) => {
-								window.location.href = file.dataset.HandoffUrl;
-								universal.uiSounds.playSound("step_2");
+								downloadPlugin();
 							},
 							true,
 						);
 					} else {
-						const pb = window.UniversalUI.show.progressBar(
-							universal.translationKey("marketplace.download.action").replace("$1", req.title),
-							universal.translationKey("marketplace.download.stage_init").replace("$1", repo.title).replace("$2", repo.channel),
-							0,
-							false,
-						);
-						universal.on(universal.events.companion.download_plugin, (state) => {
-							pb.setPercent(state.percent)
-							pb.setStage(universal.translationKey(state.stage));
-						})
-						universal.send(universal.events.companion.download_plugin, { plugin: req, repo })
-						universal.uiSounds.playSound("step_2");
+						downloadPlugin();
 					}
 				};
 				file.innerText = universal.translationKey(
@@ -260,18 +261,19 @@
 
 	const loadRepos = () => {
 		document.querySelector(".repositories").innerHTML = `<h1 class="settings-section-title">
-			<span data-i18n-key="marketplace.title">Marketplace</span>
+			<span data-i18n-key="marketplace.title"></span>
 			<span><img src="/app/shared/icons/marketplace.svg" width="50" loading="lazy" height="50" /></span>
 		</h1>`;
+		universal.translatePage()
 		document.querySelector(".marketplace").innerHTML = "";
 
 
 		const sbe = document.createElement("p");
-		sbe.innerText = "No plugins found!\nTry searching the name or keywords in the description!"
+		sbe.innerText = universal.translationKey("marketplace.search.failed");
 		sbe.style.display = 'none';
 		const sb = document.createElement("input");
 		sb.classList.add("sb")
-		sb.placeholder = "Search for a plugin..."
+		sb.placeholder = universal.translationKey("marketplace.search");
 		sb.oninput = (e) => {
 			const is = document.querySelectorAll(".item");
 			let c = 0
@@ -306,7 +308,7 @@
 			bt.id = "repo";
 			bt.onclick = () => { universal.mkp_addRepo() };
 			bt.setAttribute("data-i18n-key", "marketplace.add")
-			bt.innerText = "Add Repository";
+			bt.innerText = universal.translationKey("marketplace.add");
 			document.querySelector(".repositories").appendChild(bt)
 		}
 	};
@@ -316,7 +318,7 @@
 		dialog.content.querySelector("#title").value = "";
 		dialog.content.querySelector("#url").value = "";
 		dialog.content.querySelector("#submit").disabled = false;
-		dialog.content.querySelector("#submit").innerText = "Add";
+		dialog.content.querySelector("#submit").innerText = universal.translationKey("marketplace.add.add");
 		dialog.content.querySelector(".add-msg").innerText = "";
 		dialog.show();
 
@@ -331,21 +333,19 @@
 		dialog.content.querySelector("#submit").onclick = () => {
 			submit.disabled = true;
 
-			submit.innerText = "Downloading content...";
+			submit.innerText = universal.translationKey("marketplace.add.downloading");
 
 			const title = dialog.content.querySelector("#title").value;
 			const url = dialog.content.querySelector("#url").value;
 
 			document.querySelector(".add-msg").innerText =
-				"Fetching repository from " + url + "...";
+				universal.translationKey("marketplace.add.action").replace("$1", url)
 
 			fetch(url, { method: "GET" })
 				.then((res) => {
 					if (res.status != 200) {
 						document.querySelector(".add-msg").innerText =
-							"Failed to fetch repository from " +
-							url +
-							". Is the URL correct?";
+							universal.translationKey("marketplace.add.failed.status").replace("$1", url)
 						submit.disabled = false;
 						submit.innerText = "Add";
 						return;
@@ -370,9 +370,9 @@
 					}
 					const mod = selectModal(
 						{
-							title: "Repository Channel",
+							title: universal.translationKey("marketplace.add.channel.title"),
 							message:
-								"Please select the channel of the repository you are adding.",
+								universal.translationKey("marketplace.add.channel.message"),
 							options,
 						},
 						({ value }) => {
@@ -382,9 +382,9 @@
 								url == "https://releases.freedeck.app/index.json"
 							) {
 								document.querySelector(".add-msg").innerText =
-									"You can't re-add the main repository!";
+									universal.translationKey("marketplace.add.failed.main");
 								submit.disabled = false;
-								submit.innerText = "Add";
+								submit.innerText = universal.translationKey("marketplace.add.add");
 								return;
 							}
 							const curr = JSON.parse(universal.load("repos.community"));
@@ -406,13 +406,12 @@
 					);
 				})
 				.catch((err) => {
-					document.querySelector(".add-msg").innerHTML =
-						"Failed to fetch repository from " + url + ".<br>" + err;
+					document.querySelector(".add-msg").innerHTML = universal.translationKey("marketplace.add.failed.request").replace("$1", url).replace("$2", err);
 					if (err.toString().includes("Failed to fetch"))
 						document.querySelector(".add-msg").innerHTML +=
-							`<br>(Could not reach site, is the internet down?)`;
+							`<br>${universal.cleanHTML(universal.translationKey("marketplace.add.failed.internet"))}`;
 					submit.disabled = false;
-					submit.innerText = "Add";
+					submit.innerText = universal.translationKey("marketplace.add.add");
 				});
 		};
 	}
