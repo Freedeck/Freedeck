@@ -3,6 +3,7 @@ const NotificationManager = require("@managers/notifications.js");
 const pluginManager = require("@managers/plugins.js");
 const fs = require("node:fs");
 const HookRef = require("./HookRef");
+const {SettingBuilder} = require("./Setting");
 
 const picocolors = require("$/picocolors");
 const debug = require("$/debug");
@@ -73,6 +74,23 @@ class Plugin {
 		this.types = [];
 		this._callbacks = {};
 		this._intent = [];
+	}
+
+	useSetting(settingData) {
+		const {id, name, description, value, placeholder} = settingData;
+		const lid = id.toLowerCase();
+		const fdId = "_fd_cset_" + lid;
+		if(!this.getFromSaveData(fdId)) {
+			this.setToSaveData(fdId, JSON.stringify(settingData))
+			this.Settings[lid] = settingData;
+		} else {
+			this.Settings[lid] = this.getFromSaveData(fdId);
+		}
+	}
+
+	getSetting(id){
+		const lid = id.toLowerCase();
+		return this.Settings[lid].value || JSON.parse(this.getFromSaveData("_fd_cset_" + lid)).value;
 	}
 
 	/**
@@ -415,7 +433,6 @@ class Plugin {
 		const data = this._forceJsonObject(
 			path.resolve(`./plugins/${this.id}/settings.json`),
 		);
-		this.Settings[k] = data[k];
 		return data[k];
 	}
 
@@ -430,7 +447,6 @@ class Plugin {
 			path.resolve(`./plugins/${this.id}/settings.json`),
 		);
 		data[k] = v;
-		this.Settings[k] = v;
 		fs.writeFileSync(
 			path.resolve(`./plugins/${this.id}/settings.json`),
 			JSON.stringify(data),
@@ -590,6 +606,7 @@ const intents = {
 };
 
 module.exports = {
+	SettingBuilder,
 	Plugin,
 	HookRef,
 	events,

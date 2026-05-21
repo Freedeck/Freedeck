@@ -5,7 +5,7 @@ const openPackage = require("@managers/providers/package");
 
 module.exports = ({ debug, file, pl }) => {
 	debug.log(
-		"Loading unpacked plugin. Keep in mind disabling/enabling will not work.",
+		"Loading unpacked plugin. Disabling/enabling are unavailable.",
 		"Plugins",
 	);
 	const pkg = path.resolve(`./plugins/${file}/package.json`);
@@ -14,7 +14,7 @@ module.exports = ({ debug, file, pl }) => {
 		if (configPackage.freedeck) {
 			// It's a fdpackage, just source folder.
 			debug.log(
-				picocolors.yellow(`Initializing  Freedeck package ${file}`),
+				picocolors.yellow(`Initializing Freedeck package ${file}`),
 				"Plugins",
 			);
 			const packagefied = path
