@@ -10,6 +10,10 @@
 	width: 45%;
 }
 
+.mp-center {
+	justify-content: space-between;
+}
+
 .loading-screen {
 	display: flex;
 	flex-direction: column;
