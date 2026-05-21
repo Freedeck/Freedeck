@@ -1,4 +1,5 @@
 import { UI } from "../../client/scripts/ui";
+import {handleSoundboard} from "../tiles/soundboard";
 
 export default async function eventsHandler(universal, user) {
 	universal.CLU("Event Handler", "Creating event handlers...");
@@ -27,42 +28,10 @@ export default async function eventsHandler(universal, user) {
 
 	universal.on(universal.events.keypress, (interaction) => {
 		if (!user.includes("Companion")) return;
-		if (interaction.type === "fd.stopall") {
-			universal.audioClient.stopAll();
-			return;
-		}
 		universal.sendEvent("button", interaction);
-
-		if (interaction.type !== "fd.sound") return;
-		universal.reloadProfile();
-		// get name from universal.app_tiles with uuid
-		const a = universal.app_tiles.filter((snd) => {
-			const k = Object.keys(snd)[0];
-			return snd[k].uuid === interaction.uuid;
-		})[0];
-
-		if (!universal.load("playback-mode")) {
-			universal.save("playback-mode", "play_over");
+		if(interaction.type) {
+			universal.sendEvent("button-" + interaction.type, interaction)
 		}
-		if (interaction.data.hold === "true") {
-			for (const sound of universal.audioClient._nowPlaying) {
-				if (sound.dataset.bind === interaction.uuid) {
-					return;
-				}
-			}
-		}
-		universal.audioClient.play({
-			file: `${interaction.data.path}/${interaction.data.file}`,
-			name: Object.keys(a)[0],
-			channel: universal.audioClient.channels.cable,
-			bind: interaction.uuid,
-		});
-		universal.audioClient.play({
-			file: `${interaction.data.path}/${interaction.data.file}`,
-			name: Object.keys(a)[0],
-			channel: universal.audioClient.channels.monitor,
-			bind: interaction.uuid,
-		});
 	});
 
 	universal.on(universal.events.default.recompile, () => {
@@ -216,6 +185,8 @@ export default async function eventsHandler(universal, user) {
 
 	universal.sendEvent("init");
 	universal.CLU("Event Handler", "Created event handlers, sending init event.");
+
+	handleSoundboard(universal);
 
 	if (universal.name === "Dash") return;
 	const hookType = universal.name === "Main" ? "client" : "companion";

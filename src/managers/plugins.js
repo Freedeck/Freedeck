@@ -42,7 +42,7 @@ const pl = {
 				version,
 				intents: plugin[1].instance._intent || [],
 				packageType: plugin[1].instance.packageType || "plugin",
-				Settings: {},
+				Settings: Object.keys(plugins[1].instance.Settings),
 				popout,
 				dashModules,
 				types,
