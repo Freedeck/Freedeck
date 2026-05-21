@@ -180,7 +180,18 @@
 								true,
 							);
 						} else {
-							window.location.href = file.dataset.HandoffUrl;
+							const pb = window.UniversalUI.show.progressBar(
+								universal.translationKey("marketplace.download.action").replace("$1",req.title),
+								universal.translationKey("marketplace.download.stage_init").replace("$1",repo.title).replace("$2",repo.channel),
+								0,
+								false,
+							);
+							universal.on(universal.events.companion.download_plugin, (state) => {
+								pb.setPercent(state.percent)
+								pb.setStage(universal.translationKey(state.stage));
+							})
+							universal.send(universal.events.companion.download_plugin, {plugin:req, repo})
+							// window.location.href = file.dataset.HandoffUrl;
 							universal.uiSounds.playSound("step_2");
 						}
 					};

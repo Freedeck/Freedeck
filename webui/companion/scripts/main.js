@@ -304,6 +304,26 @@ window.UniversalUI = {
 			modal.show();
 			return modal;
 		},
+		progressBar(title, stage, startPercent, closable = true) {
+			const modal = universal.UI.makeGenericModal(
+				title,
+				`<p class="pb-stage"></p><progress class="pb-progress" max="100"></progress>`,
+				[],
+				closable,
+			);
+			const setStage = (stage) => {
+				modal.content.querySelector(".pb-stage").textContent = stage;
+			}
+			const setPercent = (value) => {
+				modal.content.querySelector(".pb-progress").value = value;
+			}
+			setStage(stage);
+			setPercent(startPercent);
+			console.log("PB",modal)
+			modal.show();
+			universal.uiSounds.playSound("int_confirm");
+			return {...modal, setStage, setPercent};
+		},
 		showYesNo(title, content, yesCallback, closable = true) {
 			const modal = universal.UI.makeGenericModal(
 				title,

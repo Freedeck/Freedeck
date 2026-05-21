@@ -40,6 +40,7 @@ const eventNames = {
 		add_profile: "cpA",
 		dup_profile: "cpD",
 		set_theme: "ctS",
+		download_plugin: "psP",
 		plugin_set: "dPS",
 		plugin_set_all: "dPSA",
 		import_profile: "cpI",
