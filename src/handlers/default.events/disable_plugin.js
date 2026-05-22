@@ -37,6 +37,6 @@ module.exports = ({ io, data }) => {
 		path.resolve(`./plugins/${plugin.file.filePath}.disabled`),
 	);
 	plugins.unload(plugin.id);
-	plugins._disabled.push(`${plugin.file}.disabled`);
+	plugins._disabled.push(`${plugin.file.filePath}.disabled`);
 	io.emit(eventNames.default.reload);
 };
