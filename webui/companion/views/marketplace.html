@@ -145,7 +145,11 @@
 					);
 					universal.on(universal.events.companion.download_plugin, (state) => {
 						pb.setPercent(state.percent)
-						pb.setStage(universal.translationKey(state.stage));
+						if(state.data) {
+							pb.setStage(universal.translationKey(state.stage).replace("$1", state.data));
+						} else {
+							pb.setStage(universal.translationKey(state.stage));
+						}
 					})
 					universal.send(universal.events.companion.download_plugin, { plugin: req, repo })
 					universal.uiSounds.playSound("step_2");
