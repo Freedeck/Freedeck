@@ -43,7 +43,7 @@
 			<ul id="actl" class="btnlist"></ul>
 		</div>
 		<button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
-		<div class="flex-wrap">
+		<div class="flex-wrap" id="disbl-plg">
 			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
 			<div id="disbl-list" class="row"></div>
 		</div>
@@ -246,6 +246,20 @@
 				],
 				({ modal, value }) => {
 					if (value.value == true) {
+						const pb = window.UniversalUI.show.progressBar(
+						universal.translationKey("settings.sections.plugins"),
+						"Disabling",
+						0,
+						false,
+					);
+						universal.on(universal.events.default.disable_plugin, (state) => {
+							pb.setPercent(state.percent)
+							if(state.data) {
+								pb.setStage(universal.translationKey(state.stage).replace("$1", state.data));
+							} else {
+								pb.setStage(universal.translationKey(state.stage));
+							}
+						})
 						universal.send(universal.events.default.disable_plugin, req.id);
 					}
 				},
@@ -281,6 +295,8 @@
 		});
 	});
 
+	if(universal._information.disabled.length == 0) document.querySelector("#disbl-plg").style.display='none';
+
 	universal._information.disabled.forEach((plugin) => {
 		if (seen[plugin]) return;
 		seen[plugin] = true;
@@ -290,22 +306,34 @@
 			console.log(plugin);
 			universal.uiSounds.playSound("int_confirm");
 			universal.send(universal.events.default.enable_plugin, plugin);
-			if (!dialog.open) dialog.showModal();
-			dialog.innerHTML = `<p>Enabling ${plugin.split(".disabled")[0]}!</p>`;
+			const pb = window.UniversalUI.show.progressBar(
+				universal.translationKey("settings.sections.plugins"),
+				`Enabling ${universal.cleanHTML(plugin.split(".disabled")[0])}!`,
+				0,
+				false,
+			);
+			let p = 0;
+			setInterval(() => {
+				pb.setPercent(p++)
+			},10);
 		};
 		document.querySelector("#disbl-list").appendChild(a);
 	});
 
 	document.querySelector("#upd").onclick = () => {
+		const pb = window.UniversalUI.show.progressBar(
+			universal.translationKey("settings.sections.plugins"),
+			"Reloading all plugins, Freedeck will automatically reload.",
+			0,
+			false,
+		);
+		let p = 0;
+		setInterval(() => {
+			pb.setPercent(p++)
+		},10);
 		universal.uiSounds.playSound("int_yes");
 		universal.send(universal.events.default.update_plugins);
-		if (!dialog.open) dialog.showModal();
-		dialog.innerHTML = `<p>Reloading plugins!</p>`;
 	};
-	const dialog =
-		document.querySelector("dialog") || document.createElement("dialog");
-	if (!document.querySelector("dialog")) document.body.appendChild(dialog);
-
 	document.querySelector(".version").innerText =
 		universal._information.version.human;
 

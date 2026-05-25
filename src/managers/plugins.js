@@ -82,14 +82,18 @@ const pl = {
 	unload: (id) => {
 		const plList = pl.plugins();
 		const plugin = plList.get(id);
-
 		if (plugin) {
 			if (plugin.instance?.stop) plugin.instance.stop();
+			debug.log(
+				picocolors.green(`Stop handler ran for ${id}`),
+				"Plugins",
+			);
 			plList.delete(id);
 		}
 		for (const key in require.cache) {
 			if (
 				key.startsWith(path.resolve(`./tmp/_e_._plugins_${id}.Freedeck`)) ||
+				key.startsWith(path.resolve(`./tmp/_${id}.fdpackage`)) ||
 				key.startsWith(path.resolve(`./plugins/${id}`)) ||
 				key.startsWith(path.resolve(`./plugins/${id}.disabled`))
 			) {

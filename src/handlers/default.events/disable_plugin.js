@@ -3,7 +3,7 @@ const plugins = require("@managers/plugins");
 const eventNames = require("../eventNames");
 const fs = require("node:fs");
 
-module.exports = ({ io, data }) => {
+module.exports = ({ io, socket, data }) => {
 	if (!data) {
 		io.emit(eventNames.default.notif, {
 			sender: "Freedeck",
@@ -13,6 +13,7 @@ module.exports = ({ io, data }) => {
 	}
 	const currLoaded = plugins.plugins();
 	plugin = currLoaded.get(data);
+	socket.emit(eventNames.default.disable_plugin, {stage: "Got plugin data", percent: 0})
 	if (!plugin) {
 		io.emit(eventNames.default.notif, {
 			sender: "Freedeck",
@@ -21,22 +22,24 @@ module.exports = ({ io, data }) => {
 		return;
 	}
 	plugin = plugin.instance;
-	console.log("RH EEEE", plugin);
 	if (!fs.existsSync(path.resolve(`./plugins/${plugin.file.filePath}`))) return;
 	if (Object.keys(plugin.types).length > 0) {
 		for (const type of plugin.types) {
 			plugins.types().delete(type);
+			socket.emit(eventNames.default.disable_plugin, {stage: "Removed " + type, percent: 50})
 		}
 	}
+	socket.emit(eventNames.default.disable_plugin, {stage: "Unloading plugin module", percent: 70})
 	console.log(
 		`Attempting to disable ${plugin.file.filePath} (${plugin.name})...`,
 	);
-	currLoaded.delete(plugin.id);
+	plugins.unload(plugin.id);
+	socket.emit(eventNames.default.disable_plugin, {stage: "Setting as disabled", percent: 80})
 	fs.renameSync(
 		path.resolve(`./plugins/${plugin.file.filePath}`),
 		path.resolve(`./plugins/${plugin.file.filePath}.disabled`),
 	);
-	plugins.unload(plugin.id);
 	plugins._disabled.push(`${plugin.file.filePath}.disabled`);
+	socket.emit(eventNames.default.disable_plugin, {stage: "Done!", percent: 100})
 	io.emit(eventNames.default.reload);
 };
