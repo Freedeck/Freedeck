@@ -97,10 +97,7 @@
 				li.setAttribute("hovereffect", "yes");
 				li.style.cursor = "default";
 				li.className = "item";
-				const officialTag = document.createElement("img");
-				officialTag.src = "/app/shared/icons/official.svg";
-				officialTag.loading = "lazy";
-				officialTag.style.width = "8rem";
+				li.style.position ='relative'
 				const name = document.createElement("div");
 				if (!isUnofficial) {
 					name.innerText = universal
@@ -121,25 +118,35 @@
 				desc.innerText = req.description;
 				desc.classList.add("plugin-ifo");
 				li.appendChild(desc);
-				const rl = document.createElement("div");
+				const rl = document.createElement("small");
 				rl.innerText = universal
 					.translationKey("marketplace.info.repository")
-					.replace("$1", repo.title);
-				li.appendChild(rl);
+					.replace("$1", repo.title)
+					.replace("$2", data.title);
+				if (universal.repositoryManager.official.find((r) => r === repo)) {
+					if (!plugin.unofficial || plugin.unofficial !== "true") {
+						const oftContainer = document.createElement("span");
+						const imgContainer = document.createElement("div");
+						imgContainer.classList.add("official-tag-img")
+						const officialTag = document.createElement("img");
+						const oftTitle = document.createElement("p");
+						oftContainer.classList.add("official-tag")
+						officialTag.src = "/app/shared/icons/official.png";
+						officialTag.loading = "lazy";
+						oftTitle.textContent = "by Freedeck";
+						imgContainer.appendChild(officialTag);
+						oftContainer.appendChild(imgContainer)
+						oftContainer.appendChild(oftTitle);
+						li.appendChild(oftContainer);
+					}
+				} else {
+						li.appendChild(rl);
+				}
 				const file = document.createElement("button");
-				file.dataset.HandoffUrl =
-					"freedeck://download/" +
-					req.id +
-					"/" +
-					encodeURIComponent(req.download) +
-					"/" +
-					encodeURIComponent(req.description) +
-					"/" +
-					encodeURIComponent(repo.title);
 				const downloadPlugin = () => {
 					const pb = window.UniversalUI.show.progressBar(
 						universal.translationKey("marketplace.download.action").replace("$1", req.title),
-						universal.translationKey("marketplace.download.stage_init").replace("$1", repo.title).replace("$2", repo.channel),
+						universal.translationKey("marketplace.download.stage_init").replace("$1", data.title).replace("$2", repo.channel),
 						0,
 						false,
 					);
@@ -206,15 +213,6 @@
 							file.innerText = universal.translationKey(
 								"marketplace.action.update",
 							);
-							file.dataset.HandoffUrl =
-								file.dataset.HandoffUrl.replace(
-									"freedeck://download",
-									"freedeck://update",
-								) +
-								"/" +
-								encodeURIComponent(universal.plugins[req.id].version) +
-								"/" +
-								encodeURIComponent(req.version);
 							file.style.backgroundColor =
 								"var(--marketplace-plugin-updatable)";
 							universal.sendToast(
@@ -242,11 +240,6 @@
 					}
 				}
 				li.appendChild(file);
-				if (universal.repositoryManager.official.find((r) => r === repo)) {
-					if (!plugin.unofficial || plugin.unofficial !== "true") {
-						// li.appendChild(officialTag);
-					}
-				}
 				setTimeout(() => {
 					const luf = document.querySelector(".load-upon-finish")
 					const lus = document.querySelector(".loading-screen")
@@ -267,7 +260,7 @@
 		document.querySelector(".repositories").innerHTML = `<h1 class="settings-section-title">
 			<span data-i18n-key="marketplace.title"></span>
 			<span><img src="/app/shared/icons/marketplace.svg" width="50" loading="lazy" height="50" /></span>
-		</h1>`;
+		</h1><small><i>Repositories</i></small>`;
 		universal.translatePage()
 		document.querySelector(".marketplace").innerHTML = "";
 
@@ -367,7 +360,6 @@
 							continue;
 						options.push({
 							added: Date.now(),
-							type: "v3",
 							id: channelKey,
 							display: `${channel.title} (${channelKey})`,
 						});
@@ -395,7 +387,6 @@
 							const chn = value.id;
 							curr.push({
 								added: Date.now(),
-								type: "v3",
 								title,
 								url: url,
 								channel: chn,

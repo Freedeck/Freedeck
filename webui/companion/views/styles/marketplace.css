@@ -27,6 +27,26 @@
 	transform: translate(-50%, -50%);
 }
 
+.official-tag {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: center;
+	gap: .25rem;
+	justify-content: center;
+}
+.official-tag img {
+	height: 2rem;
+}
+.official-tag-img {
+	height: 100%;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
 /* Credit to https://cssloaders.github.io/ */
 .loader {
 	font-size: 10px;
@@ -149,7 +169,6 @@
 .repositories button {
 	background: rgba(255, 255, 255, 0.2) !important;
 	margin: inherit;
-	width: 100%;
 }
 
 .repositories li button {
@@ -157,32 +176,28 @@
 	text-align: center;
 	align-items: center;
 	justify-content: center;
+	height: 2rem;
+	min-height: 2rem;
 }
 
-.repositories li,
-.repositories button {
+.repositories li {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
-	color: var(--modal-item-text);
-	border-radius: var(--main-radius);
 	margin: 0.5rem 0;
 	gap: 1rem;
-	min-width: 150px;
-	max-width: 250px;
+	width: 16rem;
+	font-size: medium;
 	text-overflow: ellipsis;
 
+	color: var(--modal-item-text);
+	border-radius: var(--main-radius);
 	background: var(--modal-item-bg);
 	border: var(--generic-border);
 	background-size: var(--modal-item-bg-size);
 	animation: var(--modal-item-bg-anim);
-}
-
-.repositories li button {
-	height: 3rem;
-	min-height: 3rem;
 }
 
 .plugin-ifo {
@@ -200,7 +215,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: center;
+	align-items: start;
 	padding: 1rem;
 	color: var(--modal-item-text);
 	border: var(--generic-border);

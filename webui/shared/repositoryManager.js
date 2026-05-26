@@ -1,7 +1,6 @@
 const repom = {
 	official: [
 		{
-			type: "v3",
 			title: "freedeck.app",
 			url: "https://releases.freedeck.app/index.json",
 			channel: "main",
