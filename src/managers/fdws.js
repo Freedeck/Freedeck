@@ -42,6 +42,10 @@ const fdws = {
 
 let retryDelay = 1000;
 
+function ioEmit(i, ...d) {
+	if(fdws._io && fdws._io.emit) fdws._io.emit(i, ...d)
+}
+
 function retryConnection(url = "ws://localhost:5756/") {
 	try {
 		if (!fdws.isLauncherOpen()) {
@@ -51,7 +55,7 @@ function retryConnection(url = "ws://localhost:5756/") {
 		fdws._socket = new ws(url);
 		fdws._socket.onopen = (event) => {
 			fdws.connected = true;
-			fdws._io.emit("fdws_state", true);
+			ioEmit("fdws_state", true);
 			console.log("Connected to FDWS!");
 			retryDelay = 1000;
 			fdws._socket.onmessage = (event) => {
@@ -59,7 +63,7 @@ function retryConnection(url = "ws://localhost:5756/") {
 				try {
 					const data = JSON.parse(realData);
 					if (fdws._io != null) {
-						fdws._io.emit(`fdws_${data.Event}`, JSON.parse(data.Data));
+						ioEmit(`fdws_${data.Event}`, JSON.parse(data.Data));
 					}
 				} catch (e) {
 					console.log(realData);
@@ -68,7 +72,7 @@ function retryConnection(url = "ws://localhost:5756/") {
 			};
 		};
 		fdws._socket.onclose = (event) => {
-			fdws._io.emit("fdws_state", false);
+			ioEmit("fdws_state", false);
 			fdws.connected = false;
 			setTimeout(() => {
 				if (fdws._socket.readyState !== ws.OPEN) {
