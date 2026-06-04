@@ -145,6 +145,8 @@ const contextMenu = async (e) => {
 			const selectionName = sData.name;
 			const viewList = sData.modules;
 			for (const data of viewList) {
+				if(DASH_MODE && !data.view) continue;
+				if(!DASH_MODE && !data.overlay) continue;
 				const menuItem = document.createElement("div");
 				menuItem.innerText = selectionName + " - " + data.name;
 				menuItem.className = "menuItem";
