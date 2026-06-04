@@ -6,4 +6,14 @@ contextBridge.exposeInMainWorld("freedeckoverlay", {
 	onShortcut: (e) => {
 		ipcRenderer.on("shortcutpressed", e);
 	},
+
+	onVU: (e) => {
+		ipcRenderer.on("volup", e);
+	},
+	onVD: (e) => {
+		ipcRenderer.on("voldown", e);
+	},
+	onVM: (e) => {
+		ipcRenderer.on("volMute", e);
+	},
 });

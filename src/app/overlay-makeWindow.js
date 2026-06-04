@@ -66,6 +66,22 @@ function createOverlay() {
 		lock.webContents.send("shortcutpressed");
 	});
 
+	 globalShortcut.register('Alt+VolumeUp', () => {
+    // You will need a Node.js library to execute OS-level audio commands
+		lock.webContents.send("volup");
+  });
+
+  // Volume Down: Ctrl + DownArrow
+  globalShortcut.register('Alt+VolumeDown', () => {
+    // You will need a Node.js library to execute OS-level audio commands
+		lock.webContents.send("voldown");
+  });
+
+	globalShortcut.register('Alt+VolumeMute', () => {
+    // You will need a Node.js library to execute OS-level audio commands
+		lock.webContents.send("volMute");
+  });
+
 	lock.on("close", (e) => {
 		lock = null;
 	});

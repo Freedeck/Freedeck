@@ -1,0 +1,95 @@
+<style>
+  .fdKnob {
+    background: var(--modal-item-bg);
+    width: max-content;
+    height: max-content;
+  }
+  .slots {
+    background-color: rgba(0,0,0,0.25);
+    padding: .725rem;
+    border: var(--generic-border);
+    border-radius: var(--main-radius);
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  .slot {
+    background-color: rgba(0,0,0,0.05);
+    width: 3rem;
+    height: 7rem;
+    border-radius: var(--main-radius);
+  }
+  .selected {
+    background-color: rgba(255,255,255,0.1);
+  }
+  .active {
+  }
+  @keyframes action {
+    0%, 100% {
+      background-color: rgba(255,255,255,0.1);
+    }
+    50% {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+</style>
+<freedeck-dash-module class="fdKnob">
+<div class="slots" data-max="2">
+</div>
+</freedeck-dash-module>
+<script>
+  const kbsfd = document.querySelector(".knobstatefd")
+  const slots = document.querySelector(".slots");
+  const maxSlot = Number.parseInt(slots.getAttribute("data-max"));
+  let selectedSlot = 0
+  window.freedeckoverlay.onVU((e) => {
+    if(selectedSlot == maxSlot) return;
+    else selectedSlot++;
+    selectNewSlot();
+  })
+  window.freedeckoverlay.onVD((e) => {
+    if(selectedSlot == 0) return;
+    else selectedSlot--;
+    selectNewSlot();
+  })
+   window.freedeckoverlay.onVM((e) => {
+    press();
+    selectNewSlot();
+  })
+
+  const dataSlots = {
+    "A": {value: 0},
+    "B": {value: 50},
+    "C": {value: 75}
+  }
+
+  import slider from "/scripts/ui/slider.js";
+  let X = 0;
+  for(const i in dataSlots) {
+    const slot = document.createElement("div");
+    slot.classList.add("slot");
+    slot.setAttribute("data-slot", X)
+    if(X == 0) {
+      slot.classList.add('selected')
+    }
+    const dv = dataSlots[i];
+    slot.textContent = i +": " + dv.value
+    slider({position: 0,data:{direction:"vertical",value:dv.value,min:0,max:100}}, slot, "raw")
+    slots.appendChild(slot);
+    X++;
+  }
+
+
+  function press() {
+    const selSlot = document.querySelector(".slot.selected");
+    selSlot.style.animation = 'action 0.25s';
+    setTimeout(() => {
+      selSlot.style.animation = 'none';
+    }, 250)
+  }
+
+  function selectNewSlot() {
+    document.querySelector(".slot.selected").classList.remove("selected");
+    document.querySelector('.slot[data-slot="'+selectedSlot+'"]').classList.add("selected");
+  }
+</script>

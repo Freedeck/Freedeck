@@ -1,136 +1,131 @@
 /**
  * @param {*} data Freedeck Button Config
  * @param {*} keyObject Key Object
+ * @param {*} raw Raw Interaction Config
  */
 export default function (data, keyObject, raw) {
-	const sliderContainer = document.createElement("div");
-	sliderContainer.classList.add("slider-container");
-	sliderContainer.dataset.value = data.data.value;
-	keyObject.appendChild(sliderContainer);
+  const sliderContainer = document.createElement("div");
+  sliderContainer.classList.add("slider-container");
+  sliderContainer.dataset.value = data.data.value;
+  keyObject.appendChild(sliderContainer);
 
-	const sliderTitle = document.createElement("div");
-	sliderTitle.classList.add("slider-title");
-	sliderTitle.innerText = Object.keys(raw)[0];
-	sliderContainer.appendChild(sliderTitle);
+  const sliderTitle = document.createElement("div");
+  sliderTitle.classList.add("slider-title");
+  sliderTitle.innerText = Object.keys(raw)[0];
+  sliderContainer.appendChild(sliderTitle);
 
-	const sliderThumb = document.createElement("div");
-	sliderThumb.classList.add("slider-thumb");
-	sliderThumb.classList.add("context-aware");
-	sliderContainer.appendChild(sliderThumb);
+  const sliderThumb = document.createElement("div");
+  sliderThumb.classList.add("slider-thumb");
+  sliderThumb.classList.add("context-aware");
+  sliderContainer.appendChild(sliderThumb);
 
-	const sliderPercentage = document.createElement("div");
-	sliderPercentage.classList.add("slider-percentage");
-	sliderPercentage.innerText = `${data.data.value}${data.data.format ? data.data.format : "%"}`;
-	sliderContainer.appendChild(sliderPercentage);
-	sliderContainer.dataset.value = data.data.value;
+  const sliderPercentage = document.createElement("div");
+  sliderPercentage.classList.add("slider-percentage");
+  sliderPercentage.innerText = `${data.data.value}${data.data.format ? data.data.format : "%"}`;
+  sliderContainer.appendChild(sliderPercentage);
 
-	sliderThumb.oncontextmenu = (e) => {
-		sliderThumb.parentElement.parentElement.oncontextmenu(e);
-	};
+  sliderThumb.oncontextmenu = (e) => {
+    sliderThumb.parentElement.parentElement.oncontextmenu(e);
+  };
 
-	const index = data.position;
-	const row = Math.floor((index - 1) / 5);
-	const col = (index - 1) % 5;
-	const top = `${row * 33}%`;
-	const left = `${col * 20}%`;
+  const index = data.position;
+  const row = Math.floor((index - 1) / 5);
+  const col = (index - 1) % 5;
+  const top = `${row * 33}%`;
+  const left = `${col * 20}%`;
 
-	sliderContainer.style.top = top;
-	sliderContainer.style.left = left;
+  sliderContainer.style.top = top;
+  sliderContainer.style.left = left;
 
-	let isDragging = false;
-	const updateSlider = (event) => {
-		const rect = sliderContainer.getBoundingClientRect();
-		let value;
-		if (data.data.direction === "vertical") {
-			let newTop = event.clientY - rect.top;
-			if (newTop < 0) newTop = 0;
-			if (newTop > rect.height) newTop = rect.height;
+  let isDragging = false;
 
-			value =
-				((rect.height - newTop) / rect.height) *
-					(data.data.max - data.data.min) +
-				data.data.min;
-		} else {
-			let newLeft = event.clientX - rect.left;
-			if (newLeft < 0) newLeft = 0;
-			if (newLeft > rect.width) newLeft = rect.width;
+  const updateSlider = (event) => {
+    const rect = sliderContainer.getBoundingClientRect();
+    let calculatedValue;
+    
+    if (data.data.direction === "vertical") {
+      let newTop = event.clientY - rect.top;
+      if (newTop < 0) newTop = 0;
+      if (newTop > rect.height) newTop = rect.height;
 
-			value =
-				(newLeft / rect.width) * (data.data.max - data.data.min) +
-				data.data.min;
-		}
+      calculatedValue =
+        ((rect.height - newTop) / rect.height) *
+          (data.data.max - data.data.min) +
+        data.data.min;
+    } else {
+      let newLeft = event.clientX - rect.left;
+      if (newLeft < 0) newLeft = 0;
+      if (newLeft > rect.width) newLeft = rect.width;
 
-		updateValues(data, sliderContainer, sliderPercentage);
+      calculatedValue =
+        (newLeft / rect.width) * (data.data.max - data.data.min) +
+        data.data.min;
+    }
 
-		universal.send(universal.events.keypress, {
-			isSlider: true,
-			sliderValue: data.data.value,
-			event: event,
-			btn: data,
-		});
-	};
+    let finalValue = Math.min(Math.max(calculatedValue, data.data.min), data.data.max);
+    sliderContainer.dataset.value = finalValue;
+    data.data.value = finalValue;
 
-	let value = 0;
-	function updateValues(data, sliderContainer, sliderPercentage) {
-		value = Math.min(Math.max(value, data.data.min), data.data.max); // Ensure value is within bounds
+    renderVisuals(finalValue, data, sliderContainer, sliderPercentage);
 
-		sliderContainer.dataset.value = value;
-		data.data.value = value;
+    universal.send(universal.events.keypress, {
+      isSlider: true,
+      sliderValue: data.data.value,
+      event: event,
+      btn: data,
+    });
+  };
 
-		const percentage =
-			((value - data.data.min) / (data.data.max - data.data.min)) * 100;
-		sliderContainer.style.background =
-			data.data.direction === "vertical"
-				? `linear-gradient(to top, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`
-				: `linear-gradient(to right, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
+  function renderVisuals(val, data, container, percentageEl) {
+    const percentage = ((val - data.data.min) / (data.data.max - data.data.min)) * 100;
+    
+    container.style.background =
+      data.data.direction === "vertical"
+        ? `linear-gradient(to top, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`
+        : `linear-gradient(to right, var(--slider-background) ${percentage}%, var(--slider-foreground) ${percentage}%)`;
 
-		const rounded = Number.parseFloat(value).toFixed(1);
-		sliderPercentage.innerText = `${rounded}${data.data.format ? data.data.format : "%"}`;
-	}
+    const rounded = Number.parseFloat(val).toFixed(1);
+    percentageEl.innerText = `${rounded}${data.data.format ? data.data.format : "%"}`;
+  }
 
-	const i = setInterval(() => {
-		// sync slider value with data
-		if (sliderContainer.dataset.value === data.data.value) return;
-		if (isDragging) return;
-		if (!document.body.contains(sliderContainer)) {
-			clearInterval(i);
-			return;
-		}
+  renderVisuals(data.data.value, data, sliderContainer, sliderPercentage);
 
-		updateValues(data, sliderContainer, sliderPercentage);
-	}, 500);
+  const i = setInterval(() => {
+    if (!document.body.contains(sliderContainer)) {
+      clearInterval(i);
+      return;
+    }
+    if (isDragging) return;
 
-	if (data.data.enabled != "false") {
-		const touchDownEvent = (e) => {
-			sliderContainer.dataset.dragging = true;
-			isDragging = true;
-		};
-		const touchUpEvent = (e) => {
-			sliderContainer.dataset.dragging = false;
-			isDragging = false;
-		};
+    const currentAttrValue = Number.parseFloat(sliderContainer.dataset.value) || 0;
 
-		sliderThumb.addEventListener("mousedown", touchDownEvent);
-		sliderThumb.addEventListener("touchstart", touchDownEvent);
-		sliderThumb.addEventListener("mouseup", touchUpEvent);
-		sliderThumb.addEventListener("touchend", touchUpEvent);
-		document.addEventListener("mousemove", (event) => {
-			if (isDragging) {
-				updateSlider(event);
-			}
-		});
+    if (currentAttrValue !== data.data.value) {
+      data.data.value = currentAttrValue;
+      renderVisuals(currentAttrValue, data, sliderContainer, sliderPercentage);
+    }
+  }, 250);
 
-		document.addEventListener("touchmove", (event) => {
-			if (isDragging) {
-				updateSlider(event.touches[0]);
-			}
-		});
-	}
+  if (data.data.enabled !== "false") {
+    const touchDownEvent = (e) => {
+      sliderContainer.dataset.dragging = true;
+      isDragging = true;
+    };
+    const touchUpEvent = (e) => {
+      sliderContainer.dataset.dragging = false;
+      isDragging = false;
+    };
 
-	const percent =
-		((data.data.value - data.data.min) / (data.data.max - data.data.min)) * 100;
-	sliderContainer.style.background = `linear-gradient(to right, var(--slider-background) ${percent}%, var(--slider-foreground) ${percent}%)`;
-	if (data.data.direction === "vertical") {
-		sliderContainer.style.background = `linear-gradient(to top, var(--slider-background) ${percent}%, var(--slider-foreground) ${percent}%)`;
-	}
+    sliderThumb.addEventListener("mousedown", touchDownEvent);
+    sliderThumb.addEventListener("touchstart", touchDownEvent);
+    sliderThumb.addEventListener("mouseup", touchUpEvent);
+    sliderThumb.addEventListener("touchend", touchUpEvent);
+    
+    document.addEventListener("mousemove", (event) => {
+      if (isDragging) updateSlider(event);
+    });
+
+    document.addEventListener("touchmove", (event) => {
+      if (isDragging) updateSlider(event.touches[0]);
+    });
+  }
 }

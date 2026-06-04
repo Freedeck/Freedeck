@@ -34,7 +34,7 @@ const dragWarning = document.querySelector("#dragmode-warning");
 const debugWarning = document.querySelector("#debugmode-warning");
 const noMods = document.querySelector("#nomods-warning")
 const userViewCollection = [];
-const systemViewCollection = ["freedeck"];
+const systemViewCollection = ["freedeck", "testing"];
 for (const k in universal.plugins) {
 	const i = universal.plugins[k];
 	if (i.dashModules) {
