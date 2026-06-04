@@ -45,6 +45,13 @@ function createOverlay() {
 			},
 		},
 		{
+			label: "DevTools",
+			click: () => {
+				lock.focus();
+				lock.webContents.openDevTools({mode:'detach'});
+			},
+		},
+		{
 			label: "Quit",
 			click: () => {
 				app.isQuiting = true;
@@ -64,7 +71,7 @@ function createOverlay() {
 	});
 
 	lock.setIgnoreMouseEvents(true, { forward: true });
-	lock.setAlwaysOnTop(true, "floating");
+	lock.setAlwaysOnTop(true, "status");
 	lock.setPosition(0, 0);
 
 	console.log("Loaded Overlay");

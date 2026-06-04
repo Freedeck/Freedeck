@@ -14,7 +14,7 @@ The Client styling is also way smaller and doesn't have the extent pre-included 
 }
 
 #ctxl-view-cont {
-  background-color: none;
+  background: none;
 }
 
 #ctxl-view-cont html body {
