@@ -1,12 +1,13 @@
 const eventNames = require("./eventNames");
 const sec = require("../managers/secrets");
 const debug = require("$/debug");
+const set = require("../managers/settings");
 
 module.exports = {
 	name: "Authentication",
 	id: "fd.handlers.login",
 	exec: ({ socket }) => {
-		if (debug.status) {
+		if (debug.status || !set.settings().useAuthentication) {
 			socket.auth = true;
 		}
 
