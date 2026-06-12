@@ -142,7 +142,6 @@ export default async function eventsHandler(universal, user) {
 			"--tile-columns",
 			`repeat(${e.tileCols ? e.tileCols : "5"}, 2fr)`,
 		);
-		universal.getServerFlags = () => e;
 		universal.getServerFlags().iconCountPerPage = Number.parseInt(
 			e.iconCountPerPage,
 		);

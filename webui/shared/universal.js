@@ -485,6 +485,7 @@ const universal = {
 	name: "",
 	_timeouts: {},
 	sendToast: (message, sender = "") => {
+		if(!universal.getServerFlags()['app.freedeck.ui.show_notifications']) return;
 		if (!HTMLElement.prototype.setHTML) {
 			HTMLElement.prototype.setHTML = function (html) {
 				this.innerHTML = universal.cleanHTML(html);

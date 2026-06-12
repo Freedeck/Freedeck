@@ -612,6 +612,16 @@
 						universal.UI.reloadTiles();
 					},
 				},
+				"app.freedeck.ui.show_notifications": {
+					type: "checkbox",
+					key: "settings.sections.general.show_notifications",
+					default:
+						universal.getServerFlags()["app.freedeck.ui.show_notifications"] ||
+						true,
+					onchange: () => {
+						universal.send(universal.events.default.reload)
+					},
+				},
 				"app.freedeck.ui.fill_tiles": {
 					type: "checkbox",
 					key: "settings.sections.general.fill",
