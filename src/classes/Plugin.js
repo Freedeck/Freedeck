@@ -167,7 +167,6 @@ module.exports = class Plugin {
 		const data = JSON.parse(
 			fs.readFileSync(path.resolve(`./plugins/${this.id}/settings.json`)),
 		);
-		this.Settings[k] = data[k];
 		return data[k];
 	}
 
@@ -182,7 +181,6 @@ module.exports = class Plugin {
 			fs.readFileSync(path.resolve(`./plugins/${this.id}/settings.json`)),
 		);
 		data[k] = v;
-		this.Settings[k] = v;
 		fs.writeFileSync(
 			path.resolve(`./plugins/${this.id}/settings.json`),
 			JSON.stringify(data),

@@ -10,6 +10,7 @@ const pluginManager = require("@managers/plugins");
 const eventNames = require("@handlers/eventNames");
 
 const { server } = require("./http");
+const { clients } = require("@managers/serverClientelle");
 const io = new socketIO.Server(server);
 
 const handlers = [];
@@ -39,7 +40,6 @@ const plugins = pluginManager.plugins();
 
 const types = pluginManager.types;
 
-const clients = [];
 
 debug.log("Initializing server...", "Server / HTTP");
 

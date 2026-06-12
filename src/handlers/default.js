@@ -25,6 +25,7 @@ const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
 const os = require("node:os");
 const iconRegistry = require("../managers/iconRegistry");
+const { gatherServerInformation } = require("@managers/serverInformationGatherer");
 const hostname = os.hostname();
 
 module.exports = {
@@ -115,7 +116,7 @@ module.exports = {
 			`Socket Server / ${socket.user ? socket.user : socket.id}`,
 		);
 
-		socket.on(eventNames.client_greet, (user) => {
+		socket.on(eventNames.client_greet, async (user) => {
 			socket.user = user;
 			debug.log("Migrating to username.", `Socket Server / ${socket.user}`);
 			if (user === "Main" && socket.auth) {
@@ -134,70 +135,7 @@ module.exports = {
 			console.log(
 				`Freedeck ${socket.user} connected to server at ${new Date()}`,
 			);
-			debug.log("Fetched plugin information", `Socket Server / ${socket.user}`);
-			cfg.update();
-			debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
-			const realCfg = cfg.settings();
-			const serverInfo = {
-				id: socket.id,
-				tempLoginID: socket.tempLoginID,
-				NotificationManager,
-				hostname,
-				soundpacks: [
-					...readdirSync(commonSoundpacks).filter((e) =>
-						e.endsWith(".soundpack"),
-					),
-					...readdirSync(userSoundpacksLocation)
-						.filter((e) => e.endsWith(".soundpack"))
-						.map((e) => `${e}#`),
-				],
-				themes: [
-					...readdirSync(commonThemes).filter((e) => e.endsWith(".css")),
-					...readdirSync(userThemesLocation)
-						.filter((e) => e.endsWith(".css"))
-						.map((e) => `${e}#`),
-				],
-				mobileConnected: tsm.get("isMobileConnected") || false,
-				style: styleManager.get(),
-				iconRegistry: iconRegistry.map,
-				disabled: plugins._disabled,
-				events: eventNames,
-				launcherOpen: fdws.isLauncherOpen(),
-				connectedToFDWS: fdws.connected,
-				version: {
-					raw: thisPackage.version,
-					human: `Freedeck v${thisPackage.version}`,
-				},
-			};
-			if (!socket.auth && realCfg.useAuthentication) {
-				delete serverInfo.NotificationManager;
-				delete serverInfo.hostname;
-				delete serverInfo.config;
-				delete serverInfo.launcherOpen;
-				delete serverInfo.connectedToFDWS;
-				delete serverInfo.iconRegistry;
-				serverInfo.needToAuthenticate = true;
-			}
-			if (socket.auth || !realCfg.useAuthentication) {
-				serverInfo.config = realCfg;
-				serverInfo.plugins = plugins.sanitizeInfo();
-			}
-			debug.log(
-				"Setup serverInfo. GZipping.",
-				`Socket Server / ${socket.user}`,
-			);
-			zlib.gzip(JSON.stringify(serverInfo), (err, buffer) => {
-				if (err) {
-					console.error("Compression error:", err);
-					return;
-				}
-				debug.log(
-					"GZipped. Sending information.",
-					`Socket Server / ${socket.user}`,
-				);
-
-				socket.emit(eventNames.information, buffer);
-			});
+			socket.emit(eventNames.information, await gatherServerInformation(socket))
 
 			debug.log(
 				"Letting user know they're connected.",

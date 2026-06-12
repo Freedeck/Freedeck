@@ -43,6 +43,7 @@
 			<ul id="actl" class="btnlist"></ul>
 		</div>
 		<button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
+		<button id="plst" data-i18n-key="settings.sections.plugins.settings_editor"></button>
 		<div class="flex-wrap" id="disbl-plg">
 			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
 			<div id="disbl-list" class="row"></div>
@@ -197,19 +198,24 @@
 		seen[req.name] = true;
 
 		const imgEle = document.createElement("img");
-		(async () => {
-			let ex = false;
-			await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
-				if(r.status == 200) ex = true;
-			})
-			if(ex) {
-				imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+		if(!universal.plugins[plugin].icon) {
+			(async () => {
+				let ex = false;
+				await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
+					if(r.status == 200) ex = true;
+				})
+				if(ex) {
+					imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+				}
+			})();
+			if(req.packageType == "theme") {
+				imgEle.src = "/app/shared/icons/theme-icon.png";
 			}
-		})();
-		const infoEle = document.createElement("div");
-		if(req.packageType == "theme") {
-			imgEle.src = "/app/shared/icons/theme-icon.png";
+			universal.plugins[plugin].icon = imgEle.src;
+		} else {
+			imgEle.src = req.icon;
 		}
+		const infoEle = document.createElement("div");
 		infoEle.appendChild(imgEle);
 		infoEle.classList.add("plugin-information");
 
@@ -334,6 +340,11 @@
 		universal.uiSounds.playSound("int_yes");
 		universal.send(universal.events.default.update_plugins);
 	};
+
+	document.querySelector("#plst").onclick = () => {
+		universal.vopen("settings_plugins")
+	};
+
 	document.querySelector(".version").innerText =
 		universal._information.version.human;
 

@@ -22,6 +22,7 @@ const pages = [
 	"plugins",
 	"marketplace",
 	"settings",
+	"settings_plugins",
 	"demo-pages",
 	"setup_00_language",
 	"setup_01_welcome",

@@ -44,7 +44,7 @@
 			</details>
 
 			<div class="flex-wrap-r">
-				<button onclick="window.location.reload()" data-i18n-key="settings.client.reload"></button>
+				<button onclick="universal.send(universal.events.default.reload)" data-i18n-key="settings.client.reload"></button>
 				<button onclick="window.location.href = '/dash'" data-i18n-key="settings.client.dash"></button>
 				<button onclick="window.location.href = '/companion'" data-i18n-key="settings.client.companion"></button>
 				<button onclick="universal.send(universal.events.default.recompile)"
@@ -70,7 +70,6 @@
 							">
 						Login
 					</button>
-					<button onclick="window.location.reload()" data-i18n-key="settings.client.reload"></button>
 				</div>
 			</div>
 		</div>

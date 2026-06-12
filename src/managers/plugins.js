@@ -32,6 +32,7 @@ const pl = {
 				imports,
 				hooks,
 				views,
+				Settings,
 				disabled,
 				stopped,
 			} = plugin[1].instance;
@@ -42,7 +43,7 @@ const pl = {
 				version,
 				intents: plugin[1].instance._intent || [],
 				packageType: plugin[1].instance.packageType || "plugin",
-				Settings: {},
+				Settings,
 				popout,
 				dashModules,
 				types,

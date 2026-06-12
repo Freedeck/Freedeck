@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="/companion/views/styles/settings.css" />
+<h1 class="settings-section-title">
+	PLUGIN <span data-i18n-key="settings.title"></span>
+	<span><img src="/app/shared/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
+</h1>
+<div id="settings-menu-full"></div>
+<!-- <h2>This is the bottom of the Settings menu.</h2> -->
+<script type="module">
+	const seen = {};
+	const smf = document.querySelector("#settings-menu-full")
+	Object.keys(universal.plugins).forEach((plugin) => {
+		const req = universal.plugins[plugin];
+		const li = document.createElement("details");
+		li.setAttribute("hovereffect", "yes");
+		li.style.cursor = "default";
+		if (seen[req.name]) return;
+		seen[req.name] = true;
+
+
+		if(!req.Settings || Object.keys(req.Settings).length == 0) return;
+
+		const spn = document.createElement("span");
+		spn.innerText = req.name;
+		const imgEle = document.createElement("img");
+		imgEle.width='50';
+		imgEle.height='50';
+		imgEle.loading='lazy'
+		if(!universal.plugins[plugin].icon) {
+			(async () => {
+				let ex = false;
+				await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
+					if(r.status == 200) ex = true;
+				})
+				if(ex) {
+					imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+				}
+			})();
+			if(req.packageType == "theme") {
+				imgEle.src = "/app/shared/icons/theme-icon.png";
+			}
+			universal.plugins[plugin].icon = imgEle.src;
+		} else {
+			imgEle.src = req.icon;
+		}
+		const infoEle = document.createElement("summary");
+		infoEle.appendChild(spn);
+		infoEle.appendChild(imgEle);
+		infoEle.classList.add("settings-section-title");
+		li.appendChild(infoEle)
+
+		for(const key in req.Settings) {
+			const setting = req.Settings[key];
+			const div = document.createElement("div");
+			div.innerHTML = `${setting.name}: ${setting.description}\n${setting.value}`
+			li.appendChild(div)
+		}
+		
+		smf.appendChild(li);
+  });
+</script>

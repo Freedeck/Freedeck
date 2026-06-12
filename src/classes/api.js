@@ -81,7 +81,7 @@ class Plugin {
 		const lid = id.toLowerCase();
 		const fdId = "_fd_cset_" + lid;
 		if(!this.getFromSaveData(fdId)) {
-			this.setToSaveData(fdId, JSON.stringify(settingData))
+			this.setToSaveData(fdId, settingData)
 			this.Settings[lid] = settingData;
 		} else {
 			this.Settings[lid] = this.getFromSaveData(fdId);
@@ -90,7 +90,17 @@ class Plugin {
 
 	getSetting(id){
 		const lid = id.toLowerCase();
-		return this.Settings[lid].value || JSON.parse(this.getFromSaveData("_fd_cset_" + lid)).value;
+		return this.Settings[lid].value || this.getFromSaveData("_fd_cset_" + lid).value;
+	}
+
+	setSetting(id, value) {
+		const lid = id.toLowerCase();
+		console.log(lid, this.getFromSaveData("_fd_cset_"+lid));
+		this.Settings[lid].value = value;
+		const template = this.getFromSaveData("_fd_cset_" + lid);
+		template.value = value;
+		this.setToSaveData("_fd_cset_" + lid, template);
+		return true;
 	}
 
 	/**
