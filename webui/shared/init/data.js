@@ -134,6 +134,10 @@ export default async function dataHandler(universal, user) {
 			"Generic native handler created. Resolving as we're finished here.",
 		);
 		universal.sendEvent("data_ready");
+
+		universal.listenFor("data_ready", () => {
+			universal.UI.reloadTiles();
+		})
 	});
 	universal.CLU("Incoming Data Handler", "Sent Identify packet");
 	universal._user = user;
