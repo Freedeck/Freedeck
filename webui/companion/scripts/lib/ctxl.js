@@ -73,7 +73,7 @@ const ctxl = {
 			document.body.appendChild(ctxl.createViewContainer());
 		if (ctxl.onclose[view]) ctxl.onclose[view]();
 		if (ctxl.onclose[view]) delete ctxl.onclose[view];
-		const scripts = document.querySelectorAll(`.ctxv${view}`);
+		const scripts = document.querySelectorAll(`.ctxv-${view}`);
 		for (let i = 0; i < scripts.length; i++) {
 			scripts[i].remove();
 		}

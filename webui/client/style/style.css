@@ -39,6 +39,7 @@
 
 	--input-bg: #17212a;
 	--input-slider-bg: rgb(12, 12, 12);
+	--input-slider-hover: #555;
 	--input-color: white;
 
 	--link-hover-background: rgba(0, 0, 0, 0.25);
@@ -178,7 +179,7 @@ p {
 	color: var(--text-color);
 	position: fixed;
 	top: 0;
-	z-index: 9999;
+	z-index: 10000;
 	transition-duration: 0.5s;
 	color: var(--text-color-secondary);
 }
@@ -517,7 +518,7 @@ summary ::-webkit-details-marker {
 
 select {
 	background: var(--modal-bg);
-	border: var(--generic-border);
+	border: var(--tile-border);
 	border-radius: var(--main-radius);
 	padding: 5px;
 	font-family: var(--font);
@@ -529,7 +530,7 @@ select {
 
 input {
 	background: var(--modal-bg);
-	border: var(--generic-border);
+	border: var(--tile-border);
 	border-radius: var(--main-radius);
 	padding: 5px;
 	font-family: var(--font);
@@ -544,7 +545,7 @@ input[type="checkbox"] {
 	width: 1.5rem;
 	height: 1.5rem;
 	background: var(--modal-bg);
-	border: var(--generic-border);
+	border: var(--tile-border);
 	border-radius: var(--main-radius);
 	padding: 5px;
 	font-family: var(--font);
@@ -571,7 +572,7 @@ input[type="checkbox"]:checked {
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.2l-4.2-4.2L3 14l6 6 12-12-1.8-1.8z"/></svg>');
 	background-repeat: no-repeat;
 	background-position: center;
-	border: var(--generic-border);
+	border: var(--tile-border);
 	border-radius: var(--main-radius);
 	padding: 5px;
 	font-family: var(--font);
@@ -844,6 +845,7 @@ a:hover {
 	width: 100%;
 	height: 2px;
 	background-color: rgba(221, 221, 221, 0.5);
+	border: var(--tile-border);
 	border-radius: var(--main-radius);
 	outline: none;
 	margin: 5px 0;
@@ -854,6 +856,7 @@ a:hover {
 /* hide accent color */
 .btn-slider::-webkit-slider-thumb {
 	-webkit-appearance: none;
+	border: var(--tile-border);
 	width: 0;
 	height: 0;
 	border: 0;
@@ -862,6 +865,7 @@ a:hover {
 
 .btn-slider::-moz-range-thumb {
 	width: 0;
+	border: var(--tile-border);
 	height: 0;
 	border: 0;
 	background: transparent;
@@ -894,6 +898,7 @@ a:hover {
 	width: 100%;
 	height: 100%;
 	background: var(--tile-bg);
+	border: var(--tile-border);
 	border-radius: var(--button-radius);
 	position: relative;
 	display: flex;
@@ -912,6 +917,7 @@ a:hover {
 .slider-thumb {
 	width: 100%;
 	height: 100%;
+	border: var(--tile-border);
 	background: var(--slider-foreground);
 	opacity: 0;
 	position: absolute;

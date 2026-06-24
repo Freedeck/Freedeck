@@ -44,15 +44,6 @@ if (runCfg.runs.companion === false) {
 } else if (runCfg.runs.server === false) {
 	recordTime("context-switch:is-companion");
 	console.log(picocolors.blue("Companion only mode."));
-	const { app } = require("electron");
-	app.on("ready", () => {
-		require("./app/makeWindow")(
-			"webui/client/new-connect.html",
-			true,
-			420,
-			525,
-			false,
-		);
-	});
+	require("./app/companion/launcher");
 }
 recordTime("context-switch:handoff-complete");

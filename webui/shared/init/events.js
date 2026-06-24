@@ -121,7 +121,12 @@ export default async function eventsHandler(universal, user) {
 	universal.on(universal.events.login.login_data_ack, (data) => {
 		universal._loginAllowed = data;
 	});
-	universal.on(universal.events.default.reload, () => window.location.reload());
+	universal.on(universal.events.default.reload, () => {
+  	UI.showBootLog(false);
+		setTimeout(() => {
+			window.location.reload();
+		}, 500);
+	});
 
 	universal.on(universal.events.default.server_flag_updated, (e) => {
 		document.documentElement.style.setProperty(

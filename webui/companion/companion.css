@@ -500,7 +500,7 @@ textarea {
 	background: var(--input-bg);
 	color: var(--input-color);
 	border-radius: var(--main-radius);
-	border: var(--generic-border);
+	border: var(--tile-border);
 	outline: none;
 	margin: 5px 0;
 }
@@ -511,37 +511,38 @@ textarea {
 	z-index: 999;
 	width: 25px;
 	height: 25px;
+	border: var(--tile-border);
 	background-color: var(--input-slider-bg);
 	border-radius: 50%;
 	cursor: pointer;
 }
 
 .fdc-slider::-webkit-slider-thumb:hover {
-	background-color: #555;
+	background-color: var(--input-slider-hover);
 }
 
 .fdc-slider::-moz-range-thumb {
 	width: 20px;
 	height: 20px;
-	background-color: #333;
+	background-color: var(--input-slider-bg);
 	border-radius: 50%;
 	cursor: pointer;
 }
 
 .fdc-slider::-moz-range-thumb:hover {
-	background-color: #555;
+	background-color: var(--input-slider-hover);
 }
 
 .fdc-slider::-ms-thumb {
 	width: 20px;
 	height: 20px;
-	background-color: #333;
+	background-color: var(--input-slider-bg);
 	border-radius: 50%;
 	cursor: pointer;
 }
 
 .fdc-slider::-ms-thumb:hover {
-	background-color: #555;
+	background-color: var(--input-slider-hover);
 }
 
 .unset {

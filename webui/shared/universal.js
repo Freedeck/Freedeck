@@ -697,6 +697,17 @@ window.ErrorIgnore = () => {
 };
 if (!universal.UI) universal.UI = UI;
 
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {
+    e.preventDefault(); 
+
+    UI.showBootLog(false);
+		setTimeout(() => {
+			window.location.reload();
+		}, 500);
+  }
+});
+
 universal.listenFor(
 	"animate_page",
 	(type = "automated", direction = "left") => {
