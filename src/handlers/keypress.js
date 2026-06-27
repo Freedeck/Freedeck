@@ -5,7 +5,7 @@ const cfg = settings.settings();
 
 module.exports = {
 	name: "Keypress",
-	id: "fd.handlers.keypress",
+	id: "builtin.keypress",
 	flags: ["AUTH"],
 	exec: ({ socket, types, plugins, io }) => {
 		socket.on(eventNames.keypress, (ev) => {

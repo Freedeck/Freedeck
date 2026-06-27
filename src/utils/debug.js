@@ -4,6 +4,7 @@ const picocolors = require("./picocolors");
 const os = require("node:os");
 
 const dbg = {
+	start: performance.now(),
 	logPath: path.resolve("./user-data/logs/debug-write.txt"),
 	status: process.argv.includes("--debug"),
 	mode: "Debug",
@@ -13,7 +14,7 @@ const dbg = {
 	log: (v, k = "_unset") => {
 		let strToBuild = "";
 		if (k !== "_unset")
-			strToBuild += `[${new Date().toLocaleTimeString()}] ${picocolors.blue(k)} >> `;
+			strToBuild += `[${Math.floor(performance.now() - dbg.start)}ms] ${picocolors.blue(k)} » `;
 		strToBuild += `${v}`;
 		if (dbg.status) console._log(strToBuild);
 		if (process.argv.map((e)=>e.includes("debug")).find((e)=>e==true) != undefined) {

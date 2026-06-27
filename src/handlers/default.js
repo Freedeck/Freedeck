@@ -30,13 +30,11 @@ const hostname = os.hostname();
 
 module.exports = {
 	name: "Main",
-	id: "fd.handlers.main",
-	exec: ({ socket, io, clients }) => {
-		socket._clientInfo = {};
-
+	id: "builtin.main",
+	exec: ({ socket, io, clients }) => { 
 		debug.log(
 			"Connected to server!",
-			`Socket Server / ${socket.user ? socket.user : socket.id}`,
+			`Socket.IO / ${socket.user ? socket.user : socket.id}`,
 		);
 
 		socket.on("disconnect", () => {
@@ -47,7 +45,7 @@ module.exports = {
 			if (socket.user === "Companion") tsm.delete("IC");
 			debug.log(
 				pc.red("Disconnected"),
-				`Socket Server / ${socket.user ? socket.user : socket.id}`,
+				`Socket.IO / ${socket.user ? socket.user : socket.id}`,
 			);
 		});
 
@@ -103,7 +101,7 @@ module.exports = {
 					if (hook.type === HookRef.types.socket) {
 						debug.log(
 							`Running hook ${hook.name}`,
-							`Socket Server / ${socket.user ? socket.user : socket.id}`,
+							`Socket.IO / ${socket.user ? socket.user : socket.id}`,
 						);
 						hook.execute(socket, io, instance);
 					}
@@ -111,23 +109,18 @@ module.exports = {
 			}
 		}
 
-		debug.log(
-			"Created socket hooks.",
-			`Socket Server / ${socket.user ? socket.user : socket.id}`,
-		);
-
 		socket.on(eventNames.client_greet, async (user) => {
 			socket.user = user;
-			debug.log("Migrating to username.", `Socket Server / ${socket.user}`);
+			debug.log("Migrating to username.", `Socket.IO / ${socket.user}`);
 			if (user === "Main" && socket.auth) {
-				debug.log("Mobile device.", `Socket Server / ${socket.user}`);
+				debug.log("Mobile device.", `Socket.IO / ${socket.user}`);
 				if (tsm.get("isMobileConnected") === undefined)
 					tsm.set("isMobileConnected", false);
 				io.emit(eventNames.user_mobile_conn, true);
 				tsm.set("isMobileConnected", true);
 			}
 			if (user === "Companion" && socket.auth) {
-				debug.log("Not a mobile device.", `Socket Server / ${socket.user}`);
+				debug.log("Not a mobile device.", `Socket.IO / ${socket.user}`);
 				if (tsm.get("IC") === undefined) tsm.set("IC", socket.id);
 				tsm.set("IC", socket.id);
 			}
@@ -139,16 +132,8 @@ module.exports = {
 
 			debug.log(
 				"Letting user know they're connected.",
-				`Socket Server / ${socket.user}`,
+				`Socket.IO / ${socket.user}`,
 			);
-
-			socket.on(eventNames.information, (data) => {
-				socket._clientInfo = data;
-				debug.log(
-					`Companion using APIv${data.apiVersion}`,
-					`Socket Server / ${socket.user}`,
-				);
-			});
 		});
 	},
 };

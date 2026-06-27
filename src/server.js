@@ -32,7 +32,7 @@ const plugins = pluginManager.plugins();
 		const handler = require(`@handlers/${file}`);
 		if (!handler.exec) continue;
 		handlers.push(handler);
-		debug.log(`Loaded socket handler ${handler.name}`, "Server / Initializing");
+		debug.log(`Detected handler ${handler.name}`, "Socket.IO / Initializing");
 		recordTime(`server:load-socket-handler-complete,${file}`);
 	}
 	pluginManager.update();
@@ -41,7 +41,7 @@ const plugins = pluginManager.plugins();
 const types = pluginManager.types;
 
 
-debug.log("Initializing server...", "Server / HTTP");
+debug.log("Initializing server...", "Socket.IO");
 
 io.on("connection", handleSock);
 
@@ -150,7 +150,7 @@ async function handleSock(socket) {
 	// 	if (event !== eventNames.fdws.sendRequest)
 	// 		debug.log(
 	// 			`Received event ${event}`,
-	// 			`Socket Server / S<-${socket.user ? socket.user : socket.id}`,
+	// 			`Socket.IO / S<-${socket.user ? socket.user : socket.id}`,
 	// 		);
 	// });
 	// socket.onAnyOutgoing((event, args) => {
@@ -162,14 +162,14 @@ async function handleSock(socket) {
 	// 	) {
 	// 		debug.log(
 	// 			`Emitted event ${event}`,
-	// 			`Socket Server / S->${socket.user ? socket.user : socket.id}`,
+	// 			`Socket.IO / S->${socket.user ? socket.user : socket.id}`,
 	// 		);
 	// 	}
 
 	// 	if (event === "I")
 	// 		debug.log(
 	// 			"Emitted event I with server data",
-	// 			`Socket Server / S->${socket.user ? socket.user : socket.id}`,
+	// 			`Socket.IO / S->${socket.user ? socket.user : socket.id}`,
 	// 		);
 	// });
 
@@ -192,12 +192,12 @@ async function handleSock(socket) {
 				debug.log(picocolors.red(e));
 			}
 			debug.log(
-				`${picocolors.cyan(`Added handler ${handler.name} (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
-				"Socket Server",
+				`${picocolors.cyan(`Setup "${handler.name}" (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
+				"Socket.IO",
 			);
 			recordTime(`server:load-handler,${handler.name}`);
 		}
 	} catch (e) {
-		debug.log(picocolors.red(e));
+		debug.log(picocolors.red(e), "Socket.IO / Error");
 	}
 }

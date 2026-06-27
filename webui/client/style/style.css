@@ -667,12 +667,6 @@ button {
 	}
 }
 
-#keys button {
-	width: var(--tile-width);
-	height: var(--tile-height);
-	border-radius: var(--tile-radius);
-}
-
 .button.tiles-center:active {
 	transform: scale(0.875) translate(-57%, -57%);
 	filter: brightness(1.2);
@@ -983,12 +977,14 @@ a:hover {
 	bottom: 0;
 }
 
-#keys .button {
+#keys .button, #keys button {
 	position: relative;
-	min-height: var(--tile-height);
-	min-width: var(--tile-width);
-	width: var(--tile-width);
-	height: var(--tile-height);
+	 max-height: var(--tile-height); 
+	 max-width: var(--tile-width); 
+	 width: var(--tile-width); 
+	 height: var(--tile-height); 
+	
+  aspect-ratio: 1 / 1;
 	border-radius: var(--tile-radius);
 	font-size: var(--font-size);
 }

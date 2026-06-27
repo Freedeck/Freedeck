@@ -28,9 +28,9 @@ const iconRegistry = require("../managers/iconRegistry");
 const hostname = os.hostname();
 function gatherServerInformation(socket) {
 	return new Promise((resolve, reject) => {
-		debug.log("Fetched plugin information", `Socket Server / ${socket.user}`);
+		debug.log("Fetched plugin information", `Socket.IO / ${socket.user}`);
 		cfg.update();
-		debug.log("Refreshed configuration", `Socket Server / ${socket.user}`);
+		debug.log("Refreshed configuration", `Socket.IO / ${socket.user}`);
 		const realCfg = cfg.settings();
 		const serverInfo = {
 			id: socket.id,
@@ -76,15 +76,15 @@ function gatherServerInformation(socket) {
 			serverInfo.config = realCfg;
 			serverInfo.plugins = plugins.sanitizeInfo();
 		}
-		debug.log("Setup serverInfo. GZipping.", `Socket Server / ${socket.user}`);
+		let begin = performance.now();
 		zlib.gzip(JSON.stringify(serverInfo), (err, buffer) => {
 			if (err) {
 				console.error("Compression error:", err);
 				return;
 			}
 			debug.log(
-				"GZipped. Sending information.",
-				`Socket Server / ${socket.user}`,
+				"Compressed in " + (Math.floor(performance.now() - begin)) + "ms. Sending server info.",
+				`Socket.IO / ${socket.user}`,
 			);
 
 			resolve(buffer);

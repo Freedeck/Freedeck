@@ -54,7 +54,7 @@ class Plugin {
 	log(...msg) {
 		debug.log(
 			msg.join(" "),
-			picocolors.blue(`Plugins > ${this.id || "Class"}`),
+			picocolors.magenta(`Plugin > ${this.id || "Class"}`),
 		);
 	}
 	_id = Math.random().toString(36).substring(7);
@@ -108,7 +108,6 @@ class Plugin {
 	 * @param {string} popout HTML inline string
 	 */
 	setPopout(popout) {
-		this._customLog("Setting custom popout content.");
 		this.popout = popout;
 	}
 
@@ -116,7 +115,6 @@ class Plugin {
 	 * Set popout data to hide the button
 	 */
 	hidePopout() {
-		this._customLog("Hiding popout.");
 		this.popout = "";
 	}
 
@@ -125,7 +123,6 @@ class Plugin {
 	 * @param {string} name Plugin name
 	 */
 	setName(name) {
-		this._customLog("Set plugin name.");
 		this.name = name;
 	}
 	/**
@@ -133,7 +130,6 @@ class Plugin {
 	 * @param {string} name Plugin author
 	 */
 	setAuthor(author) {
-		this._customLog("Set plugin author.");
 		this.author = author;
 	}
 	/**
@@ -141,7 +137,6 @@ class Plugin {
 	 * @param {string} name Plugin ID
 	 */
 	setID(id) {
-		this._customLog("Set plugin ID.");
 		this.id = id;
 	}
 	/**
@@ -149,7 +144,6 @@ class Plugin {
 	 * @param {string} name Plugin disabled
 	 */
 	setDisabled(disabled) {
-		this._customLog("Set plugin disabled.");
 		this.disabled = disabled;
 	}
 
@@ -162,12 +156,9 @@ class Plugin {
 		if (!this.hasInit) {
 			console.log("Plugin didn't initialize?");
 		}
-		this._customLog("Initialized plugin.");
 
 		this.id = this.id.toLowerCase();
 		this.setup();
-
-		this._customLog("Called setup.");
 
 		let foundPath = `tmp/_${this.id}.fdpackage`;
 		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
@@ -184,9 +175,8 @@ class Plugin {
 				{ force: true },
 			);
 		}
+		this._customLog("Ready. Intents: [" + this._intent.join(", ") +"]");
 		this.emit(events.ready);
-
-		this._customLog("Emitted ready.");
 	}
 
 	/**
@@ -200,7 +190,6 @@ class Plugin {
 	 * Internal function used for backwards/forwards compatibility. Event is forwarded upwards for compatibility
 	 */
 	onButton(e) {
-		this._customLog("Forwarding press interaction from v1->v2");
 		this.emit(events.button, {
 			interaction: e,
 			instance: this,
@@ -214,7 +203,6 @@ class Plugin {
 	 * Internal function used for backwards/forwards compatibility. Event is forwarded upwards for compatibility
 	 */
 	onStopping() {
-		this._customLog("Forwarding stopping interaction from v1->v2");
 		this.emit(events.stopping);
 	}
 
@@ -236,7 +224,6 @@ class Plugin {
 	requestIntent(intent) {
 		if (!Object.values(intents).includes(intent)) return;
 		if (this._intent.includes(intent)) return;
-		this._customLog(`Intent requested: ${Object.keys(intents)[intent]}`);
 		this._intent.push(intent);
 	}
 
@@ -246,7 +233,6 @@ class Plugin {
 	 * @param {void} cb The callback you wish to supply to the event upon it's calling
 	 */
 	on(ev, cb) {
-		this._customLog(`Listening for ${Object.keys(events)[ev]} v2-event`);
 		if (!this._callbacks[ev]) this._callbacks[ev] = [];
 		this._callbacks[ev].push(cb);
 	}
@@ -257,7 +243,6 @@ class Plugin {
 	 * @param {any[]} args Any arguments you want the callback to be supplied with
 	 */
 	emit(ev, ...args) {
-		this._customLog(`Emitting ${Object.keys(events)[ev]} v2-event`);
 		if (!this._callbacks[ev]) return;
 		for (const cb of this._callbacks[ev]) {
 			cb(...args);

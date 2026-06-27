@@ -8,7 +8,11 @@ import { translationKey } from "../../../shared/localization";
  */
 export default function (snd, keyObject, raw) {
 	const k = Object.keys(raw)[0];
-	keyObject.innerHTML = `<div class="button-text"><p>${sanitizeXSS(k)}</div></p>`;
+	if(snd.data.primaryIcon === "true") {
+		keyObject.innerHTML = ``;
+	} else {
+		keyObject.innerHTML = `<div class="button-text"><p>${sanitizeXSS(k)}</div></p>`
+	}
 	if (snd.data.hold === "true" && universal.name !== "Companion") {
 		const activationMs = 5;
 		const startHolding = (e) => {

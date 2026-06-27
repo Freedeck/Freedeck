@@ -2,7 +2,7 @@ const eventNames = require("./eventNames");
 
 module.exports = {
 	name: "Companion",
-	id: "fd.handlers.companion",
+	id: "builtin.companion",
 	exec: ({ socket, io, clients }) => {
 		for (const event of Object.keys(eventNames.companion)) {
 			socket.on(eventNames.companion[event], (data) => {
@@ -11,10 +11,6 @@ module.exports = {
 					// its a new event handler
 					const flags = eventHandler.flags || [];
 					if (flags.includes("AUTH")) {
-						socket.emit(eventNames.default.notif, {
-							sender: "Server",
-							data: "Performing authenticated action.",
-						});
 						if (!socket.auth) {
 							socket.emit(eventNames.login.unauthorized);
 							return;

@@ -5,7 +5,7 @@ const set = require("../managers/settings");
 
 module.exports = {
 	name: "Authentication",
-	id: "fd.handlers.login",
+	id: "builtin.auth",
 	exec: ({ socket }) => {
 		if (debug.status || !set.settings().useAuthentication) {
 			socket.auth = true;

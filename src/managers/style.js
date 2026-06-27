@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const fsPromises = require("node:fs/promises")
 const path = require("node:path");
 const debug = require("$/debug");
 const styleLocation = path.resolve("./src/configs/style.json");
@@ -16,12 +17,14 @@ const defaults = {
 	tileCols: "5",
 };
 
+let saveTimeout = null;
+
 const styleManager = {
 	_cache: {},
 	get: () => {
 		if (Object.keys(styleManager._cache).length === 0) {
 			styleManager.update();
-			debug.log("Style updated.", "Style Cache");
+			debug.log("Style updated.", "Managers / Style");
 		}
 		return styleManager._cache;
 	},
@@ -31,7 +34,7 @@ const styleManager = {
 			fs.writeFileSync(styleLocation, def);
 			debug.log(
 				"Created default style configuration file.",
-				"Style / Migration",
+				"Migration / Default Style",
 			);
 		}
 	},
@@ -39,11 +42,20 @@ const styleManager = {
 		styleManager.default();
 		delete require.cache[require.resolve(styleLocation)];
 		styleManager._cache = require(styleLocation);
-		debug.log("Settings recached.", "Settings Cache");
+		debug.log("Style recached.", "Managers / Style");
 	},
 	save: () => {
-		fs.writeFileSync(styleLocation, JSON.stringify(styleManager.get()));
-		debug.log("Loaded style configuration from file.", "Style / Migration");
+		if (saveTimeout) clearTimeout(saveTimeout);
+
+		saveTimeout = setTimeout(async () => {
+			try {
+				const dataToSave = styleManager._cache !== null ? styleManager._cache : defaults;
+				await fsPromises.writeFile(styleLocation, JSON.stringify(dataToSave, null, 2));
+				debug.log("Saved style configuration to file.", "Managers / Style");
+			} catch (error) {
+				debug.log(`Failed to save config: ${error.message}`, "Managers / Style");
+			}
+		}, 500);
 	},
 };
 

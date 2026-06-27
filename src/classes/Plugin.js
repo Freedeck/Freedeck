@@ -4,6 +4,8 @@ const types = require("@managers/plugins");
 const fs = require("node:fs");
 const HookRef = require("./HookRef");
 
+class DeprecatedPluginFormatError extends Error {}
+
 module.exports = class Plugin {
 	name;
 	author;
@@ -25,16 +27,7 @@ module.exports = class Plugin {
 	 * @return {Plugin} The plugin instance
 	 */
 	constructor(name, author, id, disabled = false) {
-		this.name = name;
-		this.author = author;
-		this.id = id.toLowerCase();
-		this.disabled = disabled;
-		this.types = [];
-		if (this.disabled) return;
-		this.hasInit = this.onInitialize();
-		if (!this.hasInit) {
-			console.log("Plugin didn't initialize?");
-		}
+		throw new DeprecatedPluginFormatError("Using @freedeck/Plugin.js is no longer supported, . Please let the developer know to set this to @freedeck/api.js , and update their plugin to use the new, better documented API. this file will be deleted by FD v6.0.0-rc8")
 	}
 
 	_hookLocation = "user-data/hooks/";

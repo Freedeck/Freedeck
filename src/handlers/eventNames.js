@@ -30,6 +30,7 @@ const eventNames = {
 	},
 
 	companion: {
+		library_report: "cLR",
 		tile_update: "cTu",
 		new_tile: "ckN",
 		del_tile: "ckD",

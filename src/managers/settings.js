@@ -2,8 +2,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const debug = require("$/debug.js");
+const fsPromises = require("node:fs/promises")
 
 const configLocation = path.resolve("./src/configs/main.json");
+
+let saveTimeout = null;
 
 const sc = {
 	configLocation,
@@ -11,7 +14,7 @@ const sc = {
 	settings: () => {
 		if (Object.keys(sc._cache).length === 0) {
 			sc.update();
-			debug.log("Settings updated.", "Settings Cache");
+			debug.log("Settings updated.", "Managers / Settings");
 		}
 		return sc._cache;
 	},
@@ -24,26 +27,33 @@ const sc = {
 			throw new Error("Invalid JSON configuration.");
 		}
 		sc._cache = JSON.parse(raw);
-		debug.log("Settings recached.", "Settings Cache");
+		debug.log("Settings recached.", "Managers / Settings");
 	},
 	save: () => {
-		const thatConfig = sc.settings();
+		if (saveTimeout) clearTimeout(saveTimeout);
 
-		const newMainConfig = {
-			release: thatConfig.release || "stable",
-			theme: thatConfig.theme || "default.css",
-			profile: thatConfig.profile || "Default",
-			profiles: thatConfig.profiles || [],
-			screenSaverActivationTime: thatConfig.screenSaverActivationTime || 5,
-			soundOnPress: thatConfig.soundOnPress || false,
-			useAuthentication: thatConfig.useAuthentication || false,
-			port: thatConfig.port || 5754,
-		};
+		saveTimeout = setTimeout(async () => {
+			try {
+				const thatConfig = sc.settings();
 
-		const cfgStr = JSON.stringify(newMainConfig, null, 2);
+				const newMainConfig = {
+					release: thatConfig.release || "stable",
+					theme: thatConfig.theme || "default.css",
+					profile: thatConfig.profile || "Default",
+					profiles: thatConfig.profiles || [],
+					screenSaverActivationTime: thatConfig.screenSaverActivationTime || 5,
+					soundOnPress: thatConfig.soundOnPress || false,
+					useAuthentication: thatConfig.useAuthentication || false,
+					port: thatConfig.port || 5754,
+				};
 
-		fs.writeFileSync(configLocation, cfgStr);
-		debug.log("Configuration saved.", "Settings Storage");
+				await fsPromises.writeFile(configLocation, JSON.stringify(newMainConfig, null, 2));
+				debug.log("Configuration saved.", "Managers / Settings");
+			} catch (error) {
+				debug.log(`Failed to save config: ${error.message}`, "Managers / Settings");
+			}
+		}, 500);
+		
 	},
 };
 

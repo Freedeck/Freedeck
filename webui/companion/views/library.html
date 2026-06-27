@@ -1,24 +1,17 @@
 <link rel="stylesheet" href="/companion/views/styles/library.css" />
 
 <h1 class="settings-section-title">
-	<span data-i18n-key="library.title"></span
-	><span
-		><img src="/app/shared/icons/library.svg" width="50" height="50" loading="lazy"
-	/></span>
+	<span data-i18n-key="library.title"></span><span><img src="/app/shared/icons/library.svg" width="50" height="50"
+			loading="lazy" /></span>
 </h1>
-<center><p data-i18n-key="library.description"></p></center>
-<button
-	class="save-changes"
-	data-i18n-key="library.save"
-	onclick="window.saveChanges()"
-></button>
+<center>
+	<p data-i18n-key="library.description"></p>
+</center>
+<button class="save-changes" data-i18n-key="library.save" onclick="window.saveChanges()"></button>
 
 <h2 id="uploads-0-title">
 	<span data-i18n-key="library.sounds"></span>
-	<button
-		onclick="universal._Uploads_New(1)"
-		data-i18n-key="library.sounds.add"
-	></button>
+	<button onclick="universal._Uploads_New(1)" data-i18n-key="library.sounds.add"></button>
 </h2>
 <details id="library-view-sounds">
 	<summary><strong data-i18n-key="library.sounds.view"></strong></summary>
@@ -27,10 +20,7 @@
 
 <h2 id="uploads-1-title">
 	<span data-i18n-key="library.icons"></span>
-	<button
-		onclick="universal._Uploads_New(0)"
-		data-i18n-key="library.icons.add"
-	></button>
+	<button onclick="universal._Uploads_New(0)" data-i18n-key="library.icons.add"></button>
 </h2>
 <details id="library-view-icons">
 	<summary><strong data-i18n-key="library.icons.view"></strong></summary>
@@ -38,35 +28,110 @@
 </details>
 
 <script>
-	fetch("/api/upload/report")
-		.then((res) => res.json())
-		.then((data) => {
-			let cc = 0;
-			for (const i of data.report) {
-				for (const j of i) {
-					const upload = document.createElement("div");
-					upload.className = "upload";
-					upload.id = `upload-${cc}`;
-					upload.dataset.name = j;
-					if (cc == 1) {
-						const img = new Image();
-						img.loading = "lazy";
-						img.decoding = "async";
-						img.src = "/icons/" + encodeURIComponent(j);
-						upload.appendChild(img);
-						universal.createTooltipFor(upload, j);
-					} else {
-						upload.innerHTML += `<p>${universal.cleanHTML(j)}</p>`;
-						upload.innerHTML += `<audio preload="none" controls><source src="/sounds/${encodeURIComponent(j)}" type="audio/mpeg"></audio>`;
-					}
-					document.querySelector(".uploads-" + cc).appendChild(upload);
-				}
-				cc++;
-			}
-			universal.sendEvent("library_paint");
-		});
-	universal.sendEvent("library_load");
+	const uploadsIcons = document.querySelector(".uploads-1");
+	const uploadsSounds = document.querySelector(".uploads-0");
+	universal.once(universal.events.companion.library_report, (report) => {
+		const { icons, sounds } = report;
 
+		for (const icon of icons) {
+			const upload = document.createElement("div");
+			upload.className = "upload";
+			upload.dataset.name = icon;
+			const img = new Image();
+			img.loading = "lazy";
+			img.decoding = "async";
+			img.src = "/icons/" + encodeURIComponent(icon);
+			upload.appendChild(img);
+			universal.createTooltipFor(upload, icon);
+			uploadsIcons.appendChild(upload);
+		}
+
+		for (const sound of sounds) {
+			const upload = document.createElement("div");
+			upload.className = "upload";
+			upload.dataset.name = sounds;
+			upload.innerHTML += `<p>${universal.cleanHTML(sound)}</p>`;
+			upload.innerHTML += `<audio preload="none" controls><source src="/sounds/${encodeURIComponent(sound)}" type="audio/mpeg"></audio>`;
+			universal.createTooltipFor(upload, sound);
+			uploadsSounds.appendChild(upload);
+		}
+
+		universal.sendEvent("library_paint");
+	})
+	universal.send(universal.events.companion.library_report)
+
+	const saveChanges = document.querySelector(".save-changes");
+	const libraryTitle = document.querySelector('span[data-i18n-key="library.title"]')
+	const libraryDescription = document.querySelector('p[data-i18n-key="library.description"]')
+	const viewIcons = document.querySelector("#library-view-icons");
+	const viewSounds = document.querySelector("#library-view-sounds");
+	const uploads0Title = document.querySelector("#uploads-0-title");
+	const uploads1Title = document.querySelector("#uploads-1-title")
+	universal.listenFor("library_request", (reqType) => {
+		let setup = {
+			title: universal.translationKey("library.title"),
+			description: universal.translationKey("library.description"),
+			saveChanges: "none",
+			sounds: {
+				viewDisplay: "block",
+				uploadDisplay: "flex",
+				open: false,
+			},
+			icons: {
+				viewDisplay: "block",
+				uploadDisplay: "flex",
+				open: false,
+			}
+		}
+		if (reqType === "icon") {
+			setup = {
+				saveChanges: "block",
+				description: universal.translationKey("library.icons.description"),
+				title: universal.translationKey("library.icons.title"),
+				sounds: {
+					viewDisplay: "none",
+					uploadDisplay: "none",
+					open: false
+				},
+				icons: {
+					viewDisplay: "block",
+					uploadDisplay: "flex",
+					open: true
+				}
+			}
+		} else if (reqType === "sound") {
+			setup = {
+				saveChanges: "block",
+				description: universal.translationKey("library.sounds.description"),
+				title: universal.translationKey("library.sounds.title"),
+				sounds: {
+					viewDisplay: "block",
+					uploadDisplay: "flex",
+					open: true
+				},
+				icons: {
+					viewDisplay: "none",
+					uploadDisplay: "none",
+					open: false
+				},
+			}
+		}
+		viewSounds.style.display = setup.sounds.viewDisplay;
+		viewSounds.open = setup.sounds.open;
+		uploadsSounds.style.display = setup.sounds.uploadDisplay;
+		uploads0Title.style.display = setup.sounds.viewDisplay;
+
+		viewIcons.style.display = setup.icons.viewDisplay;
+		viewIcons.open = setup.icons.open;
+		uploadsIcons.style.display = setup.icons.uploadDisplay;
+		uploads1Title.style.display = setup.icons.viewDisplay;
+
+		libraryDescription.textContent = setup.description;
+		libraryTitle.textContent = setup.title;
+		saveChanges.style.display = setup.saveChanges;
+	})
+
+	universal.sendEvent("library_load");
 	window.saveChanges = () => {
 		universal.sendEvent("library_save");
 		window.saveChanges = undefined;

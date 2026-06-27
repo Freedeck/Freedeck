@@ -86,12 +86,6 @@ export default async function dataHandler(universal, user) {
 		universal.CLU("Incoming Data Handler", "Setting up sidebar.");
 		loadRightSidebar();
 
-		universal.send(universal.events.information, { apiVersion: "2" });
-		universal.CLU(
-			"Incoming Data Handler",
-			"Identified ourselves as Companion APIv2.",
-		);
-
 		if (universal.name === "Companion") {
 			universal.repositoryManager.unofficial =
 				universal.loadObject("repos.community", []) || [];

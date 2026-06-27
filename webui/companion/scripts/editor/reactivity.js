@@ -8,6 +8,7 @@ const type = document.querySelector("#type");
 const renderType = document.querySelector("#rendertype");
 const leftSidebar = document.querySelector(".sidebar");
 const rightSidebar = document.querySelector("#sidebar");
+const setIcon = document.querySelector("#upload-icon")
 
 color.onchange = (e) => {
 	editorButton.style.backgroundColor = e.srcElement.value;
@@ -199,5 +200,38 @@ editorSave.addEventListener('click', () => {
 	});
 	closeEditor();
 });
+
+setIcon.onclick = (e) => {
+	universal.uiSounds.playSound("int_confirm");
+	const ito = JSON.parse(editorButton.dataset.interaction);
+	universal.listenForOnce("library_load", () => {
+		universal.sendEvent("library_request", "icon")
+	});
+	universal.listenForOnce("library_paint", () => {
+		if (ito.data.icon) {
+			const preselectedElement = document.querySelector(
+				`.upload[data-name='${ito.data.icon.split("/icons/")[1]}']`,
+			);
+			preselectedElement.classList.add("glow");
+		}
+		for (const uploadedIcon of document.querySelectorAll(
+			".uploads-1 .upload",
+		)) {
+			uploadedIcon.onclick = () => {
+				for (const glowingIcon of document.querySelectorAll(".glow")) {
+					glowingIcon.classList.remove("glow");
+				}
+				uploadedIcon.classList.add("glow");
+
+				ito.data.icon = `/icons/${uploadedIcon.dataset.name}`;
+				editorButton.setAttribute("data-interaction", JSON.stringify(ito));
+				editorButton.style.backgroundImage = `url("${`/icons/${uploadedIcon.dataset.name}`}")`;
+				loadData(ito.data);
+				universal.uiSounds.playSound("uploaded");
+			};
+		}
+	});
+	universal.vopen("library");
+};
 
 export { setupReactivity };

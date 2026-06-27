@@ -2,7 +2,7 @@ const eventNames = require("./eventNames");
 
 module.exports = {
 	name: "RPC",
-	id: "fd.handlers.rpc-server",
+	id: "builtin.rpc",
 	exec: ({ socket, io }) => {
 		for (const event of Object.keys(eventNames.rpc)) {
 			socket.on(eventNames.rpc[event], (data) => {

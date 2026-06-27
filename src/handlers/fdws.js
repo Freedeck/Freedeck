@@ -4,7 +4,7 @@ const debug = require("$/debug");
 
 module.exports = {
 	name: "App WS Forwarder",
-	id: "fd.handlers.app",
+	id: "builtin.fdws",
 	exec: ({ socket, io, clients }) => {
 		fdws._io = io;
 		

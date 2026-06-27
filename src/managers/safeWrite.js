@@ -20,6 +20,5 @@ async function safeWriteAsync(filepath, content) {
     }
     throw error;
   }
-  console.log("safewrote")
 }
 module.exports = {safeWriteAsync}
