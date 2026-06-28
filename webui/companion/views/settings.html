@@ -596,14 +596,6 @@
 			key: "settings.sections.general.title",
 			icon: "/app/shared/icons/settings.svg",
 			options: {
-				compact: {
-					type: "checkbox",
-					key: "settings.sections.general.compact",
-					default: universal.getServerFlags()["compact"] || false,
-					onchange: () => {
-						universal.UI.reloadTiles();
-					},
-				},
 				scroll: {
 					type: "checkbox",
 					key: "settings.sections.general.scroll",

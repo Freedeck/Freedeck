@@ -9,7 +9,6 @@ const defaults = {
 	"app.freedeck.ui.fill_tiles": false,
 	center: false,
 	animation: false,
-	compact: true,
 	"font-size": "15",
 	buttonSize: "6",
 	iconCountPerPage: "14",

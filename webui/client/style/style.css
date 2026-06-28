@@ -618,16 +618,15 @@ input:disabled {
 }
 
 #client-key-container {
-	width: var(--app-tile-container-width);
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	margin: 0;
 	position: fixed;
-	top: 0;
-	left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 	padding: 0;
 }
 

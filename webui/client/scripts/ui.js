@@ -295,18 +295,6 @@ function reloadTiles() {
 		if (fillStyle) fillStyle.remove();
 	}
 
-	// Handle compact mode in one operation
-	keysContainer.style.width = universal.getServerFlags().compact
-		? "unset"
-		: "100%";
-	keysContainer.style.height = universal.getServerFlags().compact
-		? "unset"
-		: "100%";
-	if (universal.name !== "Companion") {
-		keysContainer.style.padding = universal.getServerFlags().compact
-			? ".25rem"
-			: "1rem";
-	}
 
 	// Don't remove the keys, we'll update them in place
 	// Just remove tooltips and buttons
