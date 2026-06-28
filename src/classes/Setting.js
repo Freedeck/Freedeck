@@ -17,4 +17,4 @@ class SettingBuilder {
   setDefaultValue(id) {this.default = id; this.value = id; return this;}
 }
 
-export {SettingBuilder}
+module.exports = {SettingBuilder}

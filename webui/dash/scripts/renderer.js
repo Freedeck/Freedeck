@@ -26,6 +26,7 @@ if (!window["freedeckoverlay"]) {
 	universal.audioClient._no_sinks = true;
 }
 
+
 await universal.init("Overlay", "Freedeck Overlay");
 let dragMode = false;
 let debugMode = false;
@@ -33,6 +34,7 @@ const debugContainer = document.querySelector(".warnings");
 const dragWarning = document.querySelector("#dragmode-warning");
 const debugWarning = document.querySelector("#debugmode-warning");
 const noMods = document.querySelector("#nomods-warning")
+if(!DASH_MODE) noMods.textContent = "Your Overlay is empty! Press ALT + SHIFT + BACKSPACE to get started.";
 const userViewCollection = [];
 const systemViewCollection = ["freedeck", "testing"];
 for (const k in universal.plugins) {

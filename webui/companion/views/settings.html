@@ -4,13 +4,7 @@
 	<span><img src="/app/shared/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 <div id="settings-menu-full">
-	<details>
-		<summary class="settings-section-title">
-			<span data-i18n-key="settings.sections.style"></span><span><img src="/app/shared/icons/themes.svg" width="50"
-					height="50" loading="lazy" /></span>
-		</summary>
-		<div class="themelist"></div>
-	</details>
+	<settings section="generale"></settings>
 	<details>
 		<summary class="settings-section-title">
 			<span><span data-i18n-key="settings.sections.language"></span></span><span><img src="/app/shared/icons/language.svg" width="50" height="50"
@@ -22,16 +16,11 @@
 	</details>
 	<details>
 		<summary class="settings-section-title">
-			<span><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
-					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/overlay.svg" width="50" height="50"
-					loading="lazy" /></span>
+			<span data-i18n-key="settings.sections.audio_devices"></span>
+			<span><img src="/app/shared/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
-		<br />
-		<p data-i18n-key="settings.sections.overlay.message"></p>
-		<center
-			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
-			<button style="width: 95%;" onclick="freedeckexperimental.overlay()" data-i18n-key="settings.sections.overlay.action"></button>
-		</center>
+		<div class="monitor-devices audio-device-picker"></div>
+		<div class="vb-cables audio-device-picker"></div>
 	</details>
 	<details>
 		<summary class="settings-section-title">
@@ -57,13 +46,24 @@
 	</details>
 	<details>
 		<summary class="settings-section-title">
-			<span data-i18n-key="settings.sections.audio_devices"></span>
-			<span><img src="/app/shared/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
+			<span data-i18n-key="settings.sections.style"></span><span><img src="/app/shared/icons/themes.svg" width="50"
+					height="50" loading="lazy" /></span>
 		</summary>
-		<div class="monitor-devices audio-device-picker"></div>
-		<div class="vb-cables audio-device-picker"></div>
+		<div class="themelist"></div>
 	</details>
-	<settings section="generale"></settings>
+	<details>
+		<summary class="settings-section-title">
+			<span><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
+					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/overlay.svg" width="50" height="50"
+					loading="lazy" /></span>
+		</summary>
+		<br />
+		<p data-i18n-key="settings.sections.overlay.message"></p>
+		<center
+			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
+			<button style="width: 95%;" onclick="freedeckexperimental.overlay()" data-i18n-key="settings.sections.overlay.action"></button>
+		</center>
+	</details>
 	<details class="experiment-exist soundpack">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.uis"></span>
