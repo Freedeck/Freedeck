@@ -46,5 +46,16 @@ export default function (sndType, keyObject, snd, rawDat) {
 				break;
 		}
 	}
+
+	if (sndType != "fd.none" && universal.getServerFlags().scroll && !snd.data.primaryIcon) {
+		const txth = keyObject.querySelector("p");
+		const isVerticallyOverflowing = txth.scrollHeight > keyObject.clientHeight;
+		const isHorizontallyOverflowing = txth.scrollWidth > keyObject.clientWidth;
+
+		if (isVerticallyOverflowing || isHorizontallyOverflowing) {
+			txth.classList.add("too-big");
+		}
+	}
+
 	universal.sendEvent("keyRendered", { keyObject, snd, sndType, rawDat });
 }

@@ -147,14 +147,6 @@ export default function (snd, keyObject, raw) {
 			};
 		}
 	}
-	// check if text is bigger than 2 lines (by font size)
-	if (universal.getServerFlags().scroll) {
-		const txth = keyObject.querySelector("p");
-		const size = txth.clientHeight;
-		if (size > 40) {
-			txth.classList.add("too-big");
-		}
-	}
 }
 
 const sanitizeXSS = (str) => {
