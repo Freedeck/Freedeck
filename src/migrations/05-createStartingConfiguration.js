@@ -25,7 +25,7 @@ if(!exists(cfgFolder)) {
 if (!exists(styLoc)) {
 	fs.writeFileSync(
 		styLoc,
-		JSON.stringify({"scroll":false,"fill":false,"center":false,"app.freedeck.last_changelog_viewed":"-1","font-size":15,"iconCountPerPage":14,"buttonSize":6,"tileCols":5,"longPressTime":3}),
+		JSON.stringify({"scroll":false,"app.freedeck.last_changelog_viewed":"-1","font-size":15,"iconCountPerPage":14,"buttonSize":6,"tileCols":5,"longPressTime":3}),
 	);
 	debug.log("Wrote style.json", "Migration / Starting Config")
 }

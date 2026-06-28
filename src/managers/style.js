@@ -6,8 +6,6 @@ const styleLocation = path.resolve("./src/configs/style.json");
 
 const defaults = {
 	scroll: false,
-	"app.freedeck.ui.fill_tiles": false,
-	center: false,
 	animation: false,
 	"font-size": "15",
 	buttonSize: "6",

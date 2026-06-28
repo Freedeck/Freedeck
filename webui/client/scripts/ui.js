@@ -276,26 +276,6 @@ function reloadTiles() {
 	const endIndex = iconsPerPage * (currentPage + 1);
 	const isCompanionMode = universal.name === "Companion";
 
-	// Handle fill style - batch style operations
-	if (universal.getServerFlags()["app.freedeck.ui.fill_tiles"]) {
-		let fillStyle = document.getElementById("fill");
-		if (!fillStyle) {
-			fillStyle = document.createElement("style");
-			fillStyle.type = "text/css";
-			fillStyle.id = "fill";
-			fillStyle.appendChild(
-				document.createTextNode(
-					`#keys .button { width: unset; height: unset; }`,
-				),
-			);
-			document.head.appendChild(fillStyle);
-		}
-	} else {
-		const fillStyle = document.getElementById("fill");
-		if (fillStyle) fillStyle.remove();
-	}
-
-
 	// Don't remove the keys, we'll update them in place
 	// Just remove tooltips and buttons
 	document.querySelectorAll("#keys > .button").forEach((key) => key.remove());

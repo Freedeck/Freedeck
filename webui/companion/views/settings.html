@@ -614,16 +614,6 @@
 						universal.send(universal.events.default.reload)
 					},
 				},
-				"app.freedeck.ui.fill_tiles": {
-					type: "checkbox",
-					key: "settings.sections.general.fill",
-					default:
-						universal.getServerFlags()["app.freedeck.ui.fill_tiles"] ||
-						false,
-					onchange: () => {
-						universal.UI.reloadTiles();
-					},
-				},
 				"app.freedeck.ui_sounds": {
 					type: "checkbox",
 					key: "settings.sections.general.ui_sounds",
