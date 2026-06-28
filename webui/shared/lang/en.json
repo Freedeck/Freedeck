@@ -161,6 +161,8 @@
   "settings.sections.overlay.message": "Freedeck Overlay is a new experiment that allows you to control and see information at a glance. Combined with plugins like Spotify and HAFreedeck, you don't even need to fully look down at your Freedeck device. Do keep in mind that Overlay is experimental, and is subject to bugs.",
   "settings.sections.overlay.action": "Open Overlay",
   "settings.sections.plugins": "Plugins",
+  "settings.sections.plugins.settings": "Plugin Settings",
+  "settings.sections.plugins.settings_editor": "Change Settings",
   "settings.sections.plugins.reload_all": "Reload All Plugins",
   "settings.sections.plugins.single.disable": "Disable",
   "settings.sections.plugins.single.reload": "Reload",

@@ -39,11 +39,11 @@
 			<span><img src="/app/shared/icons/t_plugin.svg" width="50" height="50" loading="lazy" /></span>
 		</summary>
 		<br />
+		<button id="plst" data-i18n-key="settings.sections.plugins.settings_editor"></button>
 		<div class="experiments">
 			<ul id="actl" class="btnlist"></ul>
 		</div>
 		<button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
-		<button id="plst" data-i18n-key="settings.sections.plugins.settings_editor"></button>
 		<div class="flex-wrap" id="disbl-plg">
 			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
 			<div id="disbl-list" class="row"></div>
@@ -232,7 +232,7 @@
 
 		if (req.popout) {
 			const popout = document.createElement("details");
-			popout.innerHTML = `<summary>Settings</summary><br><div class='popout'>${req.popout}</div>`;
+			popout.innerHTML = `<summary>More</summary><br><div class='popout'>${req.popout}</div>`;
 			infoEle.appendChild(popout);
 		}
 

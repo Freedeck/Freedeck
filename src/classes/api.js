@@ -444,7 +444,7 @@ class Plugin {
 		data[k] = v;
 		fs.writeFileSync(
 			path.resolve(`./plugins/${this.id}/settings.json`),
-			JSON.stringify(data),
+			JSON.stringify(data, null, 2),
 		);
 	}
 
