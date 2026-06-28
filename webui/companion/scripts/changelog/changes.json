@@ -1,13 +1,49 @@
 {
   "major": [
+    "**Plugins now have their own settings!** Update the ones you have to see them!",
+    "**Plugins are now downloaded from Companion instead of the Windows app!**",
     "**Improved accessibility of a few themes!**",
-    "**Merged Dash and Overlay into one unified codebase, just switching display names!**"
+    "**Merged Dash and Overlay into one unified codebase, just switching display names!**",
+    "**Removed Compact Mode and Center mode**, as they were good default behavior.",
+    "**Improved setup experience!**",
+    "Added a page for Contextual library",
+    "Sliders have improved behavior!",
+    "Themes' warning now display properly",
+    "Library no longer uses an exposed HTTP endpoint with your uploads!",
+    "Removed 'Performing authenticated action.' notification",
+    "Plugin reload, enable, disable, download all have progress bars now!",
+    "Removed FreedeckCore.log",
+    "Client has Tiles in the center by default",
+    "More styling options for themes",
+    "Right sidebar gets disabled when its not supposed to be used",
+    "The Editor shows you available plugins when hovering over Plugin",
+    "Library no longer uses multiple race condition style statements to control UI, instead now event-driven.",
+    "Information gathering (initial socket connection) has its own manager and cache now",
+    "Improved debug performance",
+    "Connect now continuously checks if webpack is compiling",
+    "ServerStyleFlags are now ServerFlags",
+    "Client's settings menu gets its own script file",
+    "Scroll Long Text has improved support!",
+    "Migration now removes more logs on start",
+    "Moved around the structure: shared and common are merged into /app/shared",
+    "Settings and style now wait for consecutive saves within 500ms to write to disk",
+    "Updated dependencies",
+    "Quicker launcher for Overlay and Companion",
+    "Plugin logging is less invasive",
+    "Fixed authentication bug: without authentication would be buggy",
+    "reload_sounds is now reload_tiles",
+    "serverStyleFlagUpdated is now server_flag_updated",
+    "FDWS gets its own socket handler!",
+    "Webpack attempts to compile at the beginning of the server to improve startup time",
+    "PluginV1 are undeprecated **temporarily** until v6.0.0 fully releases"
   ],
   "other": [
-    "Some configs are now made on startup if not existing"
+    "A self-tester now exists but unused",
+    "Old configuration (version<=6.0.0-rc4) migrates properly",
+    "Some configs are now made on startup if not existing",
+    "And more slight updates to some icons and themes."
   ],
   "known": [
-    "Overlay can [still!] get stuck when webpack recompiles. Use the system tray to reload it."
   ],
   "note": ""
 }
