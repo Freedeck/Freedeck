@@ -11,6 +11,7 @@
 	Object.keys(universal.plugins).forEach((plugin) => {
 		const req = universal.plugins[plugin];
 		const li = document.createElement("details");
+		li.classList.add("plugin-settings-list")
 		li.setAttribute("hovereffect", "yes");
 		li.style.cursor = "default";
 		if (seen[req.name]) return;
@@ -51,7 +52,20 @@
 		for(const key in req.Settings) {
 			const setting = req.Settings[key];
 			const div = document.createElement("div");
-			div.innerHTML = `${setting.name}: ${setting.description}\n${setting.value}`
+			div.classList.add("plugin-setting")
+			// div.innerHTML = `${setting.name}: ${setting.description}\n${setting.value}`
+			const name = document.createElement("label");
+			name.textContent = setting.name;
+			const desc = document.createElement("small");
+			desc.classList.add("i")
+			desc.textContent = setting.description;
+			const inp = document.createElement("input");
+			inp.disabled = true;
+			inp.placeholder = setting.default;
+			inp.value = setting.value;
+			div.appendChild(name);
+			div.appendChild(desc);
+			div.appendChild(inp);
 			li.appendChild(div)
 		}
 		

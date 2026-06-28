@@ -189,3 +189,13 @@ details > summary:hover {
 	display: flex;
 	flex-wrap: wrap;
 }
+
+.plugin-setting {
+	display: flex;
+	flex-direction: column;
+	gap: .125rem;
+}
+
+.i {
+	font-style:italic;
+}
