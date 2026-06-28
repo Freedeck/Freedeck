@@ -95,7 +95,6 @@ class Plugin {
 
 	setSetting(id, value) {
 		const lid = id.toLowerCase();
-		console.log(lid, this.getFromSaveData("_fd_cset_"+lid));
 		this.Settings[lid].value = value;
 		const template = this.getFromSaveData("_fd_cset_" + lid);
 		template.value = value;
@@ -582,6 +581,8 @@ const events = {
 	button: 1,
 	/**The plugin is fully initialized. */
 	ready: 2,
+	/**The user has edited a Setting from your plugin */
+	settingsChanged: 4,
 	/**The plugin should be stopping.*/
 	stopping: 3,
 	/**Unused, but should be the final event emitted in the plugin's lifecycle.*/

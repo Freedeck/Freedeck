@@ -199,3 +199,19 @@ details > summary:hover {
 .i {
 	font-style:italic;
 }
+
+.plugin-setting > input, .array-holder > input {
+	width: min-content;
+}
+
+.array-holder {
+	display: inline-flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.item-holder {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

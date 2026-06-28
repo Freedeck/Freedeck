@@ -42,6 +42,7 @@ const eventNames = {
 		dup_profile: "cpD",
 		set_theme: "ctS",
 		download_plugin: "psP",
+		fdsp_set: "fDPS",
 		plugin_set: "dPS",
 		plugin_set_all: "dPSA",
 		import_profile: "cpI",

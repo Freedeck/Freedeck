@@ -18,25 +18,25 @@
 		seen[req.name] = true;
 
 
-		if(!req.Settings || Object.keys(req.Settings).length == 0) return;
+		if (!req.Settings || Object.keys(req.Settings).length == 0) return;
 
 		const spn = document.createElement("span");
 		spn.innerText = req.name;
 		const imgEle = document.createElement("img");
-		imgEle.width='50';
-		imgEle.height='50';
-		imgEle.loading='lazy'
-		if(!universal.plugins[plugin].icon) {
+		imgEle.width = '50';
+		imgEle.height = '50';
+		imgEle.loading = 'lazy'
+		if (!universal.plugins[plugin].icon) {
 			(async () => {
 				let ex = false;
-				await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
-					if(r.status == 200) ex = true;
+				await fetch("/user-data/hooks/" + req.id + "-icon.png").then((r) => {
+					if (r.status == 200) ex = true;
 				})
-				if(ex) {
-					imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+				if (ex) {
+					imgEle.src = "/user-data/hooks/" + req.id + "-icon.png";
 				}
 			})();
-			if(req.packageType == "theme") {
+			if (req.packageType == "theme") {
 				imgEle.src = "/app/shared/icons/theme-icon.png";
 			}
 			universal.plugins[plugin].icon = imgEle.src;
@@ -49,7 +49,7 @@
 		infoEle.classList.add("settings-section-title");
 		li.appendChild(infoEle)
 
-		for(const key in req.Settings) {
+		for (const key in req.Settings) {
 			const setting = req.Settings[key];
 			const div = document.createElement("div");
 			div.classList.add("plugin-setting")
@@ -59,16 +59,75 @@
 			const desc = document.createElement("small");
 			desc.classList.add("i")
 			desc.textContent = setting.description;
-			const inp = document.createElement("input");
-			inp.disabled = true;
-			inp.placeholder = setting.default;
-			inp.value = setting.value;
+			let valueGetter;
+			if (setting.allowed) {
+				const sel = document.createElement('select');
+				for (const i of setting.allowed) {
+					const opt = document.createElement('option');
+					opt.textContent = i;
+					opt.value = i;
+					sel.appendChild(opt);
+				}
+				valueGetter = { value: () => sel.selectedOptions[sel.selectedIndex].value, ele: sel }
+			} else if (typeof setting.value === "object" && Array.isArray(setting.value)) {
+				const holder = document.createElement("div");
+				holder.classList.add("option-holder")
+				const actualOptions = document.createElement("div");
+				actualOptions.classList.add("array-holder")
+				for(const i of setting.value) {
+					const liH = document.createElement("span");
+					liH.classList.add("item-holder");
+					const sLi = document.createElement("input");
+					sLi.value = i;
+					sLi.placeholder = setting.default;
+					const rem = document.createElement("button");
+					rem.textContent = "-"
+					rem.classList.add("reset-button")
+					rem.onclick = () => {sLi.remove()}
+					liH.appendChild(sLi);
+					liH.appendChild(rem)
+					actualOptions.appendChild(liH);
+				}
+				const button = document.createElement("button");
+				button.classList.add("reset-button")
+				button.textContent = "+";
+				button.onclick = () => {
+					const sLi = document.createElement("input");
+					sLi.placeholder = setting.default;
+					actualOptions.appendChild(sLi);
+				}
+				holder.appendChild(actualOptions)
+				holder.appendChild(button);
+				valueGetter = { value: () => {
+					const ret = [];
+					for(const i of holder.childNodes) {
+						ret.push(i.value)
+					}
+					return ret;
+				}, ele: holder }
+			} else {
+				const inp = document.createElement("input");
+				inp.placeholder = setting.default;
+				inp.value = setting.value;
+				valueGetter = { value: () => inp.value, ele: inp };
+			}
+			const btn = document.createElement("button");
+			btn.classList.add('reset-button');
+			btn.textContent = 'Set';
+			btn.onclick = () => {
+				universal.send(universal.events.companion.fdsp_set, {
+					plugin,
+					setting,
+					userValue: valueGetter.value()
+				})
+			}
 			div.appendChild(name);
 			div.appendChild(desc);
-			div.appendChild(inp);
+			div.appendChild(valueGetter.ele);
+			div.appendChild(btn);
 			li.appendChild(div)
 		}
-		
+
 		smf.appendChild(li);
-  });
+	});
 </script>
