@@ -94,7 +94,7 @@ module.exports = {
 			} else {
 				console.log(
 					pc.bgYellow(
-						`PLEASE TELL THE DEVELOPER OF ${instance.name} TO UPDATE THEIR PLUGIN TO USE V2'S API, OR YOU NEED TO UPDATE THE PLUGIN! FREEDECK HAS DEPRECATED V1 API PLUGINS.`,
+						`${instance.name} is an outdated PluginV1 plugin. Please update it or ask the developer to! On Freedeck's full release, this compatibility will be removed.`,
 					),
 				);
 				for (const hook of instance.hooks) {
