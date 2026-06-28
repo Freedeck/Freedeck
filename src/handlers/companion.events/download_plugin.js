@@ -18,6 +18,6 @@ module.exports = {
 		socket.emit(eventNames.companion.download_plugin, {percent:100,stage: "marketplace.download.finished"})
 		setTimeout(() => {
 			socket.emit(eventNames.default.reload);
-		}, 1000);
+		}, 50);
 	},
 };
