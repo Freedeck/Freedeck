@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const eventNames = require("../eventNames");
 const path = require("node:path");
 const NotificationManager = require("@managers/notifications.js");
-const { events } = require("@root/src/classes/api");
+const { events } = require("@freedeck/api");
 
 module.exports = ({ io, data }) => {
 	if (plugins.plugins().has(data.plugin)) {
