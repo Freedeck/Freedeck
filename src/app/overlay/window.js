@@ -81,9 +81,9 @@ const electronAppOverlay = {
       });
 
       window.setIgnoreMouseEvents(true, { forward: true });
-      window.setAlwaysOnTop(true, "status");
+      window.setAlwaysOnTop(true, 'screen-saver');
       window.setPosition(0, 0);
-
+      window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
       ipcMain.on("set-ignore-mouse-events", (event, ignore, options) => {
         if (event.sender != window.webContents) return;
         window.setIgnoreMouseEvents(ignore, options);
