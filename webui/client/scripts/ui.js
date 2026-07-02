@@ -5,6 +5,17 @@ import createTileRenderer from "./ui/createTileRenderer.js";
 import gridItemDrag from "../../companion/scripts/lib/gridItemDrag.js";
 import { actionButtonDown } from "./ui/quickActions.js";
 
+/**
+ * @name makeGenericModal
+ * @description Create a generic Modal, used as a backdrop for other Modals.
+ * @param {string} title - The title of your Modal
+ * @param {string} content - Body content of your Modal
+ * @param {Array(ModalButton)} buttons 
+ * @param {boolean} closable -
+ * @param {string} rawHtml - Placed directly after body element, inside modal container.
+ * @param {boolean} hidesInsteadOfClose 
+ * @returns {GenericModal}
+ */
 function makeGenericModal(
 	title,
 	content,

@@ -1,15 +1,13 @@
 /**
- * Create an empty FD button.
- * @param {*} snd Freedeck Button Config
- * @param {*} keyObject Key Object
- * @param {*} raw Raw Key Data
- * @param {boolean} isNothing Is this a nothing button?
+ * Create a "none" Tile.
+ * @param {Tile} snd Freedeck Button Config
+ * @param {DisplayedTile} keyObject Key Object
+ * @param {RawTile} raw Raw Key Data
  */
-export default function (snd, keyObject, raw, isNothing = false) {
+export default function (snd, keyObject, raw) {
 	const k = Object.keys(raw)[0];
 	keyObject.innerText = k;
-	if (isNothing && universal.name !== "Companion") {
+	if (universal.name !== "Companion") {
 		keyObject.style.opacity = 0.125;
-		// Fade on non-companion, to show it's nothing and needs to be set
 	}
 }

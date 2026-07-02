@@ -20,9 +20,6 @@ window.fetch = async (url, options) => {
 	return window._OldFetch(url, options);
 };
 
-/**
- * Unicversal
- */
 const universal = {
 	compareVersions,
 	relay: "",

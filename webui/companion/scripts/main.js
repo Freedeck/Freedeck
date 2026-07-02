@@ -222,6 +222,14 @@ editorBackButton.onclick = () => {
 
 window.UniversalUI = {
 	show: {
+		/**
+		 * @name showEditModal
+		 * @description Makes an Edit modal for 
+		 * @param {string} title - Modal title 
+		 * @param {string} description - Modal description 
+		 * @param {function(EditCallbackParameters): boolean} callback - Verify the user's given value, and return them UI feedback. 
+		 * @returns {EditModal}
+		 */
 		showEditModal: (title, description, callback) => {
 			const modal = universal.ui.makeGenericModal(
 				title,
@@ -256,6 +264,16 @@ window.UniversalUI = {
 			modal.show();
 			return modal;
 		},
+		/**
+		 * @name showPick
+		 * @description Make an options based picker.
+		 * @param {string} title - Modal  title 
+		 * @param {Array(PickModalItem)} listContent - What items to display
+		 * @param {function(EditCallbackParameters): boolean} callback - Verify your user's input and give them feedback.
+		 * @param {string} extraM - The modal's description 
+		 * @param {boolean} closable - Modal is closable
+		 * @returns {PickModal}
+		 */
 		showPick(title, listContent, callback, extraM = "", closable = true) {
 			const modal = UI.makeGenericModal(
 				title,
@@ -279,7 +297,6 @@ window.UniversalUI = {
 				],
 				closable,
 			);
-
 			const modalContent = modal.content;
 
 			const modalFeedback = document.createElement("div");
@@ -304,6 +321,15 @@ window.UniversalUI = {
 			modal.show();
 			return modal;
 		},
+		/**
+		 * @name progressBar
+		 * @description Show a progressbar
+		 * @param {string} title - The modal's title 
+		 * @param {string} stage - The starting stage
+		 * @param {number} startPercent - The starting percent
+		 * @param {boolean} closable - Modal is closable 
+		 * @returns {ProgressBar}
+		 */
 		progressBar(title, stage, startPercent, closable = true) {
 			const modal = universal.UI.makeGenericModal(
 				title,
@@ -324,6 +350,15 @@ window.UniversalUI = {
 			universal.uiSounds.playSound("int_confirm");
 			return {...modal, setStage, setPercent};
 		},
+		/**
+		 * @name showYesNo
+		 * @description Ask the user's consent (yes/no) for an impending action
+		 * @param {string} title - The modal's title
+		 * @param {string} content - The modal's description 
+		 * @param {function(): void} yesCallback - What happens when the user presses yes
+		 * @param {boolean} closable - Modal is closable
+		 * @returns {ConsentModal}
+		 */
 		showYesNo(title, content, yesCallback, closable = true) {
 			const modal = universal.UI.makeGenericModal(
 				title,

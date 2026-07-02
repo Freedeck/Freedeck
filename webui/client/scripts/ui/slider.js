@@ -1,7 +1,8 @@
 /**
- * @param {*} data Freedeck Button Config
- * @param {*} keyObject Key Object
- * @param {*} raw Raw Interaction Config
+ * Create a "slider" Tile.
+ * @param {Tile} data Freedeck Button Config
+ * @param {DisplayedTile} keyObject Key Object
+ * @param {RawTile} raw Raw Interaction Config
  */
 export default function (data, keyObject, raw) {
   const sliderContainer = document.createElement("div");
