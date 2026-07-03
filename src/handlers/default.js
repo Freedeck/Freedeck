@@ -25,13 +25,15 @@ const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
 const os = require("node:os");
 const iconRegistry = require("../managers/iconRegistry");
-const { gatherServerInformation } = require("@managers/serverInformationGatherer");
+const {
+	gatherServerInformation,
+} = require("@managers/serverInformationGatherer");
 const hostname = os.hostname();
 
 module.exports = {
 	name: "Main",
 	id: "builtin.main",
-	exec: ({ socket, io, clients }) => { 
+	exec: ({ socket, io, clients }) => {
 		debug.log(
 			"Connected to server!",
 			`Socket.IO / ${socket.user ? socket.user : socket.id}`,
@@ -128,7 +130,10 @@ module.exports = {
 			console.log(
 				`Freedeck ${socket.user} connected to server at ${new Date()}`,
 			);
-			socket.emit(eventNames.information, await gatherServerInformation(socket))
+			socket.emit(
+				eventNames.information,
+				await gatherServerInformation(socket),
+			);
 
 			debug.log(
 				"Letting user know they're connected.",

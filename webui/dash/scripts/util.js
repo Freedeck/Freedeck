@@ -48,4 +48,4 @@ function getModParent(element) {
 	return null;
 }
 
-export {mobileCheck, hasAndIs, isModule, hasParentWithTag, getModParent}
+export { mobileCheck, hasAndIs, isModule, hasParentWithTag, getModParent };

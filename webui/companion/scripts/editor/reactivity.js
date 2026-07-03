@@ -8,7 +8,7 @@ const type = document.querySelector("#type");
 const renderType = document.querySelector("#rendertype");
 const leftSidebar = document.querySelector(".sidebar");
 const rightSidebar = document.querySelector("#sidebar");
-const setIcon = document.querySelector("#upload-icon")
+const setIcon = document.querySelector("#upload-icon");
 
 color.onchange = (e) => {
 	editorButton.style.backgroundColor = e.srcElement.value;
@@ -79,12 +79,21 @@ const setupReactivity = (d, tileName) => {
 			"block";
 	}
 	leftSidebar.classList.add("disabled");
-	rightSidebar.classList.add("disabled")
+	rightSidebar.classList.add("disabled");
 
 	const pl = document.querySelector('button[data-view_id="plugins"]');
-	if(!pl.classList.contains("has-tt")) {
-		universal.createTooltipFor(pl, "<h4>" + translationKey("editor.sections.plugin.available") + "</h4>\n"+Object.values(universal.plugins).filter(e=>e.types.length>0).map(e=>e.name).join(",\n"))
-		pl.classList.add("has-tt")
+	if (!pl.classList.contains("has-tt")) {
+		universal.createTooltipFor(
+			pl,
+			"<h4>" +
+				translationKey("editor.sections.plugin.available") +
+				"</h4>\n" +
+				Object.values(universal.plugins)
+					.filter((e) => e.types.length > 0)
+					.map((e) => e.name)
+					.join(",\n"),
+		);
+		pl.classList.add("has-tt");
 	}
 
 	const interactionData = d;
@@ -181,12 +190,12 @@ function closeEditor() {
 		editorButton.style.backgroundColor = "";
 	}, 249);
 	leftSidebar.classList.remove("disabled");
-	rightSidebar.classList.remove("disabled")
+	rightSidebar.classList.remove("disabled");
 }
 
-editorClose.addEventListener('click', closeEditor)
+editorClose.addEventListener("click", closeEditor);
 
-editorSave.addEventListener('click', () => {
+editorSave.addEventListener("click", () => {
 	const tileName = name.value;
 	const interaction = JSON.parse(editorButton.getAttribute("data-interaction"));
 	const tileData = getAllTileData();
@@ -205,7 +214,7 @@ setIcon.onclick = (e) => {
 	universal.uiSounds.playSound("int_confirm");
 	const ito = JSON.parse(editorButton.dataset.interaction);
 	universal.listenForOnce("library_load", () => {
-		universal.sendEvent("library_request", "icon")
+		universal.sendEvent("library_request", "icon");
 	});
 	universal.listenForOnce("library_paint", () => {
 		if (ito.data.icon) {

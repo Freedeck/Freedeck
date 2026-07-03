@@ -23,7 +23,8 @@ const updateKeys = (data) => {
 };
 
 export function grabAndHandle() {
-	if (universal.fdws && universal.fdws.connected) universal.fdws.send("get_apps", "");
+	if (universal.fdws && universal.fdws.connected)
+		universal.fdws.send("get_apps", "");
 }
 
 const fdws = {
@@ -48,14 +49,14 @@ const fdws = {
 			updateKeys(fdws.cache);
 		});
 	},
-	connected: false
+	connected: false,
 };
 
 export function generic() {
 	universal.fdws = fdws;
 	fdws.on("state", (changed) => {
 		fdws.connected = changed;
-	})
+	});
 
 	universal.fdws.on("error", (data) => {
 		universal.sendToast("Native WebSocket", data);

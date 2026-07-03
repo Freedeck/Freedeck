@@ -149,7 +149,7 @@ textarea {
 	flex-direction: column;
 	gap: 1rem;
 	align-items: end;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 #sidebar ul li a {
@@ -194,16 +194,17 @@ textarea {
 	transition-duration: 0.25s;
 }
 
-.sidebar.disabled, #sidebar.disabled {
+.sidebar.disabled,
+#sidebar.disabled {
 	pointer-events: none;
 	/* background-color: rgba(0, 0, 0, 0.25); */
 }
 
-.sidebar.disabled > *, #sidebar.disabled > * {
+.sidebar.disabled > *,
+#sidebar.disabled > * {
 	pointer-events: none;
 	opacity: 0.5;
 }
-
 
 .sidebar::-webkit-scrollbar {
 	width: 0;
@@ -685,7 +686,7 @@ textarea {
 	overflow-x: hidden;
 	/* margin-right: 10rem; */
 	z-index: 1000;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 }
 
 #thanks .modalContent {

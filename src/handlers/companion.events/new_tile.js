@@ -18,8 +18,5 @@ module.exports = ({ socket, io, data }) => {
 		[name]: { ...interaction },
 	});
 	config.save();
-	io.emit(
-		eventNames.default.reload_tiles,
-		settings.profiles[settings.profile],
-	);
+	io.emit(eventNames.default.reload_tiles, settings.profiles[settings.profile]);
 };

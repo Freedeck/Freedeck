@@ -17,17 +17,25 @@ function exists(filePath) {
 	}
 }
 
-if(!exists(cfgFolder)) {
+if (!exists(cfgFolder)) {
 	fs.mkdirSync(cfgFolder);
-	debug.log("Created configs folder", "Migration / Starting Config")
+	debug.log("Created configs folder", "Migration / Starting Config");
 }
 
 if (!exists(styLoc)) {
 	fs.writeFileSync(
 		styLoc,
-		JSON.stringify({"scroll":false,"app.freedeck.last_changelog_viewed":"-1","font-size":15,"iconCountPerPage":14,"buttonSize":6,"tileCols":5,"longPressTime":3}),
+		JSON.stringify({
+			scroll: false,
+			"app.freedeck.last_changelog_viewed": "-1",
+			"font-size": 15,
+			iconCountPerPage: 14,
+			buttonSize: 6,
+			tileCols: 5,
+			longPressTime: 3,
+		}),
 	);
-	debug.log("Wrote style.json", "Migration / Starting Config")
+	debug.log("Wrote style.json", "Migration / Starting Config");
 }
 
 if (!exists(secLoc)) {
@@ -38,7 +46,7 @@ if (!exists(secLoc)) {
 		pwd +
 		"'},hash: (data) => 'fd.' + crypto.createHash('sha512').update(data).digest().toString('hex')};";
 	fs.writeFileSync(secLoc, fullCompleteSecrets);
-	debug.log("Wrote secrets.fd.js", "Migration / Starting Config")
+	debug.log("Wrote secrets.fd.js", "Migration / Starting Config");
 }
 if (!exists(cfgLoc)) {
 	fs.writeFileSync(
@@ -54,7 +62,7 @@ if (!exists(cfgLoc)) {
 							type: "fd.none",
 							pos: 0,
 							uuid: "fdd.01",
-							data: {}
+							data: {},
 						},
 					},
 					{
@@ -82,7 +90,7 @@ if (!exists(cfgLoc)) {
 							type: "fd.none",
 							pos: 4,
 							uuid: "fdd.04",
-							data: {}
+							data: {},
 						},
 					},
 				],
@@ -93,5 +101,5 @@ if (!exists(cfgLoc)) {
 			port: 5754,
 		}),
 	);
-	debug.log("Wrote main.json", "Migration / Starting Config")
+	debug.log("Wrote main.json", "Migration / Starting Config");
 }

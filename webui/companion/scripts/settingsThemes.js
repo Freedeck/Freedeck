@@ -22,8 +22,8 @@ window.loadThemeListing = async () => {
 		const element = document.createElement("div");
 		element.className = "theme";
 		const title = document.createElement("h2");
-		title.innerText = theme.name+" ";
-		if(theme.version) {
+		title.innerText = theme.name + " ";
+		if (theme.version) {
 			const version = document.createElement("small");
 			version.textContent = theme.version;
 			title.appendChild(version);
@@ -49,7 +49,9 @@ window.loadThemeListing = async () => {
 			}
 		};
 		if (universal.load("theme") === id) {
-			title.innerText += universal.translationKey("settings.sections.style.themes.active");
+			title.innerText += universal.translationKey(
+				"settings.sections.style.themes.active",
+			);
 			element.style.background = "var(--selected-item-bg)";
 			element.style.backgroundSize = "var(--selected-item-bg-size)";
 			element.style.animation = "var(--selected-item-bg-anim)";

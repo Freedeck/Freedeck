@@ -9,7 +9,7 @@ const fdws = {
 	connected: false,
 	isLauncherOpen: () => {
 		try {
-			if(os.platform == "win32") {
+			if (os.platform == "win32") {
 				const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
 				const realOut = out.toString().trim().trim();
 				return !realOut.includes(
@@ -43,7 +43,7 @@ const fdws = {
 let retryDelay = 1000;
 
 function ioEmit(i, ...d) {
-	if(fdws._io && fdws._io.emit) fdws._io.emit(i, ...d)
+	if (fdws._io && fdws._io.emit) fdws._io.emit(i, ...d);
 }
 
 function retryConnection(url = "ws://localhost:5756/") {

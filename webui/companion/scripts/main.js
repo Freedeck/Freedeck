@@ -224,10 +224,10 @@ window.UniversalUI = {
 	show: {
 		/**
 		 * @name showEditModal
-		 * @description Makes an Edit modal for 
-		 * @param {string} title - Modal title 
-		 * @param {string} description - Modal description 
-		 * @param {function(EditCallbackParameters): boolean} callback - Verify the user's given value, and return them UI feedback. 
+		 * @description Makes an Edit modal for
+		 * @param {string} title - Modal title
+		 * @param {string} description - Modal description
+		 * @param {function(EditCallbackParameters): boolean} callback - Verify the user's given value, and return them UI feedback.
 		 * @returns {EditModal}
 		 */
 		showEditModal: (title, description, callback) => {
@@ -267,10 +267,10 @@ window.UniversalUI = {
 		/**
 		 * @name showPick
 		 * @description Make an options based picker.
-		 * @param {string} title - Modal  title 
+		 * @param {string} title - Modal  title
 		 * @param {Array(PickModalItem)} listContent - What items to display
 		 * @param {function(EditCallbackParameters): boolean} callback - Verify your user's input and give them feedback.
-		 * @param {string} extraM - The modal's description 
+		 * @param {string} extraM - The modal's description
 		 * @param {boolean} closable - Modal is closable
 		 * @returns {PickModal}
 		 */
@@ -324,10 +324,10 @@ window.UniversalUI = {
 		/**
 		 * @name progressBar
 		 * @description Show a progressbar
-		 * @param {string} title - The modal's title 
+		 * @param {string} title - The modal's title
 		 * @param {string} stage - The starting stage
 		 * @param {number} startPercent - The starting percent
-		 * @param {boolean} closable - Modal is closable 
+		 * @param {boolean} closable - Modal is closable
 		 * @returns {ProgressBar}
 		 */
 		progressBar(title, stage, startPercent, closable = true) {
@@ -339,22 +339,22 @@ window.UniversalUI = {
 			);
 			const setStage = (stage) => {
 				modal.content.querySelector(".pb-stage").textContent = stage;
-			}
+			};
 			const setPercent = (value) => {
 				modal.content.querySelector(".pb-progress").value = value;
-			}
+			};
 			setStage(stage);
 			setPercent(startPercent);
-			console.log("PB",modal)
+			console.log("PB", modal);
 			modal.show();
 			universal.uiSounds.playSound("int_confirm");
-			return {...modal, setStage, setPercent};
+			return { ...modal, setStage, setPercent };
 		},
 		/**
 		 * @name showYesNo
 		 * @description Ask the user's consent (yes/no) for an impending action
 		 * @param {string} title - The modal's title
-		 * @param {string} content - The modal's description 
+		 * @param {string} content - The modal's description
 		 * @param {function(): void} yesCallback - What happens when the user presses yes
 		 * @param {boolean} closable - Modal is closable
 		 * @returns {ConsentModal}

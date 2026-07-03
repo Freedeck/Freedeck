@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const debug = require("$/debug.js");
-const fsPromises = require("node:fs/promises")
+const fsPromises = require("node:fs/promises");
 
 const configLocation = path.resolve("./src/configs/main.json");
 
@@ -47,13 +47,18 @@ const sc = {
 					port: thatConfig.port || 5754,
 				};
 
-				await fsPromises.writeFile(configLocation, JSON.stringify(newMainConfig, null, 2));
+				await fsPromises.writeFile(
+					configLocation,
+					JSON.stringify(newMainConfig, null, 2),
+				);
 				debug.log("Configuration saved.", "Managers / Settings");
 			} catch (error) {
-				debug.log(`Failed to save config: ${error.message}`, "Managers / Settings");
+				debug.log(
+					`Failed to save config: ${error.message}`,
+					"Managers / Settings",
+				);
 			}
 		}, 500);
-		
 	},
 };
 

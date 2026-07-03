@@ -10,10 +10,10 @@ import { actionButtonDown } from "./ui/quickActions.js";
  * @description Create a generic Modal, used as a backdrop for other Modals.
  * @param {string} title - The title of your Modal
  * @param {string} content - Body content of your Modal
- * @param {Array(ModalButton)} buttons 
+ * @param {Array(ModalButton)} buttons
  * @param {boolean} closable -
  * @param {string} rawHtml - Placed directly after body element, inside modal container.
- * @param {boolean} hidesInsteadOfClose 
+ * @param {boolean} hidesInsteadOfClose
  * @returns {GenericModal}
  */
 function makeGenericModal(
@@ -79,7 +79,6 @@ function makeGenericModal(
 		},
 	};
 }
-
 
 /**
  * @name handleActionButton Quick actions handler for the Logo button
@@ -400,11 +399,11 @@ function reloadTiles() {
 			// Build tooltip content efficiently with template literals
 
 			let initialTitle = `<h4>${universal.cleanHTML(k, false)}</h4>`;
-			if(k.length == 0) initialTitle = '';
+			if (k.length == 0) initialTitle = "";
 
 			let tooltipContent = initialTitle;
 
-			if(snd.type != 'fd.none') {
+			if (snd.type != "fd.none") {
 				if (!snd.renderType || snd.renderType == "button") {
 					tooltipContent += `<p>${
 						snd.data.longPress === "true"
@@ -561,15 +560,15 @@ function clickHandleNewTile(v) {
 	});
 	universal.listenForOnce("page_change", () => {
 		universal.editTile({
-				srcElement: {
-					getAttribute: () => JSON.stringify(interaction),
-					dataset: {
-						name: tileName,
-						interaction: JSON.stringify(interaction),
-					},
-					className: v.target.className
+			srcElement: {
+				getAttribute: () => JSON.stringify(interaction),
+				dataset: {
+					name: tileName,
+					interaction: JSON.stringify(interaction),
 				},
-			});
+				className: v.target.className,
+			},
+		});
 	});
 }
 

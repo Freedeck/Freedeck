@@ -40,7 +40,6 @@ const plugins = pluginManager.plugins();
 
 const types = pluginManager.types;
 
-
 debug.log("Initializing server...", "Socket.IO");
 
 io.on("connection", handleSock);

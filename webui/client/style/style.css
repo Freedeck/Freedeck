@@ -252,7 +252,8 @@ summary ::-webkit-details-marker {
 	border-radius: var(--main-radius);
 }
 
-.themelist .theme, .language-pick {
+.themelist .theme,
+.language-pick {
 	padding: 5px;
 	background-color: rgba(0, 0, 0, 0.5);
 	border: var(--generic-border);
@@ -624,9 +625,9 @@ input:disabled {
 	align-items: center;
 	margin: 0;
 	position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	padding: 0;
 }
 
@@ -976,14 +977,15 @@ a:hover {
 	bottom: 0;
 }
 
-#keys .button, #keys button {
+#keys .button,
+#keys button {
 	position: relative;
-	 max-height: var(--tile-height); 
-	 max-width: var(--tile-width); 
-	 width: var(--tile-width); 
-	 height: var(--tile-height); 
-	
-  aspect-ratio: 1 / 1;
+	max-height: var(--tile-height);
+	max-width: var(--tile-width);
+	width: var(--tile-width);
+	height: var(--tile-height);
+
+	aspect-ratio: 1 / 1;
 	border-radius: var(--tile-radius);
 	font-size: var(--font-size);
 }

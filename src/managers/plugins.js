@@ -85,10 +85,7 @@ const pl = {
 		const plugin = plList.get(id);
 		if (plugin) {
 			if (plugin.instance?.stop) plugin.instance.stop();
-			debug.log(
-				picocolors.green(`Stop handler ran for ${id}`),
-				"Plugins",
-			);
+			debug.log(picocolors.green(`Stop handler ran for ${id}`), "Plugins");
 			plList.delete(id);
 		}
 		for (const key in require.cache) {

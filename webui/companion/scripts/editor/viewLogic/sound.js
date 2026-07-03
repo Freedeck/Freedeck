@@ -118,7 +118,7 @@ document.querySelector("#upload-sound").onclick = () => {
 	universal.uiSounds.playSound("int_confirm");
 	const ito = JSON.parse(editorButton.dataset.interaction);
 	universal.listenForOnce("library_load", () => {
-		universal.sendEvent("library_request", "sound")
+		universal.sendEvent("library_request", "sound");
 	});
 	universal.listenForOnce("library_paint", () => {
 		const preselectedElement = document.querySelector(

@@ -9,7 +9,7 @@
  * @property {('true'|'false')} [longPress] - Long press required to activate
  * @property {string} [time] - Tile's intermediary long press time counter
  * @property {boolean} [holding] Tile's intermediary long press hold tracker
- * @property {('true'|'false')} [onRelease] - Activate upon release 
+ * @property {('true'|'false')} [onRelease] - Activate upon release
  * @property {string} [color] - Tile's background color in hex
  * @property {string} [file] - What file this Tile points to (fd.sound)
  * @property {string} [path] - Where the file is (fd.sound)
@@ -22,7 +22,7 @@
  * @property {number} [value] - Value of slider (Sliders)
  * @property {string} [format] - Suffix for value (Sliders)
  * @property {('horizontal'|'vertical')} [direction] - Which way to render slider (Sliders)
-*/
+ */
 
 /**
  * @typedef {HTMLDivElement} DisplayedTile
@@ -38,7 +38,7 @@
  * @property {TileType} type - Type specified by plugin/provider.
  * @property {number} pos - Position in Tile space.
  * @property {TileData} data - Unique data related to a Tile.
- * @property {('text'|'button'|'slider')} renderType - How Freedeck should style your Tile. 
+ * @property {('text'|'button'|'slider')} renderType - How Freedeck should style your Tile.
  * @property {string} [plugin] - Plugin providing the Tile, required if a plugin is used.
  */
 
@@ -63,7 +63,7 @@
  * @property {HTMLDivElement} content - The content inside the modal
  * @property {function(UISound): void} close - Close, and play a sound alongside (destructive)
  * @property {function(): void} hide - Hide the modal (nondestructive)
- * @property {function(): void} forceHide - No animation, just hide (nondestructive) 
+ * @property {function(): void} forceHide - No animation, just hide (nondestructive)
  * @property {function(): void} show - Show the modal
  */
 

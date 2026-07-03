@@ -160,17 +160,17 @@ const UAE = {
 			}
 			vol = universal.audioClient._player.normalVol;
 		}
-		if(UAE._no_sinks) {
+		if (UAE._no_sinks) {
 			await UAE._play({
-					file,
-					name,
-					stopPrevious,
-					volume: vol,
-					pitch,
-					channel,
-					sink:null,
-					bind,
-				});
+				file,
+				name,
+				stopPrevious,
+				volume: vol,
+				pitch,
+				channel,
+				sink: null,
+				bind,
+			});
 		}
 		for (const sink of sinks) {
 			try {
@@ -209,7 +209,7 @@ const UAE = {
 		audioInstance.src = file;
 		audioInstance.load();
 
-		if(sink != null) await audioInstance.setSinkId(sink);
+		if (sink != null) await audioInstance.setSinkId(sink);
 
 		audioInstance.playbackRate = pitch;
 		audioInstance.volume = volume;

@@ -131,9 +131,7 @@ window.oncontextmenu = (e) => {
 					UI.reloadProfile();
 					const interaction =
 						e.srcElement?.getAttribute("data-interaction") || "{}";
-					if (
-						universal.getServerFlags()["app.freedeck.tiles.force_deletion"]
-					) {
+					if (universal.getServerFlags()["app.freedeck.tiles.force_deletion"]) {
 						universal.send(universal.events.companion.del_tile, interaction);
 						return;
 					}

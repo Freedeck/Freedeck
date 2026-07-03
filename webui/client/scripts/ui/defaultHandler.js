@@ -8,10 +8,10 @@ import { translationKey } from "../../../shared/localization";
  */
 export default function (snd, tileElement, raw) {
 	const k = Object.keys(raw)[0];
-	if(snd.data.primaryIcon === "true") {
+	if (snd.data.primaryIcon === "true") {
 		tileElement.innerHTML = ``;
 	} else {
-		tileElement.innerHTML = `<div class="button-text"><p>${universal.cleanHTML(k)}</div></p>`
+		tileElement.innerHTML = `<div class="button-text"><p>${universal.cleanHTML(k)}</div></p>`;
 	}
 	if (snd.data.hold === "true" && universal.name !== "Companion") {
 		const activationMs = 5;
@@ -23,7 +23,8 @@ export default function (snd, tileElement, raw) {
 					send(e);
 					tileElement.dataset.time = 0;
 				}
-				tileElement.dataset.time = Number.parseInt(tileElement.dataset.time) + 1;
+				tileElement.dataset.time =
+					Number.parseInt(tileElement.dataset.time) + 1;
 			}, 1);
 		};
 
@@ -65,7 +66,8 @@ export default function (snd, tileElement, raw) {
 			tileElement.querySelector(".button-text").querySelector("p").innerText =
 				countdownTime;
 			tileElement.interval = setInterval(() => {
-				tileElement.dataset.time = Number.parseInt(tileElement.dataset.time) + 1;
+				tileElement.dataset.time =
+					Number.parseInt(tileElement.dataset.time) + 1;
 				tileElement.style.backgroundColor = `rgba(0, 0, 0, ${Number.parseInt(tileElement.dataset.time) * 0.1 + 0.1})`;
 				tileElement.style.transform = `scale(${0.75 + Number.parseInt(tileElement.dataset.time) * 0.05})`;
 				tileElement.querySelector(".button-text").querySelector("p").innerText =

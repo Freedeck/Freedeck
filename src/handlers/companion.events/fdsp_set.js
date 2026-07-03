@@ -14,10 +14,10 @@ module.exports = ({ io, data }) => {
 			data.setting.allowed.includes(data.userValue)
 		) {
 			plugin.setSetting(data.setting.id, data.userValue);
-			plugin.emit(events.settingsChanged, data)
+			plugin.emit(events.settingsChanged, data);
 		} else if (!data.setting.allowed) {
 			plugin.setSetting(data.setting.id, data.userValue);
-			plugin.emit(events.settingsChanged, data)
+			plugin.emit(events.settingsChanged, data);
 		} else {
 			plugin.pushNotification(
 				"Couldn't set " +
@@ -27,6 +27,6 @@ module.exports = ({ io, data }) => {
 			);
 		}
 	} else {
-		NotificationManager.add("Error", data.plugin+" doesn't exist!")
+		NotificationManager.add("Error", data.plugin + " doesn't exist!");
 	}
 };

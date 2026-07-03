@@ -19,7 +19,7 @@
 
 .plugin-information {
 	height: 100%;
-	display:flex;
+	display: flex;
 	flex-direction: column;
 }
 
@@ -193,21 +193,22 @@ details > summary:hover {
 .plugin-setting {
 	display: flex;
 	flex-direction: column;
-	gap: .125rem;
+	gap: 0.125rem;
 }
 
 .i {
-	font-style:italic;
+	font-style: italic;
 }
 
-.plugin-setting > input, .array-holder > input {
+.plugin-setting > input,
+.array-holder > input {
 	width: min-content;
 }
 
 .array-holder {
 	display: inline-flex;
 	flex-direction: column;
-	gap: .5rem;
+	gap: 0.5rem;
 }
 
 .item-holder {

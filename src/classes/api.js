@@ -3,7 +3,7 @@ const NotificationManager = require("@managers/notifications.js");
 const pluginManager = require("@managers/plugins.js");
 const fs = require("node:fs");
 const HookRef = require("./HookRef");
-const {SettingBuilder} = require("./Setting");
+const { SettingBuilder } = require("./Setting");
 
 const picocolors = require("$/picocolors");
 const debug = require("$/debug");
@@ -77,20 +77,22 @@ class Plugin {
 	}
 
 	useSetting(settingData) {
-		const {id, name, description, value, placeholder} = settingData;
+		const { id, name, description, value, placeholder } = settingData;
 		const lid = id.toLowerCase();
 		const fdId = "_fd_cset_" + lid;
-		if(!this.getFromSaveData(fdId)) {
-			this.setToSaveData(fdId, settingData)
+		if (!this.getFromSaveData(fdId)) {
+			this.setToSaveData(fdId, settingData);
 			this.Settings[lid] = settingData;
 		} else {
 			this.Settings[lid] = this.getFromSaveData(fdId);
 		}
 	}
 
-	getSetting(id){
+	getSetting(id) {
 		const lid = id.toLowerCase();
-		return this.Settings[lid].value || this.getFromSaveData("_fd_cset_" + lid).value;
+		return (
+			this.Settings[lid].value || this.getFromSaveData("_fd_cset_" + lid).value
+		);
 	}
 
 	setSetting(id, value) {
@@ -174,7 +176,7 @@ class Plugin {
 				{ force: true },
 			);
 		}
-		this._customLog("Ready. Intents: [" + this._intent.join(", ") +"]");
+		this._customLog("Ready. Intents: [" + this._intent.join(", ") + "]");
 		this.emit(events.ready);
 	}
 

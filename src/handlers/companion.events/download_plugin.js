@@ -7,15 +7,33 @@ const pluginsLocation = resolve("./plugins");
 module.exports = {
 	flags: ["AUTH"],
 	exec: async ({ socket, data }) => {
-		socket.emit(eventNames.companion.download_plugin, {percent:10,stage: "marketplace.download.stage_download"})
+		socket.emit(eventNames.companion.download_plugin, {
+			percent: 10,
+			stage: "marketplace.download.stage_download",
+		});
 		const response = await fetch(data.plugin.download);
-		socket.emit(eventNames.companion.download_plugin, {percent:30,stage: "marketplace.download.stage_download"})
+		socket.emit(eventNames.companion.download_plugin, {
+			percent: 30,
+			stage: "marketplace.download.stage_download",
+		});
 		const arrBuf = await response.arrayBuffer();
-		socket.emit(eventNames.companion.download_plugin, {percent:50,stage: "marketplace.download.stage_write"})
-		writeFileSync(resolve(pluginsLocation+"/" + data.plugin.id+".fdpackage"),Buffer.from(arrBuf))
-		socket.emit(eventNames.companion.download_plugin, {percent:75,stage: "marketplace.download.stage_load"})
+		socket.emit(eventNames.companion.download_plugin, {
+			percent: 50,
+			stage: "marketplace.download.stage_write",
+		});
+		writeFileSync(
+			resolve(pluginsLocation + "/" + data.plugin.id + ".fdpackage"),
+			Buffer.from(arrBuf),
+		);
+		socket.emit(eventNames.companion.download_plugin, {
+			percent: 75,
+			stage: "marketplace.download.stage_load",
+		});
 		await pl.reload();
-		socket.emit(eventNames.companion.download_plugin, {percent:100,stage: "marketplace.download.finished"})
+		socket.emit(eventNames.companion.download_plugin, {
+			percent: 100,
+			stage: "marketplace.download.finished",
+		});
 		setTimeout(() => {
 			socket.emit(eventNames.default.reload);
 		}, 50);

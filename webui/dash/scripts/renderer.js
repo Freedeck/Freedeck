@@ -26,15 +26,16 @@ if (!window["freedeckoverlay"]) {
 	universal.audioClient._no_sinks = true;
 }
 
-
 await universal.init("Overlay", "Freedeck Overlay");
 let dragMode = false;
 let debugMode = false;
 const debugContainer = document.querySelector(".warnings");
 const dragWarning = document.querySelector("#dragmode-warning");
 const debugWarning = document.querySelector("#debugmode-warning");
-const noMods = document.querySelector("#nomods-warning")
-if(!DASH_MODE) noMods.textContent = "Your Overlay is empty! Press ALT + SHIFT + BACKSPACE to get started.";
+const noMods = document.querySelector("#nomods-warning");
+if (!DASH_MODE)
+	noMods.textContent =
+		"Your Overlay is empty! Press ALT + SHIFT + BACKSPACE to get started.";
 const userViewCollection = [];
 const systemViewCollection = ["freedeck", "testing"];
 for (const k in universal.plugins) {
@@ -89,14 +90,13 @@ for (const i of systemViewCollection) {
 						return res.json();
 					})
 					.then((res) => {
-            if(res.hidden) return; 
+						if (res.hidden) return;
 						res.owner = viw;
 						selections[i].modules.push(res);
 					});
 			}
 		});
 }
-
 
 universal.audioClient.initialize();
 universal.uiSounds.initialize();
@@ -132,29 +132,31 @@ const contextMenu = async (e) => {
 	custMenu.style.top = `${e.clientY - window.scrollY}px`;
 	custMenu.style.left = `${e.clientX - window.scrollX}px`;
 	custMenu.style.position = "absolute";
-  custMenu.close = () => {
-    custMenu.style.animation = 'close-ctxmenu .1s'
-    setTimeout(() => {
-      custMenu.remove()
-    }, 99);
-  }
+	custMenu.close = () => {
+		custMenu.style.animation = "close-ctxmenu .1s";
+		setTimeout(() => {
+			custMenu.remove();
+		}, 99);
+	};
 	if (!hasParentWithTag(e.target)) {
 		const menuItem = document.createElement("div");
-		menuItem.innerHTML = '<div style="font-weight: bold; margin-bottom: 5px;">Add Module:</div>';
+		menuItem.innerHTML =
+			'<div style="font-weight: bold; margin-bottom: 5px;">Add Module:</div>';
 		custMenu.appendChild(menuItem);
 		for (const sKey in selections) {
 			const sData = selections[sKey];
 			const selectionName = sData.name;
 			const viewList = sData.modules;
 			for (const data of viewList) {
-				if(DASH_MODE && !data.view) continue;
-				if(!DASH_MODE && !data.overlay) continue;
+				if (DASH_MODE && !data.view) continue;
+				if (!DASH_MODE && !data.overlay) continue;
 				const menuItem = document.createElement("div");
 				menuItem.innerText = selectionName + " - " + data.name;
 				menuItem.className = "menuItem";
 				const settingsFix = {};
 				for (const settingKey in data.settings) {
-					if (!settingsFix[settingKey]) settingsFix[settingKey] = data.settings[settingKey].default;
+					if (!settingsFix[settingKey])
+						settingsFix[settingKey] = data.settings[settingKey].default;
 				}
 				menuItem.onclick = () => {
 					const uuid = Math.random() * 100;
@@ -174,72 +176,75 @@ const contextMenu = async (e) => {
 							},
 						},
 					});
-					saveToLS()
+					saveToLS();
 					reloadModules();
-          custMenu.close();
+					custMenu.close();
 				};
 				custMenu.appendChild(menuItem);
 			}
 		}
 		const sep = document.createElement("div");
-		sep.style = 'font-weight: bold; margin-bottom: 5px;'
-		sep.textContent = "Add Tile:"
+		sep.style = "font-weight: bold; margin-bottom: 5px;";
+		sep.textContent = "Add Tile:";
 		custMenu.appendChild(sep);
 		let shown = [];
-			for (const sKey of universal.config.profiles[universal.config.profile]) {
-				const title = Object.keys(sKey)[0];
-				const tileData = sKey[title];
-				if(shown.includes(tileData.uuid)) {return} else {shown.push(tileData.uuid)}
-				const menuItem = document.createElement("div");
-				let display = "";
-				if (tileData.plugin) {
-					display = tileData.plugin;
-					for (const i of universal._matchTypeToPlugin
-						.keys()
-						.filter((e) => e.type == tileData.type)) {
-						display += ": " + i.name;
-					}
+		for (const sKey of universal.config.profiles[universal.config.profile]) {
+			const title = Object.keys(sKey)[0];
+			const tileData = sKey[title];
+			if (shown.includes(tileData.uuid)) {
+				return;
+			} else {
+				shown.push(tileData.uuid);
+			}
+			const menuItem = document.createElement("div");
+			let display = "";
+			if (tileData.plugin) {
+				display = tileData.plugin;
+				for (const i of universal._matchTypeToPlugin
+					.keys()
+					.filter((e) => e.type == tileData.type)) {
+					display += ": " + i.name;
 				}
-				const italicized = document.createElement("strong");
-				italicized.textContent = title + (title.length > 0 ? " - " : "");
-				const pluginTitle = document.createElement("span");
-				pluginTitle.textContent = (tileData.plugin ? display : "");;
-				menuItem.append(italicized, pluginTitle)
-				menuItem.className = "menuItem";
-				const setupMod = (e) => {
-					layoutDefinition.modules.push({
-						[title]: {
-							uuid: Math.random() * 100,
-							type: tileData.type,
-							renderType: "dash-button",
-							plugin: tileData.plugin,
-							data: {
-								...tileData.templateData,
-								position: {
-									x: e.clientX,
-									y: e.clientY,
-									width: "defined",
-									height: "defined",
-								},
+			}
+			const italicized = document.createElement("strong");
+			italicized.textContent = title + (title.length > 0 ? " - " : "");
+			const pluginTitle = document.createElement("span");
+			pluginTitle.textContent = tileData.plugin ? display : "";
+			menuItem.append(italicized, pluginTitle);
+			menuItem.className = "menuItem";
+			const setupMod = (e) => {
+				layoutDefinition.modules.push({
+					[title]: {
+						uuid: Math.random() * 100,
+						type: tileData.type,
+						renderType: "dash-button",
+						plugin: tileData.plugin,
+						data: {
+							...tileData.templateData,
+							position: {
+								x: e.clientX,
+								y: e.clientY,
+								width: "defined",
+								height: "defined",
 							},
 						},
-					});
-					saveToLS()
-					reloadModules();
-					custMenu.close();
-				};
-				menuItem.addEventListener("touchend", setupMod);
-				menuItem.addEventListener("click", setupMod);
-				custMenu.appendChild(menuItem);
-			}
+					},
+				});
+				saveToLS();
+				reloadModules();
+				custMenu.close();
+			};
+			menuItem.addEventListener("touchend", setupMod);
+			menuItem.addEventListener("click", setupMod);
+			custMenu.appendChild(menuItem);
+		}
 	} else {
 		const p = getModParent(e.target);
 		const moduleContext = JSON.parse(p.getAttribute("modulecontext"));
 		const layoutData = JSON.parse(p.getAttribute("layout"));
 		const settings = JSON.parse(p.getAttribute("settings"));
 		const menuItem = document.createElement("div");
-		menuItem.innerHTML =
-			"<strong>Editing " + moduleContext.name + "</strong>";
+		menuItem.innerHTML = "<strong>Editing " + moduleContext.name + "</strong>";
 		custMenu.appendChild(menuItem);
 		const items = [
 			{
@@ -248,9 +253,9 @@ const contextMenu = async (e) => {
 					layoutDefinition.modules = layoutDefinition.modules.filter((e) => {
 						return e[Object.keys(e)[0]].uuid != layoutData.uuid;
 					});
-					saveToLS()
+					saveToLS();
 					reloadModules();
-          custMenu.close();
+					custMenu.close();
 				},
 			},
 		];
@@ -285,7 +290,7 @@ const contextMenu = async (e) => {
 								mod[modKey].settings = settings;
 							}
 						});
-						saveToLS()
+						saveToLS();
 					},
 				};
 				items.push(itm);
@@ -386,15 +391,15 @@ window.addEventListener("keydown", async (e) => {
 reloadModules();
 
 function reloadModules() {
-  if(layoutDefinition.modules.length < 1) {
-    noMods.style.display = 'block'
-  } else {
-    noMods.style.display = 'none'
-  }
+	if (layoutDefinition.modules.length < 1) {
+		noMods.style.display = "block";
+	} else {
+		noMods.style.display = "none";
+	}
 	document.querySelectorAll(".debug-only").forEach((enrty) => {
 		enrty.remove();
 	});
-  for (const i of mctx.opened) {
+	for (const i of mctx.opened) {
 		mctx.closeView(i);
 	}
 	document.querySelectorAll(".dash-button").forEach((e) => e.remove());

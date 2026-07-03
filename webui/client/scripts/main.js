@@ -3,7 +3,7 @@ import { makeSettingsMenu } from "./settingsMenu.js";
 
 universal.listenForOnce("init", () => {
 	makeSettingsMenu();
-})
+});
 
 await universal.init("Main");
 

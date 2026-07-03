@@ -6,7 +6,10 @@ const debug = require("$/debug");
 const picocolors = require("$/picocolors");
 const oldCfgLoc = path.resolve("./src/configs/config.fd.js");
 
-debug.log("Checking for legacy v1 configuration", picocolors.blue("Migration / Config Upgrade"))
+debug.log(
+	"Checking for legacy v1 configuration",
+	picocolors.blue("Migration / Config Upgrade"),
+);
 if (existsSync(oldCfgLoc)) {
 	console.log("Migrating your v1 configuration to v2 schema");
 	const thatConfig = require(oldCfgLoc);

@@ -131,7 +131,7 @@ export default async function dataHandler(universal, user) {
 
 		universal.listenFor("data_ready", () => {
 			universal.UI.reloadTiles();
-		})
+		});
 	});
 	universal.CLU("Incoming Data Handler", "Sent Identify packet");
 	universal._user = user;

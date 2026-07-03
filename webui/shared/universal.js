@@ -311,7 +311,7 @@ const universal = {
 						universal.listenForOnce("data_ready", async () => {
 							universal.CLU("InitFN", "Starting eventsHandler");
 							await eventsHandler(universal, user);
-							if(universal.name == "Main") {
+							if (universal.name == "Main") {
 								universal.CLU(
 									"InitFN / WakeLock",
 									"Attempting to grab wake lock.",
@@ -414,7 +414,7 @@ const universal = {
 		const logoButton = document.createElement("div");
 		logoButton.id = "fd-settings-button";
 		logoButton.style.backgroundImage = "url(/assets/logo_big.png)";
-		
+
 		logoButton.style.border = "none";
 		logoButton.style.backgroundColor = "transparent";
 		logoButton.style.boxShadow = "none";
@@ -482,7 +482,8 @@ const universal = {
 	name: "",
 	_timeouts: {},
 	sendToast: (message, sender = "") => {
-		if(!universal.getServerFlags()['app.freedeck.ui.show_notifications']) return;
+		if (!universal.getServerFlags()["app.freedeck.ui.show_notifications"])
+			return;
 		if (!HTMLElement.prototype.setHTML) {
 			HTMLElement.prototype.setHTML = function (html) {
 				this.innerHTML = universal.cleanHTML(html);
@@ -694,15 +695,15 @@ window.ErrorIgnore = () => {
 };
 if (!universal.UI) universal.UI = UI;
 
-window.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {
-    e.preventDefault(); 
+window.addEventListener("keydown", (e) => {
+	if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r") {
+		e.preventDefault();
 
-    UI.showBootLog(false);
+		UI.showBootLog(false);
 		setTimeout(() => {
 			window.location.reload();
 		}, 500);
-  }
+	}
 });
 
 universal.listenFor(

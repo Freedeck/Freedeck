@@ -47,10 +47,16 @@ export default function (sndType, tileElement, snd, rawDat) {
 		}
 	}
 
-	if (sndType != "fd.none" && universal.getServerFlags().scroll && !snd.data.primaryIcon) {
+	if (
+		sndType != "fd.none" &&
+		universal.getServerFlags().scroll &&
+		!snd.data.primaryIcon
+	) {
 		const txth = tileElement.querySelector("p");
-		const isVerticallyOverflowing = txth.scrollHeight > tileElement.clientHeight;
-		const isHorizontallyOverflowing = txth.scrollWidth > tileElement.clientWidth;
+		const isVerticallyOverflowing =
+			txth.scrollHeight > tileElement.clientHeight;
+		const isHorizontallyOverflowing =
+			txth.scrollWidth > tileElement.clientWidth;
 
 		if (isVerticallyOverflowing || isHorizontallyOverflowing) {
 			txth.classList.add("too-big");

@@ -7,8 +7,8 @@
 :root {
 	--main-bg: black;
 
-	--tile-bg: rgba(255,255,255,0.015);
-	--tile-border: 1px solid rgba(255,255,255,0.25);
+	--tile-bg: rgba(255, 255, 255, 0.015);
+	--tile-border: 1px solid rgba(255, 255, 255, 0.25);
 
 	--text-color: #fafafa;
 	--text-color-secondary: #fefefe;
@@ -40,7 +40,8 @@
 	--companion-sidebar-item-color: var(--text-color);
 }
 
-#keys, .keys {
+#keys,
+.keys {
 	background-color: black;
 }
 .sidebar-item {
@@ -49,5 +50,5 @@
 
 .unset {
 	opacity: 1;
-	--tile-border: 1px solid rgba(190,190,190,0.9);
+	--tile-border: 1px solid rgba(190, 190, 190, 0.9);
 }

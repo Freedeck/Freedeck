@@ -83,7 +83,9 @@ function gatherServerInformation(socket) {
 				return;
 			}
 			debug.log(
-				"Compressed in " + (Math.floor(performance.now() - begin)) + "ms. Sending server info.",
+				"Compressed in " +
+					Math.floor(performance.now() - begin) +
+					"ms. Sending server info.",
 				`Socket.IO / ${socket.user}`,
 			);
 
@@ -92,4 +94,4 @@ function gatherServerInformation(socket) {
 	});
 }
 
-module.exports = {gatherServerInformation};
+module.exports = { gatherServerInformation };
