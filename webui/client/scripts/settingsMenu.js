@@ -1,4 +1,5 @@
 const settingsMenuContainer = document.querySelector(".settings-menu");
+const themeList = document.querySelector(".themelist")
 const tilesContainer = document.querySelector("#keys");
 /**
  * Open the settings menu (on clients only)
@@ -6,9 +7,12 @@ const tilesContainer = document.querySelector("#keys");
 function settingsMenu() {
 	if (universal.name === "Main") {
 		tilesContainer.style.transitionDuration = "0.5s";
-		tilesContainer.style.pointerEvents = "none";
 		settingsMenuContainer.style.display = "flex";
-		tilesContainer.style.opacity = "0";
+		setTimeout(()=>{
+			settingsMenuContainer.style.right='0'
+			settingsMenuContainer.style.opacity='1'
+		},20)
+		universal.keys.parentElement.style.transform = "translate(calc(-70% - 1rem), -50%)"
 	}
 }
 function settingsMenuClose() {
@@ -16,9 +20,8 @@ function settingsMenuClose() {
 		// document.querySelector("#keys").style.display = "grid";
 		// settingsMenuContainer.style.display = "none";
 		settingsMenuContainer.style.animationName = "pull-up";
-		tilesContainer.style.opacity = "1";
-		tilesContainer.style.pointerEvents = "unset";
-
+		universal.keys.parentElement.style.transform = "translate(-50%, -50%)"
+		settingsMenuContainer.style.right='-100%';
 		setTimeout(() => {
 			settingsMenuContainer.style.display = "none";
 			settingsMenuContainer.style.animationName = "pull-down";
@@ -36,29 +39,24 @@ if(ts) {
 		remButton.style.display = 'none';
 
 		tilesContainer.style.transitionDuration = "0.5s";
-		universal.keys.parentElement.style.transform = "translate(-50%, -50%)"
 		setTimeout(()=>{
-			document.querySelector(".themelist.client").style.right='-100%'
-			document.querySelector(".themelist.client").style.opacity='1'
+			themeList.style.right='-100%'
+			themeList.style.opacity='1'
 		},20)
 	}
 
 	ts.onclick = () => {
-		remButton.style.display = 'flex';
-		settingsMenuContainer.style.animationName = "pull-up";
-		tilesContainer.style.opacity = "1";
-		tilesContainer.style.pointerEvents = "unset";
-		document.querySelector(".themelist.client").style.display='flex'
-		universal.keys.classList.remove("smaller");
-		universal.keys.parentElement.style.transform = "translate(calc(-70% - 1rem), -50%)"
+		themeList.style.display='flex'
+		remButton.style.opacity = 0;
+		remButton.style.display='flex';
 		setTimeout(()=>{
-			document.querySelector(".themelist.client").style.right='0'
-			document.querySelector(".themelist.client").style.opacity='1'
+			themeList.style.right='0'
+			themeList.style.opacity='1'
+			setTimeout(() => {
+				remButton.style.display = 'flex';
+				remButton.style.opacity = 0.5;
+			},499)
 		},20)
-		setTimeout(() => {
-			settingsMenuContainer.style.display = "none";
-			settingsMenuContainer.style.animationName = "pull-down";
-		}, 499);
 	}
 }
 
@@ -66,7 +64,7 @@ const settingsClose = document.querySelector("#settings-close");
 const versionDisplay = document.querySelector("#version");
 function makeSettingsMenu() {
 	if (versionDisplay) {
-		versionDisplay.innerText = `${universal._information.version.human}`;
+		versionDisplay.innerText = `${universal._information.version.raw}`;
 	}
 
 	settingsClose.addEventListener("click", settingsMenuClose);

@@ -28,31 +28,30 @@
 		</div>
 
 		<div class="settings-menu">
-			<div class="flex-wrap-r alc">
-				<h1 id="version"></h1>
-				<img src="/assets/logo_big.png" width="50" height="50" />
-			</div>
-
-			<div class="flex-wrap-r">
-				<input type="checkbox" name="lock" id="lock" />
-				<label for="lock" data-i18n-key="settings.client.page_lock"></label>
-			</div>
-
-			<button id="theme-set">Change Theme</button>
-
-			<div class="flex-wrap-r">
-				<button onclick="universal.send(universal.events.default.reload)" data-i18n-key="settings.client.reload"></button>
-				<button onclick="window.location.href = '/dash'" data-i18n-key="settings.client.dash"></button>
-				<button onclick="universal.send(universal.events.default.recompile)"
+			<div class="flex-wrap">
+				<div class="flex-wrap-r alc">
+					<input type="checkbox" name="lock" id="lock" />
+					<label for="lock" data-i18n-key="settings.client.page_lock"></label>
+				</div>
+				<button id="theme-set" class="wide-btn">Change Theme</button>
+				<button class="wide-btn" onclick="location.reload();universal.send(universal.events.default.reload)"
+					data-i18n-key="settings.client.reload"></button>
+				<button class="wide-btn" onclick="window.location.href = '/dash'" data-i18n-key="settings.client.dash"></button>
+				<button class="wide-btn" onclick="universal.send(universal.events.default.recompile)"
 					data-i18n-key="settings.recompile_webpack"></button>
-				<button onclick="
+				<button class="wide-btn" onclick="
 							universal.send(universal.events.keypress, {
 								builtIn: true,
 								data: 'stop-all',
 							})
 						" data-i18n-key="sidebars.left.soundboard.stop_all"></button>
-				<button id="settings-close" data-i18n-key="settings.client.close"></button>
+				<button class="wide-btn" id="settings-close" data-i18n-key="settings.client.close"></button>
+
+				<small class="alc flex-wrap-r">
+					<span id="version"></span> >> <a href="https://freedeck.app">Freedeck.app</a>
+				</small>
 			</div>
+			<br><br>
 		</div>
 		<div style="display: none; z-index: 10200" class="modal" id="login-dialog">
 			<div id="login-div" class="modalContent">

@@ -10,7 +10,14 @@
 	height: 100vh;
 }
 
-.themelist {
+.wide-btn {
+	min-width: 100%;
+	min-height: min-content;
+	height: min-content;
+	padding: 0.825rem;
+}
+
+.themelist, .settings-menu {
 	display: none;
 	flex-direction: column;
 	position: absolute;
@@ -23,19 +30,22 @@
 	transition-duration: 0.5s;
 	z-index: 1002;
 	backdrop-filter: blur(2rem);
+	background-color: rgba(0, 0, 0, 0.25);
+	padding: 1rem;
 }
 
 .rembutton {
 	z-index: 1003;
-	width:2rem;
-	min-width: 2rem;
+	width:4rem;
+	min-width: 4rem;
 	height:3rem;
 	min-height: 3rem;
 	position: absolute;
 	top: 0;
 	display: none;
-	opacity: 0.5;
+	opacity: 0;
 	right: 30%;
+	transition-duration: .5s;
 	background: var(--input-bg);
 	border-radius: 0 0 var(--main-radius) var(--main-radius);
 }
