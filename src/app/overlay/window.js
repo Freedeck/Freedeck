@@ -12,6 +12,7 @@ const electronAppOverlay = {
 	title: "Overlay",
 	createProperties: {
 		frame: false,
+		alwaysOnTop: true,
 		autoHideMenuBar: true,
 		transparent: true,
 		focusable: false,
@@ -81,7 +82,6 @@ const electronAppOverlay = {
 		});
 
 		window.setIgnoreMouseEvents(true, { forward: true });
-		window.setAlwaysOnTop(true, "screen-saver");
 		window.setPosition(0, 0);
 		window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 		ipcMain.on("set-ignore-mouse-events", (event, ignore, options) => {
