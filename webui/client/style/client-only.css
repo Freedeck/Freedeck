@@ -5,3 +5,43 @@
 	min-height: unset;
 	font-size: x-small;
 }
+
+.everything {
+	height: 100vh;
+}
+
+.themelist {
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	right: -100%;
+	width: 30%;
+	height: 100%;
+	border-radius: 0;
+	overflow-y: scroll;
+	transition-duration: 0.5s;
+	z-index: 1002;
+	backdrop-filter: blur(2rem);
+}
+
+.rembutton {
+	z-index: 1003;
+	width:2rem;
+	min-width: 2rem;
+	height:3rem;
+	min-height: 3rem;
+	position: absolute;
+	top: 0;
+	display: none;
+	opacity: 0.5;
+	right: 30%;
+	background: var(--input-bg);
+	border-radius: 0 0 var(--main-radius) var(--main-radius);
+}
+
+.rembutton:active {
+	opacity: 1;
+	height:6rem;
+	min-height: 6rem;
+}

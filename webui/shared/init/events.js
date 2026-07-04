@@ -51,7 +51,7 @@ export default async function eventsHandler(universal, user) {
 			dat.incoming &&
 			universal.name === "Companion"
 		) {
-			window.UniversalUI.show.showPick(
+			window.universal.ui.show.showPick(
 				`${dat.incoming.appInformation.title} wants to connect to your Freedeck!`,
 				[
 					{

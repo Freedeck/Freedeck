@@ -11,8 +11,11 @@ if (universal.events?.companion?.set_theme) {
 	});
 }
 
+const themeList = document.querySelector('.themelist');
+let scroll = themeList.scrollTop;
 window.loadThemeListing = async () => {
-	document.querySelector(".themelist").innerHTML = "";
+	scroll = themeList.scrollTop;
+	themeList.innerHTML = "";
 	for (const id of universal.theming.listing) {
 		let theme = universal.theming.listingData[id];
 		if (!theme) {
@@ -35,7 +38,7 @@ window.loadThemeListing = async () => {
 		apply.innerText = "Click to apply.";
 		element.onclick = () => {
 			if (theme.warn) {
-				UniversalUI.show.showYesNo(
+				universal.ui.show.showYesNo(
 					universal.translationKey("settings.sections.style.themes.warning"),
 					theme.warn,
 					() => {
@@ -59,6 +62,7 @@ window.loadThemeListing = async () => {
 		}
 		element.appendChild(desc);
 		element.appendChild(apply);
-		document.querySelector(".themelist").appendChild(element);
+		themeList.appendChild(element);
 	}
+	themeList.scrollTop = scroll;
 };

@@ -38,10 +38,7 @@
 				<label for="lock" data-i18n-key="settings.client.page_lock"></label>
 			</div>
 
-			<details>
-				<summary data-i18n-key="settings.sections.style"></summary>
-				<div class="themelist"></div>
-			</details>
+			<button id="theme-set">Change Theme</button>
 
 			<div class="flex-wrap-r">
 				<button onclick="universal.send(universal.events.default.reload)" data-i18n-key="settings.client.reload"></button>
@@ -72,6 +69,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="themelist client"></div>
 		<div id="client-key-container">
 			<div id="keys"></div>
 		</div>
