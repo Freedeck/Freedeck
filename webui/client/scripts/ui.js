@@ -611,162 +611,162 @@ export const UI = {
 	makeGenericModal,
 	reloadPluginViews,
 	show: {
-				/**
-				 * @name showEditModal
-				 * @description Makes an Edit modal for
-				 * @param {string} title - Modal title
-				 * @param {string} description - Modal description
-				 * @param {function(EditCallbackParameters): boolean} callback - Verify the user's given value, and return them UI feedback.
-				 * @returns {EditModal}
-				 */
-				showEditModal: (title, description, callback) => {
-					const modal = universal.ui.makeGenericModal(
-						title,
-						"",
-						[
-							{
-								text: "Submit",
-								onclick: () => {
-									const returned = callback({
-										value: modalInput.value,
-										feedback: modalFeedback,
-									});
-									if (returned === false) return;
-									modal.close();
-								},
-							},
-						],
-						false,
-					);
-					const modalContent = modal.content;
-		
-					const modalFeedback = document.createElement("div");
-					modalFeedback.classList.add("modalFeedback");
-					modalContent.appendChild(modalFeedback);
-		
-					const modalInput = document.createElement("input");
-					modalInput.type = "text";
-					modalInput.placeholder = description;
-					modalInput.classList.add("modalInput_text");
-					modalContent.appendChild(modalInput);
-		
-					modal.show();
-					return modal;
-				},
-				/**
-				 * @name showPick
-				 * @description Make an options based picker.
-				 * @param {string} title - Modal  title
-				 * @param {Array(PickModalItem)} listContent - What items to display
-				 * @param {function(EditCallbackParameters): boolean} callback - Verify your user's input and give them feedback.
-				 * @param {string} extraM - The modal's description
-				 * @param {boolean} closable - Modal is closable
-				 * @returns {PickModal}
-				 */
-				showPick(title, listContent, callback, extraM = "", closable = true) {
-					const modal = UI.makeGenericModal(
-						title,
-						extraM,
-						[
-							{
-								text: "Save",
-								onclick: () => {
-									const selectedItem = modalList.options[modalList.selectedIndex];
-									const value = JSON.parse(selectedItem.value);
-									const returned = callback({
-										modal,
-										value,
-										modalFeedback,
-										modalContent,
-									});
-									if (returned === false) return;
-									modal.close();
-								},
-							},
-						],
-						closable,
-					);
-					const modalContent = modal.content;
-		
-					const modalFeedback = document.createElement("div");
-					modalFeedback.classList.add("modalFeedback");
-		
-					const modalList = document.createElement("select");
-					modalList.className = "modalList";
-					modalList.style.marginBottom = "20px";
-		
-					modalContent.appendChild(modalFeedback);
-					modalContent.appendChild(modalList);
-		
-					for (const item of listContent) {
-						const modalItem = document.createElement("option");
-						modalItem.className = "modalItem";
-						modalItem.setAttribute("value", JSON.stringify(item));
-						modalItem.innerText = item.name || item.display;
-						modalList.appendChild(modalItem);
-					}
-		
-					universal.uiSounds.playSound("int_prompt");
-					modal.show();
-					return modal;
-				},
-				/**
-				 * @name progressBar
-				 * @description Show a progressbar
-				 * @param {string} title - The modal's title
-				 * @param {string} stage - The starting stage
-				 * @param {number} startPercent - The starting percent
-				 * @param {boolean} closable - Modal is closable
-				 * @returns {ProgressBar}
-				 */
-				progressBar(title, stage, startPercent, closable = true) {
-					const modal = universal.UI.makeGenericModal(
-						title,
-						`<p class="pb-stage"></p><progress class="pb-progress" max="100"></progress>`,
-						[],
-						closable,
-					);
-					const setStage = (stage) => {
-						modal.content.querySelector(".pb-stage").textContent = stage;
-					};
-					const setPercent = (value) => {
-						modal.content.querySelector(".pb-progress").value = value;
-					};
-					setStage(stage);
-					setPercent(startPercent);
-					console.log("PB", modal);
-					modal.show();
-					universal.uiSounds.playSound("int_confirm");
-					return { ...modal, setStage, setPercent };
-				},
-				/**
-				 * @name showYesNo
-				 * @description Ask the user's consent (yes/no) for an impending action
-				 * @param {string} title - The modal's title
-				 * @param {string} content - The modal's description
-				 * @param {function(): void} yesCallback - What happens when the user presses yes
-				 * @param {boolean} closable - Modal is closable
-				 * @returns {ConsentModal}
-				 */
-				showYesNo(title, content, yesCallback, closable = true) {
-					const modal = universal.UI.makeGenericModal(
-						title,
-						content,
-						[
-							{
-								text: "Continue",
-								onclick: () => {
-									modal.close();
-									yesCallback();
-								},
-							},
-						],
-						closable,
-					);
-		
-					modal.show();
-					universal.uiSounds.playSound("int_confirm");
-					return modal;
-				},
-			},
+		/**
+		 * @name showEditModal
+		 * @description Makes an Edit modal for
+		 * @param {string} title - Modal title
+		 * @param {string} description - Modal description
+		 * @param {function(EditCallbackParameters): boolean} callback - Verify the user's given value, and return them UI feedback.
+		 * @returns {EditModal}
+		 */
+		showEditModal: (title, description, callback) => {
+			const modal = universal.ui.makeGenericModal(
+				title,
+				"",
+				[
+					{
+						text: "Submit",
+						onclick: () => {
+							const returned = callback({
+								value: modalInput.value,
+								feedback: modalFeedback,
+							});
+							if (returned === false) return;
+							modal.close();
+						},
+					},
+				],
+				false,
+			);
+			const modalContent = modal.content;
+
+			const modalFeedback = document.createElement("div");
+			modalFeedback.classList.add("modalFeedback");
+			modalContent.appendChild(modalFeedback);
+
+			const modalInput = document.createElement("input");
+			modalInput.type = "text";
+			modalInput.placeholder = description;
+			modalInput.classList.add("modalInput_text");
+			modalContent.appendChild(modalInput);
+
+			modal.show();
+			return modal;
+		},
+		/**
+		 * @name showPick
+		 * @description Make an options based picker.
+		 * @param {string} title - Modal  title
+		 * @param {Array(PickModalItem)} listContent - What items to display
+		 * @param {function(EditCallbackParameters): boolean} callback - Verify your user's input and give them feedback.
+		 * @param {string} extraM - The modal's description
+		 * @param {boolean} closable - Modal is closable
+		 * @returns {PickModal}
+		 */
+		showPick(title, listContent, callback, extraM = "", closable = true) {
+			const modal = UI.makeGenericModal(
+				title,
+				extraM,
+				[
+					{
+						text: "Save",
+						onclick: () => {
+							const selectedItem = modalList.options[modalList.selectedIndex];
+							const value = JSON.parse(selectedItem.value);
+							const returned = callback({
+								modal,
+								value,
+								modalFeedback,
+								modalContent,
+							});
+							if (returned === false) return;
+							modal.close();
+						},
+					},
+				],
+				closable,
+			);
+			const modalContent = modal.content;
+
+			const modalFeedback = document.createElement("div");
+			modalFeedback.classList.add("modalFeedback");
+
+			const modalList = document.createElement("select");
+			modalList.className = "modalList";
+			modalList.style.marginBottom = "20px";
+
+			modalContent.appendChild(modalFeedback);
+			modalContent.appendChild(modalList);
+
+			for (const item of listContent) {
+				const modalItem = document.createElement("option");
+				modalItem.className = "modalItem";
+				modalItem.setAttribute("value", JSON.stringify(item));
+				modalItem.innerText = item.name || item.display;
+				modalList.appendChild(modalItem);
+			}
+
+			universal.uiSounds.playSound("int_prompt");
+			modal.show();
+			return modal;
+		},
+		/**
+		 * @name progressBar
+		 * @description Show a progressbar
+		 * @param {string} title - The modal's title
+		 * @param {string} stage - The starting stage
+		 * @param {number} startPercent - The starting percent
+		 * @param {boolean} closable - Modal is closable
+		 * @returns {ProgressBar}
+		 */
+		progressBar(title, stage, startPercent, closable = true) {
+			const modal = universal.UI.makeGenericModal(
+				title,
+				`<p class="pb-stage"></p><progress class="pb-progress" max="100"></progress>`,
+				[],
+				closable,
+			);
+			const setStage = (stage) => {
+				modal.content.querySelector(".pb-stage").textContent = stage;
+			};
+			const setPercent = (value) => {
+				modal.content.querySelector(".pb-progress").value = value;
+			};
+			setStage(stage);
+			setPercent(startPercent);
+			console.log("PB", modal);
+			modal.show();
+			universal.uiSounds.playSound("int_confirm");
+			return { ...modal, setStage, setPercent };
+		},
+		/**
+		 * @name showYesNo
+		 * @description Ask the user's consent (yes/no) for an impending action
+		 * @param {string} title - The modal's title
+		 * @param {string} content - The modal's description
+		 * @param {function(): void} yesCallback - What happens when the user presses yes
+		 * @param {boolean} closable - Modal is closable
+		 * @returns {ConsentModal}
+		 */
+		showYesNo(title, content, yesCallback, closable = true) {
+			const modal = universal.UI.makeGenericModal(
+				title,
+				content,
+				[
+					{
+						text: "Continue",
+						onclick: () => {
+							modal.close();
+							yesCallback();
+						},
+					},
+				],
+				closable,
+			);
+
+			modal.show();
+			universal.uiSounds.playSound("int_confirm");
+			return modal;
+		},
+	},
 };

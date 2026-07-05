@@ -7,7 +7,7 @@ const { settings } = require("../managers/settings");
 const sec = require("../managers/secrets");
 const aac = require("../managers/apiAuthCache");
 const { getStartupMessage } = require("../managers/startupMessage");
-const {isCompilerFinished} = require("@src/webpack")
+const { isCompilerFinished } = require("@src/webpack");
 const router = express.Router();
 const { version } = require(path.resolve("package.json"));
 
@@ -116,5 +116,6 @@ router.get("/plugin/:pluginId", (req, res) => {
 module.exports = {
 	router,
 	discoveryInformation,
-	getWs: () => startupMessage == "Freedeck is ready!" ? "ready" : "uninitialized",
+	getWs: () =>
+		startupMessage == "Freedeck is ready!" ? "ready" : "uninitialized",
 };

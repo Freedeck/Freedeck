@@ -11,7 +11,7 @@ if (universal.events?.companion?.set_theme) {
 	});
 }
 
-const themeList = document.querySelector('.themelist');
+const themeList = document.querySelector(".themelist");
 let scroll = themeList.scrollTop;
 window.loadThemeListing = async () => {
 	scroll = themeList.scrollTop;

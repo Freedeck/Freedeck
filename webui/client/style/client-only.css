@@ -17,7 +17,8 @@
 	padding: 0.825rem;
 }
 
-.themelist, .settings-menu {
+.themelist,
+.settings-menu {
 	display: none;
 	flex-direction: column;
 	position: absolute;
@@ -36,22 +37,22 @@
 
 .rembutton {
 	z-index: 1003;
-	width:4rem;
+	width: 4rem;
 	min-width: 4rem;
-	height:3rem;
+	height: 3rem;
 	min-height: 3rem;
 	position: absolute;
 	top: 0;
 	display: none;
 	opacity: 0;
 	right: 30%;
-	transition-duration: .5s;
+	transition-duration: 0.5s;
 	background: var(--input-bg);
 	border-radius: 0 0 var(--main-radius) var(--main-radius);
 }
 
 .rembutton:active {
 	opacity: 1;
-	height:6rem;
+	height: 6rem;
 	min-height: 6rem;
 }

@@ -122,19 +122,21 @@ const pl = {
 		pl._pluginCache.clear();
 		pl._typeCache.clear();
 		const files = fs.readdirSync(pluginsLocation);
-		const loadablePackages = files
-			.filter(
-				(file) =>
-					file.endsWith(".Freedeck") ||
-					file.endsWith(".src") ||
-					file.endsWith(".fdr.js") ||
-					file.endsWith(".fdpackage") ||
-					file.endsWith(".disabled"),
-			);
-		pl._toLoad = loadablePackages.filter((e)=>!e.endsWith('.disabled')).length;
-		setStartupMessage("Discovered " + pl._toLoad +" packages")
-		const loadPromises = loadablePackages
-			.map(async (file) => await pl.load(file));
+		const loadablePackages = files.filter(
+			(file) =>
+				file.endsWith(".Freedeck") ||
+				file.endsWith(".src") ||
+				file.endsWith(".fdr.js") ||
+				file.endsWith(".fdpackage") ||
+				file.endsWith(".disabled"),
+		);
+		pl._toLoad = loadablePackages.filter(
+			(e) => !e.endsWith(".disabled"),
+		).length;
+		setStartupMessage("Discovered " + pl._toLoad + " packages");
+		const loadPromises = loadablePackages.map(
+			async (file) => await pl.load(file),
+		);
 		try {
 			await Promise.all(loadPromises);
 		} catch (er) {
@@ -191,7 +193,7 @@ const pl = {
 				"Plugins",
 			);
 		}
-		setStartupMessage("Loaded " + file)
+		setStartupMessage("Loaded " + file);
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {
