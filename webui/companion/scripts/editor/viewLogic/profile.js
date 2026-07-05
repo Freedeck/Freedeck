@@ -3,7 +3,7 @@ import EditorViewLogic from "./EditorViewLogic.js";
 
 const editorButton = document.querySelector("#editor-btn");
 
-const select = document.querySelector("#eprofile-select");
+const select = document.createElement("select");
 const generateProfileSelect = () => {
 	select.innerHTML = "";
 	for (const profile of Object.keys(universal.config.profiles)) {
@@ -25,6 +25,12 @@ class Profile extends EditorViewLogic {
 	constructor() {
 		super("profiles", "fd.profile");
 		generateProfileSelect();
+		this.setSectionTitleKey("editor.sections.no_action.folder_changer")
+		this.setSectionDescriptionKey("editor.sections.folder_changer.action")
+
+		this.setElementsToAdd(() => {
+			return [select]
+		})
 
 		this.setOnRun(({ interactionData }) => {
 			generateProfileSelect();

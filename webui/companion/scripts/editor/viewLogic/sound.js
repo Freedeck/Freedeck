@@ -4,6 +4,72 @@ import EditorViewLogic from "./EditorViewLogic.js";
 const audioFile = document.querySelector("#audio-file");
 const type = document.querySelector("#type");
 const editorButton = document.querySelector("#editor-btn");
+/**
+ * <div class="flex-wrap-r alc fill">
+						<div class="flex-wrap aud-container aud-info">
+							<div class="section-audiofile" style="display: none">
+								<span class="flex-wrap no-gap">
+									<h3 data-i18n-key="editor.sections.soundboard.audiofile"></h3>
+									<p data-i18n-key="editor.sections.soundboard.action"></p>
+								</span>
+								<small
+									id="audio-file"
+									class="information-border flex-wrap-r alc aud-item"
+								></small>
+								<div
+									class="button companion-wide-button"
+									id="quick-upload-sound"
+									data-i18n-key="editor.sections.soundboard.quickupload"
+								></div>
+								<div
+									class="button companion-wide-button"
+									id="upload-sound"
+									data-i18n-key="editor.sections.soundboard.change"
+								></div>
+							</div>
+							<div class="section-control" style="display: none">
+								<span class="flex-wrap no-gap">
+									<h3 data-i18n-key="editor.sections.soundboard.control"></h3>
+									<p
+										data-i18n-key="editor.sections.soundboard.control_action"
+									></p>
+								</span>
+								<select id="section-control-selector">
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.stopall"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.pitch"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.output_volume"
+									></option>
+									<option
+										data-i18n-key="editor.sections.soundboard.control.selector.monitor_volume"
+									></option>
+								</select>
+							</div>
+						</div>
+						<div class="flex-wrap aud-container aud-info">
+							<img
+								id="section-t_audio"
+								width="50"
+								src="/app/shared/icons/t_audio.svg"
+								alt="Audio File"
+								loading="lazy"
+							/>
+							<img
+								id="section-t_ctrl"
+								width="50"
+								src="/app/shared/icons/audio.svg"
+								alt="Audio Control"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+ */
+
+
 const editorAudiofileView = document.querySelector(".section-audiofile");
 const editorControlView = document.querySelector(".section-control");
 
@@ -78,6 +144,12 @@ class Sound extends EditorViewLogic {
 			"fd.sb.vol.out",
 			"fd.sb.vol.mon",
 		);
+
+		this.setSectionTitleKey("editor.sections.no_action.soundboard")
+		this.setSectionDescriptionKey("editor.sections.soundboard.description")
+		this.setElementsToAdd(() => {
+			return []
+		});
 
 		this.setOnRun(({ interactionData }) => {
 			audioFile.innerText = interactionData.data.file;
