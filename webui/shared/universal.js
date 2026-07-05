@@ -285,7 +285,7 @@ const universal = {
 			(async () => {
 				const stateFetch = await fetch("/api/discover");
 				const state = await stateFetch.json();
-				if (state.webpackStatus !== "ready") {
+				if (!state.ready) {
 					window.location.href = `/new-connect.html?id=${user}`;
 				}
 				universal.CLU("Boot", "Boot log created");

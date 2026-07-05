@@ -5,12 +5,12 @@ const picocolors = require("$/picocolors");
 const { paths } = require("./routers/static");
 const dbg = require("$/debug");
 const { recordTime } = require("$/timer");
+const { setStartupMessage } = require("./managers/startupMessage");
 const webpackConfigLocation = path.resolve("webpack.config.js");
 const webpackBuildLocation = paths.userData_bundles;
 const connectRouterLocation = path.resolve("src/routers/connect.js");
 
 const webpackConfig = require(webpackConfigLocation);
-const setWsStateHttp = require(connectRouterLocation).webpackState;
 
 let compileTime = -1;
 let isCompilerFinished = true;
@@ -84,11 +84,12 @@ function runWebpack(webpackInstance) {
  * @return {Promise<void>}
  */
 async function compileWebpack() {
-	setWsStateHttp("compiling");
+	setStartupMessage("Compiling Webpack Bundles..");
 	const webpackInstance = webpack(webpackConfig);
+	setStartupMessage("Building Freedeck..");
 	await runWebpack(webpackInstance)
 		.then(() => {
-			setWsStateHttp("ready");
+			setStartupMessage("Freedeck is ready!");
 		})
 		.catch((e) => {
 			console.error(e);

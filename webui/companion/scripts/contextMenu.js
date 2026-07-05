@@ -16,9 +16,11 @@ window.oncontextmenu = (e) => {
 	if (e.srcElement.dataset.name === undefined) e.srcElement.dataset.name = "";
 
 	let title =
-		e.srcElement.dataset.name !== "" ? e.srcElement.dataset.name : "nothing!";
+		e.srcElement.dataset.name !== ""
+			? e.srcElement.dataset.name
+			: translationKey("context_menu.nothing");
 	if (e.srcElement.dataset.name === "" && e.srcElement.dataset.interaction)
-		title = "a tile with no name!";
+		title = universal.translationKey("context_menu.no_name");
 	const specialFlag = e.srcElement.classList.contains("unset");
 
 	const custMenuTitle = document.createElement("div");

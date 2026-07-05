@@ -8,6 +8,7 @@ const providerPackage = require("@managers/providers/package.js");
 const singleFile = require("@managers/providers/singleFile.js");
 const sourceFolder = require("@managers/providers/sourceFolder.js");
 const asarBundle = require("@managers/providers/default.js");
+const { setStartupMessage } = require("./startupMessage");
 
 const tmpLocation = path.resolve("./tmp");
 const pluginsLocation = path.resolve("./plugins");
@@ -112,6 +113,8 @@ const pl = {
 			"Plugins",
 		);
 	},
+	_toLoad: 0,
+	_workingOn: "",
 	update: async () => {
 		recordTime("plugins:update-plugin-manager-begin");
 		debug.log("Loading plugins.", "Plugins");
@@ -119,7 +122,7 @@ const pl = {
 		pl._pluginCache.clear();
 		pl._typeCache.clear();
 		const files = fs.readdirSync(pluginsLocation);
-		const loadPromises = files
+		const loadablePackages = files
 			.filter(
 				(file) =>
 					file.endsWith(".Freedeck") ||
@@ -127,7 +130,10 @@ const pl = {
 					file.endsWith(".fdr.js") ||
 					file.endsWith(".fdpackage") ||
 					file.endsWith(".disabled"),
-			)
+			);
+		pl._toLoad = loadablePackages.filter((e)=>!e.endsWith('.disabled')).length;
+		setStartupMessage("Discovered " + pl._toLoad +" packages")
+		const loadPromises = loadablePackages
 			.map(async (file) => await pl.load(file));
 		try {
 			await Promise.all(loadPromises);
@@ -185,6 +191,7 @@ const pl = {
 				"Plugins",
 			);
 		}
+		setStartupMessage("Loaded " + file)
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {

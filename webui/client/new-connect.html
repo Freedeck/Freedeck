@@ -222,10 +222,8 @@
 					return;
 				});
 				const data = await res.json();
-				const isBuilding = data.webpackStatus != "ready";
-				progressText.innerText = isBuilding
-					? "Freedeck is starting..."
-					: "Freedeck is ready!";
+				const isBuilding = !data.ready;
+				progressText.innerText = data.startupMessage
 				animateProgressTo(50);
 				return isBuilding;
 			}
