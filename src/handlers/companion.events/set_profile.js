@@ -4,7 +4,7 @@ const eventNames = require("../eventNames");
 module.exports = ({ io, data }) => {
 	const settings = config.settings();
 	settings.profile = data;
-	config.save();
+	config.save(true);
 	config.update();
 	io.emit(eventNames.companion.set_profile, data);
 };

@@ -56,3 +56,8 @@
 	height: 6rem;
 	min-height: 6rem;
 }
+
+
+body {
+	overflow: hidden;
+}

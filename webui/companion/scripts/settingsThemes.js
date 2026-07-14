@@ -12,9 +12,9 @@ if (universal.events?.companion?.set_theme) {
 }
 
 const themeList = document.querySelector(".themelist");
-let scroll = themeList.scrollTop;
+let _scroll = themeList.scrollTop;
 window.loadThemeListing = async () => {
-	scroll = themeList.scrollTop;
+	_scroll = themeList.scrollTop;
 	themeList.innerHTML = "";
 	for (const id of universal.theming.listing) {
 		let theme = universal.theming.listingData[id];
@@ -64,5 +64,5 @@ window.loadThemeListing = async () => {
 		element.appendChild(apply);
 		themeList.appendChild(element);
 	}
-	themeList.scrollTop = scroll;
+	themeList.scrollTop = _scroll;
 };
