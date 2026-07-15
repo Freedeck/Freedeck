@@ -93,7 +93,7 @@ async function openPackage({
 	} else if (freedeck.package === "theme") {
 		const location = path.resolve(`user-data/themes/${name}`);
 		const themeFile = path.resolve(`user-data/themes/${name}.css`);
-		if (!fs.existsSync()) {
+		if (!fs.existsSync(location)) {
 			await fs.promises.mkdir(location, { recursive: true });
 		}
 		const noop = (...e) => {};
