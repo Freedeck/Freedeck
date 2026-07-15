@@ -98,17 +98,19 @@ export default function (data, keyObject, raw) {
 	const i = setInterval(() => {
 		if (!document.body.contains(sliderContainer)) {
 			clearInterval(i);
+			document.removeEventListener("mousemove", onMouseMove);
+			document.removeEventListener("touchmove", onTouchMove);
 			return;
 		}
 		if (isDragging) return;
 
-		const currentAttrValue =
-			Number.parseFloat(sliderContainer.dataset.value) || 0;
+		const currentDOMValue = Number.parseFloat(sliderContainer.dataset.value) || 0;
+    const backendValue = Number.parseFloat(data.data.value) || 0;
 
-		if (currentAttrValue !== data.data.value) {
-			data.data.value = currentAttrValue;
-			renderVisuals(currentAttrValue, data, sliderContainer, sliderPercentage);
-		}
+    if (currentDOMValue !== backendValue) {
+      sliderContainer.dataset.value = backendValue;
+      renderVisuals(backendValue, data, sliderContainer, sliderPercentage);
+    }
 	}, 250);
 
 	if (data.data.enabled !== "false") {
@@ -120,18 +122,22 @@ export default function (data, keyObject, raw) {
 			sliderContainer.dataset.dragging = false;
 			isDragging = false;
 		};
+		const onMouseMove = (event) => {
+				if (isDragging) updateSlider(event);
+			};
+		
+			const onTouchMove = (event) => {
+				if (isDragging) updateSlider(event.touches[0]);
+			};
 
 		sliderThumb.addEventListener("mousedown", touchDownEvent);
 		sliderThumb.addEventListener("touchstart", touchDownEvent);
 		sliderThumb.addEventListener("mouseup", touchUpEvent);
 		sliderThumb.addEventListener("touchend", touchUpEvent);
 
-		document.addEventListener("mousemove", (event) => {
-			if (isDragging) updateSlider(event);
-		});
 
-		document.addEventListener("touchmove", (event) => {
-			if (isDragging) updateSlider(event.touches[0]);
-		});
+		document.addEventListener("mousemove", onMouseMove);
+
+		document.addEventListener("touchmove", onTouchMove)
 	}
 }
