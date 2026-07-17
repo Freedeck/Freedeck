@@ -45,10 +45,9 @@ These are commands you'd run in the terminal (cmd, powershell, bash, etc.)
 
 The moment you start Freedeck:
 
-- a setup wizard will launch.
-  - Follow the on-screen instructions.
-- when the setup wizard closes, you'll see Companion.
-  - It's like Step 2, you just pick your audio devices and then you're ready!
+- A setup wizard will launch. Follow the on-screen instructions.
+  - From this step, you'll be asked to setup language, styling, pairing a mobile device, then a short tutorial.
+- When you complete setup, you'll be greeted by the desktop app's main UI ("Companion").
 
 From there, Freedeck is ready to use.
 
