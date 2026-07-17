@@ -27,6 +27,7 @@ const pages = [
 	"setup_00_language",
 	"setup_01_welcome",
 	"setup_02_personalization",
+	"setup_02_tile",
 	"setup_03_soundboard",
 	"setup_04_device",
 ];
@@ -86,13 +87,16 @@ universal.reloadRight = () => {
 universal.reloadRight();
 universal.vclose = () => {
 	const view_container = document.querySelector(universal.ctx.view_container);
-	setAnim(view_container, "view-out 0.5s");
+	if(universal.ctx.opened.length != 0) universal.ctx.closeView(universal.ctx.opened[0])
+	setAnim(view_container, "view-out var(--companion-view-time)");
 	setTimeout(() => {
 		setDisplay(view_container, "none");
 	}, 500);
 };
 
 universal.vopen = (v) => {
+	if(universal.ctx.opened.length != 0 && (universal.ctx.opened[0] == v)) return;
+	if(universal.ctx.opened.length == 0 && v == "index.html") return;
 	if (v === "demo-pages" && !pages.includes(v)) pages.push(v);
 	if (universal.load("has_setup") === "false") return;
 	universal.uiSounds.playSound("sidebar");
@@ -104,7 +108,9 @@ universal.vopen = (v) => {
 	if (!pages.includes(v)) {
 		if (leftSidebar.style.display === "none")
 			document.querySelector(".toggle-sidebar button").click();
-		setAnim(view_container, "view-out 0.5s");
+		if(universal.ctx.opened.length != 0)
+			universal.vclose()
+		setAnim(view_container, "view-out var(--companion-view-time)");
 		setTimeout(() => {
 			setDisplay(view_container, "none");
 		}, 500);
@@ -116,7 +122,7 @@ universal.vopen = (v) => {
 	if (leftSidebar.style.display === "flex")
 		document.querySelector(".toggle-sidebar button").click();
 	universal.ctx.destructiveView(v);
-	setAnim(view_container, "view-in 0.5s");
+	setAnim(view_container, "view-in var(--companion-view-time)");
 };
 
 function setDisplay(ele, val) {

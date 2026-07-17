@@ -8,7 +8,7 @@ const ctxl = {
 	as: "html",
 	version: "1.0.0",
 	loadingHTML:
-		"<div class='center-container'><div class='alc'><h1>Freedeck</h1><p>is loading a view...</p></div></div>",
+		"",
 	views: [],
 	addView: (view) => {
 		if (!ctxl.views.includes(view)) ctxl.views.push(view);
@@ -25,7 +25,6 @@ const ctxl = {
 		}
 		const view_html = document.createElement(ctxl.as);
 		view_html.id = view;
-		view_html.innerHTML = ctxl.loadingHTML;
 		fetch(`./views/${view}.${ctxl.as}`)
 			.then((response) => response.text())
 			.then((data) => {
@@ -44,7 +43,7 @@ const ctxl = {
 					document.body.appendChild(script);
 				}
 			});
-		return view_html;
+			return view_html;
 	},
 	opened: [],
 	createViewContainer: () => {

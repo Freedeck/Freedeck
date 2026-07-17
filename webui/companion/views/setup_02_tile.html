@@ -1,30 +1,29 @@
 <h1 class="settings-section-title">
-	<span data-i18n-key="setup.personalization.title"></span>
+	<span data-i18n-key="setup.tile.title"></span>
 	<span><img src="/app/shared/icons/themes.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 
 <div class="items">
-	<div class="themelist"></div>
-
+	<button class="button">Example</button>
 	<div class="item">
-		<p data-i18n-key="setup.personalization.description"></p>
-		<p data-i18n-key="setup.personalization.choose"></p>
+		<p data-i18n-key="setup.tile.description"></p>
+		<div id="sliders"></div>
 		<button id="ok" data-i18n-key="setup.next"></button>
 	</div>
 </div>
 
 <script>
-	import "/app/settingsThemes.js";
-	loadThemeListing();
+	const sl = document.querySelector("#sliders")
+	
 	universal.reloadRight();
 	document.querySelector("#ok").onclick = (e) => {
 		document.querySelector("#sidebar").style.right = "-100%";
 		// document.querySelector("#ctxl-view-cont").style.background = "rgba(0,0,0,0.825)"
-		document.querySelector("#setup_02_personalization").style.width = "100%"
-		document.querySelector("#setup_02_personalization body").style.width = "80%"
+		document.querySelector("#setup_02_tile").style.width = "100%"
+		document.querySelector("#setup_02_tile body").style.width = "80%"
 		setTimeout(() => {
 			universal.reloadRight();
-			universal.ctx.destructiveView("setup_02_tile");
+			universal.ctx.destructiveView("setup_03_soundboard");
 		}, 250)
 	}
 
@@ -63,7 +62,7 @@
 		gap: 1rem;
 	}
 
-	#setup_02_personalization {
+	#setup_02_tile {
 		/* width: 100% !important; */
 		/* margin: 0 !important; */
 		display: inline-flex;
@@ -72,7 +71,7 @@
 		justify-content: center;
 	}
 
-	#setup_02_personalization body {
+	#setup_02_tile body {
 		/* width: 80% !important; */
 		/* padding-left: 0 !important; */
 	}

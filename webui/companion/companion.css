@@ -311,21 +311,21 @@ textarea {
 
 @keyframes editor-pull-down {
 	from {
-		bottom: -100vh;
+		transform: translateY(100%);
 	}
-
+	
 	to {
-		bottom: 0;
+		transform: translateY(0);
 	}
 }
 
 @keyframes editor-pull-up {
 	from {
-		bottom: 0;
+		transform: translateY(0);
 	}
-
+	
 	to {
-		bottom: -100vh;
+		transform: translateY(100%);
 	}
 }
 #keys.smaller {
@@ -394,44 +394,42 @@ textarea {
 }
 
 @keyframes sidebar-slide-in {
-	0% {
-		left: -20%;
+	from {
+		transform: translateX(-100%);
 	}
-	100% {
-		left: 0;
+
+	to {
+		transform: translateX(0);
 	}
 }
 
 @keyframes sidebar-slide-out {
-	0% {
-		left: 0;
+	from {
+		transform: translateX(0);
 	}
-	100% {
-		left: -21%;
+
+	to {
+		transform: translateX(-100%);
 	}
 }
 
 @keyframes view-in {
 	from {
-		width: 0;
-		left: 100%;
+		transform: translateX(100%);
 	}
 
 	to {
-		width: 100%;
-		left: 0;
+		transform: translateX(0);
 	}
 }
 
 @keyframes view-out {
 	from {
-		width: 100%;
-		left: 0;
+		transform: translateX(0);
 	}
 
 	to {
-		width: 0;
-		left: 100%;
+		transform: translateX(100%);
 	}
 }
 
