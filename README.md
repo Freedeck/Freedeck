@@ -36,7 +36,12 @@ These are commands you'd run in the terminal (cmd, powershell, bash, etc.)
 - Download NPM packages
   - `npm i`
 - Run Freedeck!
-  - `npm run start`
+  - There are two methods to running Freedeck.
+    - For best performance, split your terminal into two. In the first, run either:
+      - `npm run server` - Normal console output
+      - `npm run debug-server` - Verbose console output
+    - and in the second, run `npm run companion`. Splitting Freedeck into two processes lets Freedeck efficiently manage resources of the backend and Electron frontend.
+    - For least processes, run `npm run start`. Companion and Server may take noticeably longer to start up, as they're both trying to use the same resources to start.
 - Enjoy!
 
 ## Usage

@@ -1,7 +1,7 @@
 const eventNames = require("@handlers/eventNames");
 const fs = require("node:fs");
 const path = require("node:path");
-const { getWs } = require("../routers/connect");
+const { getWs, discoveryInformation } = require("../routers/connect");
 
 let RelayStatus = false;
 
@@ -37,19 +37,29 @@ function startRelay(handleSock) {
 			let folder = "client";
 			if (upath.includes("companion")) folder = "companion";
 			if (upath.includes("shared")) folder = "shared";
+			if (upath.includes("style")) folder = "client/style";
 			if (upath.includes("user-data")) {
 				folder = "../user-data";
 			}
 			if (upath.includes("hooks")) {
 				folder = "../user-data";
 			}
-			if (upath.includes("app")) folder = "app";
+			if (upath.includes("app")) folder = "../user-data/bundles";
 			if (upath.includes(".ttf")) folder = "client/fonts";
 			if (upath.includes("common")) folder = "common";
 
 			if (upath.includes("connect/webpack")) {
 				relayClient.emit(eventNames.relay.file, [
 					JSON.stringify({ compiled: getWs() }),
+					"text/plain",
+					upath,
+				]);
+				return;
+			}
+
+			if (upath.includes("api/discover")) {
+				relayClient.emit(eventNames.relay.file, [
+					JSON.stringify({ discoveryInformation }),
 					"text/plain",
 					upath,
 				]);

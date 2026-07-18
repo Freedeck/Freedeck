@@ -43,7 +43,6 @@ const types = pluginManager.types;
 debug.log("Initializing server...", "Socket.IO");
 
 io.on("connection", handleSock);
-
 async function handleSock(socket) {
 	/**
 	 * Send latest notification to Freedeck Client.

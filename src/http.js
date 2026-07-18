@@ -1,5 +1,7 @@
+const bonjour = require('bonjour')()
 const express = require("express");
 const http = require("node:http");
+const path = require("node:path")
 
 const picocolors = require("$/picocolors");
 const { recordTime } = require("$/timer");
@@ -13,6 +15,10 @@ const handoffRouter = require("@routers/handoff");
 const connectRouter = require("@routers/connect").router;
 const staticRouter = require("@routers/static").router;
 const uploadRouter = require("@routers/uploads");
+
+const pkgLoc = path.resolve("package.json");
+const thisPackage = require(pkgLoc);
+
 recordTime("http:required-all-routers");
 
 (async () => {
@@ -55,7 +61,11 @@ app.get("/native/*path", (req, res) => {
 recordTime("http:loaded-all-endpoints");
 
 recordTime("http:listen-begin");
+let bonjourService;
 server.listen(PORT, () => {
+	bonjourService = bonjour.publish({ name: 'Freedeck', type: 'http', port: PORT, txt: {
+		"version": thisPackage.version,
+	}})
 	const networkAddresses = require("@managers/networkAddresses");
 	const netAddresses = networkAddresses();
 	for (const netInterface of Object.keys(netAddresses)) {
@@ -65,6 +75,18 @@ server.listen(PORT, () => {
 				`Go to ${ipPort} on your mobile device (${netInterface})`,
 			),
 		);
+		console.log(
+			picocolors.bgBlue(
+				`Advertising Bonjour service for ${PORT}`,
+			),
+		);
 	}
 	recordTime("http:listen-complete");
+});
+
+
+
+process.on('SIGINT', () => {
+	bonjourService.stop();
+  process.exit(0); 
 });
