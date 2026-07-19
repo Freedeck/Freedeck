@@ -5,15 +5,9 @@ universal.listenFor("launch", () => {
 	});
 });
 
-if (universal.events?.companion?.set_theme) {
-	universal.on(universal.events.companion.set_theme, () => {
-		loadThemeListing();
-	});
-}
-
-const themeList = document.querySelector(".themelist");
-let _scroll = themeList.scrollTop;
+let _scroll;
 window.loadThemeListing = async () => {
+	const themeList = document.querySelector(".themelist");
 	_scroll = themeList.scrollTop;
 	themeList.innerHTML = "";
 	for (const id of universal.theming.listing) {
