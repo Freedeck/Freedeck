@@ -176,7 +176,7 @@ function closeEditor() {
 	universal.keys.classList.remove("smaller");
 	editorDiv.style.animationName = "editor-pull-up";
 	editorContainer.style.animation = "real-fade-out 0.25s";
-	universal.keys.parentElement.style.transform = "translate(-50%, -50%)";
+	universal.keys.parentElement.classList.remove("editing");
 	document.querySelector("#sidebar").style.right = "0";
 	editorButton.dataset.state = "not";
 	toggleSidebarButton.style.display = "block";

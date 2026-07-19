@@ -198,7 +198,7 @@ function editTile(e) {
 	}
 
 	editorDiv.style.animationName = "editor-pull-down";
-	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
+	universal.keys.parentElement.classList.add("editing");
 	toggleSidebarButton.style.display = "none";
 
 	setupReactivity(interactionData, e.srcElement.dataset.name);

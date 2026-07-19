@@ -55,6 +55,11 @@
 	padding: 1rem;
 }
 
+.center.editing { 
+	transform: translate(-50%, -50%);
+}
+
+
 .smaller {
 	transform: none !important;
 }

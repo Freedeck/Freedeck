@@ -449,6 +449,10 @@ textarea {
 	background-color: rgba(0, 0, 0, 0.25);
 }
 
+.center.editing {
+	transform: translate(-50%, -115%);
+}
+
 .center {
 	display: flex;
 	justify-content: center;
@@ -580,6 +584,11 @@ textarea {
 	justify-content: start;
 }
 
+#dynamic-view-container {
+	overflow-y: scroll;
+	scrollbar-width: none;
+}
+
 .generic-chip {
 	display: flex;
 	flex-direction: row;
@@ -617,10 +626,6 @@ textarea {
 
 #plugin-actions {
 	width: 100%;
-	align-items: center;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	scrollbar-width: none;
 }
 
 .fdc-checkbox {

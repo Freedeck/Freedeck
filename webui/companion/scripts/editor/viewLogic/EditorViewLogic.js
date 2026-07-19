@@ -48,22 +48,17 @@ class EditorViewLogic {
     const descEl = document.querySelector("#dynamic-view-description");
     const targetSlot = document.querySelector("#dynamic-view-elements");
 
-    // 2. Clear old elements injected by the previous view
     targetSlot.innerHTML = "";
 
-    // 3. Update Title & Descriptions dynamically
     titleEl.innerText = this.sectionTitle || "";
     descEl.innerText = this.sectionDesc || "";
 
-    // 4. Inject current elements registered by the view
     const elements = this.elementsToAdd();
-		console.log("Inject", elements)
     if (Array.isArray(elements)) {
       elements.forEach(el => targetSlot.appendChild(el));
     }
 
-    // 5. Unveil the dynamic window interface
-    container.style.display = "block";
+    container.style.display = "flex";
 		this.onRun(...args);
 	}
 	firstSetup() {
