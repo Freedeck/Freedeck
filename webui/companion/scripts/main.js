@@ -190,7 +190,7 @@ function editTile(e) {
 			v.logic.forwardRunningEvent(
 				interactionData.type,
 				() => {
-					openViewTop(v.logic.view);
+					// openViewTop(v.logic.view);
 				},
 				{ interactionData },
 			);

@@ -4,6 +4,7 @@ const editorButton = document.querySelector("#editor-btn");
 
 const openViewTop = (view) => {
 	translatePage();
+	document.querySelector(`#${view}-only`).style.display='flex'
 	editorButton.dataset.state = `o ${view}`;
 };
 

@@ -10,6 +10,7 @@ module.exports = ({ io, data }) => {
 		const plugin = plugins.plugins().get(data.plugin).instance;
 		if (
 			data.setting.allowed &&
+			data.setting.allowed != [] && 
 			data.setting.allowed.length > 0 &&
 			data.setting.allowed.includes(data.userValue)
 		) {

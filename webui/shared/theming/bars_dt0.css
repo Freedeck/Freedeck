@@ -1,0 +1,68 @@
+:theme-meta {
+	--name: "Bars Devtest0";
+	--description: "The default theme for Freedeck.";
+	--author: "FreedeckDevTesting";
+}
+
+#sidebar {
+	top: unset;
+	bottom: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 5%;
+	border-radius: var(--main-radius);
+	width: min-content;
+	padding: .725rem;
+	border: var(--generic-border);
+	justify-content: center;
+	flex-direction: row;
+	align-items: center;
+}
+
+#sidebar ul li a {
+	text-align: end;
+	align-items: end;
+	align-content: end;
+	border-radius: var(--main-radius);
+	padding: 5px;
+	border: 1px solid transparent;
+	border-color: var(--border-color);
+	cursor: pointer;
+	color: var(--text-color);
+}
+
+#sidebar ul {
+	flex-direction: row;
+	align-items: center;
+}
+
+#editor-div {
+	width: 20%;
+	height: 100%;
+	max-height: 95vh;
+	margin-left: none;
+	margin-right: none;
+	flex-direction: column;
+}
+
+#editor {
+	top: 0;
+	right: 0;
+	transform: unset !important;
+}
+
+#keys.smaller {
+	padding: 1rem;
+}
+
+.smaller {
+	transform: none !important;
+}
+
+.smaller.blur {
+	filter: none !important;
+}
+
+#ctxl-view-cont html {
+	width: calc(100% - 2rem);
+}
