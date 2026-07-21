@@ -134,7 +134,7 @@ class Plugins extends EditorViewLogic {
               el.style.display = "block";
             }
           }
-          if (!universal.plugins[interactionData.plugin.toLowerCase()]) {
+          if (!universal.plugins[interactionData.plugin?.toLowerCase()]) {
             if (window.disabledActions) window.disabledActions.style.display = "flex";
             this.selectPluginDisabled.style.display = "flex";
           }

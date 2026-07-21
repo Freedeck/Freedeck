@@ -1,6 +1,5 @@
 import { translatePage, translationKey } from "../../../shared/localization";
 import { getAllTileData, loadData } from "./data";
-import { openViewTop, closeAllViews } from "./viewEngine.js";
 const editorButton = document.querySelector("#editor-btn");
 const color = document.querySelector("#color");
 const name = document.querySelector("#name");
@@ -127,7 +126,6 @@ const setupReactivity = (d, tileName) => {
 	setCheck("#nbr", "noRounding", interactionData);
 	setCheck("#ha", "hold", interactionData);
 
-	// openViewTop("appearance")
 };
 
 function setCheck(id, key, interaction) {
