@@ -270,6 +270,30 @@ summary ::-webkit-details-marker {
 	}
 }
 
+@keyframes pull-right {
+  from {
+    transform: translateX(0);
+		opacity: 1;
+  }
+
+  to {
+    transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes pull-left {
+  from {
+    transform: translateX(-100%);
+		opacity: 1;
+  }
+
+  to {
+    transform: translateX(0);
+		opacity: 0;
+	}
+}
+
 @keyframes pull-up {
   from {
     transform: translateY(0);

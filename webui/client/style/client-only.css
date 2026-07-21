@@ -33,6 +33,7 @@
 	backdrop-filter: blur(2rem);
 	background-color: rgba(0, 0, 0, 0.25);
 	padding: 1rem;
+	transition-duration: .5s;
 }
 
 .rembutton {
@@ -60,4 +61,21 @@
 
 body {
 	overflow: hidden;
+}
+
+.shifted-left {
+	transform: translate(calc(-70% - 1rem), -50%) !important;
+}
+
+.vertical {
+	grid-template-columns: unset;
+	grid-template-rows: var(--tile-columns);
+	grid-auto-flow: column;
+}
+
+#folder-container {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: .25rem;
 }
