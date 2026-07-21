@@ -99,12 +99,16 @@ for (const view of editorBuiltInViews) {
 	viewButton.dataset.view_id = view.id;
 	viewButton.onclick = (e) => {
 		editorBackButton.style.display = "flex";
-		openViewTop(view.logic.view);
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(
 				editorButton.getAttribute("data-interaction"),
 			),
 		});
+		view.logic.forwardRunningEvent(
+			view.logic.types[0],
+			() => {},
+			{ interactionData: {} },
+		);
 		e.preventDefault();
 	};
 	viewButton.appendChild(keyInfo);
@@ -157,9 +161,7 @@ function editTile(e) {
 	if (!interactionData.type.startsWith("fd.")) {
 		editorBuiltInViews[1].logic.forwardRunningEvent(
 			interactionData.type,
-			() => {
-				openViewTop("plugins");
-			},
+			() => {},
 			{ interactionData },
 		);
 	}
@@ -189,9 +191,7 @@ function editTile(e) {
 		for (const v of editorBuiltInViews) {
 			v.logic.forwardRunningEvent(
 				interactionData.type,
-				() => {
-					// openViewTop(v.logic.view);
-				},
+				() => {},
 				{ interactionData },
 			);
 		}
