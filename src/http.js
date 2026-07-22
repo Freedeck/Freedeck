@@ -1,4 +1,4 @@
-const bonjour = require('bonjour')()
+const bonjour = require('bonjour-service')
 const express = require("express");
 const http = require("node:http");
 const path = require("node:path")
@@ -61,13 +61,15 @@ app.get("/native/*path", (req, res) => {
 recordTime("http:loaded-all-endpoints");
 
 recordTime("http:listen-begin");
+const bonjourInstance = new bonjour();
 let bonjourService;
 server.listen(PORT, () => {
-	bonjourService = bonjour.publish({ name: 'Freedeck', type: 'http', port: PORT, txt: {
-		"version": thisPackage.version,
-	}})
 	const networkAddresses = require("@managers/networkAddresses");
 	const netAddresses = networkAddresses();
+	bonjourService = bonjourInstance.publish({ name: 'Server', type: 'freedeck', host:netAddresses[Object.keys(netAddresses)[0]][0], protocol:'tcp', port: Number(PORT), txt: {
+		"version": thisPackage.version,
+		"addresses": JSON.stringify(netAddresses),
+	}})
 	for (const netInterface of Object.keys(netAddresses)) {
 		const ipPort = `${netAddresses[netInterface][0]}:${PORT}`;
 		console.log(
@@ -87,6 +89,6 @@ server.listen(PORT, () => {
 
 
 process.on('SIGINT', () => {
-	bonjourService.stop();
+	bonjourInstance.destroy();
   process.exit(0); 
 });

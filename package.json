@@ -35,7 +35,7 @@
   "dependencies": {
     "asar-bundle-runner": "^1.6.0",
     "babel-loader": "^10.1.1",
-    "bonjour": "^3.5.1",
+    "bonjour-service": "^1.4.3",
     "compare-versions": "^6.1.1",
     "electron": "^43.0.0",
     "express": "^5.2.1",
