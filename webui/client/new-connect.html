@@ -164,6 +164,10 @@
 			pathAddon = "/companion";
 		}
 
+		if(urlParameters.has("settings")) {
+			return;
+		}
+
 		if (
 			urlParameters.has("id") &&
 			urlParameters.get("id").includes("Companion")

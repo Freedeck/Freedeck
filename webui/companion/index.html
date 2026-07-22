@@ -40,7 +40,7 @@
 				</div>
 				<div class="button" style="height: 30px; min-height: 30px" id="upload-icon" data-i18n-key="editor.set_icon">
 				</div>
-				<details>
+				<details id="editor-appearance">
 					<summary>
 						<strong data-i18n-key="editor.appearance"></strong>
 					</summary>
@@ -48,35 +48,11 @@
 						<label for="color" data-i18n-key="editor.appearance.background"></label>
 						<input type="color" id="color" data-has_set="false" />
 					</div>
-					<div class="flex-wrap-r alc">
-						<label for="sbg" data-i18n-key="editor.appearance.no.background"></label>
-						<input class="fdc-checkbox" type="checkbox" id="sbg" />
-					</div>
-					<div class="flex-wrap-r alc">
-						<label for="nbo" data-i18n-key="editor.appearance.no.border"></label>
-						<input class="fdc-checkbox" type="checkbox" id="nbo" />
-					</div>
-					<div class="flex-wrap-r alc">
-						<label for="nbr" data-i18n-key="editor.appearance.no.rounding"></label>
-						<input class="fdc-checkbox" type="checkbox" id="nbr" />
-					</div>
 				</details>
-				<details>
+				<details id="editor-controls">
 					<summary>
 						<strong data-i18n-key="editor.controls"></strong>
 					</summary>
-					<div class="flex-wrap-r alc">
-						<label for="ha" data-i18n-key="editor.controls.hold"></label>
-						<input class="fdc-checkbox" type="checkbox" id="ha" />
-					</div>
-					<div class="flex-wrap-r alc">
-						<label for="lp" data-i18n-key="editor.controls.long_press"></label>
-						<input class="fdc-checkbox" type="checkbox" id="lp" />
-					</div>
-					<div class="flex-wrap-r alc">
-						<label for="orl" data-i18n-key="editor.controls.on_release">On release?</label>
-						<input class="fdc-checkbox" type="checkbox" id="orl" />
-					</div>
 				</details>
 				<details>
 					<summary><strong data-i18n-key="editor.advanced"></strong></summary>
@@ -96,18 +72,6 @@
 					<div class="flex-wrap-r" id="editor-data"></div>
 				</details>
 				<br />
-			</div>
-			<div style="display: none" id="system-only" class="editor-section generic-chips editor-section-bottom">
-				<div class="information">
-					<h3>
-						<span data-i18n-key="editor.sections.no_action.app_volume"></span><span class="tag-beta"
-							data-i18n-key="beta"></span>
-					</h3>
-					<p data-i18n-key="editor.sections.app_volume.action"></p>
-				</div>
-				<div id="sys-actions" class="generic-chips">
-					<select name="system-select" id="system-select"></select>
-				</div>
 			</div>
 			<div style="display: none" id="dynamic-view-container" class="editor-section generic-chips editor-section-bottom">
 				<div class="information">
