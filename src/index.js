@@ -31,7 +31,8 @@ const shouldExitNoSettings =
 	!runCfg.requirements.settingsExists && runCfg.runs.server;
 
 if (shouldExitNoSettings || runCfg.runs.setup) {
-	console.log(picocolors.bgRed("Settings do not exist yet."));
+	console.log(picocolors.bgRed("Settings do not exist yet,running migration."));
+	require('@src/migrations/05-createStartingConfiguration');
 }
 recordTime("context-switch:handoff-begin");
 
