@@ -1,6 +1,9 @@
 .disabledable {
 	display: flex;
 }
+.loading-screen {
+	display: flex;
+}
 
 .load-upon-finish {
 	display: none;

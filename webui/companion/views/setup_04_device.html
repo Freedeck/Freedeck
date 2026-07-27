@@ -6,7 +6,6 @@
 
 	<div class="item">
 		<div id="qr-container"></div>
-		<div id="qr2-container"></div>
 	</div>
 
 	<div class="item">
@@ -73,18 +72,6 @@
 				colorLight: "#ffffff",
 				correctLevel: QRCode.CorrectLevel.H,
 			});
-			
-			new QRCode(document.getElementById("qr2-container"), {
-					text: "fdmobile://pairing/" + universal._information.hostname+"/" + ip,
-					width: 256,
-					height: 256,
-				colorDark: "#000000",
-				colorLight: "#ffffff",
-					logo: "/assets/ios-icon.png",
-					logoBackgroundTransparent: true, 
-					correctLevel: QRCode.CorrectLevel.H,
-				});
-				// qrCode.clear();
 		}
 		let lastTxt = "";
 		window.editQrCode = (txt) => {
@@ -93,8 +80,6 @@
 				lastTxt = txt;
 			}
 			
-				qrCode.clear();
-			qrCode.clear(); // clear the code.
 			qrCode.makeCode(txt); // make another code.
 		};
 	})();
@@ -264,18 +249,11 @@
 		filter: brightness(1.1);
 	}
 
-	#qr-container img {
+	#qr-container canvas {
 		border-radius: 0.5rem;
 		padding: 1rem;
 		background: white;
 	}
-
-	#qr2-container img {
-		border-radius: 0.5rem;
-		padding: 1rem;
-		background: white;
-	}
-
 
 	#setup_04_device {
 		width: 100% !important;

@@ -2,3 +2,8 @@
 	font-family: "Rethink Sans";
 	src: url("/fonts/RethinkSans-VariableFont_wght.ttf");
 }
+
+@font-face {
+	font-family: "Rethink Sans for Connect";
+	src: url("../fonts/RethinkSans-VariableFont_wght.ttf");
+}

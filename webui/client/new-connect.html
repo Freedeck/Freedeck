@@ -24,8 +24,8 @@
 		</div>
 	</div>
 	<div class="connection">
-		<small id="failure">Connection Settings</small>
-		<input type="text" value="http://localhost:5754" id="url" />
+		<small id="failure"></small>
+		<input type="text" placeholder="Server URL" value="http://localhost:5754" id="url" />
 		<button id="retry">Retry</button>
 	</div>
 	<img src="./assets/logo_big.png" class="icon" />
@@ -52,10 +52,10 @@
 			position: fixed;
 			bottom: 50%;
 			left: 50%;
-			transform: translateX(-50%);
+			transform: translate(-50%, -45%);
 			background-color: #17212a;
 			border: 1px solid rgba(255, 255, 255, 0.1);
-			border-radius: 1.5rem;
+			border-radius: 1.25rem;
 			padding: 0.5rem;
 			display: none;
 			text-align: center;
@@ -125,7 +125,7 @@
 			background-color: #17212a;
 			color: white;
 			font-family:
-				Rethink Sans,
+				Rethink Sans for Connect,
 				Arial,
 				sans-serif;
 			display: flex;
@@ -165,7 +165,7 @@
 		}
 
 		if(urlParameters.has("settings")) {
-			return;
+			
 		}
 
 		if (
@@ -181,19 +181,6 @@
 		}
 
 		let isTryingToConnect = false;
-		let isErrored = false;
-		if (
-			urlParameters.has("force-fail") &&
-			urlParameters.get("force-fail") === "true"
-		)
-			isErrored = true;
-
-		if (isErrored) {
-			connection.style.display = "flex";
-			p.style.display = "none";
-			fail.innerText = "Force-failed.";
-			progressText.innerText = "";
-		}
 
 		window.splashScreen?.splash();
 
@@ -217,12 +204,12 @@
 			animateProgressTo(0);
 
 			async function webpackStillBuilding() {
-				const res = await fetch(url + "/api/discover").catch((err) => {
+				const res = await fetch(url + "/api/discover").then(async (res) => {
+					connection.style.display = 'none';
+					return res;
+				}).catch((err) => {
 					connection.style.display = "flex";
-					p.style.display = "none";
 					fail.innerText = "Error while fetching status.";
-					progressText.innerText = "";
-					isErrored = true;
 					return;
 				});
 				const data = await res.json();
