@@ -8,23 +8,23 @@ const { events } = require("@freedeck/api");
 module.exports = ({ io, data }) => {
 	if (plugins.plugins().has(data.plugin)) {
 		const plugin = plugins.plugins().get(data.plugin).instance;
+		const {allowed, name} = plugin.Settings[data.setting.id.toLowerCase()];
 		if (
-			data.setting.allowed &&
-			data.setting.allowed != [] && 
-			data.setting.allowed.length > 0 &&
-			data.setting.allowed.includes(data.userValue)
+			allowed &&
+			allowed.length > 0 &&
+			allowed.includes(data.userValue)
 		) {
 			plugin.setSetting(data.setting.id, data.userValue);
 			plugin.emit(events.settingsChanged, data);
-		} else if (!data.setting.allowed) {
+		} else if (allowed.length == 0) {
 			plugin.setSetting(data.setting.id, data.userValue);
 			plugin.emit(events.settingsChanged, data);
 		} else {
 			plugin.pushNotification(
 				"Couldn't set " +
-					data.setting.name +
+					name +
 					": Allowed values are " +
-					data.setting.allowed.join(", "),
+					allowed.join(", "),
 			);
 		}
 	} else {
