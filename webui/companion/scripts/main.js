@@ -88,7 +88,7 @@ const editorBuiltInViews = [
 
 const pluginListing = document.querySelector(".plugin-view-listing");
 for (const view of editorBuiltInViews) {
-	console.log(`Setting up ${view.id}`);
+	universal.CLU("Editor", `Setting up ${view.id}`);
 	const viewButton = document.createElement("button");
 	const keyInfo = document.createElement("p");
 	const keyIcon = document.createElement("img");
