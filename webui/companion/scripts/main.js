@@ -98,6 +98,7 @@ for (const view of editorBuiltInViews) {
 	keyIcon.loading = "lazy";
 	viewButton.dataset.view_id = view.id;
 	viewButton.onclick = (e) => {
+						document.querySelector("#none-only").style.display = "none";
 		editorBackButton.style.display = "flex";
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(

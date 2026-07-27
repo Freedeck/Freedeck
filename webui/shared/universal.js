@@ -288,6 +288,7 @@ const universal = {
 				if (!state.ready) {
 					window.location.href = `/new-connect.html?id=${user}`;
 				}
+				universal.CLU("Init", "JS loaded");
 				universal.CLU("Boot", "Boot log created");
 				window.universal = universal;
 				universal.CLU("InitFN", "Copied universal to window");

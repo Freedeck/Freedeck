@@ -118,10 +118,6 @@ function makeBootLog(title = "Freedeck") {
 function showBootLog(showText = true) {
 	return new Promise((resolve, reject) => {
 		if (showText) {
-			universal.CLU(
-				"Boot / UI : WARNING!",
-				"The boot log style hasn't been updated, and won't be! You may notice a few imperfections.",
-			);
 			bootLogContainer.style.scale = "1";
 			bootLogContainer.style.display = "block";
 			openCloseBootLog.style.display = "block";

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/companion/views/styles/marketplace.css" onload="styleLoaded()"/>
+<link rel="stylesheet" href="/companion/views/styles/marketplace.css" onload="document.querySelector('.loading-screen').style.display='flex'"/>
 
 <div class="loading-screen" style="display:none;">
 	<i style="color:var(--text-color-secondary)">Marketplace is loading...</i>
@@ -16,10 +16,6 @@
 <script type="module">
 	if (document.querySelector("#add-repo")) {
 		document.querySelector("#add-repo").remove();
-	}
-
-	window.styleLoaded = () => {
-		document.querySelector(".loading-screen").style.display='flex'
 	}
 
 	const dialog = universal.UI.makeGenericModal(
