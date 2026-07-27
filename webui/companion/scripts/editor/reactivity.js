@@ -46,7 +46,8 @@ const setupReactivity = (d, tileName) => {
 		for (const v of document.querySelectorAll(".plugin-view")) {
 			v.style.display = "none";
 		}
-		document.querySelector("#plugins-only").style.display = "none";
+		document.querySelector("#select-plugin-back").style.display='none';
+		document.querySelector("#dynamic-view-container").style.display = 'none';
 		document.querySelector(`#plugin-view-${data._view}`).style.display =
 			"block";
 	}
