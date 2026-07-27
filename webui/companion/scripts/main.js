@@ -212,6 +212,7 @@ universal.editTile = editTile;
 const editorBackButton = document.querySelector("#editor-back");
 editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
+	document.querySelector("#dynamic-view-container").style.display='none'
 	openViewTop("none");
 	const pvs = document.querySelectorAll(".plugin-view");
 	if (pvs.length > 0) {
