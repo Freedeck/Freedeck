@@ -10,8 +10,7 @@
   "scripts": {
     "start": "electron .",
     "build:webpack": "webpack --config webpack.config.js",
-    "build:win": "electron-builder --win",
-    "package": "npm run build:webpack && npm run build:win",
+    "publish": "npm run build:webpack && electron-builder --publish always",
     "companion": "electron . --companion-only",
     "server": "node src/index.js --debug --is-dev=true",
     "test": "node src/self-test.js",
