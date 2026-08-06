@@ -75,7 +75,7 @@
 			});
 			
 			new QRCode(document.getElementById("qr2-container"), {
-					text: "fdmobile://pairing/" + universal._information.hostname+"/" + ip,
+					text: "fdmobile://pairing/" + universal._information.hostname,
 					width: 256,
 					height: 256,
 				colorDark: "#000000",
@@ -92,9 +92,7 @@
 				universal.sendEvent("setup.device.swap", "ios", true)
 				lastTxt = txt;
 			}
-			
-				qrCode.clear();
-			qrCode.clear(); // clear the code.
+			// qrCode.clear(); // clear the code.
 			qrCode.makeCode(txt); // make another code.
 		};
 	})();
