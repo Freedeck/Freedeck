@@ -1,5 +1,4 @@
 const editorDataContainer = document.querySelector("#editor-data");
-const systemAudioSelect = document.querySelector("#system-select");
 
 /**
  * Load data into editor
@@ -7,7 +6,6 @@ const systemAudioSelect = document.querySelector("#system-select");
  */
 function loadData(itm) {
 	editorDataContainer.innerHTML = "";
-	systemAudioSelect.innerHTML = "";
 	for (const key of Object.keys(itm)) {
 		const elem = document.createElement("input");
 		elem.type = "text";

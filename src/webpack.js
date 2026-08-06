@@ -84,6 +84,7 @@ function runWebpack(webpackInstance) {
  * @return {Promise<void>}
  */
 async function compileWebpack() {
+	isCompilerFinished = false;
 	setStartupMessage("Compiling Webpack Bundles..");
 	const webpackInstance = webpack(webpackConfig);
 	setStartupMessage("Building Freedeck..");

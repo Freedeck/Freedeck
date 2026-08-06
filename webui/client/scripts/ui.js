@@ -118,10 +118,6 @@ function makeBootLog(title = "Freedeck") {
 function showBootLog(showText = true) {
 	return new Promise((resolve, reject) => {
 		if (showText) {
-			universal.CLU(
-				"Boot / UI : WARNING!",
-				"The boot log style hasn't been updated, and won't be! You may notice a few imperfections.",
-			);
 			bootLogContainer.style.scale = "1";
 			bootLogContainer.style.display = "block";
 			openCloseBootLog.style.display = "block";
@@ -192,7 +188,7 @@ function reloadProfile() {
 	try {
 		universal.app_tiles = universal.config.profiles[universal.config.profile];
 	} catch (e) {
-		console.log(e);
+		universal.CLU("Profile Error", e);
 	}
 	let max = 0;
 	for (
@@ -486,11 +482,9 @@ function reloadTiles() {
 			translatePage(tt);
 		} catch (e) {
 			const k = Object.keys(sound)[0];
-			console.log(
-				`while rendering sound: ${k}`,
-				sound[k],
-				"on page",
-				universal.page,
+			universal.CLU(
+				'Tile Render Error'
+				`Couldn't render ${k} (${sound[k]}) on page ${universal.page}`,
 			);
 			console.error(e);
 		}
@@ -734,7 +728,6 @@ export const UI = {
 			};
 			setStage(stage);
 			setPercent(startPercent);
-			console.log("PB", modal);
 			modal.show();
 			universal.uiSounds.playSound("int_confirm");
 			return { ...modal, setStage, setPercent };

@@ -128,7 +128,6 @@ const playbackModeSelect = new SidebarSelect(
 	"es-playback",
 	(e) => {
 		universal.save("playback-mode", e.target.value);
-		console.log(`Playback mode set to ${e.target.value}`);
 	},
 	universal.load("playback-mode"),
 );

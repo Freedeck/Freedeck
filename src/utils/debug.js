@@ -1,58 +1,50 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const picocolors = require("./picocolors");
 const os = require("node:os");
+const picocolors = require("./picocolors");
+
+const logPath = path.resolve("./user-data/logs/debug-write.txt");
+const isDebug = process.argv.some((arg) => arg.includes("debug"));
+const homeDir = os.homedir();
+
+let logStream = null;
+if (isDebug) {
+	fs.mkdirSync(path.dirname(logPath), { recursive: true });
+	logStream = fs.createWriteStream(logPath, { flags: "a" });
+}
 
 const dbg = {
 	start: performance.now(),
-	logPath: path.resolve("./user-data/logs/debug-write.txt"),
-	status: process.argv.includes("--debug"),
+	logPath,
+	status: isDebug,
 	mode: "Debug",
 	setMode: (k) => {
 		dbg.mode = k;
 	},
 	log: (v, k = "_unset") => {
-		let strToBuild = "";
-		if (k !== "_unset")
-			strToBuild += `[${Math.floor(performance.now() - dbg.start)}ms] ${picocolors.blue(k)} » `;
-		strToBuild += `${v}`;
+		const prefix = k !== "_unset" ? `${picocolors.blue(k)} » ` : "";
+		const strToBuild = `${prefix}${v}`;
+
 		if (dbg.status) console._log(strToBuild);
-		if (
-			process.argv.map((e) => e.includes("debug")).find((e) => e == true) !=
-			undefined
-		) {
-			fs.appendFile(
-				dbg.logPath,
-				`debug.log {${Date.now()}} | ${strToBuild}\n`,
-				(err) => {
-					if (err) console.error(err);
-				},
-			);
+		if (logStream) {
+			logStream.write(`debug.log {${Date.now()}} | ${strToBuild}\n`);
 		}
 	},
 };
 
 console._log = console.log;
-console.log = (...e) => {
-	console._log(...e);
-	if (
-		process.argv.map((e) => e.includes("debug")).find((e) => e == true) !=
-		undefined
-	) {
-		const rebuilt = [];
-		try {
-			for (const item of e) {
-				const cleaned = item.replace(os.homedir(), "(User's homedir)");
-				rebuilt.push(cleaned);
+console.log = (...args) => {
+	console._log(...args);
+
+	if (logStream) {
+		const cleaned = args.map((item) => {
+			if (typeof item === "string") {
+				return item.replace(homeDir, "(User's homedir)");
 			}
-		} catch (er) {}
-		fs.appendFile(
-			dbg.logPath,
-			`console.log {${Date.now()}} | ${rebuilt.join(",")}\n`,
-			(err) => {
-				if (err) console.error(err);
-			},
-		);
+			return item;
+		});
+
+		logStream.write(`console.log {${Date.now()}} | ${cleaned.join(",")}\n`);
 	}
 };
 

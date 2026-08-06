@@ -88,7 +88,7 @@ const editorBuiltInViews = [
 
 const pluginListing = document.querySelector(".plugin-view-listing");
 for (const view of editorBuiltInViews) {
-	console.log(`Setting up ${view.id}`);
+	universal.CLU("Editor", `Setting up ${view.id}`);
 	const viewButton = document.createElement("button");
 	const keyInfo = document.createElement("p");
 	const keyIcon = document.createElement("img");
@@ -98,6 +98,7 @@ for (const view of editorBuiltInViews) {
 	keyIcon.loading = "lazy";
 	viewButton.dataset.view_id = view.id;
 	viewButton.onclick = (e) => {
+						document.querySelector("#none-only").style.display = "none";
 		editorBackButton.style.display = "flex";
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(
@@ -187,6 +188,10 @@ function editTile(e) {
 		editorBackButton.style.display = "none";
 		document.querySelector("#select-plugin-back").style.display = "none";
 	} else {
+		document.querySelector("#none-only").style.display='none';
+		for (const v of document.querySelectorAll(".plugin-view")) {
+			v.style.display = "none";
+		}
 		editorBackButton.style.display = "flex";
 		for (const v of editorBuiltInViews) {
 			v.logic.forwardRunningEvent(
@@ -211,13 +216,14 @@ universal.editTile = editTile;
 const editorBackButton = document.querySelector("#editor-back");
 editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
-	openViewTop("none");
+	document.querySelector("#dynamic-view-container").style.display='none'
 	const pvs = document.querySelectorAll(".plugin-view");
 	if (pvs.length > 0) {
 		for (const v of pvs) {
 			v.style.display = "none";
 		}
 	}
+	openViewTop("none");
 };
 
 window.onclick = (e) => {

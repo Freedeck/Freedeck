@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="/companion/views/styles/marketplace.css" />
+<link rel="stylesheet" href="/companion/views/styles/marketplace.css" onload="document.querySelector('.loading-screen').style.display='flex'"/>
 
-<div class="loading-screen">
+<div class="loading-screen" style="display:none;">
 	<i style="color:var(--text-color-secondary)">Marketplace is loading...</i>
 	<div class="loader"></div>
 	<h2 class="message">Setting up...</h2>
 </div>
-<div class="load-upon-finish">
+<div class="load-upon-finish" style="display: none;">
 	<div class="main-content">
 		<ul class="repositories"></ul>
 		<div class="marketplace">

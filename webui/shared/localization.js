@@ -33,6 +33,7 @@ async function setLocale(newLocale) {
 	locale = newLocale;
 	translations = newTranslations;
 	translatePage();
+	universal.sendEvent("locale")
 }
 
 async function fetchTranslationsFor(newLocale) {
@@ -51,12 +52,15 @@ function translateElement(element) {
 	element.innerText = translation;
 }
 
+const queuedTranslations = [];
+
 function translationKey(key, defaultValue = "{{key}}") {
 	if (translations[key] === undefined) {
 		console.warn(`Translation key ${key} not found in locale.`);
 		if (Object.keys(translations).length === 0) {
 			console.warn("No translations loaded.");
 			setLocale(defaultLocale);
+			queuedTranslations.push([key, defaultValue]);
 		}
 	}
 	const defaultValueTwo = defaultValue.replace("{{key}}", key);

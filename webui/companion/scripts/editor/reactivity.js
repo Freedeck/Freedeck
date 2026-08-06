@@ -22,32 +22,6 @@ name.onkeyup = (e) => {
 	editorButton.innerText = e.srcElement.value;
 };
 
-const wants = [
-	{
-		class: "no-bg",
-		data: "showBg",
-		selector: "#sbg",
-	},
-	{
-		class: "no-border",
-		data: "noBorder",
-		selector: "#nbo",
-	},
-	{
-		class: "no-rounding",
-		data: "noRounding",
-		selector: "#nbr",
-	},
-];
-
-for (const w of wants) {
-	document.querySelector(w.selector).onclick = (e) => {
-		const isCheck = e.srcElement.checked;
-		if (isCheck) editorButton.classList.add(w.class);
-		else editorButton.classList.remove(w.class);
-	};
-}
-
 const setupReactivity = (d, tileName) => {
 	const data = d.data;
 
@@ -64,16 +38,16 @@ const setupReactivity = (d, tileName) => {
 
 	type.value = d.type || "fd.none";
 
-	for (const w of wants) {
-		if (data[w.data] === "true") editorButton.classList.add(w.class);
-		else editorButton.classList.remove(w.class);
+	for (const w of settings) {
+		w.addClassIf(d);
 	}
 
 	if (data._view) {
 		for (const v of document.querySelectorAll(".plugin-view")) {
 			v.style.display = "none";
 		}
-		document.querySelector("#plugins-only").style.display = "none";
+		document.querySelector("#select-plugin-back").style.display='none';
+		document.querySelector("#dynamic-view-container").style.display = 'none';
 		document.querySelector(`#plugin-view-${data._view}`).style.display =
 			"block";
 	}
@@ -100,55 +74,64 @@ const setupReactivity = (d, tileName) => {
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
 	document.querySelector('label[for="plugin"]').style.display =
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-
-	document.querySelector("#sbg").style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-	document.querySelector('label[for="sbg"]').style.display =
-		interactionData.renderType === "button"
-			? "block"
-			: interactionData.renderType === "slider"
-				? "none"
-				: "block";
-
-	document.querySelector("#lp").style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-	document.querySelector('label[for="lp"]').style.display =
-		interactionData.renderType === "slider" ? "none" : "block";
-
-	setCheck("#orl", "onRelease", interactionData);
-	setCheck("#lp", "longPress", interactionData);
-	setCheck("#sbg", "showBg", interactionData);
-	setCheck("#nbo", "noBorder", interactionData);
-	setCheck("#nbr", "noRounding", interactionData);
-	setCheck("#ha", "hold", interactionData);
-
+	
+	for(const i of settings) {
+		i.makeVisible(interactionData);
+		i.setupCheck(interactionData);
+	}
 };
 
-function setCheck(id, key, interaction) {
-	document.querySelector(id).checked = interaction.data[key] === "true";
-}
-
-function createEditorCheckbox(selector, dataKey) {
-	document.querySelector(selector).addEventListener("click", (e) => {
+const editorCtrl = document.querySelector("#editor-controls");
+const editorAppr = document.querySelector("#editor-appearance");
+function createEditorCheckbox(dataKey, key="notranslation", section=editorCtrl, adds="", visibilityCheck=()=>true) {
+	const ele = document.createElement("div");
+	ele.classList.add("flex-wrap-r");
+	ele.classList.add("alc");
+	const label = document.createElement("label");
+	label.textContent = universal.translationKey(key);
+	const checkbox =document.createElement("input");
+	checkbox.classList.add("fdc-checkbox");
+	checkbox.type = 'checkbox';
+	checkbox.addEventListener("click", (e) => {
 		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
 		if (!int.data[dataKey]) int.data[dataKey] = true;
 		else int.data[dataKey] = !int.data[dataKey];
 		editorButton.setAttribute("data-interaction", JSON.stringify(int));
 		loadData(int.data);
-		document.querySelector(selector).checked = int.data[dataKey];
+		checkbox.checked = int.data[dataKey];
+		const isCheck = e.srcElement.checked;
+		if (isCheck) editorButton.classList.add(adds);
+		else editorButton.classList.remove(adds);
 	});
+	ele.append(label, checkbox);
+	section.appendChild(ele);
+	return {
+		element: ele,
+		setupCheck(interaction) {
+			checkbox.checked = interaction.data[dataKey] === "true";
+		},
+		makeVisible: (interaction) => {
+			ele.style.display = visibilityCheck(interaction) ? "block" :	"none";
+		},
+		addClassIf(interaction) {
+			if(editorButton.classList.contains(adds)){
+				if(interaction.data[dataKey] === "true") editorButton.classList.add(adds);
+				else editorButton.classList.remove(adds);
+			}
+		}
+	}
 }
 
-createEditorCheckbox("#sbg", "showBg");
-createEditorCheckbox("#nbo", "noBorder");
-createEditorCheckbox("#nbr", "noRounding");
-createEditorCheckbox("#orl", "onRelease");
-createEditorCheckbox("#lp", "longPress");
-createEditorCheckbox("#ha", "hold");
+
+const settings = [
+	createEditorCheckbox("showBg", "editor.appearance.no.background", editorAppr, "no-bg"),
+	createEditorCheckbox("noBorder", "editor.appearance.no.border", editorAppr, "no-border"),
+	createEditorCheckbox("noRounding", "editor.appearance.no.rounding", editorAppr, "no-rounding"),
+
+	createEditorCheckbox("hold", "editor.controls.hold", editorCtrl),
+	createEditorCheckbox("longPress", "editor.controls.long_press", editorCtrl, (e)=>e.renderType!="slider"),
+	createEditorCheckbox("onRelease", "editor.controls.on_release", editorCtrl, (e)=>e.renderType!="slider"),
+]
 
 const editorSave = document.querySelector("#editor-save");
 const editorClose = document.querySelector("#editor-close");

@@ -190,7 +190,7 @@ class Plugins extends EditorViewLogic {
               el.style.display = "none";
             }
           };
-          actionContainer.appendChild(element);
+          this.actionContainer.appendChild(element);
           this.createdIdentifiers.push(interactionType.pluginId);
         }
 
@@ -226,7 +226,7 @@ class Plugins extends EditorViewLogic {
           this.typeField.value = interactionType.type;
           loadData(interaction.data);
         };
-        actionContainer.appendChild(element);
+        this.actionContainer.appendChild(element);
       }
 
       this.selectablePluginItemBack.onclick = (e) => {

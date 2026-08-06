@@ -165,7 +165,7 @@
 			id="bgrep"
 			data-i18n-key="settings.sections.bug.request_generate"
 		></textarea>
-		<p id="hostname">Your hostname here</p>
+		<p id="hostname"></p>
 		<button
 			id="genru"
 			data-i18n-key="settings.sections.bug.generate_upload"
@@ -428,7 +428,6 @@
 		const a = document.createElement("button");
 		a.innerText = "Enable " + plugin.split(".disabled")[0].split(".")[0];
 		a.onclick = () => {
-			console.log(plugin);
 			universal.uiSounds.playSound("int_confirm");
 			universal.send(universal.events.default.enable_plugin, plugin);
 			const pb = window.universal.ui.show.progressBar(

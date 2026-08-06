@@ -255,7 +255,7 @@ const universal = {
 	CLUL: [["Universal loaded", Date.now()]],
 	showBootLog: UI.showBootLog,
 	CLU: (s, ...m) => {
-		universal.CL ? console.log(`${s}:`, ...m) : null;
+		console.log(`${s}:`, ...m);
 		const elem = document.createElement("code");
 		elem.innerText = `${s}: ${m}\n`;
 		universal.CLUL.push([elem.innerText, Date.now()]);
@@ -288,6 +288,7 @@ const universal = {
 				if (!state.ready) {
 					window.location.href = `/new-connect.html?id=${user}`;
 				}
+				universal.CLU("Init", "JS loaded");
 				universal.CLU("Boot", "Boot log created");
 				window.universal = universal;
 				universal.CLU("InitFN", "Copied universal to window");

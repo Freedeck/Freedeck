@@ -84,7 +84,6 @@ gridItemDrag.on("drop", (event, origIndex, targIndex) => {
 });
 
 gridItemDrag.on("dragging", (e) => {
-	console.log(e);
 	document.querySelector("#keys").appendChild(mtNextPage.cloneNode(true));
 	document.querySelector("#keys").appendChild(mtPrevPage.cloneNode(true));
 	// copy the next and prev buttons to the keys container

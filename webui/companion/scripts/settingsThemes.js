@@ -44,6 +44,13 @@ window.loadThemeListing = async () => {
 				universal.theming.setTheme(id, true);
 				loadThemeListing();
 			}
+			title.innerText += universal.translationKey(
+				"settings.sections.style.themes.active",
+			);
+			element.style.background = "var(--selected-item-bg)";
+			element.style.backgroundSize = "var(--selected-item-bg-size)";
+			element.style.animation = "var(--selected-item-bg-anim)";
+			apply.innerText = "";
 		};
 		if (universal.load("theme") === id) {
 			title.innerText += universal.translationKey(
