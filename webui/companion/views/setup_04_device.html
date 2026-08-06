@@ -6,6 +6,7 @@
 
 	<div class="item">
 		<div id="qr-container"></div>
+		<div id="qr2-container"></div>
 	</div>
 
 	<div class="item">
@@ -16,6 +17,7 @@
 		<p data-i18n-key="setup.device.autoclose"></p>
 		<div class="flex-wrap-r">
 			<button id="later-button" data-i18n-key="setup.device.connect_later"></button>
+			<button onclick='document.querySelector("#qr-container").style.display="none";document.querySelector("#qr2-container").style.display="flex"'>FDMobile QR</button>
 		</div>
 
 		<center id="swapper"></center>
@@ -201,6 +203,9 @@
 </script>
 
 <style>
+	#qr2-container {
+		display: none;
+	}
 	.item {
 		background-color: rgba(0, 0, 0, 0.25);
 		padding: 5px;
@@ -261,6 +266,7 @@
 		filter: brightness(1.1);
 	}
 
+	#qr2-container canvas, 
 	#qr-container canvas {
 		border-radius: 0.5rem;
 		padding: 1rem;
