@@ -1,8 +1,12 @@
 {
   "name": "freedeck",
-  "version": "6.0.0-dev-rc7-2",
+  "version": "6.0.0-dev-fb1",
   "description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
   "main": "src/app/companion/launcher.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freedeck/freedeck.git"
+  },
   "scripts": {
     "start": "electron .",
     "build:webpack": "webpack --config webpack.config.js",
@@ -64,6 +68,7 @@
     "asar": false,
     "files": [
       "src/**/*",
+      "!src/configs/*",
       "webui/**/*",
       "node_modules/**/*",
       "webpack/**",
@@ -73,6 +78,7 @@
     ],
     "icon": "webui/client/assets/logo_big.ico",
     "win": {
+      "publish": ["github"],
       "target": [
         "nsis"
       ]
