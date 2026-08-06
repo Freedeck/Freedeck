@@ -10,20 +10,22 @@ app.on("ready", () => {
 	makeWindow(launcherObject);
 
     const isDev = !app.isPackaged;
-    const srvRoot = isDev
-    ? path.resolve('src/..')
-    : path.join(process.resourcesPath, 'app');
 
-    const serverPath = path.resolve(srvRoot, "src/index.js");
+    if(!isDev) {
+        const srvRoot = isDev
+        ? path.resolve('src/..')
+        : path.join(process.resourcesPath, 'app');
 
-    const serverProcess = fork(serverPath, ["--server-only", "--debug", "--is-dev="+isDev], {
-        cwd: srvRoot
-    });
+        const serverPath = path.resolve(srvRoot, "src/index.js");
 
-    app.on("will-quit", () => {
-        if (serverProcess) {
-            serverProcess.kill();
-        }
-    });
-    
+        const serverProcess = fork(serverPath, ["--server-only", "--debug", "--is-dev="+isDev], {
+            cwd: srvRoot
+        });
+
+        app.on("will-quit", () => {
+            if (serverProcess) {
+                serverProcess.kill();
+            }
+        });
+    }
 });
