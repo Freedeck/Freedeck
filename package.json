@@ -1,13 +1,15 @@
 {
   "name": "freedeck",
-  "version": "6.0.0d-rc7",
+  "version": "6.0.0-dev-rc7-2",
   "description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
-  "main": "src/index.js",
+  "main": "src/app/companion/launcher.js",
   "scripts": {
     "start": "electron .",
+    "build:webpack": "webpack --config webpack.config.js",
+    "build:win": "electron-builder --win",
+    "package": "npm run build:webpack && npm run build:win",
     "companion": "electron . --companion-only",
-    "server": "node src/index.js --server-only",
-    "debug-server": "node src/index.js --server-only --debug",
+    "server": "node src/index.js --debug --is-dev=true",
     "test": "node src/self-test.js",
     "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\""
   },
@@ -35,23 +37,55 @@
   "dependencies": {
     "asar-bundle-runner": "^1.6.0",
     "babel-loader": "^10.1.1",
-    "bonjour-service": "^1.4.3",
+    "bonjour-service": "^1.4.4",
     "compare-versions": "^6.1.1",
-    "electron": "^43.0.0",
     "express": "^5.2.1",
     "formidable": "^3.5.4",
     "module-alias": "^2.3.4",
     "pako": "^2.1.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
-    "tar": "^7.5.19",
-    "webpack": "^5.108.3",
-    "ws": "^8.21.0"
+    "tar": "^7.5.22",
+    "webpack": "^5.109.2",
+    "ws": "^8.21.2"
   },
   "devDependencies": {
-    "prettier": "^3.9.4"
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3",
+    "prettier": "^3.9.6",
+    "webpack-cli": "^7.2.2"
   },
   "lint-staged": {
     "*.{js,css,md,html}": "prettier --write"
+  },
+  "build": {
+    "appId": "app.freedeck.companion",
+    "productName": "Freedeck",
+    "asar": false,
+    "files": [
+      "src/**/*",
+      "webui/**/*",
+      "node_modules/**/*",
+      "webpack/**",
+      "package.json",
+      "webpack.config.js",
+      "timecache-analytics.js"
+    ],
+    "icon": "webui/client/assets/logo_big.ico",
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "include": "build/installer.nsh"
+    }
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.1.0",
+    "utf-8-validate": "^6.0.6"
   }
 }

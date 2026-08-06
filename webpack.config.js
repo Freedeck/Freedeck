@@ -15,7 +15,7 @@ const cfg = {
 		},
 	},
 	output: {
-		path: path.resolve("user-data/bundles"),
+		path: path.resolve("webpack"),
 		filename: "[name].js",
 	},
 	module: {

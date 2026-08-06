@@ -1,9 +1,10 @@
-const { ipcMain } = require("electron");
+const { ipcMain, app } = require("electron");
 const { spawn } = require("node:child_process");
 const path = require("node:path");
+const isPck = app.isPackaged;
 const electronAppCompanion = {
 	title: "Companion",
-	preload: path.resolve("src/app/companion/preload.js"),
+	preload: path.resolve((isPck?"resources/app/":"")+"src/app/companion/preload.js"),
 	createProperties: {
 		width: 420,
 		height: 525,
@@ -24,7 +25,7 @@ const electronAppCompanion = {
 		ipcMain.handle("overlay", () => {
 			spawn(process.argv[0], [path.resolve("./src/app/overlay/launcher.js")]);
 		});
-		
+
 		let isReadyToClose = false;
 
 		window.on('close', async (event) => {
@@ -50,7 +51,7 @@ const electronAppCompanion = {
 		}
 	},
 	launch: (window) => {
-		window.loadFile(path.resolve("webui/client/new-connect.html"));
+		window.loadFile(path.resolve((isPck?"resources/app/":"")+"webui/client/new-connect.html"));
 	},
 };
 

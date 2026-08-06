@@ -22,10 +22,6 @@ const thisPackage = require(pkgLoc);
 
 recordTime("http:required-all-routers");
 
-(async () => {
-	compileWebpack().catch((err) => console.error(err));
-})();
-
 const settings = config.settings();
 const PORT = settings.port || 5754;
 
