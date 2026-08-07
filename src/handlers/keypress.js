@@ -2,12 +2,14 @@ const eventNames = require("./eventNames");
 const debug = require("$/debug");
 const settings = require("../managers/settings");
 const cfg = settings.settings();
+const pluginManager = require("@managers/plugins");
 
 module.exports = {
 	name: "Keypress",
 	id: "builtin.keypress",
 	flags: ["AUTH"],
-	exec: ({ socket, types, plugins, io }) => {
+	exec: ({ socket, types, io }) => {
+		const plugins = pluginManager.plugins();
 		socket.on(eventNames.keypress, (ev) => {
 			try {
 				if (ev.isSlider) {

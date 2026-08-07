@@ -14,7 +14,6 @@ const { clients } = require("@managers/serverClientelle");
 const io = new socketIO.Server(server);
 
 const handlers = [];
-const plugins = pluginManager.plugins();
 
 (async () => {
 	const handlerDirectory = path.resolve("./src/handlers");
@@ -185,7 +184,7 @@ async function handleSock(socket) {
 		for (const handler of handlers) {
 			try {
 				if (io.rpcClients?.includes(socket) && handler.name !== "RPC") continue;
-				handler.exec({ socket, types, plugins, io, clients });
+				handler.exec({ socket, types, io, clients });
 			} catch (e) {
 				debug.log(picocolors.red(e));
 			}

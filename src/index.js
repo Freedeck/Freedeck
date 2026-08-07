@@ -32,5 +32,5 @@ if (!fs.existsSync(configLocation)) {
 
 recordTime("context-switch:is-server");
 require("./migration");
-require("$/console.js");
 (async () => require("./server"))();
+require("$/console.js");

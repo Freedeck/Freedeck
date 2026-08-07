@@ -4,7 +4,7 @@ const os = require("node:os");
 const picocolors = require("./picocolors");
 
 const logPath = path.resolve("./user-data/logs/debug-write.txt");
-const isDebug = process.argv.some((arg) => arg.includes("debug"));
+const isDebug = true;
 const homeDir = os.homedir();
 
 let logStream = null;
