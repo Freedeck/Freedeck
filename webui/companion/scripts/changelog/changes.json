@@ -2,8 +2,9 @@
   "major": [
    "**Improved mobile settings menu!**",
    "**Removed Freedeck App / Launcher, it's now one standalone installer with autoupdates**",
+   "**Freedeck now advertises on Bonjour!**",
    "Companion now handles closing server too",
-   "**Freedeck now advertises on Bonjour!**"
+   "Animations are now more efficient and disrupt the layout less"
   ],
   "other": [
   ],
