@@ -34,7 +34,7 @@ class Profile extends EditorViewLogic {
 
 		this.setOnRun(({ interactionData }) => {
 			generateProfileSelect();
-			select.value = interactionData.data.profile;
+			select.value = interactionData.data?.profile;
 		});
 
 		this.setOnFirstSetup(({ interactionData }) => {

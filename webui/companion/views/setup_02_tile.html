@@ -3,39 +3,59 @@
 	<span><img src="/app/shared/icons/themes.svg" width="50" height="50" loading="lazy" /></span>
 </h1>
 
+<style>
+	.full-span {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.item p {
+		text-align: center;
+	}
+</style>
+
 <div class="items">
-	<button class="button">Example</button>
+	<div class="flex-wrap-r full-span">
+		<button class="button ex-btn">Button</button>
+		<button class="button ex-slid"></button>
+		<button class="button ex-txt">Text</button>
+	</div>
 	<div class="item">
 		<p data-i18n-key="setup.tile.description"></p>
 		<div id="sliders"></div>
 		<button id="ok" data-i18n-key="setup.next"></button>
 	</div>
+	<div class="tooltips"></div>
 </div>
 
 <script>
 	const sl = document.querySelector("#sliders")
+	const tooltips = document.querySelector(".tooltips");
+	const sliderE = document.querySelector(".ex-slid");
+	const btnE = document.querySelector(".ex-btn");
+	const txtE = document.querySelector(".ex-txt");
+
+	import slider from '/scripts/ui/slider.js'
+	slider({position:1, data:{direction:"vertical",value:75.50,min:0,max:100}},sliderE, {"Slider":{}})
+
+
+	const tt = universal.createTooltipFor(sliderE, universal.translationKey("tooltips.tile.slider.action"));
+	tt.classList.add("tile-tooltip");
 	
-	universal.reloadRight();
+	const ttx = universal.createTooltipFor(btnE, universal.translationKey("tile.short_press") + " " + universal.translationKey("tooltips.tile.full.action"));
+	ttx.classList.add("tile-tooltip");
+	tooltips.appendChild(tt);
+	tooltips.appendChild(ttx);
+
 	document.querySelector("#ok").onclick = (e) => {
-		document.querySelector("#sidebar").style.right = "-100%";
-		// document.querySelector("#ctxl-view-cont").style.background = "rgba(0,0,0,0.825)"
-		document.querySelector("#setup_02_tile").style.width = "100%"
-		document.querySelector("#setup_02_tile body").style.width = "80%"
-		setTimeout(() => {
 			universal.reloadRight();
 			universal.ctx.destructiveView("setup_03_soundboard");
-		}, 250)
 	}
 
-	document.querySelector("#sidebar").style.right = "-100%";
-	document.querySelector("#sidebar").style.display = 'flex';
+
 	universal.save("has_setup", true);
 	universal.reloadRight();
 	universal.save("has_setup", false);
-	setTimeout(() => {
-		document.querySelector("#sidebar").style.right = "0";
-		document.querySelector("#ctxl-view-cont").style.background = "var(--modal-bg)"
-	}, 250)
 
 </script>
 
@@ -49,7 +69,7 @@
 	}
 
 	#ctxl-view-cont {
-		background: rgba(0, 0, 0, 0.825);
+		background: rgba(0, 0, 0, 0.825) !important;
 	}
 
 	#keys {
@@ -63,8 +83,8 @@
 	}
 
 	#setup_02_tile {
-		/* width: 100% !important; */
-		/* margin: 0 !important; */
+		width: 100% !important;
+		margin: 0 !important;
 		display: inline-flex;
 		flex-direction: row;
 		transition-duration: .25s;
@@ -72,8 +92,8 @@
 	}
 
 	#setup_02_tile body {
-		/* width: 80% !important; */
-		/* padding-left: 0 !important; */
+		width: 80% !important;
+		padding-left: 0 !important;
 	}
 
 	.item {

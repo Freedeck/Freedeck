@@ -4,7 +4,6 @@ import { openViewTop, closeAllViews } from "./editor/viewEngine.js";
 import { loadData } from "./editor/data.js";
 import "./sidebar.js";
 import "./uploadsHandler.js";
-import "./editor/loader.js";
 import "./contextMenu.js";
 import { makeThanks } from "./changelog/create.js";
 import Sound from "./editor/viewLogic/sound.js";
@@ -15,10 +14,12 @@ import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
 import EditorView from "./classes/EditorView.js";
-import { setupReactivity } from "./editor/reactivity.js";
-const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
+
+import "./editor/loader.js";
+import { setupReactivity } from "./editor/reactivity.js";
+const leftSidebar = document.querySelector(".sidebar");
 
 if (universal.load("has_setup") === "false") {
 	universal.ctx.destructiveView("setup_00_language");
@@ -72,12 +73,12 @@ const editorBuiltInViews = [
 		"editor.sections.no_action.macro",
 		"/app/shared/icons/t_macro.svg",
 	),
-	new EditorView(
-		"system",
-		new System(),
-		"editor.sections.no_action.app_volume",
-		"/app/shared/icons/t_app_volume.svg",
-	),
+	// new EditorView(
+	// 	"system",
+	// 	new System(),
+	// 	"editor.sections.no_action.app_volume",
+	// 	"/app/shared/icons/t_app_volume.svg",
+	// ),
 	new EditorView(
 		"profiles",
 		new Profile(),

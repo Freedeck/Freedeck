@@ -8,7 +8,6 @@ const { recordTime } = require("$/timer");
 const app = express();
 const server = http.createServer(app);
 const config = require("@managers/settings");
-const { compileWebpack } = require("@src/webpack");
 
 /** ROUTERS */
 const handoffRouter = require("@routers/handoff");

@@ -129,8 +129,12 @@ function createEditorCheckbox(
 	};
 }
 
-const settings = [
-	createEditorCheckbox(
+let settings = [
+];
+
+universal.listenFor('init', () => {
+	settings = [
+		createEditorCheckbox(
 		"showBg",
 		"editor.appearance.no.background",
 		editorAppr,
@@ -149,20 +153,23 @@ const settings = [
 		"no-rounding",
 	),
 
-	createEditorCheckbox("hold", "editor.controls.hold", editorCtrl),
+	createEditorCheckbox("hold", "editor.controls.hold", editorCtrl, "btn-h"),
 	createEditorCheckbox(
 		"longPress",
 		"editor.controls.long_press",
 		editorCtrl,
+		"btn-l",
 		(e) => e.renderType != "slider",
 	),
 	createEditorCheckbox(
 		"onRelease",
 		"editor.controls.on_release",
 		editorCtrl,
+		"btn-or",
 		(e) => e.renderType != "slider",
 	),
-];
+	]
+})
 
 const editorSave = document.querySelector("#editor-save");
 const editorClose = document.querySelector("#editor-close");

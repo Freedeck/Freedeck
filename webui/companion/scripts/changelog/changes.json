@@ -1,14 +1,13 @@
 {
   "major": [
-   "**Improved mobile settings menu!**",
-   "**Removed Freedeck App / Launcher, it's now one standalone installer with autoupdates**",
-   "**Freedeck now advertises on Bonjour!**",
-   "Companion now handles closing server too",
-   "Animations are now more efficient and disrupt the layout less"
+    "**Removed Freedeck App / Launcher, it's now one standalone installer with autoupdates**",
+    "**App Volume is going away for a second, and will be back next update!**",
+    "**Improved mobile settings menu!**",
+    "**Freedeck now advertises on Bonjour!**",
+    "Companion now handles closing server too",
+    "Animations are now more efficient and disrupt the layout less"
   ],
-  "other": [
-  ],
-  "known": [
-  ],
+  "other": [],
+  "known": [],
   "note": ""
 }

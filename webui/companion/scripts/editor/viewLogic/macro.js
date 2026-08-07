@@ -51,7 +51,7 @@ class Macro extends EditorViewLogic {
 
 		this.setOnRun(({ interactionData }) => {
 			const data = interactionData.data;
-			if (data.macro) {
+			if (data?.macro) {
 				inputMacro.value =
 					interactionData.type === "fd.macro" ? "macro" : "text";
 				inputMacro.value = data.macro;
