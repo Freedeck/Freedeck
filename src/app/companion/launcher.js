@@ -1,4 +1,5 @@
 const { app, dialog } = require("electron");
+const { autoUpdater } = require('electron-updater');
 const { fork } = require('child_process');
 const makeWindow = require("../makeWindow");
 const launcherObject = require("./window");
@@ -28,4 +29,6 @@ app.on("ready", () => {
             }
         });
     }
+
+    autoUpdater.checkForUpdatesAndNotify();
 });

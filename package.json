@@ -1,6 +1,6 @@
 {
   "name": "freedeck",
-  "version": "6.0.0-dev-fb1",
+  "version": "6.0.0-dev-fb1-test5",
   "description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
   "main": "src/app/companion/launcher.js",
   "repository": {
@@ -42,6 +42,7 @@
     "babel-loader": "^10.1.1",
     "bonjour-service": "^1.4.4",
     "compare-versions": "^6.1.1",
+    "electron-updater": "^6.8.9",
     "express": "^5.2.1",
     "formidable": "^3.5.4",
     "module-alias": "^2.3.4",
@@ -67,7 +68,7 @@
     "asar": false,
     "files": [
       "src/**/*",
-      "!src/configs/*",
+      "!src/configs/**/*",
       "webui/**/*",
       "node_modules/**/*",
       "webpack/**",
@@ -77,7 +78,9 @@
     ],
     "icon": "webui/client/assets/logo_big.ico",
     "win": {
-      "publish": ["github"],
+      "publish": [
+        "github"
+      ],
       "target": [
         "nsis"
       ]
