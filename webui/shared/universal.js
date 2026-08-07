@@ -483,8 +483,10 @@ const universal = {
 	name: "",
 	_timeouts: {},
 	sendToast: (message, sender = "") => {
-		if (!universal.getServerFlags()["app.freedeck.ui.show_notifications"])
-			return;
+		const sf = universal.getServerFlags();
+		const fl = "app.freedeck.ui.show_notifications";
+		const flag = sf[fl];
+		if (Object.keys(sf).includes(fl) && flag == false) return;
 		if (!HTMLElement.prototype.setHTML) {
 			HTMLElement.prototype.setHTML = function (html) {
 				this.innerHTML = universal.cleanHTML(html);
