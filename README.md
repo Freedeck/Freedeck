@@ -1,8 +1,8 @@
 # Freedeck
 
-<img src="webui/client/assets/logo_big.png" width="120" height="120">  
+<img src="webui/client/assets/logo_big.png" width="120" height="120">
 
-*More than just a macropad; it's a Freedeck. The FOSS alternative to the Elgato Stream Deck.*
+_More than just a macropad; it's a Freedeck. The FOSS alternative to the Elgato Stream Deck._
 
 ## Install from freedeck.app
 
@@ -23,7 +23,7 @@ The default installation location is `%APPDATA%\FreedeckApp`, and this repositor
 
 <img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/sections/installation-github.png" width="512">
 
-This set of steps assumes you have a *minimum of* [Node.js v20+, npm v10+](https://nodejs.org/en/download/current) and [Git 2.4X+](https://github.com/git-for-windows/git/releases/tag/v2.55.0.windows.3) installed.
+This set of steps assumes you have a _minimum of_ [Node.js v20+, npm v10+](https://nodejs.org/en/download/current) and [Git 2.4X+](https://github.com/git-for-windows/git/releases/tag/v2.55.0.windows.3) installed.
 
 Although it's recommended you have npm v11+ and Node.js v24+ installed, any newer version should work too.
 

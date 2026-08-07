@@ -21,7 +21,7 @@ const UAE = {
 		devices: [],
 		reloadDevices: async () => {
 			if (!navigator.mediaDevices?.enumerateDevices) {
-				universal.CLU("Audio Engine","enumerateDevices() not supported.");
+				universal.CLU("Audio Engine", "enumerateDevices() not supported.");
 			} else {
 				const devices = [];
 				navigator.mediaDevices

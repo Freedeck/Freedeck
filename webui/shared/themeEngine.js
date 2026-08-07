@@ -46,7 +46,7 @@ async function initialize() {
 
 function setTheme(name, global = true) {
 	const fu = listing.includes(name) ? name : "default.css";
-	let lastTheme = universal.load('theme');
+	let lastTheme = universal.load("theme");
 	universal.save("theme", name);
 
 	fetch(getPathFor(fu))

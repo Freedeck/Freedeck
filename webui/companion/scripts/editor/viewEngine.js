@@ -4,7 +4,8 @@ const editorButton = document.querySelector("#editor-btn");
 
 const openViewTop = (view) => {
 	translatePage();
-	if(view == 'none') document.querySelector("#none-only").style.display='block'
+	if (view == "none")
+		document.querySelector("#none-only").style.display = "block";
 	editorButton.dataset.state = `o ${view}`;
 };
 

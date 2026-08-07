@@ -25,12 +25,12 @@ class Profile extends EditorViewLogic {
 	constructor() {
 		super("profiles", "fd.profile");
 		generateProfileSelect();
-		this.setSectionTitleKey("editor.sections.no_action.folder_changer")
-		this.setSectionDescriptionKey("editor.sections.folder_changer.action")
+		this.setSectionTitleKey("editor.sections.no_action.folder_changer");
+		this.setSectionDescriptionKey("editor.sections.folder_changer.action");
 
 		this.setElementsToAdd(() => {
-			return [select]
-		})
+			return [select];
+		});
 
 		this.setOnRun(({ interactionData }) => {
 			generateProfileSelect();

@@ -66,7 +66,7 @@ module.exports = {
 					// its a new event handler
 					const flags = eventHandler.flags || [];
 					if (flags.includes("AUTH")) {
-						if(!socket.auth) return;
+						if (!socket.auth) return;
 						eventHandler.exec({ io, socket, data, clients });
 					}
 					return;

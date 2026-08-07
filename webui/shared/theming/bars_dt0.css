@@ -12,7 +12,7 @@
 	height: 5%;
 	border-radius: var(--main-radius);
 	width: min-content;
-	padding: .725rem;
+	padding: 0.725rem;
 	border: var(--generic-border);
 	justify-content: center;
 	flex-direction: row;
@@ -55,10 +55,9 @@
 	padding: 1rem;
 }
 
-.center.editing { 
+.center.editing {
 	transform: translate(-50%, -50%);
 }
-
 
 .smaller {
 	transform: none !important;

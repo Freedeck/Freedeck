@@ -12,7 +12,7 @@ const commands = {
 		name: "help",
 		description: "Help command.",
 		usage: "help [command]",
-		aliases: ['h','?','/'],
+		aliases: ["h", "?", "/"],
 		handler: help,
 	},
 	"webpack.compile": {
@@ -89,7 +89,9 @@ function help(...args) {
 		for (const arg of args) {
 			if (Object.keys(commands).includes(arg)) {
 				const data = commands[arg];
-				output(`${data.name}${data.aliases ? ' ('+data.aliases.join(', ')+')' : ''}: ${data.description}`);
+				output(
+					`${data.name}${data.aliases ? " (" + data.aliases.join(", ") + ")" : ""}: ${data.description}`,
+				);
 				output(`Usage: ${data.usage}`);
 			} else {
 				output(`Command ${arg} not found.`);
@@ -100,7 +102,9 @@ function help(...args) {
 	output("Commands:");
 	for (const key in commands) {
 		const data = commands[key];
-		output(`${data.name}${data.aliases ? ' ('+data.aliases.join(', ')+')' : ''}: ${data.description}`);
+		output(
+			`${data.name}${data.aliases ? " (" + data.aliases.join(", ") + ")" : ""}: ${data.description}`,
+		);
 	}
 }
 

@@ -46,8 +46,8 @@ const setupReactivity = (d, tileName) => {
 		for (const v of document.querySelectorAll(".plugin-view")) {
 			v.style.display = "none";
 		}
-		document.querySelector("#select-plugin-back").style.display='none';
-		document.querySelector("#dynamic-view-container").style.display = 'none';
+		document.querySelector("#select-plugin-back").style.display = "none";
+		document.querySelector("#dynamic-view-container").style.display = "none";
 		document.querySelector(`#plugin-view-${data._view}`).style.display =
 			"block";
 	}
@@ -74,8 +74,8 @@ const setupReactivity = (d, tileName) => {
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
 	document.querySelector('label[for="plugin"]').style.display =
 		interactionData.plugin !== "Freedeck" ? "flex" : "none";
-	
-	for(const i of settings) {
+
+	for (const i of settings) {
 		i.makeVisible(interactionData);
 		i.setupCheck(interactionData);
 	}
@@ -83,15 +83,21 @@ const setupReactivity = (d, tileName) => {
 
 const editorCtrl = document.querySelector("#editor-controls");
 const editorAppr = document.querySelector("#editor-appearance");
-function createEditorCheckbox(dataKey, key="notranslation", section=editorCtrl, adds="", visibilityCheck=()=>true) {
+function createEditorCheckbox(
+	dataKey,
+	key = "notranslation",
+	section = editorCtrl,
+	adds = "",
+	visibilityCheck = () => true,
+) {
 	const ele = document.createElement("div");
 	ele.classList.add("flex-wrap-r");
 	ele.classList.add("alc");
 	const label = document.createElement("label");
 	label.textContent = universal.translationKey(key);
-	const checkbox =document.createElement("input");
+	const checkbox = document.createElement("input");
 	checkbox.classList.add("fdc-checkbox");
-	checkbox.type = 'checkbox';
+	checkbox.type = "checkbox";
 	checkbox.addEventListener("click", (e) => {
 		const int = JSON.parse(editorButton.getAttribute("data-interaction"));
 		if (!int.data[dataKey]) int.data[dataKey] = true;
@@ -111,27 +117,52 @@ function createEditorCheckbox(dataKey, key="notranslation", section=editorCtrl, 
 			checkbox.checked = interaction.data[dataKey] === "true";
 		},
 		makeVisible: (interaction) => {
-			ele.style.display = visibilityCheck(interaction) ? "block" :	"none";
+			ele.style.display = visibilityCheck(interaction) ? "block" : "none";
 		},
 		addClassIf(interaction) {
-			if(editorButton.classList.contains(adds)){
-				if(interaction.data[dataKey] === "true") editorButton.classList.add(adds);
+			if (editorButton.classList.contains(adds)) {
+				if (interaction.data[dataKey] === "true")
+					editorButton.classList.add(adds);
 				else editorButton.classList.remove(adds);
 			}
-		}
-	}
+		},
+	};
 }
 
-
 const settings = [
-	createEditorCheckbox("showBg", "editor.appearance.no.background", editorAppr, "no-bg"),
-	createEditorCheckbox("noBorder", "editor.appearance.no.border", editorAppr, "no-border"),
-	createEditorCheckbox("noRounding", "editor.appearance.no.rounding", editorAppr, "no-rounding"),
+	createEditorCheckbox(
+		"showBg",
+		"editor.appearance.no.background",
+		editorAppr,
+		"no-bg",
+	),
+	createEditorCheckbox(
+		"noBorder",
+		"editor.appearance.no.border",
+		editorAppr,
+		"no-border",
+	),
+	createEditorCheckbox(
+		"noRounding",
+		"editor.appearance.no.rounding",
+		editorAppr,
+		"no-rounding",
+	),
 
 	createEditorCheckbox("hold", "editor.controls.hold", editorCtrl),
-	createEditorCheckbox("longPress", "editor.controls.long_press", editorCtrl, (e)=>e.renderType!="slider"),
-	createEditorCheckbox("onRelease", "editor.controls.on_release", editorCtrl, (e)=>e.renderType!="slider"),
-]
+	createEditorCheckbox(
+		"longPress",
+		"editor.controls.long_press",
+		editorCtrl,
+		(e) => e.renderType != "slider",
+	),
+	createEditorCheckbox(
+		"onRelease",
+		"editor.controls.on_release",
+		editorCtrl,
+		(e) => e.renderType != "slider",
+	),
+];
 
 const editorSave = document.querySelector("#editor-save");
 const editorClose = document.querySelector("#editor-close");

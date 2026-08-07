@@ -1,7 +1,7 @@
-const bonjour = require('bonjour-service')
+const bonjour = require("bonjour-service");
 const express = require("express");
 const http = require("node:http");
-const path = require("node:path")
+const path = require("node:path");
 
 const picocolors = require("$/picocolors");
 const { recordTime } = require("$/timer");
@@ -15,7 +15,7 @@ const handoffRouter = require("@routers/handoff");
 const connectRouter = require("@routers/connect").router;
 const staticRouter = require("@routers/static").router;
 const uploadRouter = require("@routers/uploads");
-const os = require('node:os');
+const os = require("node:os");
 
 const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
@@ -60,39 +60,39 @@ recordTime("http:loaded-all-endpoints");
 recordTime("http:listen-begin");
 const bonjourInstance = new bonjour();
 let bonjourService;
-server.listen(PORT, '0.0.0.0', () => {
-  const networkAddresses = require("@managers/networkAddresses");
-  const netAddresses = networkAddresses();
-  
-  const localHostName = os.hostname().replace(/\.local\.?$/i, '');
+server.listen(PORT, "0.0.0.0", () => {
+	const networkAddresses = require("@managers/networkAddresses");
+	const netAddresses = networkAddresses();
 
-  bonjourService = bonjourInstance.publish({
-    name: `Freedeck (${localHostName})`,
-    type: 'freedeck',
-    port: Number(PORT),
-    txt: {
-      "version": String(thisPackage.version),
-      "hostname": localHostName,         // ✅ Executed function returning String!
-      "addresses": JSON.stringify(netAddresses),
-    }
-  });
+	const localHostName = os.hostname().replace(/\.local\.?$/i, "");
 
-  console.log(picocolors.bgGreen(`Bonjour advertising '_freedeck._tcp' on port ${PORT}`));
+	bonjourService = bonjourInstance.publish({
+		name: `Freedeck (${localHostName})`,
+		type: "freedeck",
+		port: Number(PORT),
+		txt: {
+			version: String(thisPackage.version),
+			hostname: localHostName, // ✅ Executed function returning String!
+			addresses: JSON.stringify(netAddresses),
+		},
+	});
 
-  for (const netInterface of Object.keys(netAddresses)) {
-    const ipPort = `${netAddresses[netInterface][0]}:${PORT}`;
-    console.log(
-      picocolors.bgBlue(
-        `Go to http://${ipPort} on your mobile device (${netInterface})`,
-      ),
-    );
-  }
-  recordTime("http:listen-complete");
+	console.log(
+		picocolors.bgGreen(`Bonjour advertising '_freedeck._tcp' on port ${PORT}`),
+	);
+
+	for (const netInterface of Object.keys(netAddresses)) {
+		const ipPort = `${netAddresses[netInterface][0]}:${PORT}`;
+		console.log(
+			picocolors.bgBlue(
+				`Go to http://${ipPort} on your mobile device (${netInterface})`,
+			),
+		);
+	}
+	recordTime("http:listen-complete");
 });
 
-
-
-process.on('SIGINT', () => {
+process.on("SIGINT", () => {
 	bonjourInstance.destroy();
-  process.exit(0); 
+	process.exit(0);
 });

@@ -4,26 +4,25 @@ import { makeSettingsMenu } from "./settingsMenu.js";
 universal.listenForOnce("init", () => {
 	makeSettingsMenu();
 	checkPortrait();
-	
-const fc = document.querySelector("#folder-container")
-	for(const i of Object.keys(universal._information.config.profiles)) {
-			const btn = document.createElement("button");
-			btn.classList.add("smaller");
-			btn.textContent = i;
-			btn.addEventListener("click", () => {
-				universal.send(universal.events.keypress, {
-					event: {isTrusted: true},
-					btn: {
-						type: "fd.profile",
-						data: {
-							profile: i
-						}
-					}
-				})
-			})
-			fc.appendChild(btn)
-		}
 
+	const fc = document.querySelector("#folder-container");
+	for (const i of Object.keys(universal._information.config.profiles)) {
+		const btn = document.createElement("button");
+		btn.classList.add("smaller");
+		btn.textContent = i;
+		btn.addEventListener("click", () => {
+			universal.send(universal.events.keypress, {
+				event: { isTrusted: true },
+				btn: {
+					type: "fd.profile",
+					data: {
+						profile: i,
+					},
+				},
+			});
+		});
+		fc.appendChild(btn);
+	}
 });
 
 await universal.init("Main");
@@ -83,19 +82,19 @@ window.addEventListener("touchstart", (e) => {
 
 function checkPortrait() {
 	const isPortrait = window.innerHeight >= window.innerWidth;
-	if(isPortrait) {
+	if (isPortrait) {
 		universal.keys.classList.add("vertical");
 	} else {
-		if(universal.keys.classList.contains("vertical")) 
+		if (universal.keys.classList.contains("vertical"))
 			universal.keys.classList.remove("vertical");
 	}
 }
 
 window.addEventListener("resize", checkPortrait);
 
-universal.listenFor('launch', () => {
+universal.listenFor("launch", () => {
 	checkPortrait();
-})
+});
 checkPortrait();
 
 window.addEventListener("mousedown", (e) => {

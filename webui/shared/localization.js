@@ -33,7 +33,7 @@ async function setLocale(newLocale) {
 	locale = newLocale;
 	translations = newTranslations;
 	translatePage();
-	universal.sendEvent("locale")
+	universal.sendEvent("locale");
 }
 
 async function fetchTranslationsFor(newLocale) {

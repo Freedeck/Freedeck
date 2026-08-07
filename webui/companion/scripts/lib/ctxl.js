@@ -7,8 +7,7 @@ const ctxl = {
 	view_container: "#ctxl-view-cont",
 	as: "html",
 	version: "1.0.0",
-	loadingHTML:
-		"",
+	loadingHTML: "",
 	views: [],
 	addView: (view) => {
 		if (!ctxl.views.includes(view)) ctxl.views.push(view);
@@ -43,7 +42,7 @@ const ctxl = {
 					document.body.appendChild(script);
 				}
 			});
-			return view_html;
+		return view_html;
 	},
 	opened: [],
 	createViewContainer: () => {

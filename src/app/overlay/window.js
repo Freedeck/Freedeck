@@ -80,9 +80,9 @@ const electronAppOverlay = {
 		window.on("close", (e) => {
 			window = null;
 		});
-		window.webContents.on('did-finish-load', () => {
+		window.webContents.on("did-finish-load", () => {
 			window.webContents.setZoomFactor(1.0);
-		});		
+		});
 		window.setIgnoreMouseEvents(true, { forward: true });
 		window.setPosition(0, 0);
 		window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });

@@ -483,8 +483,7 @@ function reloadTiles() {
 		} catch (e) {
 			const k = Object.keys(sound)[0];
 			universal.CLU(
-				'Tile Render Error'
-				`Couldn't render ${k} (${sound[k]}) on page ${universal.page}`,
+				"Tile Render Error"`Couldn't render ${k} (${sound[k]}) on page ${universal.page}`,
 			);
 			console.error(e);
 		}

@@ -30,7 +30,6 @@ const sc = {
 		debug.log("Settings recached.", "Managers / Settings");
 	},
 	save: (force = false) => {
-
 		if (force) {
 			const thatConfig = sc._cache;
 
@@ -45,10 +44,7 @@ const sc = {
 				port: thatConfig.port || 5754,
 			};
 
-			fs.writeFileSync(
-				configLocation,
-				JSON.stringify(newMainConfig, null, 2),
-			);
+			fs.writeFileSync(configLocation, JSON.stringify(newMainConfig, null, 2));
 		}
 
 		if (saveTimeout) clearTimeout(saveTimeout);

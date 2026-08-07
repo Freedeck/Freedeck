@@ -1,9 +1,9 @@
 const path = require("node:path");
 
-if(process.argv.includes("--is-dev=true")) {
-	require('module-alias/register')
+if (process.argv.includes("--is-dev=true")) {
+	require("module-alias/register");
 } else {
-	const moduleAlias = require('module-alias');
+	const moduleAlias = require("module-alias");
 	moduleAlias.addAliases({
 		"@root": path.resolve("src/.."),
 		"@src": path.resolve("src"),
@@ -11,11 +11,10 @@ if(process.argv.includes("--is-dev=true")) {
 		"@public": path.resolve("src/public"),
 		"@managers": path.resolve("src/managers"),
 		"@handlers": path.resolve("src/handlers"),
-		"$": path.resolve("src/utils"),
-		"@freedeck": path.resolve("src/classes")
+		$: path.resolve("src/utils"),
+		"@freedeck": path.resolve("src/classes"),
 	});
 }
-
 
 const { recordTime } = require("$/timer");
 recordTime("STARTUP");
@@ -27,7 +26,7 @@ const { configLocation } = require("@managers/settings");
 
 if (!fs.existsSync(configLocation)) {
 	console.log(picocolors.bgRed("Settings do not exist yet,running migration."));
-	require('@src/migrations/05-createStartingConfiguration');
+	require("@src/migrations/05-createStartingConfiguration");
 }
 
 recordTime("context-switch:is-server");

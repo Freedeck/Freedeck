@@ -33,7 +33,7 @@
 	backdrop-filter: blur(2rem);
 	background-color: rgba(0, 0, 0, 0.25);
 	padding: 1rem;
-	transition-duration: .5s;
+	transition-duration: 0.5s;
 }
 
 .rembutton {
@@ -58,7 +58,6 @@
 	min-height: 6rem;
 }
 
-
 body {
 	overflow: hidden;
 }
@@ -77,5 +76,5 @@ body {
 	display: inline-flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	gap: .25rem;
+	gap: 0.25rem;
 }

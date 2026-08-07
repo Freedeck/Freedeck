@@ -87,7 +87,8 @@ universal.reloadRight = () => {
 universal.reloadRight();
 universal.vclose = () => {
 	const view_container = document.querySelector(universal.ctx.view_container);
-	if(universal.ctx.opened.length != 0) universal.ctx.closeView(universal.ctx.opened[0])
+	if (universal.ctx.opened.length != 0)
+		universal.ctx.closeView(universal.ctx.opened[0]);
 	setAnim(view_container, "view-out var(--companion-view-time)");
 	setTimeout(() => {
 		setDisplay(view_container, "none");
@@ -95,8 +96,8 @@ universal.vclose = () => {
 };
 
 universal.vopen = (v) => {
-	if(universal.ctx.opened.length != 0 && (universal.ctx.opened[0] == v)) return;
-	if(universal.ctx.opened.length == 0 && v == "index.html") return;
+	if (universal.ctx.opened.length != 0 && universal.ctx.opened[0] == v) return;
+	if (universal.ctx.opened.length == 0 && v == "index.html") return;
 	if (v === "demo-pages" && !pages.includes(v)) pages.push(v);
 	if (universal.load("has_setup") === "false") return;
 	universal.uiSounds.playSound("sidebar");
@@ -108,8 +109,7 @@ universal.vopen = (v) => {
 	if (!pages.includes(v)) {
 		if (leftSidebar.style.display === "none")
 			document.querySelector(".toggle-sidebar button").click();
-		if(universal.ctx.opened.length != 0)
-			universal.vclose()
+		if (universal.ctx.opened.length != 0) universal.vclose();
 		setAnim(view_container, "view-out var(--companion-view-time)");
 		setTimeout(() => {
 			setDisplay(view_container, "none");

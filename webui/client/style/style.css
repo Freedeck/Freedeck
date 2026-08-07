@@ -269,37 +269,37 @@ summary ::-webkit-details-marker {
 }
 
 @keyframes pull-right {
-  from {
-    transform: translateX(0);
+	from {
+		transform: translateX(0);
 		opacity: 1;
-  }
+	}
 
-  to {
-    transform: translateX(-100%);
+	to {
+		transform: translateX(-100%);
 		opacity: 0;
 	}
 }
 
 @keyframes pull-left {
-  from {
-    transform: translateX(-100%);
+	from {
+		transform: translateX(-100%);
 		opacity: 1;
-  }
+	}
 
-  to {
-    transform: translateX(0);
+	to {
+		transform: translateX(0);
 		opacity: 0;
 	}
 }
 
 @keyframes pull-up {
-  from {
-    transform: translateY(0);
+	from {
+		transform: translateY(0);
 		opacity: 1;
-  }
+	}
 
-  to {
-    transform: translateY(-100%);
+	to {
+		transform: translateY(-100%);
 		opacity: 0;
 	}
 }
@@ -337,14 +337,14 @@ summary ::-webkit-details-marker {
 }
 
 @keyframes pull-down-boot-log {
-  from {
-    transform: translateY(-100%);
-  }
+	from {
+		transform: translateY(-100%);
+	}
 
-  to {
-    transform: translateY(0);
-    background-color: #17212a;
-  }
+	to {
+		transform: translateY(0);
+		background-color: #17212a;
+	}
 }
 
 .fill {

@@ -4,7 +4,9 @@ const path = require("node:path");
 const isPck = app.isPackaged;
 const electronAppCompanion = {
 	title: "Companion",
-	preload: path.resolve((isPck?"resources/app/":"")+"src/app/companion/preload.js"),
+	preload: path.resolve(
+		(isPck ? "resources/app/" : "") + "src/app/companion/preload.js",
+	),
 	createProperties: {
 		width: 420,
 		height: 525,
@@ -28,10 +30,10 @@ const electronAppCompanion = {
 
 		let isReadyToClose = false;
 
-		window.on('close', async (event) => {
+		window.on("close", async (event) => {
 			if (!isReadyToClose) {
-				event.preventDefault(); 
-				
+				event.preventDefault();
+
 				try {
 					await window.webContents.executeJavaScript(`
 						if(universal && universal.send && universal.events) universal.send(universal.events.default.close)
@@ -40,7 +42,7 @@ const electronAppCompanion = {
 					console.error("Failed to execute script before close:", error);
 				} finally {
 					isReadyToClose = true;
-					window.close(); 
+					window.close();
 				}
 			}
 		});
@@ -51,7 +53,11 @@ const electronAppCompanion = {
 		}
 	},
 	launch: (window) => {
-		window.loadFile(path.resolve((isPck?"resources/app/":"")+"webui/client/new-connect.html"));
+		window.loadFile(
+			path.resolve(
+				(isPck ? "resources/app/" : "") + "webui/client/new-connect.html",
+			),
+		);
 	},
 };
 
