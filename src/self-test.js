@@ -63,11 +63,11 @@ console.log("Forcefully adding to plugins");
 
 console.log("> Copying to plugins");
 
-const { cpSync, rmSync } = require("fs");
-cpSync(testPlugin, path.resolve("plugins/fst.src"), { recursive: true });
+const { promises } = require("fs");
+promises.cp(testPlugin, path.resolve("plugins/fst.src"), { recursive: true });
 
 const plgm = require("@managers/plugins.js");
 plgm.load(path.resolve("plugins/fst.src"));
 
-rmSync(path.resolve("plugins/fst.src"));
+promises.rmdir(path.resolve("plugins/fst.src"));
 console.log("> Cleaned plugins dir");

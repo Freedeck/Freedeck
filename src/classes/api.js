@@ -164,13 +164,13 @@ class Plugin {
 		let foundPath = `tmp/_${this.id}.fdpackage`;
 		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
 		if (fs.existsSync(path.resolve(foundPath, "icon.png"))) {
-			fs.cpSync(
+			fs.promises.cp(
 				path.resolve(foundPath, "icon.png"),
 				path.resolve(this._hookLocation, this.id + "-icon.png"),
 				{ force: true },
 			);
 		} else {
-			fs.cpSync(
+			fs.promises.cp(
 				path.resolve("webui/shared/icons/empty-icon.png"),
 				path.resolve(this._hookLocation, this.id + "-icon.png"),
 				{ force: true },
@@ -337,7 +337,7 @@ class Plugin {
    @param {*} hook File path to hook
    @param {*} copyTo folder to copy hook to
    */
-	internalAdd(type, hook, copyTo) {
+	async internalAdd(type, hook, copyTo) {
 		let foundPath = `tmp/_${this.id}.fdpackage`;
 		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
 		const hookPath = path.resolve(foundPath, hook);
@@ -347,23 +347,25 @@ class Plugin {
 			return;
 		}
 
+		if(this.hooks.filter((e)=>e.getFile()==hookPath).length < 1) {
+			const destination = path.resolve(copyTo, path.dirname(hook));
+
+			if (!fs.existsSync(destination)) {
+				await fs.promises.mkdir(destination, { recursive: true });
+			}
+
+			const copyOpts = { force: true };
+			copyOpts.recursive =
+				type === HookRef.types.view || type === HookRef.types.dashModule;
+
+			await fs.promises.cp(
+				hookPath,
+				path.resolve(destination, path.basename(hook)),
+				copyOpts,
+			);
+		}
 		this.hooks.push(new HookRef(hookPath, type, hook));
 
-		const destination = path.resolve(copyTo, path.dirname(hook));
-
-		if (!fs.existsSync(destination)) {
-			fs.mkdirSync(destination, { recursive: true });
-		}
-
-		const copyOpts = { force: true };
-		copyOpts.recursive =
-			type === HookRef.types.view || type === HookRef.types.dashModule;
-
-		fs.cpSync(
-			hookPath,
-			path.resolve(destination, path.basename(hook)),
-			copyOpts,
-		);
 	}
 
 	/**

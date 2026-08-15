@@ -3,7 +3,7 @@ const path = require("node:path");
 const picocolors = require("$/picocolors.js");
 const openPackage = require("@managers/providers/package");
 
-module.exports = ({ debug, file, pl }) => {
+module.exports = async ({ debug, file, pl }) => {
 	debug.log(
 		"Loading unpacked plugin. Disabling/enabling are unavailable.",
 		"Plugins",
@@ -21,7 +21,7 @@ module.exports = ({ debug, file, pl }) => {
 				.resolve(`./tmp/_${file.replaceAll("/", "_")}`)
 				.replace(".src", ".fdpackage");
 			fs.mkdirSync(packagefied, { recursive: true });
-			fs.cpSync(path.resolve(`./plugins/${file}`), packagefied, {
+			await fs.promises.cp(path.resolve(`./plugins/${file}`), packagefied, {
 				recursive: true,
 			});
 			(async () => {
@@ -46,7 +46,7 @@ module.exports = ({ debug, file, pl }) => {
 		const entryPath = path.resolve(newPath, entrypoint);
 		const entry = require(entryPath);
 		debug.log("Emulating asar extraction...", "Plugins");
-		fs.cpSync(
+		await fs.promises.cp(
 			newPath,
 			path.resolve(`./tmp/_e_._plugins_${file.split(".src")[0]}.Freedeck`),
 			{ recursive: true },

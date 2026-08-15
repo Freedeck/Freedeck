@@ -28,7 +28,7 @@
 		<input type="text" placeholder="Server URL" value="http://localhost:5754" id="url" />
 		<button id="retry">Retry</button>
 	</div>
-	<img src="./assets/logo_big.png" class="icon" />
+	<img src="./assets/connect.svg" class="icon" />
 	<p class="progress-text">Freedeck is starting...</p>
 	<style>
 		@import url("style/fonts.css");
@@ -36,7 +36,7 @@
 		button {
 			background-color: #17212a;
 			border: 1px solid rgba(255, 255, 255, 0.1);
-
+			width: max-content;
 			color: white;
 			border-radius: 1.25rem;
 			padding: 0.5rem;
@@ -49,18 +49,29 @@
 		}
 
 		.connection {
-			position: fixed;
-			bottom: 50%;
-			left: 50%;
-			transform: translate(-50%, -45%);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 			background-color: #17212a;
-			border: 1px solid rgba(255, 255, 255, 0.1);
 			border-radius: 1.25rem;
-			padding: 0.5rem;
+			animation: in 1s;
 			display: none;
 			text-align: center;
+			z-index: 2;
+			align-items: center;
 			flex-direction: column;
 			gap: 5px;
+		}
+
+		@keyframes in {
+			from {
+				transform: translateX(100%);
+			}
+			to {
+				transform: translateX(0);
+			}
 		}
 
 		.progress-text {
@@ -75,6 +86,7 @@
 			color: white;
 			border: 0;
 			border-radius: 1.5rem;
+			width: max-content;
 			padding: 5px;
 			transition-duration: 0.125s;
 		}
@@ -209,7 +221,7 @@
 					return res;
 				}).catch((err) => {
 					connection.style.display = "flex";
-					fail.innerText = "Error while fetching status.";
+					fail.innerText = "Couldn't connect to Freedeck.";
 					return;
 				});
 				const data = await res.json();
@@ -226,7 +238,7 @@
 						res = await webpackStillBuilding();
 					} catch(err) {res = true}
 					if (!res) clearInterval(timer);
-				}, 500);
+				}, 25);
 				return;
 			}
 
@@ -237,9 +249,9 @@
 			if (!url.includes(pathAddon))
 				url += pathAddon;
 
-			p.style.opacity = "0";
+			// p.style.opacity = "0";
 
-			progressText.innerText = url;
+			// progressText.innerText = url;
 			window.location.replace(url)
 		}
 

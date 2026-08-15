@@ -136,7 +136,7 @@ async function openPackage({
 
 		await fs.promises.appendFile(
 			themeFile,
-			fs.readFileSync(path.resolve(pathToEx, main)),
+			await fs.promises.readFile(path.resolve(pathToEx, main)),
 		);
 	}
 	debug.log(

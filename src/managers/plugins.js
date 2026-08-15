@@ -135,7 +135,7 @@ const pl = {
 		).length;
 		setStartupMessage("Discovered " + pl._toLoad + " packages");
 		const loadPromises = loadablePackages.map(
-			async (file) => await pl.load(file),
+			(file) => pl.load(file),
 		);
 		try {
 			await Promise.all(loadPromises);
