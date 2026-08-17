@@ -39,7 +39,7 @@ module.exports = class HookRef {
 		require(this.#file)(...args);
 	}
 
-	get getFile() {
+	getFile() {
 		return this.#file;
 	}
 };

@@ -2,6 +2,7 @@ const path = require("node:path");
 const tar = require("tar");
 const picocolors = require("$/picocolors");
 const fs = require("node:fs");
+const { setStartupMessage } = require("../startupMessage");
 
 async function openPackage({
 	debug,
@@ -26,6 +27,7 @@ async function openPackage({
 	const { main, name, description, author, version, freedeck } = require(
 		cfgPath,
 	);
+	setStartupMessage("Loading" + name +' (' +pluginManager._pluginCache.size  +'/' + pluginManager._toLoad+')');
 	if (!freedeck) {
 		console.error(
 			`${picocolors.blue("Plugins / FDPackage")} >> ${picocolors.red(`Error: ${filePath} does not contain a Freedeck package definition.`)}`,
@@ -139,6 +141,7 @@ async function openPackage({
 			await fs.promises.readFile(path.resolve(pathToEx, main)),
 		);
 	}
+	setStartupMessage("Loaded " + freedeck.title +' (' +pluginManager._pluginCache.size  +'/' + pluginManager._toLoad+')');
 	debug.log(
 		`${picocolors.green(`${freedeck.package === "plugin" ? "Plugin" : "Theme"} loaded: ${freedeck.title} (${name})`)}`,
 		picocolors.blue("Plugins / FDPackage"),

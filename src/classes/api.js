@@ -63,11 +63,11 @@ class Plugin {
 
 	io = {
 		active: false,
-		emit: () => {},
+		emit: () => { },
 	};
 
 	constructor() {
-		this.id = `app.freedeck.pdx${this._id}`;
+		this.id = `fd.pdx${this._id}`;
 		this.name = "Loading...";
 		this.author = "Loading...";
 		this.disabled = false;
@@ -91,7 +91,7 @@ class Plugin {
 	getSetting(id) {
 		const lid = id.toLowerCase();
 		return (
-			this.Settings[lid].value || this.getFromSaveData("_fd_cset_" + lid).value
+			this.Settings[lid]?.value || this.getFromSaveData("_fd_cset_" + lid)?.value || 'null'
 		);
 	}
 
@@ -120,27 +120,6 @@ class Plugin {
 	}
 
 	/**
-	 * Set the plugin's name
-	 * @param {string} name Plugin name
-	 */
-	setName(name) {
-		this.name = name;
-	}
-	/**
-	 * Set the plugin's author
-	 * @param {string} name Plugin author
-	 */
-	setAuthor(author) {
-		this.author = author;
-	}
-	/**
-	 * Set the plugin's ID
-	 * @param {string} name Plugin ID
-	 */
-	setID(id) {
-		this.id = id;
-	}
-	/**
 	 * Set the plugin's disabled
 	 * @param {string} name Plugin disabled
 	 */
@@ -152,14 +131,9 @@ class Plugin {
 	 * Internal function used for backwards/forwards compatibility
 	 */
 	_fd_dropin() {
-		if (this.disabled) return;
-		this.hasInit = this.onInitialize();
-		if (!this.hasInit) {
-			console.log("Plugin didn't initialize?");
-		}
-
-		this.id = this.id.toLowerCase();
 		this.setup();
+
+		if (this.disabled) return;
 
 		let foundPath = `tmp/_${this.id}.fdpackage`;
 		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
@@ -178,13 +152,6 @@ class Plugin {
 		}
 		this._customLog("Ready. Intents: [" + this._intent.join(", ") + "]");
 		this.emit(events.ready);
-	}
-
-	/**
-	 * Internal function used for backwards/forwards compatibility
-	 */
-	onInitialize() {
-		return true;
 	}
 
 	/**
@@ -210,12 +177,12 @@ class Plugin {
 	/**
 	 * This code will be ran once upon initialization
 	 */
-	setup() {}
+	setup() { }
 
 	/**
 	 * @deprecated Backwards/forwards compatability
 	 */
-	exec() {}
+	exec() { }
 
 	/**
 	 * Request an intent for usage of special private APIs.
@@ -332,11 +299,11 @@ class Plugin {
 	}
 
 	/**
-   Internal method for adding hookrefs
-   @param {*} type the HookRef type
-   @param {*} hook File path to hook
-   @param {*} copyTo folder to copy hook to
-   */
+	 Internal method for adding hookrefs
+	 @param {*} type the HookRef type
+	 @param {*} hook File path to hook
+	 @param {*} copyTo folder to copy hook to
+	 */
 	async internalAdd(type, hook, copyTo) {
 		let foundPath = `tmp/_${this.id}.fdpackage`;
 		if (this._usesAsar) foundPath = `tmp/_e_._plugins_${this.id}.Freedeck`;
@@ -347,7 +314,7 @@ class Plugin {
 			return;
 		}
 
-		if(this.hooks.filter((e)=>e.getFile()==hookPath).length < 1) {
+		if (this.hooks.filter((e) => e.getFile() == hookPath).length < 1) {
 			const destination = path.resolve(copyTo, path.dirname(hook));
 
 			if (!fs.existsSync(destination)) {
@@ -357,16 +324,28 @@ class Plugin {
 			const copyOpts = { force: true };
 			copyOpts.recursive =
 				type === HookRef.types.view || type === HookRef.types.dashModule;
-
-			await fs.promises.cp(
-				hookPath,
-				path.resolve(destination, path.basename(hook)),
-				copyOpts,
-			);
+			const targetPath = path.resolve(destination, path.basename(hook));
+			let retries = 5;
+			let success = false;
+			while (retries > 0 && !success) {
+				try {
+					await fs.promises.cp(hookPath, targetPath, copyOpts);
+					success = true;
+				} catch (err) {
+					if (err.code === 'EBUSY' && retries > 1) {
+						retries--;
+						// Wait 50ms before retrying to let the file lock clear
+						await new Promise((resolve) => setTimeout(resolve, 50));
+					} else {
+						throw err;
+					}
+				}
+			}
 		}
 		this.hooks.push(new HookRef(hookPath, type, hook));
 
 	}
+
 
 	/**
 	 * @param {String} file The file you want to import

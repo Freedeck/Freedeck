@@ -118,6 +118,7 @@ const pl = {
 	update: async () => {
 		recordTime("plugins:update-plugin-manager-begin");
 		debug.log("Loading plugins.", "Plugins");
+		setStartupMessage("Loading plugins...");
 		pl._disabled = [];
 		pl._pluginCache.clear();
 		pl._typeCache.clear();
@@ -135,7 +136,10 @@ const pl = {
 		).length;
 		setStartupMessage("Discovered " + pl._toLoad + " packages");
 		const loadPromises = loadablePackages.map(
-			(file) => pl.load(file),
+			(file) => {
+				setStartupMessage("Loading" + file +' (' +pl._pluginCache.size  +'/' + pl._toLoad+')');
+				pl.load(file)
+			},
 		);
 		try {
 			await Promise.all(loadPromises);
@@ -193,7 +197,6 @@ const pl = {
 				"Plugins",
 			);
 		}
-		setStartupMessage("Loaded " + file);
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {

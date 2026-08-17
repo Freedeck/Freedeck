@@ -78,7 +78,7 @@ router.get("/discover", (req, res) => {
 		version,
 		plugins: idList,
 		startupMessage: getStartupMessage(),
-		ready: isCompilerFinished,
+		ready: plugins._toLoad <= plugins._pluginCache.size,
 		deviceStatus: tsm.get("isMobileConnected"),
 		ip,
 		myApp: {
