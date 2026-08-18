@@ -29,7 +29,6 @@ async function openPackage({
 	const cfgPath = path.resolve(pathToEx, "package.json");
 	const pkg = require(cfgPath);
 	const { main, name, author, version, freedeck } = pkg;
-	setStartupMessage("Loading" + name + ' (' + pluginManager._pluginCache.size + '/' + pluginManager._toLoad + ')');
 	if (!metadataVerification(pkg)) return;
 	if (freedeck.package === "plugin") {
 		const entryPath = path.resolve(pathToEx, main);

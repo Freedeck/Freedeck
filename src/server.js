@@ -40,7 +40,7 @@ async function handleSock(socket, types, io) {
 				debug.log(picocolors.red(e));
 			}
 			debug.log(
-				`${picocolors.cyan(`Setup "${handler.name}" (${handler.id})`)} for ${socket.user ? socket.user : socket.id}`,
+				`${picocolors.cyan(`Handling ${handler.name}`)} for ${socket.user ? socket.user : socket.id}`,
 				"Socket.IO",
 			);
 			recordTime(`server:load-handler,${handler.name}`);

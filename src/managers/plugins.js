@@ -137,7 +137,6 @@ const pl = {
 		setStartupMessage("Discovered " + pl._toLoad + " packages");
 		const loadPromises = loadablePackages.map(
 			(file) => {
-				setStartupMessage("Loading" + file +' (' +pl._pluginCache.size  +'/' + pl._toLoad+')');
 				pl.load(file)
 			},
 		);
@@ -149,6 +148,7 @@ const pl = {
 		recordTime("plugins:update-plugin-manager-complete");
 	},
 	load: async (file) => {
+		setStartupMessage("Loading" + file +' (' +pl._pluginCache.size  +'/' + pl._toLoad+')');
 		recordTime(`plugins:load-plugin-begin,${file}`);
 		if (pl._disabled.includes(file)) {
 			pl._disabled = pl._disabled.filter((value) => value !== file);
@@ -197,6 +197,7 @@ const pl = {
 				"Plugins",
 			);
 		}
+
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {

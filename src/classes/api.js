@@ -337,7 +337,6 @@ class Plugin {
 						// Wait 50ms before retrying to let the file lock clear
 						await new Promise((resolve) => setTimeout(resolve, 50));
 					} else {
-						throw err;
 					}
 				}
 			}
