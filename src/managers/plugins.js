@@ -7,7 +7,7 @@ const picocolors = require("$/picocolors");
 const providerPackage = require("@managers/providers/package.js");
 const singleFile = require("@managers/providers/singleFile.js");
 const sourceFolder = require("@managers/providers/sourceFolder.js");
-const asarBundle = require("@managers/providers/default.js");
+const asarBundle = require("@managers/providers/asarBundle.js");
 const { setStartupMessage } = require("./startupMessage");
 
 const tmpLocation = path.resolve("./tmp");
