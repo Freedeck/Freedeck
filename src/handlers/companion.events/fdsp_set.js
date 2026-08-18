@@ -12,7 +12,7 @@ module.exports = ({ io, data }) => {
 		if (allowed && allowed.length > 0 && allowed.includes(data.userValue)) {
 			plugin.setSetting(data.setting.id, data.userValue);
 			plugin.emit(events.settingsChanged, data);
-		} else if (allowed.length == 0) {
+		} else if (!allowed || allowed.length == 0) {
 			plugin.setSetting(data.setting.id, data.userValue);
 			plugin.emit(events.settingsChanged, data);
 		} else {

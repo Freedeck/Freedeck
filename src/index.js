@@ -16,6 +16,10 @@ if (process.argv.includes("--is-dev=true")) {
 	});
 }
 
+const debug = require("$/debug");
+debug.log("Init logger!");
+
+
 const { recordTime } = require("$/timer");
 recordTime("STARTUP");
 
@@ -24,12 +28,16 @@ const fs = require("node:fs");
 
 const { configLocation } = require("@managers/settings");
 
+debug.log("Checking if settings exist yet..");
 if (!fs.existsSync(configLocation)) {
 	console.log(picocolors.bgRed("Settings do not exist yet,running migration."));
 	require("@src/migrations/05-createStartingConfiguration");
 }
 
 recordTime("context-switch:is-server");
+debug.log(picocolors.yellow("Running migrations..."));
 require("./migration");
+debug.log(picocolors.yellow("Running Server..."));
 (async () => require("./server"))();
+debug.log(picocolors.yellow("Running console..."));
 require("$/console.js");

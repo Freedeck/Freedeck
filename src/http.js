@@ -5,9 +5,14 @@ const path = require("node:path");
 
 const picocolors = require("$/picocolors");
 const { recordTime } = require("$/timer");
+const debug = require('$/debug');
+
 const app = express();
+const bonjourInstance = new bonjour();
 const server = http.createServer(app);
 const config = require("@managers/settings");
+const settings = config.settings();
+debug.log("Loaded settings.", "Server / HTTP")
 
 /** ROUTERS */
 const handoffRouter = require("@routers/handoff");
@@ -20,8 +25,8 @@ const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
 
 recordTime("http:required-all-routers");
+debug.log("All routers loaded!", "Server / HTTP")
 
-const settings = config.settings();
 const PORT = settings.port || 5754;
 
 module.exports = {
@@ -44,34 +49,25 @@ app.use("/handoff", handoffRouter);
 
 app.use("/api/upload", uploadRouter);
 
-app.get("/native/*path", (req, res) => {
-	fetch(`http://localhost:5756/${req.url.split("/").slice(2).join("/")}`)
-		.then((res) => res.json())
-		.then((a) => {
-			res.send(a);
-		})
-		.catch((err) => {
-			res.send({ _msg: "NativeBridge is not running.", error: err });
-		});
-});
 recordTime("http:loaded-all-endpoints");
+debug.log("Endpoints created.", "Server / HTTP")
 
 recordTime("http:listen-begin");
-const bonjourInstance = new bonjour();
-let bonjourService;
+debug.log("Beginning listen task", "Server / HTTP")
 server.listen(PORT, "0.0.0.0", () => {
+	debug.log("FD is now listening.", "Server / HTTP")
 	const networkAddresses = require("@managers/networkAddresses");
 	const netAddresses = networkAddresses();
-
+	
 	const localHostName = os.hostname().replace(/\.local\.?$/i, "");
 
-	bonjourService = bonjourInstance.publish({
+	bonjourInstance.publish({
 		name: `Freedeck (${localHostName})`,
 		type: "freedeck",
 		port: Number(PORT),
 		txt: {
 			version: String(thisPackage.version),
-			hostname: localHostName, // ✅ Executed function returning String!
+			hostname: localHostName,
 			addresses: JSON.stringify(netAddresses),
 		},
 	});
