@@ -23,11 +23,6 @@
 			<progress id="progress" value="0" max="100"></progress>
 		</div>
 	</div>
-	<div class="connection">
-		<small id="failure"></small>
-		<input type="text" placeholder="Server URL" value="http://localhost:5754" id="url" />
-		<button id="retry">Retry</button>
-	</div>
 	<img src="./assets/connect.svg" class="icon" />
 	<p class="progress-text">Freedeck is starting...</p>
 	<style>
@@ -160,24 +155,14 @@
 	<script>
 		const p = document.getElementById("progress");
 		const progressText = document.querySelector(".progress-text");
-		const connection = document.querySelector(".connection");
-		const fail = document.querySelector("#failure");
-		const retry = document.querySelector("#retry");
-		const urlEle = document.getElementById("url");
 		const existing = window.location.href.split("/new-connect.html")[0];
 		const urlParameters = new URLSearchParams(window.location.search);
 
 		let pathAddon = "";
-		let url = urlEle.value;
+		let url = "http://localhost:5754";
 
-		url = existing;
 		if (existing.includes("file:")) {
-			url = "http://localhost:5754";
 			pathAddon = "/companion";
-		}
-
-		if(urlParameters.has("settings")) {
-			
 		}
 
 		if (
@@ -196,14 +181,6 @@
 
 		window.splashScreen?.splash();
 
-		retry.onclick = () => {
-			attemptConnection();
-			connection.style.display = "none";
-			p.style.display = "block";
-			progressText.innerText = "Retrying...";
-			urlEle.value = url;
-		};
-
 		setInterval(() => {
 			if (isTryingToConnect) return;
 			attemptConnection();
@@ -217,11 +194,8 @@
 
 			async function webpackStillBuilding() {
 				const res = await fetch(url + "/api/discover").then(async (res) => {
-					connection.style.display = 'none';
 					return res;
 				}).catch((err) => {
-					connection.style.display = "flex";
-					fail.innerText = "Couldn't connect to Freedeck.";
 					return;
 				});
 				const data = await res.json();
@@ -249,10 +223,10 @@
 			if (!url.includes(pathAddon))
 				url += pathAddon;
 
-			// p.style.opacity = "0";
+			p.style.opacity = "0";
 
-			// progressText.innerText = url;
-			window.location.replace(url)
+			progressText.innerText = '';
+			window.location.replace(url);
 		}
 
 		function animateProgressTo(num) {
