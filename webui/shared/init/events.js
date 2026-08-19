@@ -1,5 +1,5 @@
 import { UI } from "../../client/scripts/ui";
-import {handleSoundboard} from "../tiles/soundboard";
+import { handleSoundboard } from "../tiles/soundboard";
 
 export default async function eventsHandler(universal, user) {
 	universal.CLU("Event Handler", "Creating event handlers...");
@@ -29,8 +29,8 @@ export default async function eventsHandler(universal, user) {
 	universal.on(universal.events.keypress, (interaction) => {
 		if (!user.includes("Companion")) return;
 		universal.sendEvent("button", interaction);
-		if(interaction.type) {
-			universal.sendEvent("button-" + interaction.type, interaction)
+		if (interaction.type) {
+			universal.sendEvent("button-" + interaction.type, interaction);
 		}
 	});
 
@@ -51,7 +51,7 @@ export default async function eventsHandler(universal, user) {
 			dat.incoming &&
 			universal.name === "Companion"
 		) {
-			window.UniversalUI.show.showPick(
+			window.universal.ui.show.showPick(
 				`${dat.incoming.appInformation.title} wants to connect to your Freedeck!`,
 				[
 					{
@@ -122,7 +122,7 @@ export default async function eventsHandler(universal, user) {
 		universal._loginAllowed = data;
 	});
 	universal.on(universal.events.default.reload, () => {
-  	UI.showBootLog(false);
+		UI.showBootLog(false);
 		setTimeout(() => {
 			window.location.reload();
 		}, 500);

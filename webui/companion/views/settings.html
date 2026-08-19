@@ -1,14 +1,26 @@
 <link rel="stylesheet" href="/companion/views/styles/settings.css" />
 <h1 class="settings-section-title">
 	<span data-i18n-key="settings.title"></span>
-	<span><img src="/app/shared/icons/settings.svg" width="50" height="50" loading="lazy" /></span>
+	<span
+		><img
+			src="/app/shared/icons/settings.svg"
+			width="50"
+			height="50"
+			loading="lazy"
+	/></span>
 </h1>
 <div id="settings-menu-full">
 	<settings section="generale"></settings>
 	<details>
 		<summary class="settings-section-title">
-			<span><span data-i18n-key="settings.sections.language"></span></span><span><img src="/app/shared/icons/language.svg" width="50" height="50"
-					loading="lazy" /></span>
+			<span><span data-i18n-key="settings.sections.language"></span></span
+			><span
+				><img
+					src="/app/shared/icons/language.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<br />
 		<p data-i18n-key="settings.sections.language.reload"></p>
@@ -17,7 +29,13 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.audio_devices"></span>
-			<span><img src="/app/shared/icons/audio.svg" width="50" height="50" loading="lazy" /></span>
+			<span
+				><img
+					src="/app/shared/icons/audio.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<div class="monitor-devices audio-device-picker"></div>
 		<div class="vb-cables audio-device-picker"></div>
@@ -25,49 +43,95 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.plugins"></span>
-			<span><img src="/app/shared/icons/t_plugin.svg" width="50" height="50" loading="lazy" /></span>
+			<span
+				><img
+					src="/app/shared/icons/t_plugin.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<br />
-		<button id="plst" data-i18n-key="settings.sections.plugins.settings_editor"></button>
+		<button
+			id="plst"
+			data-i18n-key="settings.sections.plugins.settings_editor"
+		></button>
 		<div class="experiments">
 			<ul id="actl" class="btnlist"></ul>
 		</div>
-		<button id="upd" data-i18n-key="settings.sections.plugins.reload_all"></button>
+		<button
+			id="upd"
+			data-i18n-key="settings.sections.plugins.reload_all"
+		></button>
 		<div class="flex-wrap" id="disbl-plg">
 			<h2 data-i18n-key="settings.sections.plugins.disabled.title"></h2>
 			<div id="disbl-list" class="row"></div>
 		</div>
 		<details id="tile-prev">
 			<summary>
-				<strong data-i18n-key="settings.sections.plugins.tile_previews"></strong>
+				<strong
+					data-i18n-key="settings.sections.plugins.tile_previews"
+				></strong>
 			</summary>
 			<div class="btns"></div>
 		</details>
 	</details>
 	<details>
 		<summary class="settings-section-title">
-			<span data-i18n-key="settings.sections.style"></span><span><img src="/app/shared/icons/themes.svg" width="50"
-					height="50" loading="lazy" /></span>
+			<span data-i18n-key="settings.sections.style"></span
+			><span
+				><img
+					src="/app/shared/icons/themes.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<div class="themelist"></div>
 	</details>
 	<details>
 		<summary class="settings-section-title">
-			<span><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
-					class="tag-beta">ALPHA</span></span><span><img src="/app/shared/icons/overlay.svg" width="50" height="50"
-					loading="lazy" /></span>
+			<span
+				><span data-i18n-key="settings.sections.overlay"> </span>&nbsp;<span
+					class="tag-beta"
+					data-i18n-key="alpha"
+				></span></span
+			><span
+				><img
+					src="/app/shared/icons/overlay.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<br />
 		<p data-i18n-key="settings.sections.overlay.message"></p>
 		<center
-			style="display: inline-flex;flex-direction: row;width:100%;align-items:center;justify-content:space-evenly;">
-			<button style="width: 95%;" onclick="freedeckexperimental.overlay()" data-i18n-key="settings.sections.overlay.action"></button>
+			style="
+				display: inline-flex;
+				flex-direction: row;
+				width: 100%;
+				align-items: center;
+				justify-content: space-evenly;
+			"
+		>
+			<button
+				style="width: 95%"
+				onclick="freedeckexperimental.overlay()"
+				data-i18n-key="settings.sections.overlay.action"
+			></button>
 		</center>
 	</details>
 	<details class="experiment-exist soundpack">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.uis"></span>
-			<span><img src="/app/shared/icons/uisounds.svg" width="50" height="50" loading="lazy" /></span>
+			<span
+				><img
+					src="/app/shared/icons/uisounds.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<div>
 			<h4 data-i18n-key="settings.sections.uis.soundpacks"></h4>
@@ -75,8 +139,12 @@
 			<h2 data-i18n-key="settings.sections.uis.soundpacks.current"></h2>
 			<div class="experiment-exist">
 				<h3 id="soundpack-title"></h3>
-				<span>(<span id="soundpack-id"></span>) v<span id="soundpack-version"></span>
-					by <span id="soundpack-author"></span></span>
+				<span
+					>(<span id="soundpack-id"></span>) v<span
+						id="soundpack-version"
+					></span>
+					by <span id="soundpack-author"></span
+				></span>
 			</div>
 			<ul class="uisounds"></ul>
 		</div>
@@ -84,31 +152,64 @@
 	<details>
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.bug"></span>
-			<span><img src="/app/shared/icons/bugs.svg" width="50" height="50" loading="lazy" /></span>
+			<span
+				><img
+					src="/app/shared/icons/bugs.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
-		<textarea name="bgrep" id="bgrep" data-i18n-key="settings.sections.bug.request_generate"></textarea>
-		<p id="hostname">Your hostname here</p>
-		<button id="genru" data-i18n-key="settings.sections.bug.generate_upload"></button>
+		<textarea
+			name="bgrep"
+			id="bgrep"
+			data-i18n-key="settings.sections.bug.request_generate"
+		></textarea>
+		<p id="hostname"></p>
+		<button
+			id="genru"
+			data-i18n-key="settings.sections.bug.generate_upload"
+		></button>
 		<button id="genr" data-i18n-key="settings.sections.bug.generate"></button>
 	</details>
 	<details style="display: none" id="dev-tools">
 		<summary class="settings-section-title">
 			<span data-i18n-key="settings.sections.developer_tools"></span>
-			<span><img src="/app/shared/icons/dev.svg" width="50" height="50" loading="lazy" /></span>
+			<span
+				><img
+					src="/app/shared/icons/dev.svg"
+					width="50"
+					height="50"
+					loading="lazy"
+			/></span>
 		</summary>
 		<div class="flex-wrap-r">
-			<button onclick="restChnglog();window.location.reload()">
+			<button
+				onclick="
+					restChnglog();
+					window.location.reload();
+				"
+			>
 				Reset Changelog Accepted (Reloads)
 			</button>
 			<button onclick="window._makeThanks(true)">Show Current Changelog</button>
 			<button onclick="universal.showBootLog()">Show UI Boot Log</button>
-			<button onclick="universal.sendToast('This is a test', 'Test Notification from Settings')">
+			<button
+				onclick="
+					universal.sendToast(
+						'This is a test',
+						'Test Notification from Settings',
+					)
+				"
+			>
 				Test Notification
 			</button>
 			<button onclick="universal.send(universal.events.default.recompile)">
 				Recompile Webpack bundles
 			</button>
-			<button onclick="location='/new-connect.html?id=Companion&force-fail=1'">
+			<button
+				onclick="location = '/new-connect.html?id=Companion&force-fail=1'"
+			>
 				Force Failure for Connect
 			</button>
 			<button onclick="universal.vopen('demo-pages')">
@@ -121,15 +222,28 @@
 		<br />
 		<details>
 			<summary data-i18n-key="settings.sections.bug.report_reader"></summary>
-			<textarea name="input-bgrep" id="input-bgrep" class="input-bgrep"></textarea>
-			<button id="read-bgrep" data-i18n-key="settings.sections.bug.report_reader.read"></button>
+			<textarea
+				name="input-bgrep"
+				id="input-bgrep"
+				class="input-bgrep"
+			></textarea>
+			<button
+				id="read-bgrep"
+				data-i18n-key="settings.sections.bug.report_reader.read"
+			></button>
 			<div class="report-details"></div>
 		</details>
 	</details>
 	<details>
 		<summary class="settings-section-title">
 			<h1 class="version"></h1>
-			<img src="/assets/logo_big.png" alt="Freedeck Logo" width="75" height="75" loading="lazy" />
+			<img
+				src="/assets/logo_big.png"
+				alt="Freedeck Logo"
+				width="75"
+				height="75"
+				loading="lazy"
+			/>
 		</summary>
 		<center>
 			<span data-i18n-key="settings.footer.by"></span>
@@ -141,7 +255,7 @@
 <script type="module">
 	import "/app/settingsThemes.js";
 	loadThemeListing();
-//				universal.uiSounds.playSound("devmode");
+	//				universal.uiSounds.playSound("devmode");
 
 	function restChnglog() {
 		universal.send(
@@ -151,7 +265,7 @@
 	}
 	window.restChnglog = restChnglog;
 
-/**
+	/**
  * universal.flags.toggle("recompile-tab");
 		universal.reloadRight();
 		*/
@@ -165,7 +279,7 @@
 	Object.keys(locales).forEach((locale) => {
 		const container = document.createElement("div");
 		container.classList.add("theme");
-		if(universal.load("locale") == locale) {
+		if (universal.load("locale") == locale) {
 			container.style.background = "var(--selected-item-bg)";
 			container.style.backgroundSize = "var(--selected-item-bg-size)";
 			container.style.animation = "var(--selected-item-bg-anim)";
@@ -198,17 +312,17 @@
 		seen[req.name] = true;
 
 		const imgEle = document.createElement("img");
-		if(!universal.plugins[plugin].icon) {
+		if (!universal.plugins[plugin].icon) {
 			(async () => {
 				let ex = false;
-				await fetch("/user-data/hooks/" + req.id+"-icon.png").then((r) => {
-					if(r.status == 200) ex = true;
-				})
-				if(ex) {
-					imgEle.src = "/user-data/hooks/" + req.id+"-icon.png";
+				await fetch("/user-data/hooks/" + req.id + "-icon.png").then((r) => {
+					if (r.status == 200) ex = true;
+				});
+				if (ex) {
+					imgEle.src = "/user-data/hooks/" + req.id + "-icon.png";
 				}
 			})();
-			if(req.packageType == "theme") {
+			if (req.packageType == "theme") {
 				imgEle.src = "/app/shared/icons/theme-icon.png";
 			}
 			universal.plugins[plugin].icon = imgEle.src;
@@ -244,7 +358,7 @@
 		a.innerText = "Disable";
 		a.onclick = () => {
 			universal.uiSounds.playSound("int_confirm");
-			window.UniversalUI.show.showPick(
+			window.universal.ui.show.showPick(
 				"Are you sure you want to disable " + req.name + "?",
 				[
 					{ name: "Yes", value: true },
@@ -252,20 +366,24 @@
 				],
 				({ modal, value }) => {
 					if (value.value == true) {
-						const pb = window.UniversalUI.show.progressBar(
-						universal.translationKey("settings.sections.plugins"),
-						"Disabling",
-						0,
-						false,
-					);
+						const pb = window.universal.ui.show.progressBar(
+							universal.translationKey("settings.sections.plugins"),
+							"Disabling",
+							0,
+							false,
+						);
 						universal.on(universal.events.default.disable_plugin, (state) => {
-							pb.setPercent(state.percent)
-							if(state.data) {
-								pb.setStage(universal.translationKey(state.stage).replace("$1", state.data));
+							pb.setPercent(state.percent);
+							if (state.data) {
+								pb.setStage(
+									universal
+										.translationKey(state.stage)
+										.replace("$1", state.data),
+								);
 							} else {
 								pb.setStage(universal.translationKey(state.stage));
 							}
-						})
+						});
 						universal.send(universal.events.default.disable_plugin, req.id);
 					}
 				},
@@ -301,7 +419,8 @@
 		});
 	});
 
-	if(universal._information.disabled.length == 0) document.querySelector("#disbl-plg").style.display='none';
+	if (universal._information.disabled.length == 0)
+		document.querySelector("#disbl-plg").style.display = "none";
 
 	universal._information.disabled.forEach((plugin) => {
 		if (seen[plugin]) return;
@@ -309,10 +428,9 @@
 		const a = document.createElement("button");
 		a.innerText = "Enable " + plugin.split(".disabled")[0].split(".")[0];
 		a.onclick = () => {
-			console.log(plugin);
 			universal.uiSounds.playSound("int_confirm");
 			universal.send(universal.events.default.enable_plugin, plugin);
-			const pb = window.UniversalUI.show.progressBar(
+			const pb = window.universal.ui.show.progressBar(
 				universal.translationKey("settings.sections.plugins"),
 				`Enabling ${universal.cleanHTML(plugin.split(".disabled")[0])}!`,
 				0,
@@ -320,14 +438,14 @@
 			);
 			let p = 0;
 			setInterval(() => {
-				pb.setPercent(p++)
-			},10);
+				pb.setPercent(p++);
+			}, 10);
 		};
 		document.querySelector("#disbl-list").appendChild(a);
 	});
 
 	document.querySelector("#upd").onclick = () => {
-		const pb = window.UniversalUI.show.progressBar(
+		const pb = window.universal.ui.show.progressBar(
 			universal.translationKey("settings.sections.plugins"),
 			"Reloading all plugins, Freedeck will automatically reload.",
 			0,
@@ -335,14 +453,14 @@
 		);
 		let p = 0;
 		setInterval(() => {
-			pb.setPercent(p++)
-		},10);
+			pb.setPercent(p++);
+		}, 10);
 		universal.uiSounds.playSound("int_yes");
 		universal.send(universal.events.default.update_plugins);
 	};
 
 	document.querySelector("#plst").onclick = () => {
-		universal.vopen("settings_plugins")
+		universal.vopen("settings_plugins");
 	};
 
 	document.querySelector(".version").innerText =
@@ -442,7 +560,7 @@
 		bgrep.value = "Generating report...";
 		const rep = universal.ExportReportData();
 		bgrep.value = rep;
-		universal.uiSounds.playSound("int_yes")
+		universal.uiSounds.playSound("int_yes");
 	};
 
 	getElement("#genru").onclick = () => {
@@ -451,16 +569,27 @@
 		bgrep.value = "Generating report...";
 		const rep = universal.ExportReportData();
 		bgrep.value = rep;
-		const formData = new URLSearchParams({ bug_report_data: rep, key: "Freedeck_Hello_Pls_dont_abuse_TY" });
+		const formData = new URLSearchParams({
+			bug_report_data: rep,
+			key: "Freedeck_Hello_Pls_dont_abuse_TY",
+		});
 		fetch("https://content-dl.freedeck.app/upload_bug_report.php", {
 			method: "POST",
-			body: formData
-		}).then((res) => res.text()).then((res) => {
-			const url = new URL("https://github.com/freedeck/freedeck/issues/new");
-			url.searchParams.append("body", "\n-> Auto-created by " + universal._information.version.human+"\n\nBug Report Data (identifier): test4-" + res)
-			window.open(url, "_blank")
+			body: formData,
 		})
-		universal.uiSounds.playSound("uploaded")
+			.then((res) => res.text())
+			.then((res) => {
+				const url = new URL("https://github.com/freedeck/freedeck/issues/new");
+				url.searchParams.append(
+					"body",
+					"\n-> Auto-created by " +
+						universal._information.version.human +
+						"\n\nBug Report Data (identifier): test4-" +
+						res,
+				);
+				window.open(url, "_blank");
+			});
+		universal.uiSounds.playSound("uploaded");
 	};
 
 	getElement("#read-bgrep").onclick = () => {
@@ -474,7 +603,7 @@
 
 	getElement("#erals").onclick = () => {
 		//(NO UNDOING, WILL HAPPEN ON CLICK.)
-		window.UniversalUI.show.showYesNo(
+		window.universal.ui.show.showYesNo(
 			"Are you sure you want to erase the LocalStorage?",
 			"Upon clicking Continue, your LocalStorage will be completely cleared. Most local configuration will be lost, minus your Tiles. THIS IS THE LAST WARNING.",
 			(yes) => {
@@ -485,7 +614,7 @@
 				);
 				window.location.reload();
 			},
-			() => { },
+			() => {},
 		);
 	};
 
@@ -494,9 +623,7 @@
 			? "block"
 			: "none";
 	document.querySelector(".soundpack").style.display =
-		universal.getServerFlags()["app.freedeck.ui_sounds"]
-			? "block"
-			: "none";
+		universal.getServerFlags()["app.freedeck.ui_sounds"] ? "block" : "none";
 	document.querySelector("#soundpack-id").innerText =
 		universal.uiSounds.info.id;
 	document.querySelector("#soundpack-title").innerText =
@@ -611,7 +738,7 @@
 						universal.getServerFlags()["app.freedeck.ui.show_notifications"] ||
 						true,
 					onchange: () => {
-						universal.send(universal.events.default.reload)
+						universal.send(universal.events.default.reload);
 					},
 				},
 				"app.freedeck.ui_sounds": {
@@ -631,17 +758,15 @@
 					type: "checkbox",
 					key: "settings.sections.general.dont_ask",
 					default:
-						universal.getServerFlags()[
-						"app.freedeck.tiles.force_deletion"
-						] || false,
+						universal.getServerFlags()["app.freedeck.tiles.force_deletion"] ||
+						false,
 				},
 				"app.freedeck.sidebar.connect_tab": {
 					type: "checkbox",
 					key: "settings.sections.general.fdc_tab",
 					default:
-						universal.getServerFlags()[
-						"app.freedeck.sidebar.connect_tab"
-						] || false,
+						universal.getServerFlags()["app.freedeck.sidebar.connect_tab"] ||
+						false,
 					onchange: () => {
 						universal.reloadRight();
 					},
@@ -658,16 +783,14 @@
 					type: "checkbox",
 					key: "settings.sections.general.skip_boot_animation",
 					default:
-						universal.getServerFlags()[
-						"app.freedeck.skip_boot_animation"
-						] || false,
+						universal.getServerFlags()["app.freedeck.skip_boot_animation"] ||
+						false,
 				},
 				"app.freedeck.no_preset_tiles": {
 					type: "checkbox",
 					key: "settings.sections.experiments.no_preset_tiles",
 					default:
-						universal.getServerFlags()["app.freedeck.no_preset_tiles"] ||
-						false,
+						universal.getServerFlags()["app.freedeck.no_preset_tiles"] || false,
 				},
 				"app.freedeck.demo.disable_new_repo": {
 					handler: "flag",
@@ -681,9 +804,7 @@
 					type: "checkbox",
 					key: "settings.sections.debug.developer_mode",
 					default:
-						universal.getServerFlags()[
-						"app.freedeck.developer_mode"
-						] || false,
+						universal.getServerFlags()["app.freedeck.developer_mode"] || false,
 					onchange: () => {
 						document.querySelector("#dev-tools").style.display =
 							universal.getServerFlags()["app.freedeck.developer_mode"]

@@ -7,7 +7,8 @@ const picocolors = require("$/picocolors");
 const providerPackage = require("@managers/providers/package.js");
 const singleFile = require("@managers/providers/singleFile.js");
 const sourceFolder = require("@managers/providers/sourceFolder.js");
-const asarBundle = require("@managers/providers/default.js");
+const asarBundle = require("@managers/providers/asarBundle.js");
+const { setStartupMessage } = require("./startupMessage");
 
 const tmpLocation = path.resolve("./tmp");
 const pluginsLocation = path.resolve("./plugins");
@@ -85,10 +86,7 @@ const pl = {
 		const plugin = plList.get(id);
 		if (plugin) {
 			if (plugin.instance?.stop) plugin.instance.stop();
-			debug.log(
-				picocolors.green(`Stop handler ran for ${id}`),
-				"Plugins",
-			);
+			debug.log(picocolors.green(`Stop handler ran for ${id}`), "Plugins");
 			plList.delete(id);
 		}
 		for (const key in require.cache) {
@@ -115,23 +113,33 @@ const pl = {
 			"Plugins",
 		);
 	},
+	_toLoad: 0,
+	_workingOn: "",
 	update: async () => {
 		recordTime("plugins:update-plugin-manager-begin");
 		debug.log("Loading plugins.", "Plugins");
+		setStartupMessage("Loading plugins...");
 		pl._disabled = [];
 		pl._pluginCache.clear();
 		pl._typeCache.clear();
 		const files = fs.readdirSync(pluginsLocation);
-		const loadPromises = files
-			.filter(
-				(file) =>
-					file.endsWith(".Freedeck") ||
-					file.endsWith(".src") ||
-					file.endsWith(".fdr.js") ||
-					file.endsWith(".fdpackage") ||
-					file.endsWith(".disabled"),
-			)
-			.map(async (file) => await pl.load(file));
+		const loadablePackages = files.filter(
+			(file) =>
+				file.endsWith(".Freedeck") ||
+				file.endsWith(".src") ||
+				file.endsWith(".fdr.js") ||
+				file.endsWith(".fdpackage") ||
+				file.endsWith(".disabled"),
+		);
+		pl._toLoad = loadablePackages.filter(
+			(e) => !e.endsWith(".disabled"),
+		).length;
+		setStartupMessage("Discovered " + pl._toLoad + " packages");
+		const loadPromises = loadablePackages.map(
+			(file) => {
+				pl.load(file)
+			},
+		);
 		try {
 			await Promise.all(loadPromises);
 		} catch (er) {
@@ -140,6 +148,7 @@ const pl = {
 		recordTime("plugins:update-plugin-manager-complete");
 	},
 	load: async (file) => {
+		setStartupMessage("Loading" + file +' (' +pl._pluginCache.size  +'/' + pl._toLoad+')');
 		recordTime(`plugins:load-plugin-begin,${file}`);
 		if (pl._disabled.includes(file)) {
 			pl._disabled = pl._disabled.filter((value) => value !== file);
@@ -188,6 +197,7 @@ const pl = {
 				"Plugins",
 			);
 		}
+
 		recordTime(`plugins:load-plugin-complete,${file}`);
 	},
 	types: () => {

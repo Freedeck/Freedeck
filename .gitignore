@@ -9,3 +9,5 @@ user-data/
 plugins/*
 tmp/
 
+dist
+webpack

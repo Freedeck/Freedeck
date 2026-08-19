@@ -29,12 +29,14 @@ async function load(soundpack) {
 		reload();
 	});
 	universal.CLU("Boot / UI Sounds", "Fetched manifest");
+	/** @type {UISoundpack} */
 	const data = await res.json();
 	uiSoundEngine.sounds = data.sounds;
 	uiSoundEngine.info = data.info;
 	return true;
 }
 
+/** @param {UISound} name */
 async function playSound(name) {
 	if (!uiSoundEngine.enabled()) return;
 	return universal.audioClient.play({
@@ -46,6 +48,7 @@ async function playSound(name) {
 	});
 }
 
+/** @type {UISoundEngine} */
 const uiSoundEngine = {
 	enabled: () => universal.getServerFlags()["app.freedeck.ui_sounds"],
 	currentSoundpack: "futuristic.soundpack",

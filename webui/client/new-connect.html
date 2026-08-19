@@ -13,7 +13,7 @@
 	<meta name="apple-mobile-web-app-title" content="Freedeck" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<meta name="msapplication-TileColor" content="#00b3ff" />
-	<title>Freedeck is connecting...</title>
+	<title>Freedeck</title>
 </head>
 
 <body>
@@ -23,12 +23,7 @@
 			<progress id="progress" value="0" max="100"></progress>
 		</div>
 	</div>
-	<div class="connection">
-		<small id="failure">Connection Settings</small>
-		<input type="text" value="http://localhost:5754" id="url" />
-		<button id="retry">Retry</button>
-	</div>
-	<img src="./assets/logo_big.png" class="icon" />
+	<img src="./assets/connect.svg" class="icon" />
 	<p class="progress-text">Freedeck is starting...</p>
 	<style>
 		@import url("style/fonts.css");
@@ -36,7 +31,7 @@
 		button {
 			background-color: #17212a;
 			border: 1px solid rgba(255, 255, 255, 0.1);
-
+			width: max-content;
 			color: white;
 			border-radius: 1.25rem;
 			padding: 0.5rem;
@@ -49,18 +44,29 @@
 		}
 
 		.connection {
-			position: fixed;
-			bottom: 50%;
-			left: 50%;
-			transform: translateX(-50%);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 			background-color: #17212a;
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			border-radius: 1.5rem;
-			padding: 0.5rem;
+			border-radius: 1.25rem;
+			animation: in 1s;
 			display: none;
 			text-align: center;
+			z-index: 2;
+			align-items: center;
 			flex-direction: column;
 			gap: 5px;
+		}
+
+		@keyframes in {
+			from {
+				transform: translateX(100%);
+			}
+			to {
+				transform: translateX(0);
+			}
 		}
 
 		.progress-text {
@@ -75,6 +81,7 @@
 			color: white;
 			border: 0;
 			border-radius: 1.5rem;
+			width: max-content;
 			padding: 5px;
 			transition-duration: 0.125s;
 		}
@@ -125,7 +132,7 @@
 			background-color: #17212a;
 			color: white;
 			font-family:
-				Rethink Sans,
+				Rethink Sans for Connect,
 				Arial,
 				sans-serif;
 			display: flex;
@@ -148,19 +155,13 @@
 	<script>
 		const p = document.getElementById("progress");
 		const progressText = document.querySelector(".progress-text");
-		const connection = document.querySelector(".connection");
-		const fail = document.querySelector("#failure");
-		const retry = document.querySelector("#retry");
-		const urlEle = document.getElementById("url");
 		const existing = window.location.href.split("/new-connect.html")[0];
 		const urlParameters = new URLSearchParams(window.location.search);
 
 		let pathAddon = "";
-		let url = urlEle.value;
+		let url = "http://localhost:5754";
 
-		url = existing;
 		if (existing.includes("file:")) {
-			url = "http://localhost:5754";
 			pathAddon = "/companion";
 		}
 
@@ -177,29 +178,8 @@
 		}
 
 		let isTryingToConnect = false;
-		let isErrored = false;
-		if (
-			urlParameters.has("force-fail") &&
-			urlParameters.get("force-fail") === "true"
-		)
-			isErrored = true;
-
-		if (isErrored) {
-			connection.style.display = "flex";
-			p.style.display = "none";
-			fail.innerText = "Force-failed.";
-			progressText.innerText = "";
-		}
 
 		window.splashScreen?.splash();
-
-		retry.onclick = () => {
-			attemptConnection();
-			connection.style.display = "none";
-			p.style.display = "block";
-			progressText.innerText = "Retrying...";
-			urlEle.value = url;
-		};
 
 		setInterval(() => {
 			if (isTryingToConnect) return;
@@ -213,19 +193,14 @@
 			animateProgressTo(0);
 
 			async function webpackStillBuilding() {
-				const res = await fetch(url + "/api/discover").catch((err) => {
-					connection.style.display = "flex";
-					p.style.display = "none";
-					fail.innerText = "Error while fetching status.";
-					progressText.innerText = "";
-					isErrored = true;
+				const res = await fetch(url + "/api/discover").then(async (res) => {
+					return res;
+				}).catch((err) => {
 					return;
 				});
 				const data = await res.json();
-				const isBuilding = data.webpackStatus != "ready";
-				progressText.innerText = isBuilding
-					? "Freedeck is starting..."
-					: "Freedeck is ready!";
+				const isBuilding = !data.ready;
+				progressText.innerText = data.startupMessage
 				animateProgressTo(50);
 				return isBuilding;
 			}
@@ -237,7 +212,7 @@
 						res = await webpackStillBuilding();
 					} catch(err) {res = true}
 					if (!res) clearInterval(timer);
-				}, 500);
+				}, 250);
 				return;
 			}
 
@@ -250,8 +225,8 @@
 
 			p.style.opacity = "0";
 
-			progressText.innerText = url;
-			window.location.replace(url)
+			progressText.innerText = '';
+			window.location.replace(url);
 		}
 
 		function animateProgressTo(num) {

@@ -7,7 +7,7 @@ const router = express.Router();
 
 const paths = {
 	userData: path.resolve("user-data"),
-	userData_bundles: path.resolve("user-data/bundles"),
+	userData_bundles: path.resolve("webpack"),
 	userData_dashModules: path.resolve("user-data/dash-modules"),
 	userData_hooks: path.resolve("user-data/hooks"),
 	userData_icons: path.resolve("user-data/icons"),

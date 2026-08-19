@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="/companion/views/styles/marketplace.css" />
+<link rel="stylesheet" href="/companion/views/styles/marketplace.css" onload="document.querySelector('.loading-screen').style.display='flex'"/>
 
-<div class="loading-screen">
+<div class="loading-screen" style="display:none;">
 	<i style="color:var(--text-color-secondary)">Marketplace is loading...</i>
 	<div class="loader"></div>
 	<h2 class="message">Setting up...</h2>
 </div>
-<div class="load-upon-finish">
+<div class="load-upon-finish" style="display: none;">
 	<div class="main-content">
 		<ul class="repositories"></ul>
 		<div class="marketplace">
@@ -144,7 +144,7 @@
 				}
 				const file = document.createElement("button");
 				const downloadPlugin = () => {
-					const pb = window.UniversalUI.show.progressBar(
+					const pb = window.universal.ui.show.progressBar(
 						universal.translationKey("marketplace.download.action").replace("$1", req.title),
 						universal.translationKey("marketplace.download.stage_init").replace("$1", data.title).replace("$2", repo.channel),
 						0,
@@ -176,7 +176,7 @@
 									"marketplace.downgrade_fallback",
 								);
 						}
-						window.UniversalUI.show.showYesNo(
+						window.universal.ui.show.showYesNo(
 							universal.translationKey("marketplace.message_warning_prefix") +
 							str +
 							" " +
@@ -412,7 +412,7 @@
 	}
 
 	function selectModal(opt, cb, submit) {
-		const modal = window.UniversalUI.show.showPick(
+		const modal = window.universal.ui.show.showPick(
 			opt.title,
 			opt.options,
 			cb,

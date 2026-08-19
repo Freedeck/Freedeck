@@ -4,7 +4,6 @@ import { openViewTop, closeAllViews } from "./editor/viewEngine.js";
 import { loadData } from "./editor/data.js";
 import "./sidebar.js";
 import "./uploadsHandler.js";
-import "./editor/loader.js";
 import "./contextMenu.js";
 import { makeThanks } from "./changelog/create.js";
 import Sound from "./editor/viewLogic/sound.js";
@@ -15,10 +14,12 @@ import Profile from "./editor/viewLogic/profile.js";
 import "./dragHandler.js";
 import { translationKey } from "../../shared/localization.js";
 import EditorView from "./classes/EditorView.js";
-import { setupReactivity } from "./editor/reactivity.js";
-const leftSidebar = document.querySelector(".sidebar");
 
 await universal.init("Companion");
+
+import "./editor/loader.js";
+import { setupReactivity } from "./editor/reactivity.js";
+const leftSidebar = document.querySelector(".sidebar");
 
 if (universal.load("has_setup") === "false") {
 	universal.ctx.destructiveView("setup_00_language");
@@ -72,12 +73,12 @@ const editorBuiltInViews = [
 		"editor.sections.no_action.macro",
 		"/app/shared/icons/t_macro.svg",
 	),
-	new EditorView(
-		"system",
-		new System(),
-		"editor.sections.no_action.app_volume",
-		"/app/shared/icons/t_app_volume.svg",
-	),
+	// new EditorView(
+	// 	"system",
+	// 	new System(),
+	// 	"editor.sections.no_action.app_volume",
+	// 	"/app/shared/icons/t_app_volume.svg",
+	// ),
 	new EditorView(
 		"profiles",
 		new Profile(),
@@ -88,7 +89,7 @@ const editorBuiltInViews = [
 
 const pluginListing = document.querySelector(".plugin-view-listing");
 for (const view of editorBuiltInViews) {
-	console.log(`Setting up ${view.id}`);
+	universal.CLU("Editor", `Setting up ${view.id}`);
 	const viewButton = document.createElement("button");
 	const keyInfo = document.createElement("p");
 	const keyIcon = document.createElement("img");
@@ -98,12 +99,15 @@ for (const view of editorBuiltInViews) {
 	keyIcon.loading = "lazy";
 	viewButton.dataset.view_id = view.id;
 	viewButton.onclick = (e) => {
+		document.querySelector("#none-only").style.display = "none";
 		editorBackButton.style.display = "flex";
-		openViewTop(view.logic.view);
 		view.logic.onFirstSetup({
 			interactionData: JSON.parse(
 				editorButton.getAttribute("data-interaction"),
 			),
+		});
+		view.logic.forwardRunningEvent(view.logic.types[0], () => {}, {
+			interactionData: {},
 		});
 		e.preventDefault();
 	};
@@ -157,9 +161,7 @@ function editTile(e) {
 	if (!interactionData.type.startsWith("fd.")) {
 		editorBuiltInViews[1].logic.forwardRunningEvent(
 			interactionData.type,
-			() => {
-				openViewTop("plugins");
-			},
+			() => {},
 			{ interactionData },
 		);
 	}
@@ -185,20 +187,20 @@ function editTile(e) {
 		editorBackButton.style.display = "none";
 		document.querySelector("#select-plugin-back").style.display = "none";
 	} else {
+		document.querySelector("#none-only").style.display = "none";
+		for (const v of document.querySelectorAll(".plugin-view")) {
+			v.style.display = "none";
+		}
 		editorBackButton.style.display = "flex";
 		for (const v of editorBuiltInViews) {
-			v.logic.forwardRunningEvent(
-				interactionData.type,
-				() => {
-					openViewTop(v.logic.view);
-				},
-				{ interactionData },
-			);
+			v.logic.forwardRunningEvent(interactionData.type, () => {}, {
+				interactionData,
+			});
 		}
 	}
 
 	editorDiv.style.animationName = "editor-pull-down";
-	universal.keys.parentElement.style.transform = "translate(-50%, -115%)";
+	universal.keys.parentElement.classList.add("editing");
 	toggleSidebarButton.style.display = "none";
 
 	setupReactivity(interactionData, e.srcElement.dataset.name);
@@ -211,140 +213,14 @@ universal.editTile = editTile;
 const editorBackButton = document.querySelector("#editor-back");
 editorBackButton.onclick = () => {
 	editorBackButton.style.display = "none";
-	openViewTop("none");
+	document.querySelector("#dynamic-view-container").style.display = "none";
 	const pvs = document.querySelectorAll(".plugin-view");
 	if (pvs.length > 0) {
 		for (const v of pvs) {
 			v.style.display = "none";
 		}
 	}
-};
-
-window.UniversalUI = {
-	show: {
-		showEditModal: (title, description, callback) => {
-			const modal = universal.ui.makeGenericModal(
-				title,
-				"",
-				[
-					{
-						text: "Submit",
-						onclick: () => {
-							const returned = callback({
-								value: modalInput.value,
-								feedback: modalFeedback,
-							});
-							if (returned === false) return;
-							modal.close();
-						},
-					},
-				],
-				false,
-			);
-			const modalContent = modal.content;
-
-			const modalFeedback = document.createElement("div");
-			modalFeedback.classList.add("modalFeedback");
-			modalContent.appendChild(modalFeedback);
-
-			const modalInput = document.createElement("input");
-			modalInput.type = "text";
-			modalInput.placeholder = description;
-			modalInput.classList.add("modalInput_text");
-			modalContent.appendChild(modalInput);
-
-			modal.show();
-			return modal;
-		},
-		showPick(title, listContent, callback, extraM = "", closable = true) {
-			const modal = UI.makeGenericModal(
-				title,
-				extraM,
-				[
-					{
-						text: "Save",
-						onclick: () => {
-							const selectedItem = modalList.options[modalList.selectedIndex];
-							const value = JSON.parse(selectedItem.value);
-							const returned = callback({
-								modal,
-								value,
-								modalFeedback,
-								modalContent,
-							});
-							if (returned === false) return;
-							modal.close();
-						},
-					},
-				],
-				closable,
-			);
-
-			const modalContent = modal.content;
-
-			const modalFeedback = document.createElement("div");
-			modalFeedback.classList.add("modalFeedback");
-
-			const modalList = document.createElement("select");
-			modalList.className = "modalList";
-			modalList.style.marginBottom = "20px";
-
-			modalContent.appendChild(modalFeedback);
-			modalContent.appendChild(modalList);
-
-			for (const item of listContent) {
-				const modalItem = document.createElement("option");
-				modalItem.className = "modalItem";
-				modalItem.setAttribute("value", JSON.stringify(item));
-				modalItem.innerText = item.name || item.display;
-				modalList.appendChild(modalItem);
-			}
-
-			universal.uiSounds.playSound("int_prompt");
-			modal.show();
-			return modal;
-		},
-		progressBar(title, stage, startPercent, closable = true) {
-			const modal = universal.UI.makeGenericModal(
-				title,
-				`<p class="pb-stage"></p><progress class="pb-progress" max="100"></progress>`,
-				[],
-				closable,
-			);
-			const setStage = (stage) => {
-				modal.content.querySelector(".pb-stage").textContent = stage;
-			}
-			const setPercent = (value) => {
-				modal.content.querySelector(".pb-progress").value = value;
-			}
-			setStage(stage);
-			setPercent(startPercent);
-			console.log("PB",modal)
-			modal.show();
-			universal.uiSounds.playSound("int_confirm");
-			return {...modal, setStage, setPercent};
-		},
-		showYesNo(title, content, yesCallback, closable = true) {
-			const modal = universal.UI.makeGenericModal(
-				title,
-				content,
-				[
-					{
-						text: "Continue",
-						onclick: () => {
-							modal.close();
-							yesCallback();
-						},
-					},
-				],
-				closable,
-			);
-
-			modal.show();
-			universal.uiSounds.playSound("int_confirm");
-			return modal;
-		},
-	},
+	openViewTop("none");
 };
 
 window.onclick = (e) => {

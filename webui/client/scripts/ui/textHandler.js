@@ -1,14 +1,10 @@
 /**
- * Create a text-only FD button.
- * @param {*} snd Freedeck Button Config
- * @param {*} keyObject Key Object
- * @param {*} raw Raw Key Data
+ * Create a "text" Tile.
+ * @param {Tile} snd Freedeck Button Config
+ * @param {DisplayedTile} keyObject Key Object
+ * @param {RawTile} raw Raw Key Data
  */
 export default function (snd, keyObject, raw) {
 	const k = Object.keys(raw)[0];
-	keyObject.innerHTML = `<div class="button-text"><p>${sanitizeXSS(k)}</div></p>`;
+	keyObject.innerHTML = `<div class="button-text"><p>${universal.cleanHTML(k)}</p></div>`;
 }
-
-const sanitizeXSS = (str) => {
-	return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};

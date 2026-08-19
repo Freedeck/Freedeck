@@ -16,7 +16,7 @@ const eventNames = {
 
 	default: {
 		notif: "dN",
-
+		close: "dDAC",
 		reload: "dR",
 		reload_tiles: "dRS",
 		recompile: "dC",

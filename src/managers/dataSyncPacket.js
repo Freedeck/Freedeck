@@ -1,69 +1,69 @@
 const rawPacketData = {};
-const crypto = require('node:crypto');
+const crypto = require("node:crypto");
 
 class DSPChannel {
-  uuid;
-  name;
-  updateSelf = false;
-  outgoing = [];
-  incoming = [];
+	uuid;
+	name;
+	updateSelf = false;
+	outgoing = [];
+	incoming = [];
 
-  constructor(uuid, name, updateSelf) {
-    this.uuid = uuid;
-    this.name = name;
-    this.updateSelf = updateSelf;
-  }
+	constructor(uuid, name, updateSelf) {
+		this.uuid = uuid;
+		this.name = name;
+		this.updateSelf = updateSelf;
+	}
 
-  addOutgoing(out) {
-    this.outgoing.push(out);
-  }
+	addOutgoing(out) {
+		this.outgoing.push(out);
+	}
 
-  addIncoming(_in) {
-    this.incoming.push(_in);
-  }
+	addIncoming(_in) {
+		this.incoming.push(_in);
+	}
 
-  update() {
-    const snapshot = {
-      uuid: this.uuid,
-      name: this.name,
-      outgoing: [...this.outgoing],
-      incoming: [...this.incoming]
-    };
+	update() {
+		const snapshot = {
+			uuid: this.uuid,
+			name: this.name,
+			outgoing: [...this.outgoing],
+			incoming: [...this.incoming],
+		};
 
-    this.outgoing = [];
-    this.incoming = [];
+		this.outgoing = [];
+		this.incoming = [];
 
-    return snapshot; 
-  }
+		return snapshot;
+	}
 }
 
 const DSP = {
-  _data: rawPacketData,
-  _lastUpdate: -1,
-  updaters: [],
-  updated: [],
-  update() { 
-    const nonce = crypto.randomUUID();
-    this._lastUpdate = performance.now();
-    
-    this.updated = []; 
+	_data: rawPacketData,
+	_lastUpdate: -1,
+	updaters: [],
+	updated: [],
+	update() {
+		const nonce = crypto.randomUUID();
+		this._lastUpdate = performance.now();
 
-    for(const channel of this.updaters) {
-      this.updated.push(channel.update());
-    }
+		this.updated = [];
 
-    return {
-      nonce,
-      updated: this._lastUpdate,
-      channels: this.updated
-    };
-  },
+		for (const channel of this.updaters) {
+			this.updated.push(channel.update());
+		}
 
-  registerChannel(channel) {
-    if (channel.updateSelf) {
-      this.updaters.push(channel);
-    }
-  }
+		return {
+			nonce,
+			updated: this._lastUpdate,
+			channels: this.updated,
+		};
+	},
+
+	registerChannel(channel) {
+		if (channel.updateSelf) {
+			this.updaters.push(channel);
+		}
+	},
 };
 
 DSP._channel_fd0 = new DSPChannel(0, "low_speed", true);

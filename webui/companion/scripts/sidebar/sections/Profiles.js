@@ -9,7 +9,7 @@ const style = new SidebarSection(
 const newBtn = new SidebarSvgButton(
 	"",
 	() => {
-		window.UniversalUI.show.showEditModal(
+		window.universal.ui.show.showEditModal(
 			translationKey("sidebars.left.style.folders.popups.new"),
 			translationKey("sidebars.left.style.folders.popups.new.description"),
 			({ value, feedback }) => {
@@ -48,7 +48,7 @@ const newBtn = new SidebarSvgButton(
 const dupBtn = new SidebarSvgButton(
 	"",
 	() => {
-		window.UniversalUI.show.showEditModal(
+		window.universal.ui.show.showEditModal(
 			translationKey("sidebars.left.style.folders.popups.duplicate"),
 			translationKey(
 				"sidebars.left.style.folders.popups.duplicate.description",
@@ -72,7 +72,7 @@ const dupBtn = new SidebarSvgButton(
 const importBtn = new SidebarSvgButton(
 	"",
 	() => {
-		window.UniversalUI.show.showEditModal(
+		window.universal.ui.show.showEditModal(
 			translationKey("sidebars.left.style.folders.popups.import"),
 			translationKey("sidebars.left.style.folders.popups.import.description"),
 			({ value, feedback }) => {
@@ -84,7 +84,7 @@ const importBtn = new SidebarSvgButton(
 						return false;
 					}
 					const data = JSON.parse(value);
-					window.UniversalUI.show.showEditModal(
+					window.universal.ui.show.showEditModal(
 						translationKey("sidebars.left.style.folders.popups.import"),
 						translationKey(
 							"sidebars.left.style.folders.popups.import.ask_name",

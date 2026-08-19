@@ -1,20 +1,81 @@
 import { loadData } from "../data.js";
 import EditorViewLogic from "./EditorViewLogic.js";
 
-const audioFile = document.querySelector("#audio-file");
 const type = document.querySelector("#type");
 const editorButton = document.querySelector("#editor-btn");
-const editorAudiofileView = document.querySelector(".section-audiofile");
-const editorControlView = document.querySelector(".section-control");
 
-const selector_audiofile = document.querySelector("#section-t_audio");
-const selector_control = document.querySelector("#section-t_ctrl");
+const mainContainer = document.createElement("div");
+mainContainer.classList.add("flex-wrap-r", "alc", "fill");
 
-const true_selector_control = document.querySelector(
-	"#section-control-selector",
+const sectionsContainer = document.createElement("div");
+sectionsContainer.classList.add("flex-wrap", "aud-container", "aud-info");
+
+const editorAudiofileView = document.createElement("div");
+editorAudiofileView.classList.add("section-audiofile");
+
+const titleDescContainer = document.createElement("span");
+titleDescContainer.classList.add("flex-wrap", "no-gap");
+
+const editorAudiofileTitle = document.createElement("h3");
+const editorAudiofileDesc = document.createElement("p");
+titleDescContainer.append(editorAudiofileTitle, editorAudiofileDesc);
+
+const audioFile = document.createElement("small");
+audioFile.id = "audio-file";
+audioFile.classList.add("information-border", "flex-wrap-r", "alc", "aud-item");
+
+const quickUpload = document.createElement("button");
+quickUpload.classList.add("button", "companion-wide-button");
+
+const upload = document.createElement("button");
+upload.classList.add("button", "companion-wide-button");
+
+editorAudiofileView.append(titleDescContainer, audioFile, quickUpload, upload);
+
+const editorControlView = document.createElement("div");
+editorControlView.classList.add("section-control");
+
+const controlTitleDescContainer = document.createElement("span");
+controlTitleDescContainer.classList.add("flex-wrap", "no-gap");
+
+const editorControlTitle = document.createElement("h3");
+const editorControlDesc = document.createElement("p");
+controlTitleDescContainer.append(editorControlTitle, editorControlDesc);
+
+const true_selector_control = document.createElement("select");
+editorControlView.append(controlTitleDescContainer, true_selector_control);
+
+sectionsContainer.append(editorAudiofileView, editorControlView);
+
+const pickBtnContainer = document.createElement("div");
+pickBtnContainer.classList.add("flex-wrap", "aud-container", "aud-info");
+
+function make(id, src, alt) {
+	const image = document.createElement("img");
+	image.id = id;
+	image.src = src;
+	image.alt = alt;
+	image.width = "50";
+	image.loading = "lazy";
+	return image;
+}
+
+const pickForAudioFile = make(
+	"section-t_audio",
+	"/app/shared/icons/t_audio.svg",
+	"Audio File",
 );
+const pickForControl = make(
+	"section-t_ctrl",
+	"/app/shared/icons/audio.svg",
+	"Audio Control",
+);
+pickBtnContainer.append(pickForAudioFile, pickForControl);
 
-selector_audiofile.onclick = () => {
+mainContainer.append(sectionsContainer, pickBtnContainer);
+
+// Inter-view toggle behavior
+pickForAudioFile.onclick = () => {
 	editorAudiofileView.style.display = "flex";
 	editorControlView.style.display = "none";
 	const intr = JSON.parse(editorButton.getAttribute("data-interaction"));
@@ -22,7 +83,7 @@ selector_audiofile.onclick = () => {
 	editorButton.setAttribute("data-interaction", JSON.stringify(intr));
 };
 
-selector_control.onclick = () => {
+pickForControl.onclick = () => {
 	editorAudiofileView.style.display = "none";
 	editorControlView.style.display = "flex";
 	true_selector_control.selectedIndex = 0;
@@ -30,7 +91,6 @@ selector_control.onclick = () => {
 };
 
 const featureFlags = [true, false, false, false];
-
 const availableTypes = [
 	["fd.stopall", {}, "button"],
 	[
@@ -49,6 +109,7 @@ const availableTypes = [
 		"slider",
 	],
 ];
+
 true_selector_control.onchange = (e) => {
 	const i = true_selector_control.selectedIndex;
 	if (!featureFlags[i]) {
@@ -59,12 +120,11 @@ true_selector_control.onchange = (e) => {
 		true_selector_control.selectedIndex = 0;
 		return;
 	}
-	const type = availableTypes[i];
-	// This probably isn't the best... but we'll leave it for now.
+	const typeDef = availableTypes[i];
 	const intr = JSON.parse(editorButton.getAttribute("data-interaction"));
-	intr.type = type[0];
-	intr.data = { ...intr.data, ...type[1] };
-	intr.renderType = type[2];
+	intr.type = typeDef[0];
+	intr.data = { ...intr.data, ...typeDef[1] };
+	intr.renderType = typeDef[2];
 	editorButton.setAttribute("data-interaction", JSON.stringify(intr));
 };
 
@@ -79,8 +139,52 @@ class Sound extends EditorViewLogic {
 			"fd.sb.vol.mon",
 		);
 
+		this.setSectionTitleKey("editor.sections.no_action.soundboard");
+		this.setSectionDescriptionKey("editor.sections.soundboard.description");
+
+		this.setElementsToAdd(() => {
+			return [mainContainer];
+		});
+
 		this.setOnRun(({ interactionData }) => {
-			audioFile.innerText = interactionData.data.file;
+			// Dynamic translation refresh when running the component view layout safely
+			editorAudiofileTitle.textContent = universal.translationKey(
+				"editor.sections.soundboard.audiofile",
+			);
+			editorAudiofileDesc.textContent = universal.translationKey(
+				"editor.sections.soundboard.action",
+			);
+			quickUpload.textContent = universal.translationKey(
+				"editor.sections.soundboard.quickupload",
+			);
+			upload.textContent = universal.translationKey(
+				"editor.sections.soundboard.change",
+			);
+
+			editorControlTitle.textContent = universal.translationKey(
+				"editor.sections.soundboard.control",
+			);
+			editorControlDesc.textContent = universal.translationKey(
+				"editor.sections.soundboard.control_action",
+			);
+
+			// Refresh dynamic dropdown options sequentially
+			true_selector_control.innerHTML = "";
+			true_selector_control.append(
+				this.makeOption("editor.sections.soundboard.control.selector.stopall"),
+				this.makeOption("editor.sections.soundboard.control.selector.pitch"),
+				this.makeOption(
+					"editor.sections.soundboard.control.selector.output_volume",
+				),
+				this.makeOption(
+					"editor.sections.soundboard.control.selector.monitor_volume",
+				),
+			);
+
+			if (interactionData.data && interactionData.data.file) {
+				audioFile.innerText = interactionData.data.file;
+			}
+
 			if (interactionData.type === "fd.sound") {
 				editorAudiofileView.style.display = "flex";
 				editorControlView.style.display = "none";
@@ -88,8 +192,8 @@ class Sound extends EditorViewLogic {
 				editorAudiofileView.style.display = "none";
 				editorControlView.style.display = "flex";
 				let i = 0;
-				for (const [type, ,] of availableTypes) {
-					if (type === interactionData.type) {
+				for (const [typeOption] of availableTypes) {
+					if (typeOption === interactionData.type) {
 						true_selector_control.selectedIndex = i;
 					}
 					i++;
@@ -108,62 +212,80 @@ class Sound extends EditorViewLogic {
 				JSON.stringify(interactionData),
 			);
 			audioFile.innerText = "Unset, please change!";
-			type.value = "fd.sound";
+			if (type) type.value = "fd.sound";
 		});
+
+		// Encapsulate upload click hooks inside the module lifecycle scope safely
+		this.setupAssetActions();
+	}
+
+	makeOption(k) {
+		const o = document.createElement("option");
+		o.innerText = universal.translationKey(k);
+		return o;
+	}
+
+	setupAssetActions() {
+		upload.onclick = () => {
+			const sidebarEl = document.querySelector("#sidebar");
+			if (sidebarEl) sidebarEl.style.right = "-20%";
+			universal.uiSounds.playSound("int_confirm");
+			const ito = JSON.parse(editorButton.dataset.interaction);
+
+			universal.listenForOnce("library_load", () => {
+				universal.sendEvent("library_request", "sound");
+			});
+
+			universal.listenForOnce("library_paint", () => {
+				const preselectedElement = document.querySelector(
+					`.upload[data-name='${ito.data.file}']`,
+				);
+				if (ito.data.file && preselectedElement)
+					preselectedElement.classList.add("glow");
+
+				for (const uploadedIcon of document.querySelectorAll(
+					".uploads-0 .upload",
+				)) {
+					uploadedIcon.onclick = () => {
+						for (const glowingIcon of document.querySelectorAll(".glow")) {
+							glowingIcon.classList.remove("glow");
+						}
+						uploadedIcon.classList.add("glow");
+
+						ito.data.file = uploadedIcon.dataset.name;
+						ito.data.path = "/sounds/";
+						editorButton.setAttribute("data-interaction", JSON.stringify(ito));
+						loadData(ito.data);
+
+						const fileDataEl = document.querySelector("#file.editor-data");
+						const pathDataEl = document.querySelector("#path.editor-data");
+						if (fileDataEl) fileDataEl.value = uploadedIcon.dataset.name;
+						if (pathDataEl) pathDataEl.value = "/sounds/";
+
+						audioFile.innerText = uploadedIcon.dataset.name;
+						universal.uiSounds.playSound("int_yes");
+					};
+				}
+			});
+
+			universal.listenForOnce("library_save", () => {
+				const sidebarEl = document.querySelector("#sidebar");
+				if (sidebarEl) sidebarEl.style.right = "0";
+			});
+			universal.vopen("library");
+		};
+
+		quickUpload.onclick = () => {
+			universal.uiSounds.playSound("int_confirm");
+			universal.listenForOnce("library_load", () => {
+				if (typeof universal._Uploads_New === "function") {
+					universal._Uploads_New(1, true);
+				}
+				universal.sendEvent("library_request", "sound");
+			});
+			universal.vopen("library");
+		};
 	}
 }
-
-document.querySelector("#upload-sound").onclick = () => {
-	document.querySelector("#sidebar").style.right = "-20%";
-	universal.uiSounds.playSound("int_confirm");
-	const ito = JSON.parse(editorButton.dataset.interaction);
-	universal.listenForOnce("library_load", () => {
-		universal.sendEvent("library_request", "sound")
-	});
-	universal.listenForOnce("library_paint", () => {
-		const preselectedElement = document.querySelector(
-			`.upload[data-name='${ito.data.file}']`,
-		);
-		if (ito.data.file && preselectedElement)
-			preselectedElement.classList.add("glow");
-		for (const uploadedIcon of document.querySelectorAll(
-			".uploads-0 .upload",
-		)) {
-			uploadedIcon.onclick = () => {
-				for (const glowingIcon of document.querySelectorAll(".glow")) {
-					glowingIcon.classList.remove("glow");
-				}
-				uploadedIcon.classList.add("glow");
-
-				ito.data.file = uploadedIcon.dataset.name;
-				ito.data.path = "/sounds/";
-				editorButton.setAttribute("data-interaction", JSON.stringify(ito));
-				loadData(ito.data);
-				document.querySelector("#file.editor-data").value =
-					uploadedIcon.dataset.name;
-				document.querySelector("#path.editor-data").value = "/sounds/";
-				document.querySelector("#audio-file").innerText =
-					uploadedIcon.dataset.name;
-
-				universal.uiSounds.playSound("int_yes");
-			};
-		}
-	});
-	universal.listenForOnce("library_save", () => {
-		document.querySelector("#sidebar").style.right = "0";
-	});
-	universal.vopen("library");
-};
-
-document.querySelector("#quick-upload-sound").onclick = () => {
-	universal.uiSounds.playSound("int_confirm");
-
-	universal.listenForOnce("library_load", () => {
-		universal._Uploads_New(1, true);
-		setupLibraryFor("sound");
-	});
-
-	universal.vopen("library");
-};
 
 export default Sound;

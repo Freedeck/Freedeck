@@ -5,14 +5,11 @@ universal.listenFor("launch", () => {
 	});
 });
 
-if (universal.events?.companion?.set_theme) {
-	universal.on(universal.events.companion.set_theme, () => {
-		loadThemeListing();
-	});
-}
-
+let _scroll;
 window.loadThemeListing = async () => {
-	document.querySelector(".themelist").innerHTML = "";
+	const themeList = document.querySelector(".themelist");
+	_scroll = themeList.scrollTop;
+	themeList.innerHTML = "";
 	for (const id of universal.theming.listing) {
 		let theme = universal.theming.listingData[id];
 		if (!theme) {
@@ -22,8 +19,8 @@ window.loadThemeListing = async () => {
 		const element = document.createElement("div");
 		element.className = "theme";
 		const title = document.createElement("h2");
-		title.innerText = theme.name+" ";
-		if(theme.version) {
+		title.innerText = theme.name + " ";
+		if (theme.version) {
 			const version = document.createElement("small");
 			version.textContent = theme.version;
 			title.appendChild(version);
@@ -35,7 +32,7 @@ window.loadThemeListing = async () => {
 		apply.innerText = "Click to apply.";
 		element.onclick = () => {
 			if (theme.warn) {
-				UniversalUI.show.showYesNo(
+				universal.ui.show.showYesNo(
 					universal.translationKey("settings.sections.style.themes.warning"),
 					theme.warn,
 					() => {
@@ -47,9 +44,18 @@ window.loadThemeListing = async () => {
 				universal.theming.setTheme(id, true);
 				loadThemeListing();
 			}
+			title.innerText += universal.translationKey(
+				"settings.sections.style.themes.active",
+			);
+			element.style.background = "var(--selected-item-bg)";
+			element.style.backgroundSize = "var(--selected-item-bg-size)";
+			element.style.animation = "var(--selected-item-bg-anim)";
+			apply.innerText = "";
 		};
 		if (universal.load("theme") === id) {
-			title.innerText += universal.translationKey("settings.sections.style.themes.active");
+			title.innerText += universal.translationKey(
+				"settings.sections.style.themes.active",
+			);
 			element.style.background = "var(--selected-item-bg)";
 			element.style.backgroundSize = "var(--selected-item-bg-size)";
 			element.style.animation = "var(--selected-item-bg-anim)";
@@ -57,6 +63,7 @@ window.loadThemeListing = async () => {
 		}
 		element.appendChild(desc);
 		element.appendChild(apply);
-		document.querySelector(".themelist").appendChild(element);
+		themeList.appendChild(element);
 	}
+	themeList.scrollTop = _scroll;
 };

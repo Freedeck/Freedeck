@@ -46,11 +46,14 @@ async function initialize() {
 
 function setTheme(name, global = true) {
 	const fu = listing.includes(name) ? name : "default.css";
+	let lastTheme = universal.load("theme");
+	universal.save("theme", name);
 
 	fetch(getPathFor(fu))
 		.then((res) => res.text())
 		.then(async (css) => {
 			if (css.includes("Cannot GET")) {
+				universal.save("theme", lastTheme);
 				throw new Error(`Failed to get theme ${getPathFor(fu)}`);
 			}
 			const meta = css.match(/:theme-meta {([\s\S]*?)}/);
@@ -67,9 +70,9 @@ function setTheme(name, global = true) {
 
 			currentTheme = () => res;
 			if (global) universal.send(universal.events.companion.set_theme, name);
-			universal.save("theme", name);
 		})
 		.catch((e) => {
+			universal.save("theme", lastTheme);
 			console.error("Failed to load theme.", name, global, fu, e);
 			universal.sendToast("Failed to load theme.", "Freedeck");
 		});

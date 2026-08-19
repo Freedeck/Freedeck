@@ -16,9 +16,11 @@ window.oncontextmenu = (e) => {
 	if (e.srcElement.dataset.name === undefined) e.srcElement.dataset.name = "";
 
 	let title =
-		e.srcElement.dataset.name !== "" ? e.srcElement.dataset.name : "nothing!";
+		e.srcElement.dataset.name !== ""
+			? e.srcElement.dataset.name
+			: translationKey("context_menu.nothing");
 	if (e.srcElement.dataset.name === "" && e.srcElement.dataset.interaction)
-		title = "a tile with no name!";
+		title = universal.translationKey("context_menu.no_name");
 	const specialFlag = e.srcElement.classList.contains("unset");
 
 	const custMenuTitle = document.createElement("div");
@@ -69,7 +71,7 @@ window.oncontextmenu = (e) => {
 					universal.sendEvent("page_change");
 					break;
 				case `%context_menu.folder%${universal.config.profile}`:
-					window.UniversalUI.show.showPick(
+					window.universal.ui.show.showPick(
 						"Switch to another Folder:",
 						Object.keys(universal.config.profiles).map((profile) => {
 							return {
@@ -131,13 +133,11 @@ window.oncontextmenu = (e) => {
 					UI.reloadProfile();
 					const interaction =
 						e.srcElement?.getAttribute("data-interaction") || "{}";
-					if (
-						universal.getServerFlags()["app.freedeck.tiles.force_deletion"]
-					) {
+					if (universal.getServerFlags()["app.freedeck.tiles.force_deletion"]) {
 						universal.send(universal.events.companion.del_tile, interaction);
 						return;
 					}
-					window.UniversalUI.show.showPick(
+					window.universal.ui.show.showPick(
 						`Are you sure you want to remove ${universal.cleanHTML(
 							e.srcElement.dataset.name,
 						)}?`,
@@ -173,7 +173,7 @@ window.oncontextmenu = (e) => {
  */
 function showReplaceGUI(srcElement) {
 	UI.reloadProfile();
-	window.UniversalUI.show.showPick(
+	window.universal.ui.show.showPick(
 		"Copy from:",
 		universal.app_tiles.map((sound) => {
 			const k = Object.keys(sound)[0];

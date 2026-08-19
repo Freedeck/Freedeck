@@ -38,4 +38,8 @@ module.exports = class HookRef {
 	execute(...args) {
 		require(this.#file)(...args);
 	}
+
+	getFile() {
+		return this.#file;
+	}
 };

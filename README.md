@@ -1,52 +1,48 @@
 # Freedeck
 
-<center>
-<img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/Freedeck@2k.png" width="120" height="120">
-<br />
-<i>The FOSS alternative to the Elgato Stream Deck.</i>
-</center>
-<br />
+<img src="webui/client/assets/logo_big.png" width="120" height="120">
 
-## Installation
+_More than just a macropad; it's a Freedeck. The FOSS alternative to the Elgato Stream Deck._
 
-<img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/sections/slice8.png" width="512">
+## Install from freedeck.app
 
-### Instructions (Easier Than Easy)
+<img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/sections/installation-app.png" width="512">
+
+The launcher automagically updates, keeps track of dependencies, and allows you to on-demand switch between the developer and stable branch. Alongside that, it also provides the native bridge capability, enabling control for system application volume and macros.
 
 - Go to [https://freedeck.app](https://freedeck.app)
-- Click "Download"
-- Run the installer
+- Click "Get it? Get Freedeck."
+- Run the installer, and configure Freedeck however you'd like!
 - Click "Install" in the installer
-- You're done! Check the start menu for a shortcut!
+- When it finishes, the installer will turn into the launcher for Freedeck.
+- You're done! Check the Start menu for a shortcut.
 
-### Instructions (Super Duper Easy)
+The default installation location is `%APPDATA%\FreedeckApp`, and this repository is inside `FreedeckApp\freedeck`.
+
+## Install from GitHub
+
+<img src="https://raw.githubusercontent.com/Freedeck/media-kit/main/sections/installation-github.png" width="512">
+
+This set of steps assumes you have a _minimum of_ [Node.js v20+, npm v10+](https://nodejs.org/en/download/current) and [Git 2.4X+](https://github.com/git-for-windows/git/releases/tag/v2.55.0.windows.3) installed.
+
+Although it's recommended you have npm v11+ and Node.js v24+ installed, any newer version should work too.
+
+These are commands you'd run in the terminal (cmd, powershell, bash, etc.)
 
 - Clone the repo
-  - Run this in your terminal to clone the repo (to retain git info for autoupdater)
-  - `git clone https://github.com/Freedeck/Freedeck.git`
-- Go to where you cloned the repo in File Explorer
-- Run `init.bat`
-- Profit
-
-### Instructions (Semi-Advanced)
-
-- Clone the repo
-  - `git clone https://github.com/Freedeck/Freedeck.git`
+  - `git clone https://github.com/Freedeck/freedeck.git`
+- Move into it
+  - `cd freedeck`
 - Download NPM packages
   - `npm i`
-- Run the program!
-  - `npm run start`
+- Run Freedeck!
+  - There are two methods to running Freedeck.
+    - For best performance, split your terminal into two. In the first, run either:
+      - `npm run server` - Normal console output
+      - `npm run debug-server` - Verbose console output
+    - and in the second, run `npm run companion`. Splitting Freedeck into two processes lets Freedeck efficiently manage resources of the backend and Electron frontend.
+    - For least processes, run `npm run start`. Companion and Server may take noticeably longer to start up, as they're both trying to use the same resources to start.
 - Enjoy!
-
-### Instructions (Easily Advanced??)
-
-For those who want the simplicity of the Installer, but need the complexity of the codebase.
-
-- Follow the _Instructions (Easier Than Easy)_
-- Now, you can go to your user directory, documents, Freedeck, then Freedeck again!
-  - Let me break the command down for you.
-  - `cd C:\Users\You\Documents\Freedeck\freedeck` (You need the last "freedeck"! That's the actual repo!)
-- Kaboom! You can now open Freedeck in VSCode, NeoVim, or any other editor/IDE!
 
 ## Usage
 
@@ -54,9 +50,12 @@ For those who want the simplicity of the Installer, but need the complexity of t
 
 The moment you start Freedeck:
 
-- a setup wizard will launch.
-  - Follow the on-screen instructions.
-- when the setup wizard closes, you'll see Companion.
-  - It's like Step 2, you just pick your audio devices and then you're ready!
+- A setup wizard will launch. Follow the on-screen instructions.
+  - From this step, you'll be asked to setup language, styling, pairing a mobile device, then a short tutorial.
+- When you complete setup, you'll be greeted by the desktop app's main UI ("Companion").
 
 From there, Freedeck is ready to use.
+
+## Uninstalling Freedeck
+
+If you want to uninstall Freedeck, simply delete the `%APPDATA%\FreedeckApp` folder. To remove all traces from Electron, delete `%APPDATA%\freedeck` too. Finally, you can remove the Desktop and Start menu shortcuts. Thanks for trying Freedeck out!

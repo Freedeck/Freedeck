@@ -6,14 +6,10 @@ const networkAddresses = require("@managers/networkAddresses");
 const { settings } = require("../managers/settings");
 const sec = require("../managers/secrets");
 const aac = require("../managers/apiAuthCache");
+const { getStartupMessage } = require("../managers/startupMessage");
+const { isCompilerFinished } = require("@src/webpack");
 const router = express.Router();
 const { version } = require(path.resolve("package.json"));
-
-let iwebpackState = "uninitialized";
-
-const webpackState = (i) => {
-	iwebpackState = i;
-};
 
 const discoveryInformation = {
 	title: "Freedeck",
@@ -81,7 +77,8 @@ router.get("/discover", (req, res) => {
 		title: "Freedeck",
 		version,
 		plugins: idList,
-		webpackStatus: iwebpackState,
+		startupMessage: getStartupMessage(),
+		ready: plugins._toLoad <= plugins._pluginCache.size,
 		deviceStatus: tsm.get("isMobileConnected"),
 		ip,
 		myApp: {
@@ -119,6 +116,6 @@ router.get("/plugin/:pluginId", (req, res) => {
 module.exports = {
 	router,
 	discoveryInformation,
-	webpackState,
-	getWs: () => iwebpackState,
+	getWs: () =>
+		startupMessage == "Freedeck is ready!" ? "ready" : "uninitialized",
 };

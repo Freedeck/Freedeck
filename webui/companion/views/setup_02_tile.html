@@ -1,0 +1,109 @@
+<h1 class="settings-section-title">
+	<span data-i18n-key="setup.tile.title"></span>
+	<span><img src="/app/shared/icons/themes.svg" width="50" height="50" loading="lazy" /></span>
+</h1>
+
+<style>
+	.full-span {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.item p {
+		text-align: center;
+	}
+</style>
+
+<div class="items">
+	<div class="flex-wrap-r full-span">
+		<button class="button ex-btn">Button</button>
+		<button class="button ex-slid"></button>
+		<button class="button ex-txt">Text</button>
+	</div>
+	<div class="item">
+		<p data-i18n-key="setup.tile.description"></p>
+		<div id="sliders"></div>
+		<button id="ok" data-i18n-key="setup.next"></button>
+	</div>
+	<div class="tooltips"></div>
+</div>
+
+<script>
+	const sl = document.querySelector("#sliders")
+	const tooltips = document.querySelector(".tooltips");
+	const sliderE = document.querySelector(".ex-slid");
+	const btnE = document.querySelector(".ex-btn");
+	const txtE = document.querySelector(".ex-txt");
+
+	import slider from '/scripts/ui/slider.js'
+	slider({position:1, data:{direction:"vertical",value:75.50,min:0,max:100}},sliderE, {"Slider":{}})
+
+
+	const tt = universal.createTooltipFor(sliderE, universal.translationKey("tooltips.tile.slider.action"));
+	tt.classList.add("tile-tooltip");
+	
+	const ttx = universal.createTooltipFor(btnE, universal.translationKey("tile.short_press") + " " + universal.translationKey("tooltips.tile.full.action"));
+	ttx.classList.add("tile-tooltip");
+	tooltips.appendChild(tt);
+	tooltips.appendChild(ttx);
+
+	document.querySelector("#ok").onclick = (e) => {
+			universal.reloadRight();
+			universal.ctx.destructiveView("setup_03_soundboard");
+	}
+
+
+	universal.save("has_setup", true);
+	universal.reloadRight();
+	universal.save("has_setup", false);
+
+</script>
+
+<style>
+	li a {
+		pointer-events: hover !important;
+	}
+
+	li a:hover {
+		cursor: not-allowed !important;
+	}
+
+	#ctxl-view-cont {
+		background: rgba(0, 0, 0, 0.825) !important;
+	}
+
+	#keys {
+		display: none;
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	#setup_02_tile {
+		width: 100% !important;
+		margin: 0 !important;
+		display: inline-flex;
+		flex-direction: row;
+		transition-duration: .25s;
+		justify-content: center;
+	}
+
+	#setup_02_tile body {
+		width: 80% !important;
+		padding-left: 0 !important;
+	}
+
+	.item {
+		background-color: rgba(0, 0, 0, 0.25);
+		padding: 5px;
+		border-radius: var(--main-radius);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: start;
+		height: max-content;
+	}
+</style>

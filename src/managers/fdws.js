@@ -7,20 +7,7 @@ const fdws = {
 	_callbacks: {},
 	_io: null,
 	connected: false,
-	isLauncherOpen: () => {
-		try {
-			if(os.platform == "win32") {
-				const out = execSync('tasklist /FI "IMAGENAME eq Freedeck.exe"');
-				const realOut = out.toString().trim().trim();
-				return !realOut.includes(
-					"INFO: No tasks are running which match the specified criteria.",
-				);
-			}
-			return false;
-		} catch (err) {
-			return false;
-		}
-	},
+	isLauncherOpen: () => false,
 	send: (data, ...args) => {
 		if (fdws._socket.readyState === ws.OPEN) {
 			fdws._socket.send(JSON.stringify({ Event: data, Data: [...args] }));
@@ -43,7 +30,7 @@ const fdws = {
 let retryDelay = 1000;
 
 function ioEmit(i, ...d) {
-	if(fdws._io && fdws._io.emit) fdws._io.emit(i, ...d)
+	if (fdws._io && fdws._io.emit) fdws._io.emit(i, ...d);
 }
 
 function retryConnection(url = "ws://localhost:5756/") {

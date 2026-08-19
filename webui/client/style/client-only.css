@@ -5,3 +5,76 @@
 	min-height: unset;
 	font-size: x-small;
 }
+
+.everything {
+	height: 100vh;
+}
+
+.wide-btn {
+	min-width: 100%;
+	min-height: min-content;
+	height: min-content;
+	padding: 0.825rem;
+}
+
+.themelist,
+.settings-menu {
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	right: -100%;
+	width: 30%;
+	height: 100%;
+	border-radius: 0;
+	overflow-y: scroll;
+	transition-duration: 0.5s;
+	z-index: 1002;
+	backdrop-filter: blur(2rem);
+	background-color: rgba(0, 0, 0, 0.25);
+	padding: 1rem;
+	transition-duration: 0.5s;
+}
+
+.rembutton {
+	z-index: 1003;
+	width: 4rem;
+	min-width: 4rem;
+	height: 3rem;
+	min-height: 3rem;
+	position: absolute;
+	top: 0;
+	display: none;
+	opacity: 0;
+	right: 30%;
+	transition-duration: 0.5s;
+	background: var(--input-bg);
+	border-radius: 0 0 var(--main-radius) var(--main-radius);
+}
+
+.rembutton:active {
+	opacity: 1;
+	height: 6rem;
+	min-height: 6rem;
+}
+
+body {
+	overflow: hidden;
+}
+
+.shifted-left {
+	transform: translate(calc(-70% - 1rem), -50%) !important;
+}
+
+.vertical {
+	grid-template-columns: unset;
+	grid-template-rows: var(--tile-columns);
+	grid-auto-flow: column;
+}
+
+#folder-container {
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+}

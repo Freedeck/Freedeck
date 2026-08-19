@@ -20,9 +20,6 @@ window.fetch = async (url, options) => {
 	return window._OldFetch(url, options);
 };
 
-/**
- * Unicversal
- */
 const universal = {
 	compareVersions,
 	relay: "",
@@ -258,7 +255,7 @@ const universal = {
 	CLUL: [["Universal loaded", Date.now()]],
 	showBootLog: UI.showBootLog,
 	CLU: (s, ...m) => {
-		universal.CL ? console.log(`${s}:`, ...m) : null;
+		console.log(`${s}:`, ...m);
 		const elem = document.createElement("code");
 		elem.innerText = `${s}: ${m}\n`;
 		universal.CLUL.push([elem.innerText, Date.now()]);
@@ -288,9 +285,10 @@ const universal = {
 			(async () => {
 				const stateFetch = await fetch("/api/discover");
 				const state = await stateFetch.json();
-				if (state.webpackStatus !== "ready") {
+				if (!state.ready) {
 					window.location.href = `/new-connect.html?id=${user}`;
 				}
+				universal.CLU("Init", "JS loaded");
 				universal.CLU("Boot", "Boot log created");
 				window.universal = universal;
 				universal.CLU("InitFN", "Copied universal to window");
@@ -314,7 +312,7 @@ const universal = {
 						universal.listenForOnce("data_ready", async () => {
 							universal.CLU("InitFN", "Starting eventsHandler");
 							await eventsHandler(universal, user);
-							if(universal.name == "Main") {
+							if (universal.name == "Main") {
 								universal.CLU(
 									"InitFN / WakeLock",
 									"Attempting to grab wake lock.",
@@ -417,7 +415,7 @@ const universal = {
 		const logoButton = document.createElement("div");
 		logoButton.id = "fd-settings-button";
 		logoButton.style.backgroundImage = "url(/assets/logo_big.png)";
-		
+
 		logoButton.style.border = "none";
 		logoButton.style.backgroundColor = "transparent";
 		logoButton.style.boxShadow = "none";
@@ -485,7 +483,10 @@ const universal = {
 	name: "",
 	_timeouts: {},
 	sendToast: (message, sender = "") => {
-		if(!universal.getServerFlags()['app.freedeck.ui.show_notifications']) return;
+		const sf = universal.getServerFlags();
+		const fl = "app.freedeck.ui.show_notifications";
+		const flag = sf[fl];
+		if (Object.keys(sf).includes(fl) && flag == false) return;
 		if (!HTMLElement.prototype.setHTML) {
 			HTMLElement.prototype.setHTML = function (html) {
 				this.innerHTML = universal.cleanHTML(html);
@@ -697,15 +698,15 @@ window.ErrorIgnore = () => {
 };
 if (!universal.UI) universal.UI = UI;
 
-window.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {
-    e.preventDefault(); 
+window.addEventListener("keydown", (e) => {
+	if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r") {
+		e.preventDefault();
 
-    UI.showBootLog(false);
+		UI.showBootLog(false);
 		setTimeout(() => {
 			window.location.reload();
 		}, 500);
-  }
+	}
 });
 
 universal.listenFor(

@@ -113,7 +113,7 @@ const gridItemDrag = {
 			);
 		}
 
-		gridItemDrag._dragging = false;
+		gridItemDrag.dragging = false;
 		gridItemDrag._draggedItem = null;
 		gridItemDrag._targetIndex = null;
 	},

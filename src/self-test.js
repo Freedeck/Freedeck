@@ -4,7 +4,7 @@ recordTime("FST-STARTUP");
 
 const path = require("node:path");
 
-const picocolors = require('$/picocolors.js')
+const picocolors = require("$/picocolors.js");
 
 const { version } = require(path.resolve("package.json"));
 console.log(`Freedeck v${version} Self-Test`);
@@ -21,13 +21,19 @@ const netAddresses = networkAddresses();
 
 function testHTTP() {
 	return new Promise(async (resolve, reject) => {
-    try {
-      const promises = Object.keys(netAddresses).map(netInterface => fetch(`http://${netAddresses[netInterface][0]}:${settings.port}/api/discover`).catch((e)=>false).then(res => true));
-      const results = await Promise.all(promises);
-      resolve(results);
-    }catch(err){
-      reject(err)
-    }
+		try {
+			const promises = Object.keys(netAddresses).map((netInterface) =>
+				fetch(
+					`http://${netAddresses[netInterface][0]}:${settings.port}/api/discover`,
+				)
+					.catch((e) => false)
+					.then((res) => true),
+			);
+			const results = await Promise.all(promises);
+			resolve(results);
+		} catch (err) {
+			reject(err);
+		}
 	});
 }
 
@@ -46,22 +52,22 @@ function testHTTP() {
 })();
 
 console.log("Loaded HTTP, beginning socket.io");
-require('./server.js')
+require("./server.js");
 
-console.log(picocolors.bgGreen('All pre-init tests complete!'))
+console.log(picocolors.bgGreen("All pre-init tests complete!"));
 
-console.log('> Now testing: Plugin Manager')
+console.log("> Now testing: Plugin Manager");
 
-const testPlugin = path.resolve('src/test/fst.src');
-console.log('Forcefully adding to plugins')
+const testPlugin = path.resolve("src/test/fst.src");
+console.log("Forcefully adding to plugins");
 
-console.log('> Copying to plugins')
+console.log("> Copying to plugins");
 
-const {cpSync, rmSync} = require('fs');
-cpSync(testPlugin, path.resolve('plugins/fst.src'), {recursive:true});
+const { promises } = require("fs");
+promises.cp(testPlugin, path.resolve("plugins/fst.src"), { recursive: true });
 
-const plgm = require('@managers/plugins.js');
-plgm.load(path.resolve('plugins/fst.src'))
+const plgm = require("@managers/plugins.js");
+plgm.load(path.resolve("plugins/fst.src"));
 
-rmSync(path.resolve('plugins/fst.src'));
-console.log('> Cleaned plugins dir')
+promises.rmdir(path.resolve("plugins/fst.src"));
+console.log("> Cleaned plugins dir");

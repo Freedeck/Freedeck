@@ -120,7 +120,7 @@ module.exports = class Plugin {
 			`tmp/_e_._plugins_${this.id}.Freedeck`,
 			file,
 		);
-		fs.cpSync(this.tempImportPath, path.resolve(`user-data/hooks/${file}`));
+		fs.promises.cp(this.tempImportPath, path.resolve(`user-data/hooks/${file}`));
 	}
 
 	/**

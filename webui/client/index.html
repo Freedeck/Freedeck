@@ -28,51 +28,49 @@
 		</div>
 
 		<div class="settings-menu">
-			<div class="flex-wrap-r alc">
-				<h1 id="version"></h1>
-				<img src="/assets/logo_big.png" width="50" height="50" />
-			</div>
-
-			<div class="flex-wrap-r">
-				<input type="checkbox" name="lock" id="lock" />
-				<label for="lock" data-i18n-key="settings.client.page_lock"></label>
-			</div>
-
-			<details>
-				<summary data-i18n-key="settings.sections.style"></summary>
-				<div class="themelist"></div>
-			</details>
-
-			<div class="flex-wrap-r">
-				<button onclick="universal.send(universal.events.default.reload)" data-i18n-key="settings.client.reload"></button>
-				<button onclick="window.location.href = '/dash'" data-i18n-key="settings.client.dash"></button>
-				<button onclick="window.location.href = '/companion'" data-i18n-key="settings.client.companion"></button>
-				<button onclick="universal.send(universal.events.default.recompile)"
+			<div class="flex-wrap">
+				<span><i>Quick Switch to:</i></span>
+				<div id="folder-container"></div>
+				<div class="flex-wrap-r alc">
+					<input type="checkbox" name="lock" id="lock" />
+					<label for="lock" data-i18n-key="settings.client.page_lock"></label>
+				</div>
+				<button id="theme-set" class="wide-btn" data-i18n-key="settings.client.change_theme"></button>
+				<button class="wide-btn" onclick="location.reload();universal.send(universal.events.default.reload)"
+					data-i18n-key="settings.client.reload"></button>
+				<button class="wide-btn" onclick="window.location.href = '/dash'" data-i18n-key="settings.client.dash"></button>
+				<button class="wide-btn" onclick="universal.send(universal.events.default.recompile)"
 					data-i18n-key="settings.recompile_webpack"></button>
-				<button onclick="
+				<button class="wide-btn" onclick="
 							universal.send(universal.events.keypress, {
 								builtIn: true,
 								data: 'stop-all',
 							})
 						" data-i18n-key="sidebars.left.soundboard.stop_all"></button>
-				<button id="settings-close" data-i18n-key="settings.client.close"></button>
+				<button class="wide-btn" id="settings-close" data-i18n-key="settings.client.close"></button>
+				<a href="fdmobile://settings" class="iosappsettings">iOS App Settings</a>
+				<small class="alc flex-wrap-r">
+					<span id="version"></span> >> <a href="https://freedeck.app">Freedeck.app</a>
+				</small>
 			</div>
+			<br><br>
 		</div>
 		<div style="display: none; z-index: 10200" class="modal" id="login-dialog">
 			<div id="login-div" class="modalContent">
-				<h1 id="login-msg">Login to Freedeck</h1>
-				<p>Enter the password to gain access.</p>
+				<h1 id="login-msg" data-i18n-key="authentication.title"></h1>
+				<p data-i18n-key="authentication.prompt"></p>
 				<input type="password" id="password" />
 				<br />
 				<div class="flex-wrap-r">
 					<button onclick="
 								universal.login(document.getElementById('password').value)
-							">
-						Login
+							"
+							data-i18n-key="authentication.prompt">
 					</button>
 				</div>
 			</div>
 		</div>
+		<div class="themelist client"></div>
 		<div id="client-key-container">
 			<div id="keys"></div>
 		</div>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 -300 1173 1200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    
+    <style>
+        .gray-tile, .red-tile, .blue-tile {
+            animation-duration: 3.6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: cubic-bezier(0.4, 0, 1, 1); 
+        }
+
+        .gray-tile { animation-name: rotateGray; }
+        .red-tile { animation-name: rotateRed; }
+        .blue-tile { animation-name: rotateBlue; }
+
+        @keyframes rotateGray {
+            0%, 12% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            18.5%   { transform: translate(120px, 200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            25%, 37%{ transform: translate(320px, 320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            43.5%   { transform: translate(520px, 200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            50%, 62%{ transform: translate(640px, 0px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            68.5%   { transform: translate(520px, -200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            75%, 87%{ transform: translate(320px, -320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            93.5%   { transform: translate(120px, -200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            100%    { transform: translate(0px, 0px); }
+        }
+
+        @keyframes rotateRed {
+            0%, 12% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            18.5%   { transform: translate(200px, -120px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            25%, 37%{ transform: translate(320px, -320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            43.5%   { transform: translate(200px, -520px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            50%, 62%{ transform: translate(0px, -640px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            68.5%   { transform: translate(-200px, -520px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            75%, 87%{ transform: translate(-320px, -320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            93.5%   { transform: translate(-200px, -120px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            100%    { transform: translate(0px, 0px); }
+        }
+
+        @keyframes rotateBlue {
+            0%, 12% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            18.5%   { transform: translate(-120px, -200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            25%, 37%{ transform: translate(-320px, -320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            43.5%   { transform: translate(-520px, -200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            50%, 62%{ transform: translate(-640px, 0px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            68.5%   { transform: translate(-520px, 200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            75%, 87%{ transform: translate(-320px, 320px); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+            93.5%   { transform: translate(-120px, 200px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+            100%    { transform: translate(0px, 0px); }
+        }
+    </style>
+
+    <g class="red-tile">
+        <g transform="matrix(0.755793,-0.755793,0.755793,0.755793,-61.6132,629.876)">
+            <path d="M653,299.75C653,244.696 608.304,200 553.25,200L353.75,200C298.696,200 254,244.696 254,299.75L254,499.25C254,554.304 298.696,599 353.75,599L553.25,599C608.304,599 653,554.304 653,499.25L653,299.75Z" style="fill:rgb(192,13,77);stroke:black;stroke-width:11.23px;"/>
+        </g>
+    </g>
+
+    <g class="gray-tile">
+        <g transform="matrix(0.755793,-0.755793,0.755793,0.755793,-381.314,310.175)">
+            <path d="M653,299.75C653,244.696 608.304,200 553.25,200L353.75,200C298.696,200 254,244.696 254,299.75L254,499.25C254,554.304 298.696,599 353.75,599L553.25,599C608.304,599 653,554.304 653,499.25L653,299.75Z" style="fill:rgb(45,45,50);stroke:black;stroke-width:11.23px;"/>
+        </g>
+    </g>
+
+    <g class="blue-tile">
+        <g transform="matrix(0.755793,-0.755793,0.755793,0.755793,258.77,309.493)">
+            <path d="M653,287.78C653,239.333 613.667,200 565.22,200L341.78,200C293.333,200 254,239.333 254,287.78L254,511.22C254,559.667 293.333,599 341.78,599L565.22,599C613.667,599 653,559.667 653,511.22L653,287.78Z" style="fill:rgb(13,139,194);stroke:black;stroke-width:11.23px;"/>
+        </g>
+    </g>
+
+</svg>

@@ -35,8 +35,8 @@ function handlePress(interaction) {
 }
 
 function handleSoundboard(universal) {
-	universal.listenFor("button-fd.stopall", handlePress)
-	universal.listenFor("button-fd.sound", handleSound)
+	universal.listenFor("button-fd.stopall", handlePress);
+	universal.listenFor("button-fd.sound", handleSound);
 }
 
-export {handleSoundboard}
+export { handleSoundboard };

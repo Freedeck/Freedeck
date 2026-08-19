@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const fsPromises = require("node:fs/promises")
+const fsPromises = require("node:fs/promises");
 const path = require("node:path");
 const debug = require("$/debug");
 const styleLocation = path.resolve("./src/configs/style.json");
@@ -46,11 +46,18 @@ const styleManager = {
 
 		saveTimeout = setTimeout(async () => {
 			try {
-				const dataToSave = styleManager._cache !== null ? styleManager._cache : defaults;
-				await fsPromises.writeFile(styleLocation, JSON.stringify(dataToSave, null, 2));
+				const dataToSave =
+					styleManager._cache !== null ? styleManager._cache : defaults;
+				await fsPromises.writeFile(
+					styleLocation,
+					JSON.stringify(dataToSave, null, 2),
+				);
 				debug.log("Saved style configuration to file.", "Managers / Style");
 			} catch (error) {
-				debug.log(`Failed to save config: ${error.message}`, "Managers / Style");
+				debug.log(
+					`Failed to save config: ${error.message}`,
+					"Managers / Style",
+				);
 			}
 		}, 500);
 	},

@@ -1,48 +1,49 @@
 import { translationKey } from "../../../shared/localization";
 
 /**
- * Create the default FD button.
- * @param {*} snd Freedeck Button Config
- * @param {*} keyObject Key Object
- * @param {*} raw Raw Key Data
+ * Create a "button" Tile.
+ * @param {Tile} snd Freedeck Button Config
+ * @param {DisplayedTile} tileElement Key Object
+ * @param {RawTile} raw Raw Key Data
  */
-export default function (snd, keyObject, raw) {
+export default function (snd, tileElement, raw) {
 	const k = Object.keys(raw)[0];
-	if(snd.data.primaryIcon === "true") {
-		keyObject.innerHTML = ``;
+	if (snd.data.primaryIcon === "true") {
+		tileElement.innerHTML = ``;
 	} else {
-		keyObject.innerHTML = `<div class="button-text"><p>${sanitizeXSS(k)}</div></p>`
+		tileElement.innerHTML = `<div class="button-text"><p>${universal.cleanHTML(k)}</div></p>`;
 	}
 	if (snd.data.hold === "true" && universal.name !== "Companion") {
 		const activationMs = 5;
 		const startHolding = (e) => {
-			keyObject.dataset.time = 0;
-			keyObject.dataset.holding = true;
-			keyObject.interval = setInterval(() => {
-				if (Number.parseInt(keyObject.dataset.time) >= activationMs) {
+			tileElement.dataset.time = 0;
+			tileElement.dataset.holding = true;
+			tileElement.interval = setInterval(() => {
+				if (Number.parseInt(tileElement.dataset.time) >= activationMs) {
 					send(e);
-					keyObject.dataset.time = 0;
+					tileElement.dataset.time = 0;
 				}
-				keyObject.dataset.time = Number.parseInt(keyObject.dataset.time) + 1;
+				tileElement.dataset.time =
+					Number.parseInt(tileElement.dataset.time) + 1;
 			}, 1);
 		};
 
 		const stopHolding = (e) => {
-			keyObject.dataset.holding = false;
-			clearInterval(keyObject.interval);
-			if (Number.parseInt(keyObject.dataset.time) >= activationMs) {
+			tileElement.dataset.holding = false;
+			clearInterval(tileElement.interval);
+			if (Number.parseInt(tileElement.dataset.time) >= activationMs) {
 				send(e);
 			}
-			keyObject.dataset.time = 0;
+			tileElement.dataset.time = 0;
 		};
 
-		keyObject.onmousedown = startHolding;
-		keyObject.onmouseup = stopHolding;
-		keyObject.onmouseleave = stopHolding;
-		keyObject.ontouchstart = startHolding;
-		keyObject.ontouchend = stopHolding;
-		keyObject.ontouchcancel = stopHolding;
-		keyObject.ontouchleave = stopHolding;
+		tileElement.onmousedown = startHolding;
+		tileElement.onmouseup = stopHolding;
+		tileElement.onmouseleave = stopHolding;
+		tileElement.ontouchstart = startHolding;
+		tileElement.ontouchend = stopHolding;
+		tileElement.ontouchcancel = stopHolding;
+		tileElement.ontouchleave = stopHolding;
 		const send = (e) => {
 			universal.send(universal.events.keypress, {
 				event: e,
@@ -57,47 +58,48 @@ export default function (snd, keyObject, raw) {
 				: 3,
 		);
 		const startHolding = (e) => {
-			keyObject.dataset.time = 0;
-			keyObject.dataset.holding = true;
-			keyObject.style.backgroundColor = "rgba(0, 0, 0, 0)";
-			keyObject.style.transform = "scale(0.75)";
-			keyObject.style.fontSize = "2rem";
-			keyObject.querySelector(".button-text").querySelector("p").innerText =
+			tileElement.dataset.time = 0;
+			tileElement.dataset.holding = true;
+			tileElement.style.backgroundColor = "rgba(0, 0, 0, 0)";
+			tileElement.style.transform = "scale(0.75)";
+			tileElement.style.fontSize = "2rem";
+			tileElement.querySelector(".button-text").querySelector("p").innerText =
 				countdownTime;
-			keyObject.interval = setInterval(() => {
-				keyObject.dataset.time = Number.parseInt(keyObject.dataset.time) + 1;
-				keyObject.style.backgroundColor = `rgba(0, 0, 0, ${Number.parseInt(keyObject.dataset.time) * 0.1 + 0.1})`;
-				keyObject.style.transform = `scale(${0.75 + Number.parseInt(keyObject.dataset.time) * 0.05})`;
-				keyObject.querySelector(".button-text").querySelector("p").innerText =
-					countdownTime - Number.parseInt(keyObject.dataset.time);
-				if (Number.parseInt(keyObject.dataset.time) >= countdownTime) {
+			tileElement.interval = setInterval(() => {
+				tileElement.dataset.time =
+					Number.parseInt(tileElement.dataset.time) + 1;
+				tileElement.style.backgroundColor = `rgba(0, 0, 0, ${Number.parseInt(tileElement.dataset.time) * 0.1 + 0.1})`;
+				tileElement.style.transform = `scale(${0.75 + Number.parseInt(tileElement.dataset.time) * 0.05})`;
+				tileElement.querySelector(".button-text").querySelector("p").innerText =
+					countdownTime - Number.parseInt(tileElement.dataset.time);
+				if (Number.parseInt(tileElement.dataset.time) >= countdownTime) {
 					stopHolding(e);
-					clearInterval(keyObject.interval);
+					clearInterval(tileElement.interval);
 				}
 			}, 1000);
 		};
 
 		const stopHolding = (e) => {
-			keyObject.dataset.holding = false;
-			keyObject.style.backgroundColor = snd.data.color ? snd.data.color : "";
-			keyObject.style.transform = "";
-			keyObject.style.fontSize = "";
-			keyObject.querySelector(".button-text").querySelector("p").innerText =
-				sanitizeXSS(k);
-			clearInterval(keyObject.interval);
-			if (Number.parseInt(keyObject.dataset.time) >= countdownTime) {
+			tileElement.dataset.holding = false;
+			tileElement.style.backgroundColor = snd.data.color ? snd.data.color : "";
+			tileElement.style.transform = "";
+			tileElement.style.fontSize = "";
+			tileElement.querySelector(".button-text").querySelector("p").innerText =
+				universal.cleanHTML(k);
+			clearInterval(tileElement.interval);
+			if (Number.parseInt(tileElement.dataset.time) >= countdownTime) {
 				send(e);
 			}
-			keyObject.dataset.time = 0;
+			tileElement.dataset.time = 0;
 		};
 
-		keyObject.onmousedown = startHolding;
-		keyObject.onmouseup = stopHolding;
-		keyObject.onmouseleave = stopHolding;
-		keyObject.ontouchstart = startHolding;
-		keyObject.ontouchend = stopHolding;
-		keyObject.ontouchcancel = stopHolding;
-		keyObject.ontouchleave = stopHolding;
+		tileElement.onmousedown = startHolding;
+		tileElement.onmouseup = stopHolding;
+		tileElement.onmouseleave = stopHolding;
+		tileElement.ontouchstart = startHolding;
+		tileElement.ontouchend = stopHolding;
+		tileElement.ontouchcancel = stopHolding;
+		tileElement.ontouchleave = stopHolding;
 		const send = (e) => {
 			universal.send(universal.events.keypress, {
 				event: e,
@@ -106,7 +108,7 @@ export default function (snd, keyObject, raw) {
 		};
 	} else {
 		if (universal.name === "Companion") {
-			keyObject.onpointerup = (ev) => {
+			tileElement.onpointerup = (ev) => {
 				if (!universal.flags.isEnabled("try_buttons")) {
 					universal.sendToast(
 						translationKey("app.error.test_buttons_is_off"),
@@ -121,7 +123,7 @@ export default function (snd, keyObject, raw) {
 				});
 			};
 		} else if (snd.data.onRelease === "true") {
-			keyObject.onpointerup = (ev) => {
+			tileElement.onpointerup = (ev) => {
 				if (ev.which !== 1) return;
 				universal.send(universal.events.keypress, {
 					event: ev,
@@ -129,7 +131,7 @@ export default function (snd, keyObject, raw) {
 				});
 			};
 		} else {
-			keyObject.onpointerdown = (ev) => {
+			tileElement.onpointerdown = (ev) => {
 				if (universal.name === "Companion") {
 					if (!universal.flags.isEnabled("try_buttons")) {
 						universal.sendToast(
@@ -148,7 +150,3 @@ export default function (snd, keyObject, raw) {
 		}
 	}
 }
-
-const sanitizeXSS = (str) => {
-	return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};

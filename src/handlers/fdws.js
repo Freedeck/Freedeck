@@ -7,7 +7,7 @@ module.exports = {
 	id: "builtin.fdws",
 	exec: ({ socket, io, clients }) => {
 		fdws._io = io;
-		
+
 		socket.on(eventNames.fdws.sendRequest, (data) => {
 			if (fdws.connected) {
 				fdws.send(data[0], ...data[1]);

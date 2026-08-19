@@ -114,8 +114,8 @@
 				valueGetter = {
 					value: () => {
 						const ret = [];
-						for (const i of holder.childNodes) {
-							ret.push(i.value)
+						for (const i of actualOptions.childNodes) {
+							ret.push(i.querySelector('input').value)
 						}
 						return ret;
 					}, ele: holder

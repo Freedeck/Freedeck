@@ -15,9 +15,7 @@ const routinesFolders = [
 	["./webui/app", false],
 ];
 
-const routinesFiles = [
-	"./user-data/logs/debug-write.txt",
-]
+const routinesFiles = ["./user-data/logs/debug-write.txt"];
 
 for (const [i, shouldRemake] of routinesFolders) {
 	const p = path.resolve(i);
@@ -28,8 +26,6 @@ for (const [i, shouldRemake] of routinesFolders) {
 
 for (const i of routinesFiles) {
 	const p = path.resolve(i);
-	if(fs.existsSync(p)) fs.writeFileSync(p, "");
+	if (fs.existsSync(p)) fs.writeFileSync(p, "");
 	debug.log(`Cleaned up ${i}`, picocolors.blue("Migration / Cleaner"));
 }
-
-
