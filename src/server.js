@@ -50,4 +50,4 @@ async function handleSock(socket, types, io) {
 	}
 }
 
-startServer();
+module.exports = {startServer}

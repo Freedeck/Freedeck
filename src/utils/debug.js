@@ -9,7 +9,9 @@ const homeDir = os.homedir();
 
 let logStream = null;
 if (isDebug) {
-	fs.mkdirSync(path.dirname(logPath), { recursive: true });
+	if(!fs.existsSync(path.dirname(logPath))) {
+		fs.mkdirSync(path.dirname(logPath), { recursive: true });
+	}
 	logStream = fs.createWriteStream(logPath, { flags: "a" });
 }
 
@@ -37,14 +39,7 @@ console.log = (...args) => {
 	console._log(...args);
 
 	if (logStream) {
-		const cleaned = args.map((item) => {
-			if (typeof item === "string") {
-				return item.replace(homeDir, "(User's homedir)");
-			}
-			return item;
-		});
-
-		logStream.write(`console.log {${Date.now()}} | ${cleaned.join(",")}\n`);
+		logStream.write(`console.log {${Date.now()}} | ${args.join(" ")}\n`);
 	}
 };
 

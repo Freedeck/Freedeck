@@ -27,9 +27,13 @@ Thank you for using Freedeck.`)
 });
 client.on('error', (err) => {  })
 app.on("ready", () => {
-	makeWindow(launcherObject);
+	const win = makeWindow(launcherObject);
 
 	const isDev = !app.isPackaged;
+
+	win.on('ready-to-show', () => {
+			autoUpdater.checkForUpdatesAndNotify();
+	})
 
 	if (!isDev) {
 		const srvRoot = isDev
@@ -52,6 +56,4 @@ app.on("ready", () => {
 			}
 		});
 	}
-
-	autoUpdater.checkForUpdatesAndNotify();
 });

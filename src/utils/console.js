@@ -109,32 +109,35 @@ function help(...args) {
 }
 
 const dataListeners = {};
-process.stdin.on("data", (buf) => {
-	const data = buf.toString().trim();
-	if (Object.keys(dataListeners).includes(data)) {
-		dataListeners[data] = true;
-	}
-	const args = data.split(" ");
-	let foundCommand = false;
-	for (const commandKey in commands) {
-		const command = commands[commandKey];
-		if (data.startsWith(commandKey)) {
-			const handler = command.handler;
-			args.shift();
-			handler(...args);
-			foundCommand = true;
-		} else {
-			if (command.aliases?.includes(args[0])) {
+
+function startConsoleListener() {
+	process.stdin.on("data", (buf) => {
+		const data = buf.toString().trim();
+		if (Object.keys(dataListeners).includes(data)) {
+			dataListeners[data] = true;
+		}
+		const args = data.split(" ");
+		let foundCommand = false;
+		for (const commandKey in commands) {
+			const command = commands[commandKey];
+			if (data.startsWith(commandKey)) {
 				const handler = command.handler;
 				args.shift();
 				handler(...args);
 				foundCommand = true;
+			} else {
+				if (command.aliases?.includes(args[0])) {
+					const handler = command.handler;
+					args.shift();
+					handler(...args);
+					foundCommand = true;
+				}
 			}
 		}
-	}
-	if (!foundCommand)
-		output("Command not recognized. Type 'help' for a list of commands.");
-});
+		if (!foundCommand)
+			output("Command not recognized. Type 'help' for a list of commands.");
+	});
+}
 
 function wasEntered(g) {
 	if (dataListeners[g]) return dataListeners[g];
@@ -146,4 +149,5 @@ module.exports = {
 	addCommand: (i, d) => {
 		commands[i] = d;
 	},
+	startConsoleListener
 };

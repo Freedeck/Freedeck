@@ -78,6 +78,13 @@
       "timecache-analytics.js"
     ],
     "icon": "webui/client/assets/logo_big.ico",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "freedeck",
+        "repo": "freedeck"
+      }
+    ],
     "win": {
       "publish": [
         "github"
