@@ -4,7 +4,8 @@ const path = require("node:path");
 const { configLocation } = require("../managers/settings");
 const debug = require("$/debug");
 const picocolors = require("$/picocolors");
-const oldCfgLoc = path.resolve("./src/configs/config.fd.js");
+const oldCfgLoc = path.resolve("user-data/config/config.fd.js");
+// Even though TECHNICALLY wrong, this will be possible after 01a-migrateConfigToUserData.
 
 debug.log(
 	"Checking for legacy v1 configuration",

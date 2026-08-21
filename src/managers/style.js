@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const fsPromises = require("node:fs/promises");
 const path = require("node:path");
 const debug = require("$/debug");
-const styleLocation = path.resolve("./src/configs/style.json");
+const styleLocation = path.resolve("user-data/config/style.json");
 
 const defaults = {
 	scroll: false,

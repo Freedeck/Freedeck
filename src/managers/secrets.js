@@ -1,5 +1,5 @@
 const path = require("node:path");
-const secretsLoc = path.resolve("./src/configs/secrets.fd.js");
+const secretsLoc = path.resolve("user-data/config/secrets.fd.js");
 const secrets = require(secretsLoc);
 
 const sm = {

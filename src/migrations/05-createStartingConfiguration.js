@@ -2,11 +2,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 const debug = require("$/debug");
 
-const cfgFolder = path.resolve("./src/configs");
+const cfgFolder = path.resolve("user-data/config");
 
-const cfgLoc = path.resolve("./src/configs/main.json");
-const styLoc = path.resolve("./src/configs/style.json");
-const secLoc = path.resolve("./src/configs/secrets.fd.js");
+const cfgLoc = path.resolve("user-data/config/main.json");
+const styLoc = path.resolve("user-data/config/style.json");
+const secLoc = path.resolve("user-data/config/secrets.fd.js");
 
 function exists(filePath) {
 	try {

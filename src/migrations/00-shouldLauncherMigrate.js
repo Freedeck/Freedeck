@@ -10,9 +10,15 @@ try {
       const oldPath = path.resolve(process.env.LOCALAPPDATA, 'FreedeckApp', 'freedeck')
       if (existsSync(path.resolve(oldPath, "freedeck.migrated"))) return;
       const baseMainCfg = path.resolve('src/configs')
+      const baseMainCfgNew = path.resolve('user-data/config')
       const basePluginPath = path.resolve('plugins')
 
-      cpSync(path.resolve(oldPath, baseMainCfg), path.resolve(baseMainCfg), { recursive: true })
+      if(!existsSync(path.resolve(oldPath, baseMainCfgNew))) {
+        cpSync(path.resolve(oldPath, baseMainCfg), path.resolve(baseMainCfg), { recursive: true })
+      } else {
+        cpSync(path.resolve(oldPath, baseMainCfgNew), path.resolve(baseMainCfgNew), { recursive: true })
+      }
+
       console.log(">> Copied over baseMainCfg")
       cpSync(path.resolve(oldPath, basePluginPath), path.resolve(basePluginPath), { recursive: true })
       console.log(">> Copied over basePlugin")

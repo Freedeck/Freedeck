@@ -10,6 +10,7 @@ const folders = [
 	"logs",
 	"themes",
 	"soundpacks",
+	"config",
 	"icon-registry",
 ];
 const debug = require("$/debug");

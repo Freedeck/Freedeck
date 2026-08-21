@@ -4,7 +4,7 @@ const path = require("node:path");
 const debug = require("$/debug.js");
 const fsPromises = require("node:fs/promises");
 
-const configLocation = path.resolve("./src/configs/main.json");
+const configLocation = path.resolve("user-data/config/main.json");
 
 let saveTimeout = null;
 
