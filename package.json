@@ -67,8 +67,8 @@
     "asar": false,
     "files": [
       "src/**/*",
-      "!src/configs/**/*",
       "!plugins/**/*",
+      "!tmp/**/*",
       "!user-data/**/*",
       "webui/**/*",
       "node_modules/**/*",
