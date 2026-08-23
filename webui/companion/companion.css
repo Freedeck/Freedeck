@@ -15,6 +15,21 @@ input {
 	width: 100%;
 }
 
+.changelog-body {
+	max-height: 12rem;
+	padding: .5rem;
+	overflow-y: scroll;
+	border: var(--generic-border);
+	border-radius: var(--main-radius);
+	color: var(--text-color);
+	background-color: var(--modal-bg);
+	text-align: left;
+}
+
+html {
+  scrollbar-color: var(--input-color) var(--input-bg); 
+}
+
 input[type="color"] {
 	width: auto;
 	border-radius: var(--main-radius);
@@ -192,6 +207,7 @@ textarea {
 	height: 100%;
 	z-index: 1002;
 	overflow-y: scroll;
+	scrollbar-width: none;
 	transition-duration: 0.25s;
 }
 
@@ -372,7 +388,6 @@ textarea {
 	z-index: 1000;
 	overflow-y: scroll;
 	border: var(--generic-border);
-	scrollbar-color: rgba(0, 0, 0, 0);
 	scrollbar-width: none;
 	overflow-x: hidden;
 	animation-duration: 0.325s;
@@ -699,6 +714,7 @@ textarea {
 	text-align: center;
 	gap: 4px;
 	max-height: 85vh;
+	margin: 1rem;
 }
 #thanks .modalContent details {
 	text-align: start;
@@ -712,6 +728,7 @@ textarea {
 #ctxl-view-cont html body {
 	background: none;
 	background-image: none;
+	scrollbar-width: none;
 	width: 100%;
 	color: var(--modal-color);
 	padding-left: 1rem;

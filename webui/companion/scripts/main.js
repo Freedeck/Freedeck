@@ -5,7 +5,7 @@ import { loadData } from "./editor/data.js";
 import "./sidebar.js";
 import "./uploadsHandler.js";
 import "./contextMenu.js";
-import { makeThanks } from "./changelog/create.js";
+import { makeThanks } from "./changelog.js";
 import Sound from "./editor/viewLogic/sound.js";
 import Plugins from "./editor/viewLogic/plugins.js";
 import System from "./editor/viewLogic/system.js";

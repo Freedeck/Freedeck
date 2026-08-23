@@ -1,38 +1,22 @@
-const { app, dialog } = require("electron");
+const { app } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const { fork } = require("child_process");
 const makeWindow = require("../makeWindow");
 const launcherObject = require("./window");
-const net = require("net");
-const os = require("os");
 const path = require("node:path");
-const { writeFileSync, existsSync } = require("node:fs");
 
-const pipePath = '\\\\.\\pipe\\fd_app_handoff';
+autoUpdater.autoDownload = true;
+autoUpdater.autoInstallOnAppQuit = true;
 
-const client = net.createConnection({ path: pipePath }, () => {
-	if(!existsSync('download.new.freedeck.launcher')) writeFileSync('download.new.freedeck.launcher', 0)
-  dialog.showErrorBox("Old Launcher Detected!", `Freedeck has automatically detected that you are still using the outdated "App" (launcher/updater).
-
-Freedeck has completely consolidated into one app, removing the requirement of pressing Launch every time you open the app.
-
-Please download the latest version on GitHub (repository: freedeck/freedeck), or Freedeck.app!
-
-Freedeck will automagically move your data over for you, when you make the switch.
-
-This configuration has been marked for update.
-
-Thank you for using Freedeck.`)
-  client.end();
-});
-client.on('error', (err) => {  })
 app.on("ready", () => {
 	const win = makeWindow(launcherObject);
 
 	const isDev = !app.isPackaged;
 
-	win.on('ready-to-show', () => {
+	win.once('ready-to-show', () => {
+		if(!isDev) {
 			autoUpdater.checkForUpdatesAndNotify();
+		}
 	})
 
 	if (!isDev) {
@@ -56,4 +40,29 @@ app.on("ready", () => {
 			}
 		});
 	}
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  dialog
+    .showMessageBox({
+      type: "info",
+      title: "Update Ready",
+      message: `Freedeck v${info.version} has been downloaded. Restart now to install?`,
+      buttons: ["Restart", "Later"],
+    })
+    .then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+});
+
+autoUpdater.on("error", (err) => {
+  dialog
+    .showMessageBox({
+      type: "error",
+      title: "Error while updating",
+      message: `${err}`,
+      buttons: ["OK"],
+    });
 });
