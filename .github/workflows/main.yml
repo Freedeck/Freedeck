@@ -37,6 +37,10 @@ jobs:
           npx webpack --config webpack.config.js
           npx electron-builder --publish never
 
+      - name: Copy Installer to Latest Name
+        run: |
+          Copy-Item dist\"Freedeck Setup*.exe" dist\"Freedeck Setup.exe"
+
       - name: Upload Artifacts to Release
         uses: softprops/action-gh-release@v2
         with:
