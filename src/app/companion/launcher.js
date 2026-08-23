@@ -5,6 +5,7 @@ const makeWindow = require("../makeWindow");
 const launcherObject = require("./window");
 const path = require("node:path");
 
+autoUpdater.allowPrerelease = true;
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = true;
 
@@ -12,6 +13,11 @@ app.on("ready", () => {
 	const win = makeWindow(launcherObject);
 
 	const isDev = !app.isPackaged;
+
+	if(isDev) {
+		autoUpdater.forceDevUpdateConfig = true;
+    autoUpdater.updateConfigPath = path.resolve('src/../dev-test.yml');
+	}
 
 	win.once('ready-to-show', () => {
 		if(!isDev) {
@@ -40,6 +46,10 @@ app.on("ready", () => {
 			}
 		});
 	}
+});
+
+autoUpdater.on("update-available", (info) => {
+  console.log(`[AutoUpdater] Update available: v${info.version}`);
 });
 
 autoUpdater.on("update-downloaded", (info) => {
