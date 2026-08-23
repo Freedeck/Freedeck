@@ -4,7 +4,8 @@ const { fork } = require("child_process");
 const makeWindow = require("../makeWindow");
 const launcherObject = require("./window");
 const path = require("node:path");
-
+autoUpdater.logger = require('electron-log')
+autoUpdater.logger.transports.file.level = "debug"
 autoUpdater.allowPrerelease = true;
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = true;
@@ -16,12 +17,11 @@ app.on("ready", () => {
 
 	if(isDev) {
 		autoUpdater.forceDevUpdateConfig = true;
-    autoUpdater.updateConfigPath = path.resolve('src/../dev-test.yml');
 	}
 
 	win.once('ready-to-show', () => {
+		autoUpdater.checkForUpdatesAndNotify();
 		if(!isDev) {
-			autoUpdater.checkForUpdatesAndNotify();
 		}
 	})
 

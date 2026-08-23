@@ -1,6 +1,6 @@
 {
   "name": "freedeck",
-  "version": "6.0.0",
+  "version": "6.0.0-rc.7",
   "description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase. https://freedeck.app",
   "main": "src/app/companion/launcher.js",
   "repository": {
@@ -41,6 +41,7 @@
     "babel-loader": "^10.1.1",
     "bonjour-service": "^1.4.4",
     "compare-versions": "^6.1.1",
+    "electron-log": "^5.4.4",
     "electron-updater": "^6.8.9",
     "express": "^5.2.1",
     "formidable": "^3.5.4",
@@ -91,7 +92,8 @@
       ],
       "target": [
         "nsis"
-      ]
+      ],
+      "artifactName": "Freedeck-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
