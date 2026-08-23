@@ -1,4 +1,4 @@
-const { app } = require("electron");
+const { app, dialog } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const { fork } = require("child_process");
 const makeWindow = require("../makeWindow");
