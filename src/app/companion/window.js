@@ -49,7 +49,6 @@ const electronAppCompanion = {
 
 		async function _handle(w, h) {
 			window.setSize(w, h);
-			window.center();
 		}
 	},
 	launch: (window) => {

@@ -4,6 +4,12 @@
 	padding: 0;
 }
 
+.theme {
+	border: var(--generic-border);
+	border-radius: var(--main-radius);
+	padding: 0.5rem;
+}
+
 .disabledable,
 #disbl-list {
 	display: flex;
