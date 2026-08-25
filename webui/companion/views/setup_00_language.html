@@ -5,9 +5,6 @@
 
 <div class="items">
 	<div class="item">
-		<span class="flex-wrap-r alc">
-			<h1 data-i18n-key="locale.display"></h1> &nbsp;-&nbsp; <p data-i18n-key="locale.preview"></p>
-		</span>
 
 		<p data-i18n-key="setup.language.message"></p>
 
@@ -22,7 +19,25 @@
 
 	<button id="next" data-i18n-key="setup.next"></button>
 </div>
+<style>
+	#next {
+	position:relative;
+	left:50%;
+	transform:translateX(-50%);
+}
+	.theme {
+		border: var(--generic-border);
+		border-radius: var(--main-radius);
+		padding: 0.5rem;
+	}
 
+	#language-list {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		align-items: center;
+	}
+</style>
 <script>
 	universal.reloadRight();
 	document.querySelector("#next").onclick = (e) => {
@@ -50,18 +65,30 @@
 
 	import {
 		locales,
+		localeDescriptions,
 		setLocale,
 		translationKey,
 	} from "/app/shared/localization.js";
 	Object.keys(locales).forEach((locale) => {
-		const li = document.createElement("button");
-		li.classList.add("lang-btn")
-		li.innerText = locales[locale];
-		li.onclick = async () => {
-			await setLocale(locale);
+		const container = document.createElement("div");
+		container.classList.add("theme");
+		if (universal.load("locale") == locale) {
+			container.style.background = "var(--selected-item-bg)";
+			container.style.backgroundSize = "var(--selected-item-bg-size)";
+			container.style.animation = "var(--selected-item-bg-anim)";
+		}
+		const title = document.createElement("h2");
+		title.innerText = locales[locale];
+		const desc = document.createElement("p");
+		desc.innerText = localeDescriptions[locale];
+		const applicator = document.createElement("button");
+		container.appendChild(title);
+		container.appendChild(desc);
+		container.onclick = () => {
+			setLocale(locale);
 			window.location.reload();
 		};
-		document.querySelector("#language-list").appendChild(li);
+		document.querySelector("#language-list").appendChild(container);
 	});
 
 </script>
@@ -69,13 +96,16 @@
 <style>
 	.lang-btn {
 		min-height: calc(var(--button-height) / 2) !important;
-		height: calc(var(--button-height) / 2) !important;
+		/* height: calc(var(--button-height) / 2) !important; */
 	}
 
 	#ctxl-view-cont {
 		background: rgba(0, 0, 0, 0.825);
 	}
-	#dev-menu {display:none;}
+
+	#dev-menu {
+		display: none;
+	}
 
 	#keys {
 		display: none;
