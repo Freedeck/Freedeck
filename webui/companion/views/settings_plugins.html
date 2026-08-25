@@ -86,7 +86,7 @@
 					sLi.value = i;
 					sLi.placeholder = setting.default;
 					const rem = document.createElement("button");
-					rem.textContent = "-"
+					rem.textContent = universal.translationKey('settings.plugin_settings.array.remove');
 					rem.classList.add("reset-button")
 					rem.onclick = () => { liH.remove(); }
 					liH.appendChild(sLi);
@@ -95,14 +95,14 @@
 				}
 				const button = document.createElement("button");
 				button.classList.add("reset-button")
-				button.textContent = "+";
+				button.textContent = universal.translationKey('settings.plugin_settings.array.add');
 				button.onclick = () => {
 					const liH = document.createElement("span");
 					liH.classList.add("item-holder");
 					const sLi = document.createElement("input");
 					sLi.placeholder = setting.default;
 					const rem = document.createElement("button");
-					rem.textContent = "-"
+					rem.textContent = universal.translationKey('settings.plugin_settings.array.remove')
 					rem.classList.add("reset-button")
 					rem.onclick = () => { liH.remove(); }
 					liH.appendChild(sLi);
@@ -128,7 +128,7 @@
 			}
 			const btn = document.createElement("button");
 			btn.classList.add('reset-button');
-			btn.textContent = 'Set';
+			btn.textContent = universal.translationKey('settings.plugin_settings.set');
 			btn.onclick = () => {
 				universal.send(universal.events.companion.fdsp_set, {
 					plugin,
