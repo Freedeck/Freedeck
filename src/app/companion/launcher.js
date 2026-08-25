@@ -1,4 +1,4 @@
-const { app, dialog } = require("electron");
+const { app, dialog, Tray, Menu } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const { fork } = require("child_process");
 const makeWindow = require("../makeWindow");
@@ -9,9 +9,30 @@ autoUpdater.logger.transports.file.level = "debug"
 autoUpdater.allowPrerelease = true;
 autoUpdater.autoDownload = true;
 autoUpdater.autoInstallOnAppQuit = true;
+const { version } = require(path.resolve('package.json'))
+
+let tray = null;
+let isQuitting = false;
+let win = null;
+
+const isLocked = app.requestSingleInstanceLock();
+
+if(!isLocked) {
+	app.quit();
+	process.exit(0);
+}
+
+app.on('second-instance', () => {
+	if(win) {
+		if(win.isMinimized()) {
+			win.restore();
+		}
+		win.focus();
+	}
+})
 
 app.on("ready", () => {
-	const win = makeWindow(launcherObject);
+	win = makeWindow(launcherObject);
 
 	const isDev = !app.isPackaged;
 
@@ -46,6 +67,31 @@ app.on("ready", () => {
 			}
 		});
 	}
+
+	win.on('close', (event) => {
+		if (!isQuitting) {
+			event.preventDefault();
+			win.hide();
+		}
+		return false;
+	});
+
+	tray = new Tray(path.resolve('webui/client/assets/logo_big.png'));
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Show', click: () => win.show() },
+    { label: 'Quit', click: () => {
+      isQuitting = true;
+      app.quit();
+    }}
+  ]);
+
+  tray.setToolTip('Freedeck: v' + version);
+  tray.setContextMenu(contextMenu);
+
+  tray.on('click', () => {
+    win.show();
+  });
 });
 
 autoUpdater.on("update-available", (info) => {
