@@ -82,7 +82,17 @@ app.on("ready", () => {
     { label: 'Show', click: () => win.show() },
     { label: 'Quit', click: () => {
       isQuitting = true;
-      app.quit();
+			
+			try {
+				win.webContents.executeJavaScript(`
+					if(universal && universal.send && universal.events) universal.send(universal.events.default.close)
+					`);
+				} catch (error) {
+					console.error("Failed to execute script before close:", error);
+				} finally {
+					isReadyToClose = true;
+					app.quit();
+				}
     }}
   ]);
 

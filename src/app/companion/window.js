@@ -28,25 +28,6 @@ const electronAppCompanion = {
 			spawn(process.argv[0], [path.resolve("./src/app/overlay/launcher.js")]);
 		});
 
-		let isReadyToClose = false;
-
-		window.on("close", async (event) => {
-			if (!isReadyToClose) {
-				event.preventDefault();
-
-				try {
-					await window.webContents.executeJavaScript(`
-						if(universal && universal.send && universal.events) universal.send(universal.events.default.close)
-					`);
-				} catch (error) {
-					console.error("Failed to execute script before close:", error);
-				} finally {
-					isReadyToClose = true;
-					window.close();
-				}
-			}
-		});
-
 		async function _handle(w, h) {
 			window.setSize(w, h);
 		}
