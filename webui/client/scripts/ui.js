@@ -483,7 +483,8 @@ function reloadTiles() {
 		} catch (e) {
 			const k = Object.keys(sound)[0];
 			universal.CLU(
-				"Tile Render Error"`Couldn't render ${k} (${sound[k]}) on page ${universal.page}`,
+				"Tile Render Error",
+				`Couldn't render ${k} (${sound[k]}) on page ${universal.page}`,
 			);
 			console.error(e);
 		}
@@ -574,6 +575,10 @@ async function _visualChange(tileId, text, matcher) {
 				const txt = button.querySelector(".button-text p");
 				if (txt) {
 					txt.innerText = text;
+					if(dat.data.lastText != text) {
+						dat.data.lastText = text;
+						// universal.
+					}
 				}
 			}
 		} catch (error) {}
