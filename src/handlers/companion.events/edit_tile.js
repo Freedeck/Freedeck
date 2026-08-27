@@ -16,15 +16,14 @@ module.exports = ({ socket, io, data }) => {
 	const settings = config.settings();
 	const keyListing = settings.profiles[settings.profile];
 
-	for (const snd of keyListing) {
-		const key = Object.keys(snd)[0];
-		if (snd[key].uuid === interaction.uuid) {
-			if (name !== key) {
-				delete snd[key];
-			}
-			snd[name] = interaction;
-			break;
-		}
+	const snd = keyListing.find(item => 
+		Object.values(item)[0]?.uuid === interaction.uuid
+	);
+
+	if (snd) {
+		const oldKey = Object.keys(snd)[0];
+		if (oldKey !== name) delete snd[oldKey];
+		snd[name] = interaction;
 	}
 
 	config.save();
