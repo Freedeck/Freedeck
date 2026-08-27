@@ -157,6 +157,7 @@ export default async function eventsHandler(universal, user) {
 	universal.on(universal.events.default.reload_tiles, (profileData) => {
 		universal.config.profiles[universal.config.profile] = profileData;
 		UI.reloadTiles();
+		universal.sendEvent("page_change");
 	});
 
 	universal.on(universal.events.default.login, (auth) => {

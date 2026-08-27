@@ -81,6 +81,7 @@ gridItemDrag.on("drop", (event, origIndex, targIndex) => {
 	});
 	changed.pos = targetIndex;
 	changed.setAttribute("data-interaction", JSON.stringify(targetInter));
+	universal.sendEvent("page_change");
 });
 
 gridItemDrag.on("dragging", (e) => {
