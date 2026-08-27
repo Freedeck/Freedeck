@@ -2,6 +2,8 @@ import { get, saveToLS } from "./layoutHandler.js";
 import { getModParent, hasParentWithTag, mobileCheck } from "./util.js";
 import mctx from "/dash/scripts/ctxl2.js";
 
+import {setupMenu} from "/dash/scripts/menu.js"
+
 let layoutDefinition = get();
 let DASH_MODE = false;
 const MOBILE = mobileCheck();
@@ -24,6 +26,10 @@ if (!window["freedeckoverlay"]) {
 	});
 	document.body.classList.add("dash");
 	universal.audioClient._no_sinks = true;
+}
+
+if(DASH_MODE) {
+	setupMenu();
 }
 
 await universal.init("Overlay", "Freedeck Overlay");
