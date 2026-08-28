@@ -1,4 +1,4 @@
-let startupMessage = "";
+let startupMessage = "Server just started";
 
 function setStartupMessage(s) {
 	startupMessage = s;

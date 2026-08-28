@@ -1,56 +1,48 @@
 const bonjour = require("bonjour-service");
 const express = require("express");
-const http = require("node:http");
 const path = require("node:path");
 
 const picocolors = require("$/picocolors");
 const { recordTime } = require("$/timer");
 const debug = require('$/debug');
+const os = require("node:os");
 
-const app = express();
 const bonjourInstance = new bonjour();
-const server = http.createServer(app);
 const config = require("@managers/settings");
 const settings = config.settings();
 debug.log("Loaded settings.", "Server / HTTP")
 
-/** ROUTERS */
-const handoffRouter = require("@routers/handoff");
-const connectRouter = require("@routers/connect").router;
-const staticRouter = require("@routers/static").router;
-const uploadRouter = require("@routers/uploads");
-const os = require("node:os");
+const http = require("node:http");
+const { getStartupMessage } = require("./startupMessage");
+const app = express();
+const server = http.createServer(app);
 
 const pkgLoc = path.resolve("package.json");
 const thisPackage = require(pkgLoc);
 
-recordTime("http:required-all-routers");
-debug.log("All routers loaded!", "Server / HTTP")
-
 const PORT = settings.port || 5754;
 
+let preInitActive = true;
+
+app.get('/api/discover', (req,res, next) => {
+  if(!preInitActive) {next();return;}
+  res.send({
+    title: 'Freedeck',
+    version: 'Loading...',
+    plugins: [],
+    startupMessage: getStartupMessage(),
+    ready: false,
+    ip: {},
+    myApp:{code:'',host:'null'}
+  })
+})
+
 module.exports = {
-	http,
-	server,
-	app,
-};
-
-app.use(express.json());
-
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	next();
-});
-
-app.use("/", staticRouter);
-
-app.use("/api", connectRouter);
-app.use("/handoff", handoffRouter);
-
-app.use("/api/upload", uploadRouter);
-
-recordTime("http:loaded-all-endpoints");
-debug.log("Endpoints created.", "Server / HTTP")
+  http, server, app, 
+  deactivatePrerun: () => {
+    preInitActive = false;
+  }
+}
 
 recordTime("http:listen-begin");
 debug.log("Beginning listen task", "Server / HTTP")

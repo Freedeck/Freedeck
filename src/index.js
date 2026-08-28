@@ -2,7 +2,6 @@ const path = require("node:path");
 const fs = require("node:fs");
 
 const { version } = require(path.resolve('package.json'));
-
 if (process.argv.includes("--is-dev=true")) {
 	require("module-alias/register");
 } else {
@@ -18,6 +17,7 @@ if (process.argv.includes("--is-dev=true")) {
 		"@freedeck": path.resolve("src/classes"),
 	});
 }
+require('@managers/http')
 const { configLocation } = require("@managers/settings");
 
 const debug = require("$/debug");

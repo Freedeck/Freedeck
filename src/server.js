@@ -8,7 +8,7 @@ const { clients } = require("@managers/serverClientelle");
 const { handlers, loadHandlers }  = require('@managers/ioHandlers');
 
 debug.log("Setting up HTTP", "Server / Runner")
-const { server } = require("./http");
+const { server } = require("./registerRoutes");
 
 debug.log("Setting up Socket.IO", "Server / Runner")
 const io = new socketIO.Server(server);
