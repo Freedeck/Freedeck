@@ -1,7 +1,7 @@
 let metrics;
 
 try {
-	metrics = require("./user-data/logs/timecache.json");
+	metrics = require("@src/../user-data/logs/timecache.json");
 } catch (err) {
 	console.error(err);
 	console.log(

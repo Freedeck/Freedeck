@@ -12,24 +12,24 @@
 	<div class="item">
 		<center class="dev-status"></center>
 
-		<p id="scan-or-go"></p>
-		<p id="add-to-hs"></p>
+		<p id="scan-or-go" data-i18n-key="setup.device.scan_or_browse"></p>
+		<p id="add-to-hs" data-i18n-key="setup.device.add_inst"></p>
 		<p data-i18n-key="setup.device.autoclose"></p>
 		<div class="flex-wrap-r">
 			<button id="later-button" data-i18n-key="setup.device.connect_later"></button>
 			<!-- <button onclick='document.querySelector("#qr-container").style.display="none";document.querySelector("#qr2-container").style.display="flex"'>FDMobile QR</button> -->
 		</div>
 
-		<center id="swapper"></center>
-		<div class="flex-wrap-r">
+		<div class="flex-wrap-r alc">
+			<center id="swapper" data-i18n-key="setup.device.swap"></center>
 			<button class="long" id="connect-button" style="display:none;">
-				<img src="/app/shared/icons/apple.svg" width="25" height="25" loading="lazy" />
-				<p data-i18n-key="setup.device.view_for_ios"></p>
-			</button>
-			<button class="long" id="connect-button-android">
-				<img src="/app/shared/icons/android.svg" width="25" height="25" loading="lazy" />
-				<p data-i18n-key="setup.device.view_for_android"></p>
-			</button>
+					<img src="/app/shared/icons/apple.svg" width="25" height="25" loading="lazy" />
+					<p data-i18n-key="setup.device.view_for_ios"></p>
+				</button>
+				<button class="long" id="connect-button-android">
+					<img src="/app/shared/icons/android.svg" width="25" height="25" loading="lazy" />
+					<p data-i18n-key="setup.device.view_for_android"></p>
+				</button>
 		</div>
 	</div>
 
@@ -74,22 +74,22 @@
 				colorLight: "#ffffff",
 				correctLevel: QRCode.CorrectLevel.H,
 			});
-			
+
 			new QRCode(document.getElementById("qr2-container"), {
-					text: "fdmobile://pairing/" + universal._information.hostname,
-					width: 256,
-					height: 256,
+				text: "fdmobile://pairing/" + universal._information.hostname,
+				width: 256,
+				height: 256,
 				colorDark: "#000000",
 				colorLight: "#ffffff",
-					logo: "/assets/ios-icon.png",
-					logoBackgroundTransparent: true, 
-					correctLevel: QRCode.CorrectLevel.H,
-				});
-				// qrCode.clear();
+				logo: "/assets/ios-icon.png",
+				logoBackgroundTransparent: true,
+				correctLevel: QRCode.CorrectLevel.H,
+			});
+			// qrCode.clear();
 		}
 		let lastTxt = "";
 		window.editQrCode = (txt) => {
-			if(lastTxt != txt) {
+			if (lastTxt != txt) {
 				universal.sendEvent("setup.device.swap", "ios", true)
 				lastTxt = txt;
 			}
@@ -118,6 +118,7 @@
 		"#connect-button-android",
 	);
 	let selectedOS = "iOS";
+	let isIos = true;
 	connectButtonAndroid.onclick = () => {
 		universal.sendEvent("setup.device.swap", "android")
 	};
@@ -134,16 +135,17 @@
 	let ip;
 	let connectedDevice = false;
 	let mfaHost;
-
 	universal.listenFor("setup.device.swap", (e, silent) => {
 		browser = universal.translationKey("setup.device." + e + ".browser");
 		selectedOS = universal.translationKey("setup.device." + e)
 		if (!silent) universal.uiSounds.playSound("select_option");
 
 		if (e == 'ios') {
+			isIos = true;
 			connectButton.style.display = 'none';
 			connectButtonAndroid.style.display = 'flex';
 		} else {
+			isIos = false;
 			connectButton.style.display = 'flex';
 			connectButtonAndroid.style.display = 'none';
 		}
@@ -152,6 +154,7 @@
 		atHS.innerText = universal.translationKey("setup.device." + e + ".add_to_home_screen")
 		swapper.innerText = universal.translationKey("setup.device.swap").replace("$1", selectedOS)
 	})
+	universal.sendEvent("setup.device.swap", "ios")
 
 	laterButton.onclick = () => {
 		if (connectedDevice) universal.uiSounds.playSound("mobile_connect");
@@ -198,14 +201,22 @@
 				if (data.myApp?.host) {
 					mfaGoTo.innerText = universal.translationKey("setup.device.mfa.go_to").replace("$1", browser).replace("$2", mfaHost)
 				}
+				universal.sendEvent("setup.device.swap", isIos ? 'ios' : 'android')
 			});
 	}, 500);
 </script>
 
 <style>
+	#connect-button,
+	#connect-button-android {
+		min-height: 4rem;
+		height: 4rem;
+	}
+
 	#qr2-container {
 		display: none;
 	}
+
 	.item {
 		background-color: rgba(0, 0, 0, 0.25);
 		padding: 5px;
@@ -266,7 +277,7 @@
 		filter: brightness(1.1);
 	}
 
-	#qr2-container canvas, 
+	#qr2-container canvas,
 	#qr-container canvas {
 		border-radius: 0.5rem;
 		padding: 1rem;

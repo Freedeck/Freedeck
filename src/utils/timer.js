@@ -7,6 +7,7 @@ function recordTime(tag) {
 }
 
 function writeFinal() {
+	recordTime('timer:upon-write')
 	fs.writeFileSync("user-data/logs/timecache.json", JSON.stringify(timeCache));
 }
 

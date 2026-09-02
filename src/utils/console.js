@@ -37,7 +37,7 @@ const commands = {
 		handler: () => {
 			recordTime("console:timer-exit");
 			writeFinal();
-			require("@src/../timecache-analytics");
+			require("$/timer-analytics");
 			process.exit(0);
 		},
 	},
