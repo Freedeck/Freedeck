@@ -202,6 +202,12 @@
 				const data = await res.json();
 				const isBuilding = !data.ready;
 				progressText.innerText = data.startupMessage
+				if(data.startupMessage.includes("Loaded") && data.startupMessage.includes("(")) {
+					let [cur, fin] = data.startupMessage.split("(")[1].split("/");
+					cur = Number.parseInt(cur);
+					fin = Number.parseInt(fin.split(")")[0]);
+					animateProgressTo((cur / fin) * 100);
+				}
 				animateProgressTo(50);
 				return isBuilding;
 			}
