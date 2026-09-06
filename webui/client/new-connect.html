@@ -64,6 +64,7 @@
 			from {
 				transform: translateX(100%);
 			}
+
 			to {
 				transform: translateX(0);
 			}
@@ -158,26 +159,22 @@
 		const existing = window.location.href.split("/new-connect.html")[0];
 		const urlParameters = new URLSearchParams(window.location.search);
 
-		let pathAddon = "";
+		let pathAddon = "/index.html";
 		let url = "";
 
 		if (existing.includes("file:")) {
 			url = "http://localhost:5754";
 			pathAddon = "/companion";
-		}
-
-		if (
-			urlParameters.has("id") &&
-			urlParameters.get("id").includes("Companion")
-		)
-			pathAddon = "/companion";
-		if (urlParameters.has("id") && urlParameters.get("id").includes("Dash"))
-			pathAddon = "/dash";
-		if (urlParameters.has("id") && urlParameters.get("id").includes("Overlay")) {
-			document.querySelector("body").style.display = 'none';
-			pathAddon = "/dash";
-		} else {
-			pathAddon = "/index.html"
+		} else if (urlParameters.has("id")) {
+			const userId = urlParameters.get("id");
+			if (userId.includes("Companion")) {
+				pathAddon = "/companion";
+			} else if (userId.includes("Dash")) {
+				pathAddon = "/dash";
+			} else if (userId.includes("Overlay")) {
+				document.querySelector("body").style.display = 'none';
+				pathAddon = "/dash";
+			}
 		}
 
 		let isTryingToConnect = false;
@@ -213,7 +210,7 @@
 					let res = true;
 					try {
 						res = await webpackStillBuilding();
-					} catch(err) {res = true}
+					} catch (err) { res = true }
 					if (!res) clearInterval(timer);
 				}, 250);
 				return;
