@@ -196,7 +196,8 @@
 				const res = await fetch(url + "/api/discover").then(async (res) => {
 					return res;
 				}).catch((err) => {
-					return;
+					progressText.innerText = "Waiting on server to start..";
+					return true;
 				});
 				const data = await res.json();
 				const isBuilding = !data.ready;
