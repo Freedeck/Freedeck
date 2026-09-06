@@ -159,7 +159,7 @@
 		const urlParameters = new URLSearchParams(window.location.search);
 
 		let pathAddon = "";
-		let url = "http://localhost:5754";
+		let url = "";
 
 		if (existing.includes("file:")) {
 			pathAddon = "/companion";
@@ -175,6 +175,8 @@
 		if (urlParameters.has("id") && urlParameters.get("id").includes("Overlay")) {
 			document.querySelector("body").style.display = 'none';
 			pathAddon = "/dash";
+		} else {
+			pathAddon = "/index.html"
 		}
 
 		let isTryingToConnect = false;

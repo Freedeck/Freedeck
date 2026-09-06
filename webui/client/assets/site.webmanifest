@@ -15,7 +15,9 @@
 			"purpose": "maskable"
 		}
 	],
+	"description": "The FOSS alternative to the Elgato Stream Deck, now supercharged with a new codebase.",
 	"theme_color": "#2d2d32",
 	"background_color": "#2d2d32",
-	"display": "standalone"
+	"display": "standalone",
+	"start_url": "/new-connect.html?fullscreen=true"
 }
