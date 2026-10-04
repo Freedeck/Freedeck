@@ -7,6 +7,7 @@ const setupMenu = () => {
   overBtn.onclick = () => {
     const dsp = overMnu.style.display;
     if (dsp == 'flex') {
+      overBtn.style.filter = 'opacity(0)';
       overMnu.style.animationName = 'close-menu'
       overMnu.style.filter = 'opacity(0.5)'
       setTimeout(() => {
@@ -16,6 +17,7 @@ const setupMenu = () => {
       overMnu.style.display = 'flex'
       overMnu.style.animationName = 'open-menu'
       overMnu.style.filter = 'opacity(1)'
+      overBtn.style.filter = 'opacity(1)';
     }
   }
   

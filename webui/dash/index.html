@@ -7,6 +7,7 @@
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<link rel="stylesheet" href="/style/style.css" />
+	<link rel="stylesheet" href="/style/client-only.css" />
 	<link rel="stylesheet" href="/companion/companion.css" />
 	<link rel="stylesheet" href="/dash/dash.css" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -36,17 +37,18 @@
 		</div>
 	</div>
 	<span class="warnings">
-		<span class="alpha-warning" id="debugmode-warning"><strong>Debug Mode is activated.</strong> Above text is the
-			on-screen
-			module data.</span>
-		<span class="alpha-warning" id="dragmode-warning">Edit mode activated. Click and drag a module to move it.</span>
-		<span class="alpha-warning" id="nomods-warning">Your Dash is empty! Right click to get started.</span>
+		<span class="alpha-warning" id="debugmode-warning" data-i18n-key="debug_mode"></span>
+		<span class="alpha-warning" id="dragmode-warning" data-i18n-key="dash.edit_mode"></span>
+		<span class="alpha-warning" id="nomods-warning" data-i18n-key="dash.empty"></span>
 	</span>
+	<div class="settings-menu" style="display:none;">
+	</div>
 	<div class="logo-menu" style="display:none;">
 		<div id="menu" style="display: none;">
-			<button onclick="window.location.reload()">Reload</button>
-			<button onclick="window.open('fdmobile://settings')" class="wide-btn iosappsettings" data-i18n-key="settings.client.native">Native App Settings</button>
-			<button onclick="window.location.href='/'">Back</button>
+			<button onclick="window.location.reload()" data-i18n-key="settings.client.reload"></button>
+			<button onclick="window.open('fdmobile://settings')" class="iosappsettings" data-i18n-key="settings.client.native"></button>
+			<button id="layout-settings" data-i18n-key="settings.client.layout"></button>
+			<button onclick="window.location.href='/'" data-i18n-key="settings.client.back"></button>
 		</div>
 		<img src="/assets/overlay.png" alt="Overlay" id="overlay-btn">
 	</div>

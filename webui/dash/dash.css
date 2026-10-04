@@ -100,13 +100,20 @@ body:not(.dash) {
 	z-index: 1002;
   bottom: calc(env(safe-area-inset-bottom) + (var(--tile-width)/3)); 
   left: calc(env(safe-area-inset-left) + (var(--tile-width)/3)); 
-	filter: opacity(0.5);
-	width: 3.5rem;
+	bottom: 0;
+	left: 0;
+	filter: opacity(0);
+	transform: scale(1);
+	width: calc(env(safe-area-inset-bottom) + var(--tile-width));;
 	transition-duration: .25s;
 }
 
 #overlay-btn:active {
 	filter: opacity(1);
+}
+
+.settings-menu {
+	backdrop-filter: blur(2px);
 }
 
 #menu {
@@ -116,8 +123,8 @@ body:not(.dash) {
 	flex-direction: column;
 	gap:0.5rem;
 	z-index: 1001;
-  bottom: calc((env(safe-area-inset-bottom) + (var(--tile-width)/3))/3); 
-  left: calc((env(safe-area-inset-left) + (var(--tile-width)/3))/3); 
+  bottom: 0;
+  left: 0;
 	filter: opacity(0.5);
 	padding-left: env(safe-area-inset-left);
 	width: calc(env(safe-area-inset-bottom) + var(--tile-width));
@@ -125,7 +132,7 @@ body:not(.dash) {
 	transform: scale(1);
 	transition-duration: .25s;
 	animation-duration: .5s;
-	height:47%;
+	height:calc(calc(env(safe-area-inset-bottom) + var(--tile-width)) * 5.25);
 }
 #menu a {
 	height: max-content;
@@ -133,18 +140,18 @@ body:not(.dash) {
 
 @keyframes open-menu {
 	0% {
-		transform: translateY(100%);
+		transform: translateY(100%) scaleY(0);
 	}
 	100% {
-		transform: translateY(0);
+		transform: translateY(0) scaleY(1);
 	}
 }
 
 @keyframes close-menu {
 	0% {
-		transform: translateY(0);
+		transform: translateY(0) scaleY(1);
 	}
 	100% {
-		transform: translateY(100%);
+		transform: translateY(100%) scaleY(0);
 	}
 }

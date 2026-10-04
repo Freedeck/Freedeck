@@ -15,8 +15,10 @@
   "settings.client.page_lock": "Page Lock",
   "settings.client.dash": "Open Dash",
   "settings.client.reload": "Reload",
+  "settings.client.layout": "Layout Settings",
   "settings.client.native": "Freedeck Mobile Settings",
   "settings.client.close": "Close",
+  "settings.client.back": "Back to Tiles",
   "settings.client.companion": "Open Companion",
   "settings.recompile_webpack": "Recompile Webpack Bundles",
   "sidebars.right.Tiles": "Tiles",
@@ -326,5 +328,11 @@
   "marketplace.message.fetching": "Downloading repository: ",
   "marketplace.message.err_fetching": "Error downloading ",
   "marketplace.message.error": "An error occurred while fetching the repository.",
-  "marketplace.message.internet": "(Could not fetch $1, is the internet down?)"
+  "marketplace.message.internet": "(Could not fetch $1, is the internet down?)",
+  "dash.settings": "Current Layout Settings",
+  "dash.settings.viewtitle": "$1 (from $2)",
+  "dash.empty": "Your Dash is empty! Right click to get started.",
+  "dash.edit_mode": "Edit mode activated. Click and drag a module to move it.",
+  "dash.debug_mode": "Debug Mode is activated. Above text is the on-screen layout module data.",
+  "dash.overlay.empty": "Your Overlay is empty! Press ALT + SHIFT + BACKSPACE to get started."
 }

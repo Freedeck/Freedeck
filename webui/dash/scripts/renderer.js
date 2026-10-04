@@ -1,4 +1,5 @@
 import { get, saveToLS } from "./layoutHandler.js";
+import { setupSettingsMenu } from "./layoutSettings.js";
 import { getModParent, hasParentWithTag, mobileCheck } from "./util.js";
 import mctx from "/dash/scripts/ctxl2.js";
 
@@ -30,6 +31,7 @@ if (!window["freedeckoverlay"]) {
 
 if(DASH_MODE) {
 	setupMenu();
+	setupSettingsMenu();
 }
 
 await universal.init("Overlay", "Freedeck Overlay");
@@ -40,8 +42,7 @@ const dragWarning = document.querySelector("#dragmode-warning");
 const debugWarning = document.querySelector("#debugmode-warning");
 const noMods = document.querySelector("#nomods-warning");
 if (!DASH_MODE)
-	noMods.textContent =
-		"Your Overlay is empty! Press ALT + SHIFT + BACKSPACE to get started.";
+	noMods.textContent =universal.translationKey('dash.overlay.empty');
 const userViewCollection = [];
 const systemViewCollection = ["freedeck", "testing"];
 for (const k in universal.plugins) {
@@ -77,7 +78,7 @@ for (const i of userViewCollection) {
 			}
 		});
 }
-
+universal.uvc = selections;
 for (const i of systemViewCollection) {
 	fetch("/dash/modules/" + i + "/module.json")
 		.then((res) => {
