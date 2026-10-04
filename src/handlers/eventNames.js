@@ -6,6 +6,9 @@ const eventNames = {
 
 	keypress: "k",
 	user_mobile_conn: "U",
+	special: {
+		server_crashed: "sC"
+	},
 	login: {
 		login_data: "lD",
 		login: "lL",

@@ -6,7 +6,7 @@ const networkAddresses = require("@managers/networkAddresses");
 const { settings } = require("../managers/settings");
 const sec = require("../managers/secrets");
 const aac = require("../managers/apiAuthCache");
-const { getStartupMessage } = require("../managers/startupMessage");
+const { getStartupMessage, getCrashMessage } = require("../managers/startupMessage");
 const { isCompilerFinished } = require("@src/webpack");
 const router = express.Router();
 const { version } = require(path.resolve("package.json"));
@@ -78,6 +78,7 @@ router.get("/discover", (req, res) => {
 		version,
 		plugins: idList,
 		startupMessage: getStartupMessage(),
+		crashMessage: getCrashMessage(),
 		ready: plugins._toLoad <= plugins._pluginCache.size,
 		deviceStatus: tsm.get("isMobileConnected"),
 		ip,

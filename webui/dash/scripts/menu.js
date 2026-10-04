@@ -7,12 +7,23 @@ const setupMenu = () => {
   overBtn.onclick = () => {
     const dsp = overMnu.style.display;
     if (dsp == 'flex') {
-      overMnu.style.display = 'none'
+      overMnu.style.animationName = 'close-menu'
+      overMnu.style.filter = 'opacity(0.5)'
+      setTimeout(() => {
+        overMnu.style.display = 'none'
+      },498);
     } else {
       overMnu.style.display = 'flex'
       overMnu.style.animationName = 'open-menu'
+      overMnu.style.filter = 'opacity(1)'
     }
   }
+  
+	if (navigator.userAgent.includes("FDMobile")) {
+		document.querySelector(".iosappsettings").style.display = "block";
+	} else {
+		document.querySelector(".iosappsettings").style.display = "none";
+	}
 }
 
 export {

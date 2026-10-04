@@ -9,6 +9,7 @@ const { handlers, loadHandlers }  = require('@managers/ioHandlers');
 
 debug.log("Setting up HTTP", "Server / Runner")
 const { server } = require("./http");
+const { setStartupMessage, setCrashMessage } = require("./managers/startupMessage");
 
 debug.log("Setting up Socket.IO", "Server / Runner")
 const io = new socketIO.Server(server);
@@ -20,6 +21,15 @@ async function startServer() {
   io.on("connection", (socket) => handleSock(socket, pluginManager.types, io));
   debug.log("Server initialized.", "Server / Runner");
 }
+
+process.on('uncaughtException', (err) => {
+	setCrashMessage({e:err.toString(), details:err})
+	if(clients.length > 0) {
+		for(const i of clients) {
+			i.emit("sC", err.toString())
+		}
+	}
+});
 
 async function handleSock(socket, types, io) {
 	clients.push(socket);

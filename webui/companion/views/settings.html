@@ -184,40 +184,30 @@
 			/></span>
 		</summary>
 		<div class="flex-wrap-r">
+			<button onclick="window._makeThanks(true)" data-i18n-key="settings.sections.developer_tools.show_changelog"></button>
+			<button onclick="universal.showBootLog()" data-i18n-key="settings.sections.developer_tools.show_bootlog"></button>
 			<button
-				onclick="
-					restChnglog();
-					window.location.reload();
-				"
-			>
-				Reset Changelog Accepted (Reloads)
-			</button>
-			<button onclick="window._makeThanks(true)">Show Current Changelog</button>
-			<button onclick="universal.showBootLog()">Show UI Boot Log</button>
-			<button
+				data-i18n-key="settings.sections.developer_tools.notif_test"
 				onclick="
 					universal.sendToast(
-						'This is a test',
-						'Test Notification from Settings',
+						universal.translationKey('settings.sections.developer_tools.notif_test.title'),
+						universal.translationKey('settings.sections.developer_tools.notif_test.content')
 					)
 				"
 			>
-				Test Notification
 			</button>
-			<button onclick="universal.send(universal.events.default.recompile)">
-				Recompile Webpack bundles
+			<button data-i18n-key="settings.recompile_webpack" onclick="universal.send(universal.events.default.recompile)">
 			</button>
 			<button
+				data-i18n-key="settings.sections.developer_tools.show_connect"
 				onclick="location = '/new-connect.html?id=Companion&force-fail=1'"
 			>
-				Force Failure for Connect
 			</button>
-			<button onclick="universal.vopen('demo-pages')">
-				Open Contextual Test View
+			<button data-i18n-key="settings.sections.developer_tools.ctxl_test" onclick="universal.vopen('demo-pages')">
 			</button>
-			<button onclick="universal.error()">Error</button>
-			<button id="fsw">Force Setup Wizard</button>
-			<button id="erals">Erase LocalStorage</button>
+			<button data-i18n-key="settings.sections.developer_tools.error" onclick="universal.error()"></button>
+			<button data-i18n-key="settings.sections.developer_tools.fsw" id="fsw"></button>
+			<button id="erals" data-i18n-key="settings.sections.developer_tools.erals"></button>
 		</div>
 		<br />
 		<details>

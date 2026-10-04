@@ -188,6 +188,8 @@
 
 		attemptConnection();
 
+		let crahsed = false;
+
 		async function attemptConnection() {
 			if (isTryingToConnect) return;
 			animateProgressTo(0);
@@ -196,11 +198,18 @@
 				const res = await fetch(url + "/api/discover").then(async (res) => {
 					return res;
 				}).catch((err) => {
-					progressText.innerText = "Waiting on server to start..";
+					if(!crahsed) {
+						progressText.innerText = "Waiting on server to start..";
+					}
 					return true;
 				});
 				const data = await res.json();
 				const isBuilding = !data.ready;
+				if(data.crashMessage != null) {
+					crahsed = true;
+					progressText.innerText = data.crashMessage.e;
+					// return true;
+				}
 				progressText.innerText = data.startupMessage
 				if(data.startupMessage.includes("Loaded") && data.startupMessage.includes("(")) {
 					let [cur, fin] = data.startupMessage.split("(")[1].split("/");

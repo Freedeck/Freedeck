@@ -68,7 +68,7 @@ function makeSettingsMenu() {
 		versionDisplay.innerText = `${universal._information.version.raw}`;
 	}
 
-	if (navigator.userAgent.includes("FDMobileIOS")) {
+	if (navigator.userAgent.includes("FDMobile")) {
 		document.querySelector(".iosappsettings").style.display = "block";
 	} else {
 		document.querySelector(".iosappsettings").style.display = "none";

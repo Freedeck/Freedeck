@@ -10,7 +10,7 @@ const config = require("@managers/settings");
 const settings = config.settings();
 debug.log("Loaded settings.", "Server / HTTP");
 
-const { getStartupMessage } = require("./startupMessage");
+const { getStartupMessage, getCrashMessage } = require("./startupMessage");
 const app = express();
 const server = http.createServer(app);
 
@@ -26,6 +26,7 @@ app.get('/api/discover', (req, res, next) => {
     version: 'Loading...',
     plugins: [],
     startupMessage: getStartupMessage(),
+    crashMessage: getCrashMessage(),
     ready: false,
     ip: {},
     myApp: { code: '', host: 'null' }

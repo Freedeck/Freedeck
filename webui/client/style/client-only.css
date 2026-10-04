@@ -6,8 +6,15 @@
 	font-size: x-small;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .everything {
 	height: 100vh;
+	height: 100dvh;
 }
 
 .wide-btn {
@@ -17,15 +24,17 @@
 	padding: 0.825rem;
 }
 
+
 .themelist,
 .settings-menu {
 	display: none;
 	flex-direction: column;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: -100%;
 	width: 30%;
-	height: 100%;
+	height: 100vh; 
+  height: 100dvh; 
 	border-radius: 0;
 	overflow-y: scroll;
 	transition-duration: 0.5s;
