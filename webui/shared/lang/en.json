@@ -267,7 +267,7 @@
   "setup.soundboard.vb.description": "Freedeck has first-class support for VB-Cable, a virtual audio cable that allows you to direct input/output of audio. Using Windows' monitor feature, you can use the Soundboard alongside your mic. If you do not have VB-Cable, install it from",
   "setup.soundboard.vb.click_check": "Click here to visit the docs!",
   "setup.device.title": "Device Pairing",
-  "setup.device.scan_or_browse": "Scan the QR code, or browse to $1 in $2.",
+  "setup.device.scan_or_browse": "Download the Freedeck app, scan the QR code, or browse to $1 in $2.",
   "setup.device.add_inst": "When you see Freedeck, press $1, then $2",
   "setup.device.swap": "Not on $1?",
   "setup.device.view_for_ios": "View for iOS",
