@@ -150,7 +150,7 @@
 			connectButtonAndroid.style.display = 'none';
 		}
 
-		scanOrGo.innerText = universal.translationKey("setup.device.scan_or_browse").replace("$1", ip).replace("$2", browser)
+		scanOrGo.innerText = universal.translationKey("setup.device.scan_or_browse").replace("$1", ip+':5754').replace("$2", browser)
 		atHS.innerText = universal.translationKey("setup.device." + e + ".add_to_home_screen")
 		swapper.innerText = universal.translationKey("setup.device.swap").replace("$1", selectedOS)
 	})
